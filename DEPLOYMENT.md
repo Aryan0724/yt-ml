@@ -19,8 +19,9 @@ Render offers a reliable free tier for web services.
   1. Create a "New Web Service" on Render.
   2. Connect the same GitHub repo.
   3. Set the **Root Directory** to `backend/`.
-  4. Build Command: `pip install -r requirements.txt`
-  5. Start Command: `python saas_api_v1.py`
+  4. Render will automatically detect the **Dockerfile**.
+  5. Select the "Free" instance type.
+  - *Note: Docker-based deployment is more stable and ensures all your ML dependencies (CatBoost, etc.) are installed correctly.*
   - *Note: Free tier instances spin down after 15 mins of inactivity. Use a free cron service like [Cron-job.org](https://cron-job.org/) to ping your API every 10 mins if you want it "always on."*
 
 ## 3. Database: Performance Vault (Supabase)
