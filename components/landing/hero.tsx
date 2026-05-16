@@ -54,7 +54,7 @@ export function Hero() {
               className="flex flex-col sm:flex-row items-center gap-4"
             >
               <Link
-                href="#waitlist"
+                href="/waitlist"
                 className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white text-black font-bold hover:bg-zinc-200 transition-all flex items-center justify-center group"
               >
                 Join Closed Beta

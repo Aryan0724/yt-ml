@@ -1,65 +1,72 @@
-import Image from "next/image";
+import { Navbar } from "@/components/global/navbar";
+import { Footer } from "@/components/global/footer";
+import { PageTransition } from "@/components/global/page-transition";
+import { Hero } from "@/components/landing/hero";
+import { Preview } from "@/components/landing/preview";
+import { Waitlist } from "@/components/landing/waitlist";
+import { Zap, GitCompare, Target, ShieldAlert, BarChart3, MessageSquare } from "lucide-react";
+import Link from "next/link";
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <PageTransition>
+      <Navbar />
+      <main className="flex-1 overflow-hidden">
+        <Hero />
+        
+        {/* Live Intelligence Showcase */}
+        <section className="bg-black py-32 px-6 border-y border-white/5 relative">
+            <div className="absolute top-0 left-0 w-full h-full noise-bg" />
+            <div className="max-w-7xl mx-auto flex flex-col items-center text-center mb-24 relative z-10">
+                <span className="text-blue-500 font-bold text-xs uppercase tracking-widest mb-4">Live Diagnostic Demo</span>
+                <h2 className="text-4xl md:text-6xl font-bold mb-8">Understand the <span className="text-gradient">Signal.</span></h2>
+                <p className="text-zinc-500 text-lg max-w-2xl leading-relaxed">
+                    Watch the engine dissect a metadata concept in real-time. Identify hooks, focal points, and volatility before publish.
+                </p>
+            </div>
+            <div className="relative z-10">
+                <Preview />
+            </div>
+        </section>
+
+        {/* Features Grid */}
+        <section id="features" className="section-padding bg-zinc-950/20">
+            <div className="max-w-7xl mx-auto">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {[
+                        { title: "Thumbnail Intelligence", icon: BarChart3, desc: "Visual quality audit across all niches." },
+                        { title: "Comparison Engine", icon: GitCompare, desc: "Side-by-side variant ranking logic." },
+                        { title: "Confidence Calibration", icon: Target, desc: "Map prediction reliability (± pts)." },
+                        { title: "Volatility Detection", icon: ShieldAlert, desc: "Identify high-risk experimental ideas." },
+                        { title: "Explainability Layer", icon: MessageSquare, desc: "Reasoning behind every score." },
+                        { title: "Niche Calibration", icon: Zap, desc: "Calibrated for Gaming, Tech, and more." }
+                    ].map((feature, i) => (
+                        <div key={i} className="p-10 rounded-[2.5rem] glass-card border-white/5 hover:border-white/10 transition-all hover:-translate-y-1 premium-shadow group">
+                            <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-blue-500/10 transition-colors">
+                                <feature.icon className="w-5 h-5 text-zinc-500 group-hover:text-blue-500" />
+                            </div>
+                            <h3 className="text-xl font-bold mb-4">{feature.title}</h3>
+                            <p className="text-zinc-500 text-sm leading-relaxed mb-6">{feature.desc}</p>
+                            <Link href="/features" className="text-[10px] font-bold text-zinc-700 uppercase tracking-widest group-hover:text-white transition-colors">Learn More</Link>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <section className="py-32 bg-black overflow-hidden relative border-t border-white/5">
+            <div className="max-w-7xl mx-auto px-6 text-center">
+                <h2 className="text-4xl md:text-6xl font-bold mb-8">Ready to publish with <br /><span className="text-gradient">confidence?</span></h2>
+                <div className="flex justify-center gap-4 pt-8">
+                    <Link href="/waitlist" className="px-8 py-4 rounded-xl bg-white text-black font-bold hover:bg-zinc-200 transition-all">Join Closed Beta</Link>
+                    <Link href="/intelligence" className="px-8 py-4 rounded-xl border border-white/10 bg-white/5 font-bold hover:bg-white/10 transition-all">Explore Tech</Link>
+                </div>
+            </div>
+        </section>
+
+        <Waitlist />
       </main>
-    </div>
+      <Footer />
+    </PageTransition>
   );
 }
