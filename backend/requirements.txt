@@ -7,3 +7,5 @@ catboost
 pydantic
 python-dotenv
 joblib
+xgboost
+scikit-learn
