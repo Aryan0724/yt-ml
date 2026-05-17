@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Upload, Sparkles, CheckCircle2, AlertCircle, TrendingUp, GitCompare, History, Search, Zap } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { saveAnalysisHistory } from "@/lib/supabase"
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<"analyze" | "compare" | "history">("analyze")
@@ -38,6 +39,16 @@ export default function DashboardPage() {
       const payload = await response.json()
       if (payload.status === "success") {
         setResult(payload.data)
+        // Store analysis details in history database
+        saveAnalysisHistory({
+          title,
+          niche,
+          sensitivity,
+          score: payload.data.score,
+          tier: payload.data.tier,
+          reliability: payload.data.reliability,
+          risk_level: payload.data.risk_level || "Medium",
+        }).catch((err) => console.error("Error logging analysis run history:", err))
       } else {
         throw new Error(payload.detail || "Analysis failed")
       }
