@@ -6,3 +6,4 @@ numpy
 catboost
 pydantic
 python-dotenv
+joblib
