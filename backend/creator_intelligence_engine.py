@@ -8,7 +8,9 @@ from v40_confidence_system import ConfidenceSystem
 from v40_accuracy_optimizer import EnsembleAccuracyOptimizer
 
 class CreatorIntelligenceEngine:
-    def __init__(self, model_dir="d:/research/youtube_dataset"):
+    def __init__(self, model_dir=None):
+        if model_dir is None:
+            model_dir = os.path.dirname(os.path.abspath(__file__))
         self.base_engine = RankingEngineV30(model_dir)
         self.optimizer = EnsembleAccuracyOptimizer(model_dir)
         self.heuristics = HeuristicAnalyzer(self.base_engine.cat_stats)

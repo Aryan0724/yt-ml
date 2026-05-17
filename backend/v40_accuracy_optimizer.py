@@ -6,7 +6,9 @@ from v30_ranking_engine import RankingEngineV30
 from behavioral_api_server import ViralPrescriber
 
 class EnsembleAccuracyOptimizer:
-    def __init__(self, data_dir="d:/research/youtube_dataset"):
+    def __init__(self, data_dir=None):
+        if data_dir is None:
+            data_dir = os.path.dirname(os.path.abspath(__file__))
         self.ranker = RankingEngineV30(data_dir)
         self.behavioral = ViralPrescriber() # Behavioral engine logic
         self.cat_stats = self.ranker.cat_stats

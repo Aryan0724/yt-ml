@@ -5,7 +5,7 @@ import json
 import os
 import re
 
-DATA_DIR = "d:/research/youtube_dataset"
+DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 
 from v30_title_forensics import TitleForensics
 from v30_competitor_gap import CompetitorGap

@@ -1,0 +1,162 @@
+{
+  "Science & Technology": {
+    "means": {
+      "hook_score": 0.3068627450980392,
+      "curiosity_index": 0.049019607843137254,
+      "brightness": 112.91401960784313
+    },
+    "count": 102
+  },
+  "People & Blogs": {
+    "means": {
+      "hook_score": 0.2950464396284829,
+      "curiosity_index": 0.002631578947368421,
+      "brightness": 103.96504643962851
+    },
+    "count": 1292
+  },
+  "Music": {
+    "means": {
+      "hook_score": 0.2897959183673469,
+      "curiosity_index": 0.0,
+      "brightness": 81.71979591836735
+    },
+    "count": 147
+  },
+  "Entertainment": {
+    "means": {
+      "hook_score": 0.28592592592592586,
+      "curiosity_index": 0.008641975308641976,
+      "brightness": 85.37562962962964
+    },
+    "count": 810
+  },
+  "Travel & Events": {
+    "means": {
+      "hook_score": 0.3000000000000001,
+      "curiosity_index": 0.0,
+      "brightness": 107.19311111111112
+    },
+    "count": 45
+  },
+  "Howto & Style": {
+    "means": {
+      "hook_score": 0.2953488372093024,
+      "curiosity_index": 0.03255813953488372,
+      "brightness": 122.15441860465117
+    },
+    "count": 43
+  },
+  "Autos & Vehicles": {
+    "means": {
+      "hook_score": 0.2936708860759494,
+      "curiosity_index": 0.0,
+      "brightness": 104.39974683544304
+    },
+    "count": 79
+  },
+  "Gaming": {
+    "means": {
+      "hook_score": 0.35590361445783125,
+      "curiosity_index": 0.027951807228915656,
+      "brightness": 74.3462891566265
+    },
+    "count": 415
+  },
+  "Sports": {
+    "means": {
+      "hook_score": 0.3028571428571429,
+      "curiosity_index": 0.005714285714285714,
+      "brightness": 115.92328571428571
+    },
+    "count": 70
+  },
+  "Education": {
+    "means": {
+      "hook_score": 0.3164435946462715,
+      "curiosity_index": 0.04053537284894837,
+      "brightness": 95.55319311663479
+    },
+    "count": 523
+  },
+  "Comedy": {
+    "means": {
+      "hook_score": 0.2854166666666666,
+      "curiosity_index": 0.004166666666666667,
+      "brightness": 100.14052083333333
+    },
+    "count": 96
+  },
+  "Pets & Animals": {
+    "means": {
+      "hook_score": 0.2972972972972973,
+      "curiosity_index": 0.0,
+      "brightness": 114.69432432432431
+    },
+    "count": 74
+  },
+  "Film & Animation": {
+    "means": {
+      "hook_score": 0.27727272727272734,
+      "curiosity_index": 0.0,
+      "brightness": 115.8184090909091
+    },
+    "count": 44
+  },
+  "News & Politics": {
+    "means": {
+      "hook_score": 0.2785714285714285,
+      "curiosity_index": 0.0,
+      "brightness": 100.175
+    },
+    "count": 28
+  },
+  "Unknown": {
+    "means": {
+      "hook_score": 0.3,
+      "curiosity_index": 0.0,
+      "brightness": 88.63666666666667
+    },
+    "count": 6
+  },
+  "Nonprofits & Activism": {
+    "means": {
+      "hook_score": 0.27499999999999997,
+      "curiosity_index": 0.0,
+      "brightness": 96.75875
+    },
+    "count": 16
+  },
+  "News": {
+    "means": {
+      "hook_score": 0.2776014109347442,
+      "curiosity_index": 0.057848324514991174,
+      "brightness": 85.66183421516756
+    },
+    "count": 567
+  },
+  "Vlogs": {
+    "means": {
+      "hook_score": 0.16584992343032157,
+      "curiosity_index": 0.02970903522205207,
+      "brightness": 79.51304747320061
+    },
+    "count": 653
+  },
+  "General": {
+    "means": {
+      "hook_score": 0.32362110311750597,
+      "curiosity_index": 0.07314148681055156,
+      "brightness": 87.9721582733813
+    },
+    "count": 834
+  },
+  "India-Segment": {
+    "means": {
+      "hook_score": 0.26285164703053615,
+      "curiosity_index": 0.05018033181053137,
+      "brightness": 89.43412418850684
+    },
+    "count": 16636
+  }
+}
