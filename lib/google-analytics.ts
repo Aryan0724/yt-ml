@@ -1,31 +1,79 @@
-import { BetaAnalyticsDataClient } from "@google-analytics/data"
 import { google } from "googleapis"
+import { supabaseServer } from "@/lib/supabase-server"
 
 // Failsafe configuration detection
 const hasGoogleCreds = !!process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
 const hasGaProperty = !!process.env.GA_PROPERTY_ID
 const hasGscUrl = !!process.env.GSC_SITE_URL
 
-// Initialize GA4 Client securely if credentials exist
-let analyticsClient: BetaAnalyticsDataClient | null = null
-if (hasGoogleCreds) {
+// Helper: Ingest the securely saved Google OAuth2 credentials from Supabase
+async function getOAuth2Client() {
+  const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET
+  const redirectUri = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI || "http://localhost:3000/api/admin/google/callback"
+
+  if (!clientId || !clientSecret) return null
+
   try {
-    const creds = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON!)
-    analyticsClient = new BetaAnalyticsDataClient({
-      credentials: {
-        client_email: creds.client_email,
-        private_key: creds.private_key?.replace(/\\n/g, "\n")
-      }
+    const { data } = await supabaseServer
+      .from("system_configs")
+      .select("value")
+      .eq("key", "google_oauth_credentials")
+      .single()
+
+    const tokens = data?.value
+    if (!tokens || !tokens.refresh_token) return null
+
+    const oauth2Client = new google.auth.OAuth2(clientId, clientSecret, redirectUri)
+    oauth2Client.setCredentials(tokens)
+
+    // Listen to token refresh events to automatically update expired access keys
+    oauth2Client.on("tokens", async (newTokens) => {
+      await supabaseServer
+        .from("system_configs")
+        .update({
+          value: {
+            ...tokens,
+            ...newTokens
+          }
+        })
+        .eq("key", "google_oauth_credentials")
     })
+
+    return oauth2Client
   } catch (err) {
-    console.error("Failed to parse GOOGLE_APPLICATION_CREDENTIALS_JSON:", err)
+    console.error("Failed to retrieve OAuth2 client credentials:", err)
+    return null
   }
 }
 
-// Fetch Google Analytics 4 (GA4) Live Stats
+// Fetch Google Analytics 4 (GA4) Live Stats (Supports both OAuth2 and Service Account JSON)
 export async function getLiveGA4Metrics() {
-  if (!analyticsClient || !hasGaProperty) {
-    // Elegant fallback to mock data if credentials are not yet configured
+  let authClient: any = null
+  let usingOAuth = false
+
+  // 1. Try to load authenticated OAuth2 credentials first
+  const oauthClient = await getOAuth2Client()
+  if (oauthClient) {
+    authClient = oauthClient
+    usingOAuth = true
+  } 
+  // 2. Fall back to Service Account JSON if configured
+  else if (hasGoogleCreds) {
+    try {
+      const creds = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON!)
+      authClient = new google.auth.JWT({
+        email: creds.client_email,
+        key: creds.private_key?.replace(/\\n/g, "\n"),
+        scopes: ["https://www.googleapis.com/auth/analytics.readonly"]
+      })
+    } catch (err) {
+      console.error("Failed to parse Service Account JSON:", err)
+    }
+  }
+
+  // 3. Simulation mode fallback if no authentication keys are configured yet
+  if (!authClient || !hasGaProperty) {
     return {
       live: false,
       sessions: 14832,
@@ -52,21 +100,24 @@ export async function getLiveGA4Metrics() {
   }
 
   try {
+    const analyticsdata = google.analyticsdata({ version: "v1beta", auth: authClient })
     const propertyId = `properties/${process.env.GA_PROPERTY_ID}`
 
-    // 1. Fetch Traffic Totals (Sessions, Active Users)
-    const [trafficReport] = await analyticsClient.runReport({
+    // Fetch Traffic Totals (Sessions, Active Users, Bounce Rate, Average Duration)
+    const trafficResponse = await analyticsdata.properties.runReport({
       property: propertyId,
-      dateRanges: [{ startDate: "30daysAgo", endDate: "today" }],
-      metrics: [
-        { name: "sessions" },
-        { name: "activeUsers" },
-        { name: "bounceRate" },
-        { name: "averageSessionDuration" }
-      ]
+      requestBody: {
+        dateRanges: [{ startDate: "30daysAgo", endDate: "today" }],
+        metrics: [
+          { name: "sessions" },
+          { name: "activeUsers" },
+          { name: "bounceRate" },
+          { name: "averageSessionDuration" }
+        ]
+      }
     })
 
-    const trafficRow = trafficReport.rows?.[0]?.metricValues
+    const trafficRow = trafficResponse.data.rows?.[0]?.metricValues
     const sessions = Number(trafficRow?.[0]?.value || 0)
     const activeUsers = Number(trafficRow?.[1]?.value || 0)
     const rawBounce = Number(trafficRow?.[2]?.value || 0)
@@ -77,17 +128,19 @@ export async function getLiveGA4Metrics() {
     const seconds = Math.floor(rawDuration % 60)
     const avgDuration = rawDuration > 0 ? `${minutes}m ${seconds}s` : "14m 12s"
 
-    // 2. Fetch Device Share
-    const [deviceReport] = await analyticsClient.runReport({
+    // Fetch Device Breakdown Category share
+    const deviceResponse = await analyticsdata.properties.runReport({
       property: propertyId,
-      dateRanges: [{ startDate: "30daysAgo", endDate: "today" }],
-      dimensions: [{ name: "deviceCategory" }],
-      metrics: [{ name: "sessions" }]
+      requestBody: {
+        dateRanges: [{ startDate: "30daysAgo", endDate: "today" }],
+        dimensions: [{ name: "deviceCategory" }],
+        metrics: [{ name: "sessions" }]
+      }
     })
 
     let desktopCount = 0
     let mobileCount = 0
-    deviceReport.rows?.forEach((row) => {
+    deviceResponse.data.rows?.forEach((row) => {
       const category = row.dimensionValues?.[0]?.value?.toLowerCase()
       const val = Number(row.metricValues?.[0]?.value || 0)
       if (category === "desktop") desktopCount += val
@@ -121,14 +174,48 @@ export async function getLiveGA4Metrics() {
       ]
     }
   } catch (err) {
-    console.error("Failed to fetch live GA4 metrics:", err)
-    return { live: false, error: "Authentication failed. Using fallback simulation data." }
+    console.error("Failed to query dynamic GA4 analytics metrics:", err)
+    return {
+      live: false,
+      sessions: 14832,
+      activeUsers: 843,
+      bounceRate: "32.4%",
+      avgDuration: "14m 12s",
+      devices: [{ name: "Desktop", share: 64 }, { name: "Mobile", share: 36 }],
+      geo: [
+        { country: "United States (US)", sessions: "6,412", percentage: 48 },
+        { country: "India (IN)", sessions: "4,010", percentage: 30 }
+      ],
+      referrals: [{ source: "YouTube Referrals", sessions: "7,842", percentage: 55 }]
+    }
   }
 }
 
-// Fetch Google Search Console Live Stats
+// Fetch Google Search Console Live Stats (Supports both OAuth2 and Service Account JSON)
 export async function getLiveGSCMetrics() {
-  if (!hasGoogleCreds || !hasGscUrl) {
+  let authClient: any = null
+
+  // 1. Try to load authenticated OAuth2 credentials first
+  const oauthClient = await getOAuth2Client()
+  if (oauthClient) {
+    authClient = oauthClient
+  } 
+  // 2. Fall back to Service Account JSON if configured
+  else if (hasGoogleCreds) {
+    try {
+      const creds = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON!)
+      authClient = new google.auth.JWT({
+        email: creds.client_email,
+        key: creds.private_key?.replace(/\\n/g, "\n"),
+        scopes: ["https://www.googleapis.com/auth/webmasters.readonly"]
+      })
+    } catch (err) {
+      console.error("Failed to parse GSC Service Account:", err)
+    }
+  }
+
+  // 3. Simulation mode fallback if no authentication keys are configured yet
+  if (!authClient || !hasGscUrl) {
     return {
       live: false,
       clicks: 2410,
@@ -145,14 +232,7 @@ export async function getLiveGSCMetrics() {
   }
 
   try {
-    const creds = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON!)
-    const auth = new google.auth.JWT({
-      email: creds.client_email,
-      key: creds.private_key?.replace(/\\n/g, "\n"),
-      scopes: ["https://www.googleapis.com/auth/webmasters.readonly"]
-    })
-
-    const searchconsole = google.searchconsole({ version: "v1", auth })
+    const searchconsole = google.searchconsole({ version: "v1", auth: authClient })
 
     // Query GSC Search Performance Metrics
     const response = await searchconsole.searchanalytics.query({
@@ -205,6 +285,15 @@ export async function getLiveGSCMetrics() {
     }
   } catch (err) {
     console.error("Failed to query live Google Search Console metrics:", err)
-    return { live: false, error: "Failed to connect to Google Search Console API." }
+    return {
+      live: false,
+      clicks: 2410,
+      impressions: 84320,
+      ctr: "2.8%",
+      position: "14.2",
+      keywords: [
+        { keyword: "youtube title analyzer", pos: "#1.2", trend: "+0.4", volume: "1,800/mo" }
+      ]
+    }
   }
 }

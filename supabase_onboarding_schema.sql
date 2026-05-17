@@ -58,3 +58,22 @@ create policy "Allow insert for usage_logs"
 create policy "Allow select for usage_logs"
   on usage_logs for select
   using (true);
+
+-- TABLE: system_configs (OAuth & Features Storage)
+create table if not exists system_configs (
+  key text primary key,
+  value jsonb default '{}'::jsonb
+);
+
+-- Enable RLS and add policies
+alter table system_configs enable row level security;
+
+create policy "Allow public read for system_configs"
+  on system_configs for select
+  using (true);
+
+create policy "Allow all updates for service roles"
+  on system_configs
+  using (true)
+  with check (true);
+
