@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Diamond } from "lucide-react"
+import { Zap } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function Navbar() {
@@ -21,8 +21,8 @@ export function Navbar() {
     )}>
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
-          <Diamond className="w-6 h-6 text-white transition-transform group-hover:rotate-12" />
-          <span className="font-display font-bold text-xl tracking-tight">DIAMOND</span>
+          <Zap className="w-6 h-6 text-white transition-transform group-hover:rotate-12" />
+          <span className="font-display font-bold text-xl tracking-tight">AlgoPilot</span>
         </Link>
         
         <div className="hidden md:flex items-center gap-8">

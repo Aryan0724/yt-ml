@@ -9,21 +9,44 @@ export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<"analyze" | "compare" | "history">("analyze")
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [result, setResult] = useState<any>(null)
+  const [title, setTitle] = useState("")
+  const [niche, setNiche] = useState("Gaming")
+  const [sensitivity, setSensitivity] = useState("Balanced")
+  const [error, setError] = useState<string | null>(null)
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
+    if (!title.trim()) return
     setIsAnalyzing(true)
-    setTimeout(() => {
-      setResult({
-        score: 82,
-        tier: "A-TIER",
-        confidence: "High (±6 pts)",
-        reliability: "Stable",
-        risk: "Low",
-        strengths: ["Strong curiosity loop in hook", "Optimal focal point saturation", "Human face visibility meets benchmark"],
-        improvements: ["Increase background contrast by 15%", "Adjust title power-word position"]
+    setError(null)
+    setResult(null)
+
+    try {
+      const formData = new FormData()
+      formData.append("title", title)
+      formData.append("niche", niche)
+      formData.append("sensitivity", sensitivity)
+
+      const response = await fetch("https://yt-ml-production-870b.up.railway.app/analyze", {
+        method: "POST",
+        body: formData,
       })
+
+      if (!response.ok) {
+        throw new Error(`Server returned status: ${response.status}`)
+      }
+
+      const payload = await response.json()
+      if (payload.status === "success") {
+        setResult(payload.data)
+      } else {
+        throw new Error(payload.detail || "Analysis failed")
+      }
+    } catch (e: any) {
+      console.error(e)
+      setError(e.message || "An error occurred connecting to the intelligence server.")
+    } finally {
       setIsAnalyzing(false)
-    }, 2000)
+    }
   }
 
   return (
@@ -79,6 +102,8 @@ export default function DashboardPage() {
                             <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Proposed Title</label>
                             <textarea 
                                 rows={3}
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
                                 placeholder="Enter your best title variant..."
                                 className="w-full bg-white/[0.02] border border-white/5 rounded-2xl px-6 py-5 text-sm focus:outline-none focus:border-white/20 transition-all resize-none"
                             />
@@ -86,25 +111,43 @@ export default function DashboardPage() {
                         <div className="grid grid-cols-2 gap-6">
                              <div className="space-y-3">
                                 <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Niche</label>
-                                <select className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-4 py-3 text-xs focus:outline-none appearance-none cursor-pointer">
-                                    <option>Gaming</option>
-                                    <option>Tech</option>
-                                    <option>Education</option>
+                                <select 
+                                    value={niche}
+                                    onChange={(e) => setNiche(e.target.value)}
+                                    className="w-full bg-zinc-900 border border-white/5 rounded-xl px-4 py-3 text-xs focus:outline-none appearance-none cursor-pointer"
+                                >
+                                    <option value="Gaming">Gaming</option>
+                                    <option value="Tech">Tech</option>
+                                    <option value="Education">Education</option>
                                 </select>
                              </div>
                              <div className="space-y-3">
                                 <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Sensitivity</label>
-                                <select className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-4 py-3 text-xs focus:outline-none appearance-none cursor-pointer">
-                                    <option>Balanced</option>
-                                    <option>Strict</option>
-                                    <option>Experimental</option>
+                                <select 
+                                    value={sensitivity}
+                                    onChange={(e) => setSensitivity(e.target.value)}
+                                    className="w-full bg-zinc-900 border border-white/5 rounded-xl px-4 py-3 text-xs focus:outline-none appearance-none cursor-pointer"
+                                >
+                                    <option value="Balanced">Balanced</option>
+                                    <option value="Strict">Strict</option>
+                                    <option value="Experimental">Experimental</option>
                                 </select>
                              </div>
                         </div>
+
+                        {error && (
+                            <div className="p-6 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-xs font-semibold flex items-center gap-3">
+                                <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                                <div>
+                                    <span className="font-bold">Execution Failed:</span> {error}
+                                </div>
+                            </div>
+                        )}
+
                         <button 
                             onClick={handleAnalyze}
-                            disabled={isAnalyzing}
-                            className="w-full py-5 rounded-2xl bg-white text-black font-bold hover:bg-zinc-200 transition-all flex items-center justify-center gap-3 relative overflow-hidden"
+                            disabled={isAnalyzing || !title.trim()}
+                            className="w-full py-5 rounded-2xl bg-white text-black font-bold hover:bg-zinc-200 transition-all flex items-center justify-center gap-3 relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {isAnalyzing ? (
                                 <div className="w-6 h-6 border-2 border-black/20 border-t-black rounded-full animate-spin" />
@@ -157,50 +200,86 @@ export default function DashboardPage() {
                                     <div className="text-8xl font-bold">{result.score}</div>
                                 </div>
                                 <div className="px-4 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-xs font-bold uppercase tracking-widest">
-                                    {result.tier}
+                                    {result.tier}-TIER
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-3 gap-4 mb-12">
                                 <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5">
                                     <div className="text-[10px] font-bold text-zinc-500 uppercase mb-2">Confidence</div>
-                                    <div className="text-sm font-bold">{result.confidence}</div>
+                                    <div className="text-xs font-bold">{result.confidence} ({result.confidence_range || "±15 pts"})</div>
                                 </div>
                                 <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5">
                                     <div className="text-[10px] font-bold text-zinc-500 uppercase mb-2">Reliability</div>
-                                    <div className="text-sm font-bold text-emerald-500">{result.reliability}</div>
+                                    <div className={cn("text-xs font-bold", result.reliability === "Stable" ? "text-emerald-500" : "text-yellow-500")}>{result.reliability}</div>
                                 </div>
                                 <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5">
-                                    <div className="text-[10px] font-bold text-zinc-500 uppercase mb-2">Risk</div>
-                                    <div className="text-sm font-bold text-blue-500">{result.risk}</div>
+                                    <div className="text-[10px] font-bold text-zinc-500 uppercase mb-2">Risk Level</div>
+                                    <div className="text-xs font-bold text-blue-500">{result.risk_level || "Medium"}</div>
                                 </div>
                             </div>
 
                             <div className="space-y-10">
-                                <div className="space-y-4">
-                                    <div className="flex items-center gap-2 text-[10px] font-bold text-emerald-500 uppercase tracking-widest">
-                                        <CheckCircle2 className="w-3.5 h-3.5" /> Core Strengths
+                                {result.strengths && result.strengths.length > 0 && (
+                                    <div className="space-y-4">
+                                        <div className="flex items-center gap-2 text-[10px] font-bold text-emerald-500 uppercase tracking-widest">
+                                            <CheckCircle2 className="w-3.5 h-3.5" /> Core Strengths
+                                        </div>
+                                        <div className="space-y-3">
+                                            {result.strengths.map((s: string) => (
+                                                <div key={s} className="flex items-center gap-3 text-xs text-zinc-300">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                                                    {s}
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
-                                    <div className="space-y-3">
-                                        {result.strengths.map((s: string) => (
-                                            <div key={s} className="flex items-center gap-3 text-xs text-zinc-300">
-                                                <div className="w-1 h-1 rounded-full bg-emerald-500" />
-                                                {s}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
+                                )}
 
-                                <div className="p-6 rounded-[2rem] bg-blue-500/5 border border-blue-500/10 space-y-4">
-                                    <div className="flex items-center gap-2 text-[10px] font-bold text-blue-400 uppercase tracking-widest">
-                                        <Zap className="w-3.5 h-3.5" /> High-Lift Fixes
+                                {result.improvements && result.improvements.length > 0 && (
+                                    <div className="p-6 rounded-[2rem] bg-blue-500/5 border border-blue-500/10 space-y-4">
+                                        <div className="flex items-center gap-2 text-[10px] font-bold text-blue-400 uppercase tracking-widest">
+                                            <Zap className="w-3.5 h-3.5" /> High-Lift Fixes
+                                        </div>
+                                        <ul className="text-[11px] text-zinc-400 space-y-3">
+                                            {result.improvements.map((i: string) => (
+                                                <li key={i} className="flex gap-2"><span>•</span> {i}</li>
+                                            ))}
+                                        </ul>
                                     </div>
-                                    <ul className="text-[11px] text-zinc-400 space-y-3">
-                                        {result.improvements.map((i: string) => (
-                                            <li key={i} className="flex gap-2"><span>•</span> {i}</li>
-                                        ))}
-                                    </ul>
-                                </div>
+                                )}
+
+                                {result.factors && (
+                                    <div className="p-6 rounded-[2rem] bg-white/[0.01] border border-white/5 space-y-4">
+                                        <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
+                                            Visual & Linguistic Diagnostics
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-xs">
+                                            <div className="flex justify-between py-1.5 border-b border-white/5 text-zinc-500">
+                                                <span>Brightness</span>
+                                                <span className="text-white font-bold">{result.factors.brightness || 120}</span>
+                                            </div>
+                                            <div className="flex justify-between py-1.5 border-b border-white/5 text-zinc-500">
+                                                <span>Face Detected</span>
+                                                <span className={cn("font-bold", result.factors.face_detected ? "text-emerald-500" : "text-zinc-500")}>
+                                                    {result.factors.face_detected ? "Yes" : "No"}
+                                                </span>
+                                            </div>
+                                            <div className="flex justify-between py-1.5 border-b border-white/5 text-zinc-500">
+                                                <span>Contrast</span>
+                                                <span className="text-white font-bold uppercase">{result.factors.contrast || "medium"}</span>
+                                            </div>
+                                            <div className="flex justify-between py-1.5 border-b border-white/5 text-zinc-500">
+                                                <span>Saturation</span>
+                                                <span className="text-white font-bold uppercase">{result.factors.saturation || "medium"}</span>
+                                            </div>
+                                            <div className="flex justify-between py-1.5 border-b border-white/5 text-zinc-500 col-span-2">
+                                                <span>Niche Alignment Coefficient</span>
+                                                <span className="text-blue-400 font-bold uppercase">{result.factors.niche_alignment || "high"}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </motion.div>
                     )}

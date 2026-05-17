@@ -1,6 +1,6 @@
 "use client"
 
-import { Diamond, BarChart3, Layout, History, LogOut, User, Bell } from "lucide-react"
+import { Zap, BarChart3, Layout, History, LogOut, User, Bell } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -17,8 +17,8 @@ export function Sidebar() {
   return (
     <aside className="w-64 border-r border-white/5 flex flex-col p-6 glass bg-black/40 h-screen sticky top-0">
       <Link href="/" className="flex items-center gap-2 mb-12 group">
-        <Diamond className="w-6 h-6 transition-transform group-hover:rotate-12" />
-        <span className="font-display font-bold tracking-tight text-lg">DIAMOND</span>
+        <Zap className="w-6 h-6 transition-transform group-hover:rotate-12 text-white" />
+        <span className="font-display font-bold tracking-tight text-lg">AlgoPilot</span>
       </Link>
 
       <nav className="flex-1 space-y-2">

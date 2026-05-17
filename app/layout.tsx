@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
-  title: "Diamond Intelligence | Creator Decision Platform",
+  title: "AlgoPilot | Creator Decision Platform",
   description: "Analyze thumbnails, titles, and performance signals before you publish.",
 };
 

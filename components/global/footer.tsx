@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Diamond, Twitter, Github, Play } from "lucide-react"
+import { Zap, Twitter, Github, Play } from "lucide-react"
 
 export function Footer() {
   return (
@@ -8,8 +8,8 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12 mb-16">
           <div className="col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-6 group">
-              <Diamond className="w-6 h-6 text-white group-hover:rotate-12 transition-transform" />
-              <span className="font-display font-bold text-xl tracking-tight">DIAMOND</span>
+              <Zap className="w-6 h-6 text-white group-hover:rotate-12 transition-transform" />
+              <span className="font-display font-bold text-xl tracking-tight">AlgoPilot</span>
             </Link>
             <p className="text-zinc-500 text-sm max-w-xs leading-relaxed">
               Pre-upload intelligence for serious creators. Analyze performance signals before you publish.
@@ -48,7 +48,7 @@ export function Footer() {
 
         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-zinc-600 text-xs">
-            &copy; 2026 Diamond Intelligence. Built under the Integral Groups Studio.
+            &copy; 2026 AlgoPilot. Built under the Integral Groups Studio.
           </p>
           <div className="flex items-center gap-6">
             <Link href="#" className="text-zinc-600 hover:text-white transition-colors"><Twitter className="w-4 h-4" /></Link>
