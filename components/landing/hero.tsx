@@ -35,7 +35,8 @@ export function Hero() {
               className="text-6xl md:text-8xl font-display font-bold tracking-tight mb-8 leading-[0.95]"
             >
               Pre-upload <br />
-              <span className="text-gradient">intelligence.</span>
+              <span className="text-gradient">intelligence</span> <br />
+              <span className="text-sm font-semibold tracking-widest text-zinc-500 uppercase block mt-4">for serious creators.</span>
             </motion.h1>
 
             <motion.p
@@ -44,7 +45,7 @@ export function Hero() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-lg md:text-xl text-zinc-400 max-w-xl mb-10 leading-relaxed"
             >
-              Analyze thumbnails, titles, confidence, and performance signals before you publish. Professional decision intelligence for serious creators.
+              Analyze thumbnails, titles, confidence, volatility, and performance signals before you publish. Built under the parent studio Integral Groups.
             </motion.p>
 
             <motion.div
@@ -85,12 +86,12 @@ export function Hero() {
                     <div className="w-2.5 h-2.5 rounded-full bg-amber-500/20 border border-amber-500/40" />
                     <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/20 border border-emerald-500/40" />
                   </div>
-                  <div className="text-[10px] font-bold text-zinc-600 tracking-widest uppercase">Intelligence Audit v4.1</div>
+                  <div className="text-[10px] font-bold text-zinc-600 tracking-widest uppercase">AlgoPilot Intelligence Audit</div>
                 </div>
                 <div className="p-8 space-y-8">
                   <div className="flex justify-between items-end">
                     <div className="space-y-1">
-                      <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Predictive Score</div>
+                      <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Calibration Score</div>
                       <div className="text-6xl font-display font-bold">88</div>
                     </div>
                     <div className="px-3 py-1 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-xs font-bold">S-TIER</div>
@@ -127,7 +128,7 @@ export function Hero() {
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               className="absolute -top-12 -left-12 p-6 glass-card border-white/10 shadow-2xl rotate-[-6deg] z-10"
             >
-              <div className="text-[10px] font-bold text-zinc-500 mb-2 uppercase">Viral Probability</div>
+              <div className="text-[10px] font-bold text-zinc-500 mb-2 uppercase">Novelty Calibration</div>
               <div className="text-2xl font-bold text-blue-400">92.4%</div>
             </motion.div>
           </motion.div>

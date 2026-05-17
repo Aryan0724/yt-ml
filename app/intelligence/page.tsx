@@ -12,7 +12,7 @@ export default function IntelligencePage() {
           <div className="max-w-3xl">
             <h1 className="text-5xl md:text-7xl font-bold mb-8">The Engine of <br /><span className="text-gradient">Certainty.</span></h1>
             <p className="text-zinc-400 text-xl leading-relaxed">
-              Diamond Intelligence isn't a recommendation tool. It's a psychological forensic engine that dissects performance signals across visual and linguistic dimensions.
+              AlgoPilot isn't a recommendation tool. It's a psychological forensic engine that dissects performance signals across visual and linguistic dimensions.
             </p>
           </div>
         </section>
@@ -63,11 +63,11 @@ export default function IntelligencePage() {
         <section className="mt-32 px-6 max-w-7xl mx-auto">
            <div className="p-16 rounded-[3rem] bg-gradient-to-br from-zinc-900/50 to-black border border-white/5 relative overflow-hidden">
              <div className="absolute top-0 right-0 p-8 opacity-[0.03]">
-                <Diamond className="w-64 h-64" />
+                <Zap className="w-64 h-64" />
              </div>
              <div className="max-w-2xl relative z-10">
                 <h2 className="text-3xl md:text-5xl font-bold mb-8">Research-Grade Infrastructure.</h2>
-                <p className="text-zinc-400 mb-10 leading-relaxed text-lg">
+                 <p className="text-zinc-400 mb-10 leading-relaxed text-lg">
                   We leverage an ensemble of CatBoost classifiers and behavioral psychology rules to minimize Mean Absolute Error (MAE) and maximize breakout probability.
                 </p>
                 <div className="flex flex-wrap gap-4">
@@ -83,5 +83,3 @@ export default function IntelligencePage() {
     </PageTransition>
   )
 }
-
-import { Diamond } from "lucide-react";

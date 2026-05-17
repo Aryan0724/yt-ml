@@ -24,7 +24,7 @@ const updates = [
     version: "1.0.0",
     date: "March 2026",
     title: "Core Launch",
-    desc: "Initial deployment of the Diamond Intelligence research engine.",
+    desc: "Initial deployment of the AlgoPilot research engine.",
     icon: Zap,
     features: ["Single Analysis Mode", "Linguistic Audit", "Visual Clarity Scoring"]
   }

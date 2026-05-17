@@ -33,7 +33,7 @@ export function Preview() {
                 viewport={{ once: true }}
                 className="text-zinc-400 text-lg leading-relaxed max-w-xl"
               >
-                Most tools give you a random number. Diamond Intelligence provides a deep technical diagnostic of your metadata, identifying psychological hooks, visual clarity, and novelty risk.
+                Most tools give you a random number. AlgoPilot provides a deep technical diagnostic of your pre-upload metadata, identifying psychological hooks, visual clarity, and novelty risk to help you make smarter decisions.
               </motion.p>
             </div>
 
@@ -41,8 +41,8 @@ export function Preview() {
               {[
                 { icon: Search, label: "Linguistic Audit", desc: "Title hook forensic analysis" },
                 { icon: Layers, label: "Visual Benchmarks", desc: "Niche-specific visual rules" },
-                { icon: TrendingUp, label: "Stability Analysis", desc: "Confidence interval mapping" },
-                { icon: Zap, label: "Actionable Fixes", desc: "Step-by-step improvements" }
+                { icon: TrendingUp, label: "Confidence Calibration", desc: "Stability and risk interval mapping" },
+                { icon: Zap, label: "Workflow Intelligence", desc: "Step-by-step actionable improvements" }
               ].map((item, i) => (
                 <motion.div
                   key={item.label}

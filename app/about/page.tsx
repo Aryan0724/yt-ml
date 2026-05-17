@@ -12,7 +12,7 @@ export default function AboutPage() {
             <div className="text-center">
                 <h1 className="text-5xl md:text-8xl font-bold mb-8">The Story of <br /><span className="text-gradient">Certainty.</span></h1>
                 <p className="text-zinc-500 text-xl leading-relaxed">
-                    Diamond Intelligence was born out of a simple observation: creators are working harder than ever, but publishing with less certainty.
+                    AlgoPilot was born out of a simple observation: creators are working harder than ever, but publishing with less certainty.
                 </p>
             </div>
 
