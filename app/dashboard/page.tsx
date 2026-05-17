@@ -39,6 +39,23 @@ export default function DashboardPage() {
       const payload = await response.json()
       if (payload.status === "success") {
         setResult(payload.data)
+        
+        // Trigger live telemetric tracking events
+        const localEmail = typeof window !== "undefined" ? localStorage.getItem("ap_beta_email") || "" : ""
+        const localToken = typeof window !== "undefined" ? localStorage.getItem("ap_beta_token") || "" : ""
+        if (localEmail && localToken) {
+          fetch("/api/activity/log", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: localEmail,
+              token: localToken,
+              eventType: "thumbnail_analysis",
+              metadata: { title, niche, score: payload.data.score }
+            })
+          }).catch(err => console.error("Telemetry logging failed:", err))
+        }
+
         // Store analysis details in history database
         saveAnalysisHistory({
           title,

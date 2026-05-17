@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Navbar } from "@/components/global/navbar"
 import { Footer } from "@/components/global/footer"
 import { PageTransition } from "@/components/global/page-transition"
-import { Send, CheckCircle2, Play, User, Mail, MessageSquare, ChevronRight, AlertCircle } from "lucide-react"
+import { Send, CheckCircle2, Play, User, Mail, MessageSquare, ChevronRight, AlertCircle, Users } from "lucide-react"
 import { saveWaitlistEntry } from "@/lib/supabase"
 
 export default function WaitlistPage() {
@@ -16,6 +16,7 @@ export default function WaitlistPage() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [channelLink, setChannelLink] = useState("")
+  const [subscriberCount, setSubscriberCount] = useState("")
   const [niche, setNiche] = useState("Gaming")
   const [uploads, setUploads] = useState("1-4 videos")
   const [reason, setReason] = useState("")
@@ -26,19 +27,26 @@ export default function WaitlistPage() {
     setError(null)
 
     try {
-      const res = await saveWaitlistEntry({
-        name,
-        email,
-        channelLink,
-        niche,
-        uploads,
-        reason,
+      const res = await fetch("/api/waitlist/apply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: name,
+          email,
+          youtubeChannel: channelLink,
+          niche,
+          subscriberCount: parseInt(subscriberCount) || 0,
+          uploadFrequency: uploads,
+          reasonForJoining: reason,
+        })
       })
 
-      if (res.success) {
+      const payload = await res.json()
+
+      if (res.ok && payload.success) {
         setStatus("success")
       } else {
-        throw new Error("Could not persist database registration entry.")
+        throw new Error(payload.error || "Could not persist database registration entry.")
       }
     } catch (err: any) {
       console.error(err)
@@ -159,18 +167,34 @@ export default function WaitlistPage() {
                     </div>
                   </div>
 
-                  <div className="space-y-3">
-                    <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2">
-                      <Play className="w-3 h-3 text-blue-500" /> YouTube Channel Link
-                    </label>
-                    <input
-                      required
-                      type="url"
-                      value={channelLink}
-                      onChange={(e) => setChannelLink(e.target.value)}
-                      placeholder="https://youtube.com/@yourchannel"
-                      className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-white/20 transition-all text-white placeholder-zinc-600"
-                    />
+                  <div className="grid md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+                        <Play className="w-3 h-3 text-blue-500" /> YouTube Channel Link
+                      </label>
+                      <input
+                        required
+                        type="url"
+                        value={channelLink}
+                        onChange={(e) => setChannelLink(e.target.value)}
+                        placeholder="https://youtube.com/@yourchannel"
+                        className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-white/20 transition-all text-white placeholder-zinc-600"
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+                        <Users className="w-3 h-3 text-blue-500" /> Subscriber Count
+                      </label>
+                      <input
+                        required
+                        type="number"
+                        min="0"
+                        value={subscriberCount}
+                        onChange={(e) => setSubscriberCount(e.target.value)}
+                        placeholder="e.g. 42000"
+                        className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-5 py-4 text-sm focus:outline-none focus:border-white/20 transition-all text-white placeholder-zinc-600"
+                      />
+                    </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-8">
