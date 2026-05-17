@@ -1,19 +1,23 @@
 import { NextResponse } from "next/server"
 import { supabaseServer } from "@/lib/supabase-server"
+import { getLiveGA4Metrics } from "@/lib/google-analytics"
 
 export async function GET() {
   try {
-    // 1. Fetch all applicants to compute server-side stats (fast for beta sizes)
+    // 1. Fetch live metrics from Supabase DB
     const { data: users, error: userError } = await supabaseServer
       .from("waitlist_users")
       .select("status, niche, subscriber_count, total_logins, total_analyses")
 
     if (userError) throw userError
 
+    // 2. Fetch live metrics from Google Analytics 4
+    const gaMetrics = await getLiveGA4Metrics()
+
     const totalApplications = users?.length || 0
     let approvedCreators = 0
     let pendingApplications = 0
-    let activeUsers = 0
+    let activeUsers = gaMetrics.activeUsers || 0
     let totalAnalyses = 0
     let totalSubsCombined = 0
 
@@ -25,7 +29,6 @@ export async function GET() {
 
       if (u.status === "approved") approvedCreators++
       if (u.status === "pending") pendingApplications++
-      if (u.total_logins > 0) activeUsers++
 
       // Count niche distribution
       nicheBreakdown[u.niche] = (nicheBreakdown[u.niche] || 0) + 1
@@ -42,8 +45,16 @@ export async function GET() {
         activeUsers,
         totalAnalyses,
         avgSubscribers,
+        // Google Analytics payloads
+        sessions: gaMetrics.sessions,
+        bounceRate: gaMetrics.bounceRate,
+        avgDuration: gaMetrics.avgDuration,
+        live: gaMetrics.live
       },
       niches: Object.entries(nicheBreakdown).map(([name, count]) => ({ name, count })),
+      devices: gaMetrics.devices,
+      geo: gaMetrics.geo,
+      referrals: gaMetrics.referrals
     })
   } catch (err: any) {
     console.error("Admin Analytics API Error:", err)

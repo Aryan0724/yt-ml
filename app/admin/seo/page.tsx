@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { 
   Search, ShieldCheck, RefreshCw, CheckCircle, AlertTriangle, 
@@ -8,8 +8,52 @@ import {
 } from "lucide-react"
 
 export default function SEOCommandPage() {
+  const [loading, setLoading] = useState(true)
   const [sitemapLoading, setSitemapLoading] = useState(false)
   const [sitemapSuccess, setSitemapSuccess] = useState(false)
+  
+  const [seoData, setSeoData] = useState({
+    clicks: 2410,
+    impressions: 84320,
+    ctr: "2.8%",
+    position: "14.2",
+    live: false,
+    keywords: [
+      { keyword: "youtube title analyzer", pos: "#1.2", trend: "+0.4", volume: "1,800/mo" },
+      { keyword: "creator telemetry metrics", pos: "#2.4", trend: "+1.1", volume: "840/mo" },
+      { keyword: "algopilot decision tool", pos: "#3.1", trend: "+0.8", volume: "1,200/mo" },
+      { keyword: "thumbnail predictor ai", pos: "#4.8", trend: "+0.2", volume: "450/mo" }
+    ]
+  })
+
+  const loadSEOMetrics = async () => {
+    try {
+      setLoading(true)
+      const res = await fetch("/api/admin/seo")
+      const payload = await res.json()
+      
+      if (payload.success && payload.metrics) {
+        setSeoData({
+          clicks: payload.metrics.clicks || 0,
+          impressions: payload.metrics.impressions || 0,
+          ctr: payload.metrics.ctr || "2.8%",
+          position: payload.metrics.position || "14.2",
+          live: !!payload.metrics.live,
+          keywords: payload.metrics.keywords || [
+            { keyword: "youtube title analyzer", pos: "#1.2", trend: "+0.4", volume: "1,800/mo" }
+          ]
+        })
+      }
+    } catch (err) {
+      console.error("Failed to load live GSC metrics:", err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    loadSEOMetrics()
+  }, [])
 
   const handleRegenerateSitemap = () => {
     setSitemapLoading(true)
@@ -23,30 +67,46 @@ export default function SEOCommandPage() {
   return (
     <div className="space-y-8">
       {/* Title */}
-      <section className="flex justify-between items-center">
+      <section className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-3xl font-bold tracking-tight text-white flex items-center gap-2">
             SEO Command Center <Search className="w-5 h-5 text-blue-400" />
           </h2>
           <p className="text-xs text-zinc-500 mt-1">Monitor organic keywords, search impressions, crawl diagnostics, and indexing structures.</p>
         </div>
-        <div className="flex items-center gap-2 text-xs font-bold bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-emerald-400">
-          <ShieldCheck className="w-4 h-4" /> SEO Health Score: 98/100
+        
+        <div className="flex items-center gap-3">
+          <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest border ${
+            seoData.live 
+              ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400 animate-pulse" 
+              : "bg-amber-500/10 border-amber-500/20 text-amber-400"
+          }`}>
+            <span className={`w-1.5 h-1.5 rounded-full ${seoData.live ? "bg-emerald-500" : "bg-amber-500"}`} />
+            {seoData.live ? "GSC Live API Connected" : "GSC Simulation Engine Active"}
+          </span>
+
+          <button 
+            onClick={loadSEOMetrics}
+            disabled={loading}
+            className="px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all disabled:opacity-50"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} /> Sync GSC API
+          </button>
         </div>
       </section>
 
       {/* GSC Key Indicators */}
       <section className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {[
-          { label: "Organic Search Clicks", value: "2,410", desc: "Total organic impressions", trend: "+24.3%", up: true, color: "text-blue-500" },
-          { label: "Search Impressions", value: "84,320", desc: "Creator search visibility", trend: "+19.8%", up: true, color: "text-purple-500" },
-          { label: "Average Click-Through (CTR)", value: "2.8%", desc: "Conversion click ratio", trend: "+0.4%", up: true, color: "text-emerald-500" },
-          { label: "Average Search Position", value: "14.2", desc: "SERP ranking tier", trend: "-1.2", up: true, color: "text-amber-500" }
+          { label: "Organic Search Clicks", value: seoData.clicks.toLocaleString(), desc: "Total organic impressions", trend: "+24.3%", color: "text-blue-500" },
+          { label: "Search Impressions", value: seoData.impressions.toLocaleString(), desc: "Creator search visibility", trend: "+19.8%", color: "text-purple-500" },
+          { label: "Average Click-Through (CTR)", value: seoData.ctr, desc: "Conversion click ratio", trend: "+0.4%", color: "text-emerald-500" },
+          { label: "Average Search Position", value: seoData.position, desc: "SERP ranking tier", trend: "-1.2", color: "text-amber-500" }
         ].map((card, idx) => (
           <div key={idx} className="p-6 rounded-2xl glass-card border-white/5 flex flex-col justify-between space-y-4 hover:border-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.01)] transition-all">
             <div className="flex justify-between items-start">
               <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">{card.label}</span>
-              <span className={`inline-flex items-center gap-0.5 text-[10px] font-bold text-emerald-500`}>
+              <span className="inline-flex items-center gap-0.5 text-[10px] font-bold text-emerald-500">
                 <ArrowUpRight className="w-3.5 h-3.5" />
                 {card.trend}
               </span>
@@ -140,16 +200,11 @@ export default function SEOCommandPage() {
           </div>
 
           <div className="space-y-4 pt-2">
-            {[
-              { keyword: "youtube title analyzer", pos: "#1.2", trend: "+0.4", volume: "1,800/mo" },
-              { keyword: "creator telemetry metrics", pos: "#2.4", trend: "+1.1", volume: "840/mo" },
-              { keyword: "algopilot decision tool", pos: "#3.1", trend: "+0.8", volume: "1,200/mo" },
-              { keyword: "thumbnail predictor ai", pos: "#4.8", trend: "+0.2", volume: "450/mo" }
-            ].map((kw, i) => (
+            {seoData.keywords.map((kw, i) => (
               <div key={i} className="flex justify-between items-center p-3.5 rounded-xl bg-white/[0.01] border border-white/5">
                 <div>
                   <div className="text-xs font-semibold text-white">{kw.keyword}</div>
-                  <div className="text-[9px] text-zinc-500 mt-0.5 font-mono">{kw.volume} Search Volume</div>
+                  <div className="text-[9px] text-zinc-500 mt-0.5 font-mono">{kw.volume}</div>
                 </div>
                 <div className="text-right">
                   <div className="text-xs font-bold text-emerald-400">{kw.pos}</div>
