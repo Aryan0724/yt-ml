@@ -9,8 +9,8 @@ const smtpHost = process.env.SMTP_HOST || ""
 const smtpPort = parseInt(process.env.SMTP_PORT || "587")
 const smtpUser = process.env.SMTP_USER || ""
 const smtpPassword = process.env.SMTP_PASSWORD || ""
-const fromEmail = process.env.MAIL_FROM || "onboarding@algopilot.ai"
-const adminEmail = process.env.ADMIN_EMAIL || "admin@algopilot.ai"
+const fromEmail = process.env.MAIL_FROM || "contact@integralgroups.in"
+const adminEmail = process.env.ADMIN_EMAIL || "aryantiwari@integralgroups.in"
 
 /**
  * Sends a premium styled email using either Resend or Nodemailer
