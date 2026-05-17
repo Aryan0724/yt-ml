@@ -316,17 +316,31 @@ export default function CMSDashboard() {
   }, [editorContent, seoKeyword, editorTitle, seoDesc, seoCanonical, keywordDensity])
 
   // Authentication Gate Trigger
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoginError(null)
 
-    if (passcode === "ap_seo_2026") {
-      setIsAuthenticated(true)
-      localStorage.setItem("ap_cms_token", "ap_authorized")
-      localStorage.setItem("ap_cms_role", userRole)
-      localStorage.setItem("ap_cms_email", userEmail || "admin@integralgroups.in")
-    } else {
-      setLoginError("Invalid enterprise passcode token. Please recheck security parameters.")
+    try {
+      const response = await fetch("/api/cms/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: userEmail, passcode })
+      })
+
+      const payload = await response.json()
+
+      if (payload.status === "success") {
+        setIsAuthenticated(true)
+        setUserRole(payload.role)
+        localStorage.setItem("ap_cms_token", "ap_authorized")
+        localStorage.setItem("ap_cms_role", payload.role)
+        localStorage.setItem("ap_cms_email", userEmail.trim().toLowerCase())
+      } else {
+        setLoginError(payload.message || "Invalid enterprise security token.")
+      }
+    } catch (err) {
+      console.error("Auth validation failed:", err)
+      setLoginError("Failed to communicate with credentials validator. Please verify database connectivity.")
     }
   }
 
@@ -547,25 +561,7 @@ export default function CMSDashboard() {
                   />
                 </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">Select Access Role</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {["Super Admin", "Editor", "Writer", "SEO Manager"].map((role) => (
-                      <button
-                        key={role}
-                        type="button"
-                        onClick={() => setUserRole(role as CMSRole)}
-                        className={`py-2 px-3 rounded-lg text-[10px] font-bold border transition-all uppercase tracking-wider ${
-                          userRole === role
-                            ? "bg-white text-black border-white"
-                            : "bg-white/[0.01] border-white/5 text-zinc-500 hover:text-white"
-                        }`}
-                      >
-                        {role}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+
 
                 {loginError && (
                   <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-500 text-xs font-medium flex items-center gap-2">
