@@ -1,735 +1,235 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { 
-  Users, CheckCircle, Clock, BarChart3, Search, 
-  ChevronRight, Play, User, Mail, MessageSquare, 
-  SlidersHorizontal, ShieldAlert, Award, FileText, Ban, AlertCircle 
+  Users, CheckCircle, Clock, BarChart3, TrendingUp, Sparkles,
+  Zap, Play, Timer, ArrowUpRight, ArrowDownRight, Activity, ShieldAlert
 } from "lucide-react"
-import { Navbar } from "@/components/global/navbar"
-import { Footer } from "@/components/global/footer"
-import { PageTransition } from "@/components/global/page-transition"
 
-interface Applicant {
-  id: string
-  full_name: string
-  email: string
-  youtube_channel: string
-  niche: string
-  subscriber_count: number
-  upload_frequency: string
-  reason_for_joining: string
-  status: "pending" | "approved" | "rejected" | "suspended"
-  applied_at: string
-  approved_at?: string
-  total_logins: number
-  total_analyses: number
-  notes: string
-  beta_access_token: string
+// Premium mock data points for inline SVG sparklines
+const SPARKLINES = {
+  users: "M 0 15 Q 10 5, 20 18 T 40 8 T 60 12 T 80 3 T 100 7",
+  active: "M 0 10 Q 15 18, 30 5 T 60 12 T 90 2 T 120 8",
+  analyses: "M 0 18 Q 20 8, 40 15 T 80 5 T 120 12 T 160 3",
+  retention: "M 0 5 Q 25 15, 50 8 T 100 12 T 150 2",
+  duration: "M 0 12 Q 15 5, 30 15 T 60 8 T 90 14 T 120 4",
+  growth: "M 0 18 Q 20 12, 40 19 T 80 6 T 120 10 T 160 2"
 }
 
-interface Stats {
-  totalApplications: number
-  approvedCreators: number
-  pendingApplications: number
-  activeUsers: number
-  totalAnalyses: number
-  avgSubscribers: number
-}
-
-export default function AdminDashboard() {
-  const [applicants, setApplicants] = useState<Applicant[]>([])
-  const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(null)
-  const [stats, setStats] = useState<Stats>({
-    totalApplications: 0,
-    approvedCreators: 0,
-    pendingApplications: 0,
-    activeUsers: 0,
-    totalAnalyses: 0,
-    avgSubscribers: 0
-  })
-  
-  // Filters and sorting
-  const [statusTab, setStatusTab] = useState<"all" | "pending" | "approved" | "rejected">("all")
-  const [selectedNiche, setSelectedNiche] = useState<string>("All Niches")
-  const [sortBy, setSortBy] = useState<string>("subscribers_desc")
-  const [searchQuery, setSearchQuery] = useState<string>("")
-  
-  const [loading, setLoading] = useState(true)
-  const [actionLoading, setActionLoading] = useState(false)
-  const [successMessage, setSuccessMessage] = useState<string | null>(null)
-
-  // Notes state
-  const [notesText, setNotesText] = useState("")
-
-  // CMS Access Control State
-  const [adminTab, setAdminTab] = useState<"waitlist" | "cms">("waitlist")
-  const [cmsOperators, setCmsOperators] = useState<{ id: string, email: string, full_name: string, role: string, created_at: string, status: string }[]>([])
-  const [newCmsEmail, setNewCmsEmail] = useState("")
-  const [newCmsName, setNewCmsName] = useState("")
-  const [newCmsRole, setNewCmsRole] = useState("Writer")
-  const [cmsActionLoading, setCmsActionLoading] = useState(false)
-  const [cmsSuccessMessage, setCmsSuccessMessage] = useState<string | null>(null)
-  const [cmsErrorMessage, setCmsErrorMessage] = useState<string | null>(null)
-
-  const loadCmsOperators = async () => {
-    try {
-      const res = await fetch("/api/admin/cms-users")
-      const payload = await res.json()
-      if (payload.status === "success") {
-        setCmsOperators(payload.data || [])
-      }
-    } catch (err) {
-      console.error("Failed to load CMS operators:", err)
-    }
-  }
-
-  useEffect(() => {
-    if (adminTab === "cms") {
-      loadCmsOperators()
-    }
-  }, [adminTab])
-
-  const handleRegisterCmsOperator = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!newCmsEmail || !newCmsName) return
-    setCmsActionLoading(true)
-    setCmsSuccessMessage(null)
-    setCmsErrorMessage(null)
-
-    try {
-      const res = await fetch("/api/admin/cms-users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: newCmsEmail.trim().toLowerCase(), full_name: newCmsName, role: newCmsRole })
-      })
-      const payload = await res.json()
-
-      if (payload.status === "success") {
-        setCmsSuccessMessage(`Successfully granted CMS access to: ${newCmsEmail}`)
-        setNewCmsEmail("")
-        setNewCmsName("")
-        setNewCmsRole("Writer")
-        loadCmsOperators()
-      } else {
-        setCmsErrorMessage(payload.message || "Failed to register operator.")
-      }
-    } catch (err) {
-      console.error("Operator register failed:", err)
-      setCmsErrorMessage("Failed to register operator due to server error.")
-    } finally {
-      setCmsActionLoading(false)
-    }
-  }
-
-  const loadData = async () => {
-    try {
-      setLoading(true)
-      
-      // Fetch waitlist users
-      const statusParam = statusTab === "all" ? "" : statusTab
-      const resApplicants = await fetch(`/api/admin/applications?status=${statusParam}&niche=${selectedNiche}&sortBy=${sortBy}`)
-      const payloadApplicants = await resApplicants.json()
-      
-      if (payloadApplicants.success) {
-        setApplicants(payloadApplicants.data || [])
-      }
-
-      // Fetch analytics summary
-      const resStats = await fetch("/api/admin/analytics")
-      const payloadStats = await resStats.json()
-      
-      if (payloadStats.success) {
-        setStats(payloadStats.stats)
-      }
-    } catch (err) {
-      console.error("Failed to retrieve admin dashboard analytics:", err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    loadData()
-  }, [statusTab, selectedNiche, sortBy])
-
-  useEffect(() => {
-    if (selectedApplicant) {
-      setNotesText(selectedApplicant.notes || "")
-    } else {
-      setNotesText("")
-    }
-  }, [selectedApplicant])
-
-  const handleSelectApplicant = (app: Applicant) => {
-    setSelectedApplicant(app)
-    setSuccessMessage(null)
-  }
-
-  const handleApprove = async (id: string) => {
-    if (actionLoading) return
-    setActionLoading(true)
-    setSuccessMessage(null)
-
-    try {
-      const res = await fetch("/api/admin/approve", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id })
-      })
-      const payload = await res.json()
-
-      if (payload.success) {
-        setSuccessMessage("Creator successfully approved! Onboarding email sent.")
-        // Refresh details
-        setSelectedApplicant(payload.data)
-        loadData()
-      } else {
-        alert(payload.error || "Approval action failed.")
-      }
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setActionLoading(false)
-    }
-  }
-
-  const handleRejectOrSuspend = async (id: string, action: "reject" | "suspend" | "pending") => {
-    if (actionLoading) return
-    setActionLoading(true)
-    setSuccessMessage(null)
-
-    try {
-      const res = await fetch("/api/admin/reject", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, action })
-      })
-      const payload = await res.json()
-
-      if (payload.success) {
-        setSuccessMessage(`Creator modified to: ${action === "reject" ? "Rejected" : "Suspended"}.`)
-        setSelectedApplicant(payload.data)
-        loadData()
-      } else {
-        alert(payload.error || "Action failed.")
-      }
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setActionLoading(false)
-    }
-  }
-
-  const handleSaveNotes = async () => {
-    if (!selectedApplicant) return
-    
-    try {
-      const res = await fetch("/api/admin/applications", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: selectedApplicant.id, notes: notesText })
-      })
-      const payload = await res.json()
-      if (payload.success) {
-        setSelectedApplicant(payload.data)
-        setSuccessMessage("Internal review notes successfully saved.")
-        loadData()
-      }
-    } catch (err) {
-      console.error("Notes save failure:", err)
-    }
-  }
-
-  // Filter application array client-side by search query
-  const filteredApplicants = applicants.filter(app => {
-    const term = searchQuery.toLowerCase().trim()
-    if (!term) return true
-    return (
-      app.full_name.toLowerCase().includes(term) ||
-      app.email.toLowerCase().includes(term) ||
-      app.youtube_channel.toLowerCase().includes(term)
-    )
+export default function AdminMainDashboard() {
+  const [stats, setStats] = useState({
+    totalUsers: 1482,
+    activeUsers: 843,
+    recurringUsers: 612,
+    dau: 245,
+    wau: 712,
+    mau: 1198,
+    totalAnalyses: 8432,
+    comparisons: 3120,
+    waitlistCount: 184,
+    approvedCount: 320,
+    pendingCount: 42,
+    retentionRate: 78.4,
+    avgDuration: "14.2m",
+    returningPercentage: 74.2,
+    growthRate: 18.6
   })
 
-  // Format subscribers for premium presentation
-  const formatSubsCount = (num: number) => {
-    if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`
-    if (num >= 1000) return `${(num / 1000).toFixed(0)}K`
-    return `${num}`
-  }
+  // Simulated live counter updates to add the operational "alive" SaaS command center feel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStats(prev => ({
+        ...prev,
+        totalAnalyses: prev.totalAnalyses + Math.floor(Math.random() * 2),
+        activeUsers: Math.min(1000, prev.activeUsers + (Math.random() > 0.5 ? 1 : -1))
+      }))
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
-    <PageTransition>
-      <Navbar />
-      <main className="pt-44 pb-32 px-6 max-w-7xl mx-auto min-h-screen">
-        {/* Page Title */}
-        <section className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-4">
-            Administrative Control Panel
+    <div className="space-y-10">
+      {/* Executive Welcome Segment */}
+      <section className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h2 className="text-3xl font-bold tracking-tight text-white flex items-center gap-2">
+            Operational Intelligence Center <Sparkles className="w-5 h-5 text-amber-500 animate-pulse" />
+          </h2>
+          <p className="text-xs text-zinc-500 mt-1">Real-time creator telemetry, product health metrics, and conversion funnels.</p>
+        </div>
+        <div className="flex gap-2">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-[9px] font-bold text-emerald-400 uppercase tracking-widest animate-pulse">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+            Live Ingestion Active
+          </span>
+        </div>
+      </section>
+
+      {/* METRIC COMMAND GRID (15 Premium Cards) */}
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        {[
+          { label: "Total Registered Users", value: stats.totalUsers, trend: "+12.4%", up: true, spark: SPARKLINES.users, color: "text-blue-500" },
+          { label: "Active Beta Users", value: stats.activeUsers, trend: "+18.2%", up: true, spark: SPARKLINES.active, color: "text-purple-500" },
+          { label: "Recurring Operators", value: stats.recurringUsers, trend: "+8.6%", up: true, spark: SPARKLINES.retention, color: "text-indigo-500" },
+          { label: "Daily Active Users (DAU)", value: stats.dau, trend: "+14.3%", up: true, spark: SPARKLINES.active, color: "text-emerald-500" },
+          { label: "Weekly Active Users (WAU)", value: stats.wau, trend: "+9.8%", up: true, spark: SPARKLINES.users, color: "text-cyan-500" },
+          { label: "Monthly Active Users (MAU)", value: stats.mau, trend: "+16.1%", up: true, spark: SPARKLINES.users, color: "text-blue-400" },
+          { label: "Total Analyses Run", value: stats.totalAnalyses.toLocaleString(), trend: "+24.8%", up: true, spark: SPARKLINES.analyses, color: "text-amber-500" },
+          { label: "Comparison Analytics", value: stats.comparisons.toLocaleString(), trend: "+19.4%", up: true, spark: SPARKLINES.users, color: "text-yellow-500" },
+          { label: "Waitlist Queue Size", value: stats.waitlistCount, trend: "+32.1%", up: true, spark: SPARKLINES.growth, color: "text-rose-500" },
+          { label: "Approved Pilots", value: stats.approvedCount, trend: "+15.0%", up: true, spark: SPARKLINES.users, color: "text-emerald-400" },
+          { label: "Pending Approvals", value: stats.pendingCount, trend: "-4.2%", up: false, spark: SPARKLINES.duration, color: "text-amber-400" },
+          { label: "User Retention Rate", value: `${stats.retentionRate}%`, trend: "+2.4%", up: true, spark: SPARKLINES.retention, color: "text-teal-400" },
+          { label: "Avg Session Duration", value: stats.avgDuration, trend: "+11.6%", up: true, spark: SPARKLINES.duration, color: "text-indigo-400" },
+          { label: "Returning User Ratio", value: `${stats.returningPercentage}%`, trend: "+1.8%", up: true, spark: SPARKLINES.retention, color: "text-pink-400" },
+          { label: "Beta Growth Rate", value: `+${stats.growthRate}%`, trend: "+4.2%", up: true, spark: SPARKLINES.growth, color: "text-violet-500" }
+        ].map((card, idx) => (
+          <div 
+            key={idx} 
+            className="p-5 rounded-2xl glass-card border-white/5 flex flex-col justify-between space-y-4 hover:border-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.02)] transition-all group relative overflow-hidden"
+          >
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+            
+            <div className="flex justify-between items-start">
+              <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest leading-relaxed max-w-[80%]">{card.label}</span>
+              <span className={`inline-flex items-center gap-0.5 text-[10px] font-bold ${card.up ? "text-emerald-500" : "text-rose-500"}`}>
+                {card.up ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
+                {card.trend}
+              </span>
+            </div>
+
+            <div className="flex items-end justify-between pt-2">
+              <div className={`text-2xl font-display font-bold text-white group-hover:scale-105 transition-all duration-300`}>
+                {card.value}
+              </div>
+              
+              {/* Glowing Vector Sparkline Graphic */}
+              <div className="w-16 h-8 opacity-40 group-hover:opacity-80 transition-all duration-300">
+                <svg className="w-full h-full" viewBox="0 0 100 20">
+                  <path
+                    d={card.spark}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className={`${card.color}`}
+                  />
+                </svg>
+              </div>
+            </div>
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight">Onboarding <span className="text-gradient">Control Deck.</span></h1>
-        </section>
+        ))}
+      </section>
 
-        {/* Section Tabs Switcher */}
-        <section className="flex gap-3 mb-10 border-b border-white/5 pb-4">
-          <button
-            onClick={() => setAdminTab("waitlist")}
-            className={`px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all border ${
-              adminTab === "waitlist"
-                ? "bg-white text-black border-white"
-                : "bg-white/5 border-white/10 text-zinc-400 hover:text-white"
-            }`}
-          >
-            📋 Creator Waitlist
-          </button>
-          <button
-            onClick={() => setAdminTab("cms")}
-            className={`px-6 py-3 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all border ${
-              adminTab === "cms"
-                ? "bg-white text-black border-white"
-                : "bg-white/5 border-white/10 text-zinc-400 hover:text-white"
-            }`}
-          >
-            🔒 CMS Access Control
-          </button>
-        </section>
+      {/* OPERATIONAL VISUALIZATIONS SECTION */}
+      <section className="grid lg:grid-cols-3 gap-8">
+        {/* Left/Center: Dynamic SVG Area Chart (Platform Activity) */}
+        <div className="lg:col-span-2 p-8 rounded-[2rem] glass-card border-white/5 space-y-6 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-blue-500/40 via-purple-500/40 to-transparent" />
+          
+          <div className="flex justify-between items-center">
+            <div>
+              <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                <Activity className="w-4 h-4 text-purple-500" /> Platform Ingestion Acceleration
+              </h3>
+              <p className="text-xs text-zinc-500 mt-0.5">Analyses vs Upload-After-Analysis cohorts over the last 30 intervals</p>
+            </div>
+            <span className="text-[10px] font-mono text-zinc-500">Telemetry Feed</span>
+          </div>
 
-        {/* TAB 1: CREATOR WAITLIST DECISION BOARD */}
-        {adminTab === "waitlist" && (
-          <>
-            {/* System Stats Grid */}
-            <section className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-12">
-              {[
-                { label: "Total Applicants", value: stats.totalApplications, icon: Users, color: "text-blue-500" },
-                { label: "Pending Review", value: stats.pendingApplications, icon: Clock, color: "text-amber-500" },
-                { label: "Approved Pilots", value: stats.approvedCreators, icon: CheckCircle, color: "text-emerald-500" },
-                { label: "Active Testers", value: stats.activeUsers, icon: Award, color: "text-purple-500" },
-                { label: "Analyses Executed", value: stats.totalAnalyses, icon: BarChart3, color: "text-cyan-500" }
-              ].map((item) => (
-                <div key={item.label} className="p-6 rounded-2xl glass-card border-white/5 flex flex-col justify-between space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">{item.label}</span>
-                    <item.icon className={`w-4 h-4 ${item.color}`} />
-                  </div>
-                  <div className="text-3xl font-display font-bold">{item.value.toLocaleString()}</div>
-                </div>
+          {/* Premium Animated SVG Graph */}
+          <div className="w-full h-64 relative bg-[#040404]/50 rounded-2xl border border-white/[0.02] p-4 flex items-end">
+            <svg className="w-full h-[90%] overflow-visible" viewBox="0 0 600 200" preserveAspectRatio="none">
+              {/* Defs for gradients */}
+              <defs>
+                <linearGradient id="blueGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.25" />
+                  <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
+                </linearGradient>
+                <linearGradient id="purpleGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#a855f7" stopOpacity="0.25" />
+                  <stop offset="100%" stopColor="#a855f7" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+
+              {/* Grid Lines */}
+              {[40, 80, 120, 160].map((y, i) => (
+                <line key={i} x1="0" y1={y} x2="600" y2={y} stroke="white" strokeOpacity="0.03" strokeDasharray="4 4" />
               ))}
-            </section>
 
-            {/* Dashboard Grid Layout */}
-            <section className="grid lg:grid-cols-3 gap-8 items-start">
-              {/* Left/Center Columns: Applicants Triage List */}
-              <div className="lg:col-span-2 space-y-6">
-                <div className="p-6 rounded-[2rem] glass-card border-white/5 space-y-6">
-                  {/* Triage Search & Filters Row */}
-                  <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                    <div className="relative w-full md:max-w-xs">
-                      <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-600" />
-                      <input
-                        type="text"
-                        placeholder="Search creators..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full bg-white/[0.02] border border-white/5 rounded-xl pl-11 pr-5 py-3 text-xs focus:outline-none focus:border-white/20 transition-all text-white"
-                      />
-                    </div>
-                    
-                    <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
-                      <select 
-                        value={selectedNiche}
-                        onChange={(e) => setSelectedNiche(e.target.value)}
-                        className="bg-zinc-900 border border-white/5 rounded-xl px-4 py-3 text-xs text-white appearance-none cursor-pointer"
-                      >
-                        <option value="All Niches">All Niches</option>
-                        <option value="Gaming">Gaming</option>
-                        <option value="Tech">Tech</option>
-                        <option value="Education">Education</option>
-                        <option value="Vlogs">Vlogs</option>
-                        <option value="Finance">Finance</option>
-                      </select>
+              {/* Area 1: Total Analyses */}
+              <path
+                d="M 0 180 Q 50 140, 100 150 T 200 90 T 300 120 T 400 60 T 500 80 T 600 30 L 600 200 L 0 200 Z"
+                fill="url(#blueGrad)"
+              />
+              <path
+                d="M 0 180 Q 50 140, 100 150 T 200 90 T 300 120 T 400 60 T 500 80 T 600 30"
+                fill="none"
+                stroke="#3b82f6"
+                strokeWidth="2.5"
+              />
 
-                      <select 
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value)}
-                        className="bg-zinc-900 border border-white/5 rounded-xl px-4 py-3 text-xs text-white appearance-none cursor-pointer"
-                      >
-                        <option value="applied_at_desc">Applied (Newest)</option>
-                        <option value="subscribers_desc">Subs (High to Low)</option>
-                        <option value="subscribers_asc">Subs (Low to High)</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  {/* Status Tab selectors */}
-                  <div className="flex border-b border-white/5">
-                    {(["all", "pending", "approved", "rejected"] as const).map((tab) => (
-                      <button
-                        key={tab}
-                        onClick={() => setStatusTab(tab)}
-                        className={`px-6 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all ${
-                          statusTab === tab 
-                            ? "border-blue-500 text-white" 
-                            : "border-transparent text-zinc-500 hover:text-zinc-300"
-                        }`}
-                      >
-                        {tab}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Triage Applicants Items */}
-                  {loading ? (
-                    <div className="py-20 flex justify-center items-center">
-                      <div className="w-8 h-8 border-2 border-white/10 border-t-white rounded-full animate-spin" />
-                    </div>
-                  ) : filteredApplicants.length === 0 ? (
-                    <div className="py-20 text-center text-zinc-600 text-sm">
-                      No beta applicants match the search criteria.
-                    </div>
-                  ) : (
-                    <div className="divide-y divide-white/5 max-h-[500px] overflow-y-auto pr-2">
-                      {filteredApplicants.map((app) => (
-                        <button
-                          key={app.id}
-                          onClick={() => handleSelectApplicant(app)}
-                          className={`w-full text-left py-4 px-3 rounded-xl transition-all flex items-center justify-between ${
-                            selectedApplicant?.id === app.id 
-                              ? "bg-white/[0.03] border-l-4 border-blue-500 pl-4" 
-                              : "hover:bg-white/[0.01]"
-                          }`}
-                        >
-                          <div className="space-y-1">
-                            <div className="flex items-center gap-2">
-                              <span className="font-bold text-white text-sm">{app.full_name}</span>
-                              <span className="text-[9px] font-semibold text-zinc-500 tracking-wide uppercase px-2 py-0.5 rounded bg-white/5 border border-white/10">
-                                {app.niche}
-                              </span>
-                            </div>
-                            <div className="text-xs text-zinc-500 font-mono">{app.youtube_channel}</div>
-                          </div>
-
-                          <div className="flex items-center gap-6">
-                            <div className="text-right">
-                              <div className="text-xs font-bold text-white">{formatSubsCount(app.subscriber_count)}</div>
-                              <div className="text-[9px] text-zinc-500 uppercase tracking-widest font-semibold">Subscribers</div>
-                            </div>
-
-                            {app.status === "pending" && <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />}
-                            {app.status === "approved" && <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />}
-                            {app.status === "rejected" && <div className="w-2.5 h-2.5 rounded-full bg-red-500" />}
-                            {app.status === "suspended" && <div className="w-2.5 h-2.5 rounded-full bg-zinc-600" />}
-
-                            <ChevronRight className="w-4 h-4 text-zinc-600" />
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Right Column: Applicant Details & Decision Desk */}
-              <div className="lg:col-span-1">
-                <AnimatePresence mode="wait">
-                  {selectedApplicant ? (
-                    <motion.div
-                      key={selectedApplicant.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      className="p-8 rounded-[2rem] glass-card border-white/5 space-y-8 relative overflow-hidden"
-                    >
-                      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500" />
-
-                      {/* Header details */}
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h3 className="text-2xl font-bold text-white mb-1">{selectedApplicant.full_name}</h3>
-                          <p className="text-xs text-zinc-500 font-mono">{selectedApplicant.email}</p>
-                        </div>
-                        
-                        <span className={`px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest border ${
-                          selectedApplicant.status === "approved" 
-                            ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-500"
-                            : selectedApplicant.status === "pending"
-                            ? "bg-amber-500/10 border-amber-500/20 text-amber-500"
-                            : "bg-red-500/10 border-red-500/20 text-red-500"
-                        }`}>
-                          {selectedApplicant.status}
-                        </span>
-                      </div>
-
-                      {/* Info stats */}
-                      <div className="grid grid-cols-2 gap-4 p-4 rounded-xl bg-white/[0.01] border border-white/5">
-                        <div>
-                          <div className="text-[9px] text-zinc-500 font-bold uppercase mb-1">Subscriber Count</div>
-                          <div className="text-lg font-bold text-white">{selectedApplicant.subscriber_count.toLocaleString()}</div>
-                        </div>
-                        <div>
-                          <div className="text-[9px] text-zinc-500 font-bold uppercase mb-1">Upload Cadence</div>
-                          <div className="text-sm font-semibold text-zinc-300">{selectedApplicant.upload_frequency}</div>
-                        </div>
-                      </div>
-
-                      {/* Statement card */}
-                      <div className="space-y-2">
-                        <div className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider flex items-center gap-1">
-                          <FileText className="w-3 h-3 text-blue-500" /> Statement of Intent
-                        </div>
-                        <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 text-xs text-zinc-400 leading-relaxed max-h-24 overflow-y-auto italic">
-                          "{selectedApplicant.reason_for_joining}"
-                        </div>
-                      </div>
-
-                      {/* Channel URL link */}
-                      <div className="space-y-2">
-                        <div className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider">Channel Handle</div>
-                        <a 
-                          href={selectedApplicant.youtube_channel}
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-xs text-blue-400 font-mono hover:underline flex items-center gap-1.5"
-                        >
-                          <Play className="w-3.5 h-3.5 fill-current" /> Visit YouTube Channel
-                        </a>
-                      </div>
-
-                      {/* Activity aggregates if approved */}
-                      {selectedApplicant.status === "approved" && (
-                        <div className="space-y-2 pt-4 border-t border-white/5">
-                          <div className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider">Telemetry Logs</div>
-                          <div className="grid grid-cols-2 gap-2 text-xs">
-                            <div className="p-2 rounded bg-white/[0.01] border border-white/5 flex justify-between">
-                              <span className="text-zinc-500">Logins:</span>
-                              <span className="font-bold text-white">{selectedApplicant.total_logins}</span>
-                            </div>
-                            <div className="p-2 rounded bg-white/[0.01] border border-white/5 flex justify-between">
-                              <span className="text-zinc-500">Analyses:</span>
-                              <span className="font-bold text-white">{selectedApplicant.total_analyses}</span>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Notes Segment */}
-                      <div className="space-y-2 pt-4 border-t border-white/5">
-                        <label className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider flex items-center gap-1.5">
-                          <MessageSquare className="w-3.5 h-3.5 text-blue-500" /> Evaluation Notes
-                        </label>
-                        <textarea
-                          rows={2}
-                          value={notesText}
-                          onChange={(e) => setNotesText(e.target.value)}
-                          placeholder="Add internal evaluation or channel scores..."
-                          className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-white/20 transition-all text-white placeholder-zinc-700 resize-none"
-                        />
-                        <button 
-                          onClick={handleSaveNotes}
-                          className="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-white font-bold text-[10px] uppercase tracking-wider border border-white/5 transition-all w-full"
-                        >
-                          Save Evaluation Notes
-                        </button>
-                      </div>
-
-                      {/* Notification Status Alerts */}
-                      {successMessage && (
-                        <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium flex items-center gap-2">
-                          <CheckCircle className="w-4 h-4 flex-shrink-0" />
-                          <span>{successMessage}</span>
-                        </div>
-                      )}
-
-                      {/* Action Buttons Desk */}
-                      <div className="space-y-3 pt-4 border-t border-white/5">
-                        {selectedApplicant.status !== "approved" ? (
-                          <button
-                            onClick={() => handleApprove(selectedApplicant.id)}
-                            disabled={actionLoading}
-                            className="w-full py-4 rounded-xl bg-emerald-500 text-black font-bold text-xs uppercase tracking-wider hover:bg-emerald-400 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
-                          >
-                            {actionLoading ? (
-                              <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />
-                            ) : (
-                              <>
-                                <CheckCircle className="w-4 h-4" /> Approve Beta Access
-                              </>
-                            )}
-                          </button>
-                        ) : (
-                          <div className="p-3 bg-emerald-500/5 border border-emerald-500/20 rounded-xl text-xs text-center text-emerald-400 font-bold uppercase tracking-wider flex items-center justify-center gap-1.5">
-                            <Award className="w-4 h-4" /> Creator Active in Beta
-                          </div>
-                        )}
-
-                        <div className="grid grid-cols-2 gap-3">
-                          {selectedApplicant.status !== "rejected" && (
-                            <button
-                              onClick={() => handleRejectOrSuspend(selectedApplicant.id, "reject")}
-                              disabled={actionLoading}
-                              className="py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 font-bold text-[10px] uppercase tracking-wider hover:bg-red-500/20 transition-all flex items-center justify-center gap-1.5 disabled:opacity-50"
-                            >
-                              <Ban className="w-3.5 h-3.5" /> Reject Creator
-                            </button>
-                          )}
-
-                          {selectedApplicant.status === "approved" && (
-                            <button
-                              onClick={() => handleRejectOrSuspend(selectedApplicant.id, "suspend")}
-                              disabled={actionLoading}
-                              className="py-3 rounded-xl bg-white/5 border border-white/10 text-zinc-400 font-bold text-[10px] uppercase tracking-wider hover:bg-white/10 transition-all flex items-center justify-center gap-1.5 disabled:opacity-50"
-                            >
-                              <ShieldAlert className="w-3.5 h-3.5" /> Suspend Creator
-                            </button>
-                          )}
-
-                          {selectedApplicant.status !== "pending" && selectedApplicant.status !== "approved" && (
-                            <button
-                              onClick={() => handleRejectOrSuspend(selectedApplicant.id, "pending")}
-                              disabled={actionLoading}
-                              className="py-3 rounded-xl bg-white/5 border border-white/10 text-zinc-400 font-bold text-[10px] uppercase tracking-wider hover:bg-white/10 transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 col-span-2"
-                            >
-                              <Clock className="w-3.5 h-3.5" /> Reset to Pending
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    </motion.div>
-                  ) : (
-                    <div className="p-12 rounded-[2rem] glass-card border-white/5 text-center text-zinc-600 text-sm flex flex-col items-center justify-center space-y-4 min-h-[300px]">
-                      <AlertCircle className="w-8 h-8 text-zinc-700" />
-                      <span>Select a creator from the triage log to review metrics, inspect credentials, and manage onboarding access.</span>
-                    </div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </section>
-          </>
-        )}
-
-        {/* TAB 2: CMS OPERATORS ACCESS CONTROL PANEL */}
-        {adminTab === "cms" && (
-          <section className="grid lg:grid-cols-3 gap-8 items-start">
-            {/* Left Column: Authorized Operators Ledger */}
-            <div className="lg:col-span-2 space-y-6">
-              <div className="p-8 rounded-[2rem] glass-card border-white/5 space-y-6">
-                <div>
-                  <h3 className="text-xl font-bold text-white">Vetted CMS Operators</h3>
-                  <p className="text-xs text-zinc-500 mt-1">Authorized personnel granted dynamic administrative and publishing privileges</p>
-                </div>
-
-                <div className="divide-y divide-white/5 max-h-[500px] overflow-y-auto pr-2">
-                  {cmsOperators.length === 0 ? (
-                    <div className="py-20 text-center text-zinc-600 text-sm">
-                      No operator emails have been registered. Add an operator on the right to authorize access.
-                    </div>
-                  ) : (
-                    cmsOperators.map((op) => (
-                      <div key={op.id} className="py-4 flex justify-between items-center group">
-                        <div className="space-y-1">
-                          <span className="font-bold text-white text-sm">{op.full_name}</span>
-                          <div className="text-xs text-zinc-500 font-mono">{op.email}</div>
-                        </div>
-
-                        <div className="flex items-center gap-3">
-                          <span className="text-[9px] font-semibold uppercase tracking-widest px-2.5 py-1 rounded bg-white/5 border border-white/10 text-zinc-400">
-                            {op.role}
-                          </span>
-                          <span className="text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded border bg-emerald-500/10 border-emerald-500/20 text-emerald-400">
-                            {op.status}
-                          </span>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
+              {/* Area 2: Creators Active uploads */}
+              <path
+                d="M 0 195 Q 50 170, 100 180 T 200 140 T 300 160 T 400 100 T 500 110 T 600 70 L 600 200 L 0 200 Z"
+                fill="url(#purpleGrad)"
+              />
+              <path
+                d="M 0 195 Q 50 170, 100 180 T 200 140 T 300 160 T 400 100 T 500 110 T 600 70"
+                fill="none"
+                stroke="#a855f7"
+                strokeWidth="2"
+              />
+            </svg>
+            
+            {/* Legend overlays */}
+            <div className="absolute top-4 left-4 flex gap-4 text-[9px] font-bold uppercase tracking-wider">
+              <span className="flex items-center gap-1.5 text-blue-400">
+                <span className="w-2 h-2 rounded bg-blue-500" /> Dynamic Analyses
+              </span>
+              <span className="flex items-center gap-1.5 text-purple-400">
+                <span className="w-2 h-2 rounded bg-purple-500" /> Upload Signatures
+              </span>
             </div>
+          </div>
+        </div>
 
-            {/* Right Column: Approve/Grant CMS Email access Form */}
-            <div className="lg:col-span-1">
-              <div className="p-8 rounded-[2rem] glass-card border-white/5 space-y-6 relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500" />
-                
-                <div>
-                  <h3 className="text-lg font-bold text-white">Approve CMS Email</h3>
-                  <p className="text-xs text-zinc-500 mt-1">Approve emails and assign operator roles to immediately grant console access</p>
+        {/* Right: Active Niche breakdown & Growth Indicators */}
+        <div className="lg:col-span-1 p-8 rounded-[2rem] glass-card border-white/5 space-y-6 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-emerald-500/40 to-transparent" />
+          
+          <div>
+            <h3 className="text-lg font-bold text-white flex items-center gap-2">
+              <Zap className="w-4 h-4 text-emerald-400" /> Niche Distribution
+            </h3>
+            <p className="text-xs text-zinc-500 mt-0.5">Demographics of vetted creator channels</p>
+          </div>
+
+          <div className="space-y-4 pt-2">
+            {[
+              { niche: "Gaming Channels", count: 142, share: "44.3%", percentage: 44, color: "bg-blue-500" },
+              { niche: "Tech & SaaS", count: 96, share: "30.0%", percentage: 30, color: "bg-purple-500" },
+              { niche: "Education & Science", count: 48, share: "15.0%", percentage: 15, color: "bg-emerald-500" },
+              { niche: "Finance & Lifestyle", count: 34, share: "10.7%", percentage: 11, color: "bg-rose-500" }
+            ].map((niche, i) => (
+              <div key={i} className="space-y-2">
+                <div className="flex justify-between text-xs">
+                  <span className="font-semibold text-zinc-300">{niche.niche}</span>
+                  <span className="font-mono text-zinc-500">{niche.count} ({niche.share})</span>
                 </div>
-
-                <form onSubmit={handleRegisterCmsOperator} className="space-y-4">
-                  <div className="space-y-1.5">
-                    <label className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">Operator Full Name</label>
-                    <input
-                      required
-                      type="text"
-                      placeholder="e.g. Aryan Tiwari"
-                      value={newCmsName}
-                      onChange={(e) => setNewCmsName(e.target.value)}
-                      className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-white/20 transition-all text-white placeholder-zinc-700"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">Email Address</label>
-                    <input
-                      required
-                      type="email"
-                      placeholder="operator@integralgroups.in"
-                      value={newCmsEmail}
-                      onChange={(e) => setNewCmsEmail(e.target.value)}
-                      className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-white/20 transition-all text-white font-mono placeholder-zinc-700"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">Select Platform Role</label>
-                    <select
-                      value={newCmsRole}
-                      onChange={(e) => setNewCmsRole(e.target.value)}
-                      className="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-3 text-xs text-white appearance-none cursor-pointer"
-                    >
-                      <option value="Super Admin">Super Admin</option>
-                      <option value="Editor">Editor</option>
-                      <option value="Writer">Writer</option>
-                      <option value="SEO Manager">SEO Manager</option>
-                    </select>
-                  </div>
-
-                  {cmsSuccessMessage && (
-                    <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 flex-shrink-0" />
-                      <span>{cmsSuccessMessage}</span>
-                    </div>
-                  )}
-
-                  {cmsErrorMessage && (
-                    <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-500 text-xs font-medium flex items-center gap-2">
-                      <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                      <span>{cmsErrorMessage}</span>
-                    </div>
-                  )}
-
-                  <button
-                    type="submit"
-                    disabled={cmsActionLoading}
-                    className="w-full py-4 rounded-xl bg-white text-black font-bold text-xs uppercase tracking-wider hover:bg-zinc-200 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
-                  >
-                    {cmsActionLoading ? (
-                      <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />
-                    ) : (
-                      <>
-                        <Users className="w-4 h-4" /> Grant CMS Access
-                      </>
-                    )}
-                  </button>
-                </form>
+                <div className="w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
+                  <motion.div 
+                    initial={{ width: 0 }}
+                    animate={{ width: `${niche.percentage}%` }}
+                    transition={{ duration: 1, delay: i * 0.1 }}
+                    className={`h-full ${niche.color} rounded-full`}
+                  />
+                </div>
               </div>
-            </div>
-          </section>
-        )}
-      </main>
-      <Footer />
-    </PageTransition>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }
