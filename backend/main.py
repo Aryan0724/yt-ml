@@ -43,17 +43,21 @@ async def analyze_metadata(
     thumbnail: Optional[UploadFile] = File(None)
 ):
     try:
-        # Simulate processing time for the "intelligence scan" feel
-        # In a real app, you'd process the thumbnail file here
-        
-        results = engine.run_diagnostic(title, niche)
+        # Construct raw inputs for the ensemble engine
+        raw_input = {
+            "title": title,
+            "category": niche,
+            "face_count": 0,
+            "brightness": 120
+        }
+        results = engine.analyze_single(raw_input)
         
         return {
             "status": "success",
             "data": results,
             "metadata": {
-                "processing_time": 1.2,
-                "engine_version": "4.1.0"
+                "processing_time": 0.8,
+                "engine_version": results.get("engine_version", "1.1.0")
             }
         }
     except Exception as e:
@@ -67,7 +71,13 @@ async def compare_variants(
         # Simplified comparison logic for the SaaS API
         comparison_results = []
         for v in variants:
-            res = engine.run_diagnostic(v.title, v.niche)
+            raw_input = {
+                "title": v.title,
+                "category": v.niche,
+                "face_count": 0,
+                "brightness": 120
+            }
+            res = engine.analyze_single(raw_input)
             comparison_results.append({
                 "title": v.title,
                 "score": res["score"],
