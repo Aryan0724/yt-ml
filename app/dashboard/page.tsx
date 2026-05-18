@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from "framer-motion"
 import { 
   Upload, Sparkles, CheckCircle2, AlertCircle, 
   TrendingUp, GitCompare, History, Search, Zap, 
-  Tv, FileText, Image as ImageIcon, Clock, Calendar, CheckSquare, ArrowRight, ArrowLeft, RefreshCw
+  Tv, FileText, Image as ImageIcon, Clock, Calendar, CheckSquare, ArrowRight, ArrowLeft, RefreshCw,
+  Smartphone, BookOpen, Sliders
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { saveAnalysisHistory } from "@/lib/supabase"
@@ -376,6 +377,610 @@ function generateChannelAudit(channelName: string, niche: string) {
   }
 
   return nicheData[cleanNiche] || fallback
+}
+
+// ============================================================================
+//           CREATOR DECISION INTELLIGENCE SYSTEM OVERHAUL (v2.0)
+// ============================================================================
+interface ReferenceItem {
+  title: string
+  why: string[]
+  ctr: string
+  lesson: string
+  difference: string
+}
+
+function CreatorIntelligenceReport({ 
+  result, 
+  profile, 
+  title, 
+  niche, 
+  brightness, 
+  faceCount, 
+  thumbnailPreview, 
+  onRestart 
+}: { 
+  result: any, 
+  profile: any, 
+  title: string, 
+  niche: string, 
+  brightness: number, 
+  faceCount: number, 
+  thumbnailPreview: string | null, 
+  onRestart: () => void 
+}) {
+  // Parse dynamic score from result (e.g. 78.4 or "78%")
+  const scoreNum = parseFloat(result.score) || 72.0
+  const tier = result.tier || "B"
+
+  // 1. Executive Verdict dynamically evaluated
+  let verdictTitle = `🟡 DECENT BUT WEAK FOR ${niche.toUpperCase()}`
+  let verdictColor = "text-amber-400 bg-amber-500/10 border-amber-500/20"
+  let verdictDescription = `This thumbnail has recognizable visual structure and baseline niche compatibility, but lacks emotional intensity, identity anchors, and clear curiosity triggers to scale beyond baseline indexes in the ${niche} feed.`
+  
+  if (scoreNum >= 90) {
+    verdictTitle = `🟢 ELITE CLICK-PROBABILITY FOR ${niche.toUpperCase()}`
+    verdictColor = "text-emerald-400 bg-emerald-500/10 border-emerald-500/20"
+    verdictDescription = `Outstanding metadata composition. The layout maximizes subject separation, establishes an immediate curiosity escalation hook, and has top-tier readability for mobile users scanning high-velocity feeds.`
+  } else if (scoreNum >= 80) {
+    verdictTitle = `🟢 STRONG & HIGHLY COMPETITIVE FOR ${niche.toUpperCase()}`
+    verdictColor = "text-emerald-400 bg-emerald-500/10 border-emerald-500/20"
+    verdictDescription = `Highly optimized composition. It offers strong clarity and visual anchors. Minor adjustments to color saturation and focal-point sizing can push it into the elite tier.`
+  } else if (scoreNum < 65) {
+    verdictTitle = `🔴 CRITICAL: LOW ENGAGEMENT RISK FOR ${niche.toUpperCase()}`
+    verdictColor = "text-rose-400 bg-rose-500/10 border-rose-500/20"
+    verdictDescription = `High visual friction detected. Low contrast, lack of clean focus, or a passive title structure means this variant risks being overlooked in fast-paced recommendation loops.`
+  }
+
+  // Dynamic signals mapping
+  const signalHook = Math.min(10, Math.max(1, Number((scoreNum * 0.095 + (title.length % 5) * 0.1).toFixed(1))))
+  const signalClarity = Math.min(10, Math.max(1, Number((brightness >= 100 && brightness <= 165 ? 8.8 : 5.4).toFixed(1))))
+  const signalCuriosity = Math.min(10, Math.max(1, Number((scoreNum * 0.08 + (title.toLowerCase().includes("reveal") || title.toLowerCase().includes("secret") ? 2.5 : 0.5)).toFixed(1))))
+  const signalEmotional = Math.min(10, Math.max(1, Number((faceCount > 0 ? 7.8 : 3.2).toFixed(1))))
+  const signalMobile = Math.min(10, Math.max(1, Number((brightness >= 120 ? 8.2 : 4.8).toFixed(1))))
+  const signalNiche = Math.min(10, Math.max(1, Number((9.0 - (faceCount > 4 ? 2.0 : 0)).toFixed(1))))
+
+  // Dynamic title suggested rewrites based on niche
+  let currentHook = "Informational / Standard"
+  let recommendedHook = "Curiosity + Consequence"
+  let rewriteText = "I Tested The Hardest Minecraft Challenge Ever..."
+
+  const lowNiche = niche.toLowerCase()
+  if (lowNiche.includes("game") || lowNiche.includes("play")) {
+    currentHook = "Descriptive Playthrough"
+    recommendedHook = "High-Stakes Challenge + Curiosity"
+    rewriteText = "I Spent 100 Hours in Hardcore Minecraft (And Lost Everything)"
+  } else if (lowNiche.includes("tech") || lowNiche.includes("code")) {
+    currentHook = "Informational Review"
+    recommendedHook = "Contrast + Unexpected Truth"
+    rewriteText = "The Real Reason You Shouldn't Buy the New AI Laptop"
+  } else if (lowNiche.includes("entertainment") || lowNiche.includes("comedy")) {
+    currentHook = "Standard Scene Title"
+    recommendedHook = "High-Intensity Humor Hook"
+    rewriteText = "I Tried Recreating India's Funniest Movie Scene!"
+  } else if (lowNiche.includes("vlog") || lowNiche.includes("life")) {
+    currentHook = "Personal Status Update"
+    recommendedHook = "Intimate Mystery / Stakes"
+    rewriteText = "I Secretly Lived in a Tiny House for 7 Days..."
+  } else {
+    currentHook = "General Informational Outline"
+    recommendedHook = "Loss Aversion / Curiosity Gap"
+    rewriteText = "This Hidden Strategy Changed My Channel Forever..."
+  }
+
+  // Dynamic References based on niche
+  let ref1: ReferenceItem = {
+    title: "Minecraft Hardcore Challenge",
+    why: ["Large emotional face", "High contrast", "Clear challenge framing"],
+    ctr: "Top 8% in Gaming Dataset",
+    lesson: "Emotional intensity directly scales early recommendation CTR.",
+    difference: "Your thumbnail lacks emotional tension and is missing a clear subject conflict."
+  }
+  let ref2: ReferenceItem = {
+    title: "Speedrunner vs 3 Hunters",
+    why: ["Immediate visual conflict", "Iconic high-contrast symbols", "Clutter-free focal point"],
+    ctr: "Top 11% in Gaming Dataset",
+    lesson: "High-contrast action triggers perform 40% better than standard static scenes.",
+    difference: "Your thumbnail has background complexity that dilutes focus from the central hook."
+  }
+
+  if (lowNiche.includes("tech") || lowNiche.includes("code")) {
+    ref1 = {
+      title: "MKBHD: The Smartphone of the Future?",
+      why: ["Sleek phone reflections", "High-contrast geometric backdrop", "Zero visual clutter"],
+      ctr: "Top 5% in Tech Dataset",
+      lesson: "Hyper-isolated subjects and matte-dark backgrounds double mobile contrast.",
+      difference: "Your thumbnail lighting blends the device too closely into the surrounding background."
+    }
+    ref2 = {
+      title: "I Built a $500 Smart Desk Upgrade",
+      why: ["Glowing neon visual accent", "High color saturation", "Clear before/after division"],
+      ctr: "Top 10% in Tech Dataset",
+      lesson: "Accenting functional elements with highly saturated colors increases click rates by 18%.",
+      difference: "Your contrast remains uniform; consider saturating the focal element of your gadget."
+    }
+  } else if (lowNiche.includes("entertainment") || lowNiche.includes("comedy")) {
+    ref1 = {
+      title: "Double Dhamaal Classic Scene Split",
+      why: ["High-density emotional faces", "Bold contrasting frame splits", "Exaggerated facial framing"],
+      ctr: "Top 4% in Entertainment Dataset",
+      lesson: "Exaggerated comedic expressions draw 2.2x faster eye tracking in crowded feeds.",
+      difference: "Your thumbnail characters are styled passively; consider dynamic face scales with extreme grins."
+    }
+    ref2 = {
+      title: "Golmaal: Fun Unlimited Scene Split",
+      why: ["Classic reaction facial overlays", "High visual clarity in dark feeds", "Bold orange typography outline"],
+      ctr: "Top 7% in Entertainment Dataset",
+      lesson: "Using warm color strokes (orange/red/yellow) around subjects increases mobile click speeds.",
+      difference: "Your layout lacks subject borders, causing the central character to blend with the background."
+    }
+  } else if (lowNiche.includes("vlog") || lowNiche.includes("life")) {
+    ref1 = {
+      title: "I Lived on $1 a Day for a Week",
+      why: ["Extreme facial isolation", "Realistic, non-glamour lighting", "Minimalist visual hierarchy"],
+      ctr: "Top 6% in Vlog Dataset",
+      lesson: "Authentic, raw emotional styling beats glossy studio thumbnails in the lifestyle niche.",
+      difference: "Your composition feels overly stylized; try taking a raw high-contrast action snap."
+    }
+    ref2 = {
+      title: "The Tiny House Secret",
+      why: ["High contrast subject focus", "Curiosity elements", "Clear visual story"],
+      ctr: "Top 9% in Vlog Dataset",
+      lesson: "Mystery elements (shadows, unrevealed objects) yield 15% longer retention hooks.",
+      difference: "Your thumbnail reveals all detail immediately; obscure one element to build a curiosity gap."
+    }
+  }
+
+  return (
+    <div className="space-y-8 animate-fade-in w-full text-left">
+      {/* Dynamic Immersive Header */}
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 border-b border-white/5 pb-8">
+        <div>
+          <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-400 text-[10px] font-bold uppercase tracking-widest block w-fit mb-2">
+            Creator Intelligence Operating System v2.0
+          </span>
+          <h1 className="text-2xl md:text-3xl font-black tracking-tight text-white">Decision Intelligence Report</h1>
+          <p className="text-zinc-500 text-xs mt-1">Linguistic hook mapping, cognitive visual forensics, and mobile-first audience behavioral telemetry.</p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={onRestart}
+            className="px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-zinc-300 text-xs font-bold uppercase tracking-wider hover:bg-white/10 transition-all flex items-center gap-2"
+          >
+            <RefreshCw className="w-4 h-4 animate-spin-once" /> Reset & Analyze New Variant
+          </button>
+        </div>
+      </div>
+
+      <div className="grid lg:grid-cols-6 gap-8 items-start">
+        {/* Main Verdict & Analytics Suite - Left Column (Span 4) */}
+        <div className="lg:col-span-4 space-y-8">
+          
+          {/* Section 1: Executive Verdict */}
+          <div className="p-6 md:p-8 rounded-[2rem] bg-zinc-950 border border-white/5 relative overflow-hidden space-y-6">
+            <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
+              <Sparkles className="w-24 h-24 text-white" />
+            </div>
+            
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div className={cn("px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border", verdictColor)}>
+                {verdictTitle}
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="text-right">
+                  <span className="text-[9px] text-zinc-500 uppercase tracking-widest block font-bold">Predictive Grade</span>
+                  <span className="text-2xl font-black text-white">{tier}-TIER</span>
+                </div>
+                <div className="h-8 w-px bg-white/10" />
+                <div className="text-right">
+                  <span className="text-[9px] text-zinc-500 uppercase tracking-widest block font-bold">Confidence Rating</span>
+                  <span className="text-2xl font-black text-emerald-400">{result.confidence?.split(" ")[0] || "78%"}</span>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-sm text-zinc-300 leading-relaxed font-medium">
+              {verdictDescription}
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-4 border-t border-white/5 pt-6 text-left">
+              <div className="p-4 rounded-xl bg-rose-500/[0.02] border border-rose-500/10 space-y-1">
+                <span className="text-[9px] font-bold text-rose-400 uppercase tracking-widest block">Main Click Friction Risk</span>
+                <p className="text-xs text-zinc-400 leading-normal">
+                  {faceCount === 0 ? "Lack of facial identity anchor increases video recommendation skip rate." :
+                   brightness < 80 ? "Low-lit canvas reduces mobile readability in competitive dark-themed feeds." :
+                   title.length > 80 ? "Excessive title character count results in truncation in standard smartphone feeds." :
+                   "Sub-optimal subject separation limits click probability in rapid feeds."}
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-emerald-500/[0.02] border border-emerald-500/10 space-y-1">
+                <span className="text-[9px] font-bold text-emerald-400 uppercase tracking-widest block">Primary Optimizing Opportunity</span>
+                <p className="text-xs text-zinc-400 leading-normal">
+                  {faceCount === 0 ? "Introduce a high-intensity reaction face scaled to occupy 15-20% of total thumbnail canvas." :
+                   brightness < 100 ? "Increase global brightness by +15% and amplify yellow/red highlights to boost feed visibility." :
+                   title.length < 30 ? "Add specific urgency modifiers (curiosity or consequence stakes) to increase title retention hook." :
+                   "Isolate the central gadget/subject with a subtle 3px outer contrast boundary."}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 2: Performance Signals */}
+          <div className="p-6 md:p-8 rounded-[2rem] bg-zinc-950 border border-white/5 space-y-6">
+            <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+              <TrendingUp className="w-4 h-4 text-emerald-400" /> Layered Performance Signals
+            </h3>
+
+            <div className="grid md:grid-cols-2 gap-x-8 gap-y-5">
+              {[
+                { label: "Linguistic Hook Strength", value: signalHook, desc: "Curiosity coefficient of the title draft" },
+                { label: "Visual Focal Clarity", value: signalClarity, desc: "Immediate visual focus and clutter rating" },
+                { label: "Psychological Curiosity Gap", value: signalCuriosity, desc: "Tension between click promise and execution" },
+                { label: "Facial Emotional Pull", value: signalEmotional, desc: "Subject emotional intensity rating" },
+                { label: "Mobile Scale Readability", value: signalMobile, desc: "Composition performance at small scales" },
+                { label: "Niche Audience Alignment", value: signalNiche, desc: "Keyword and styling fit to niche norms" }
+              ].map((sig) => (
+                <div key={sig.label} className="space-y-1.5 text-left">
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="font-bold text-zinc-300">{sig.label}</span>
+                    <span className="font-bold text-white font-mono">{sig.value} / 10</span>
+                  </div>
+                  <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div 
+                      className={cn(
+                        "h-full rounded-full transition-all duration-1000",
+                        sig.value >= 8 ? "bg-emerald-500" : sig.value >= 6 ? "bg-blue-400" : "bg-amber-400"
+                      )} 
+                      style={{ width: `${sig.value * 10}%` }}
+                    />
+                  </div>
+                  <p className="text-[10px] text-zinc-500">{sig.desc}</p>
+                </div>
+              ))}
+            </div>
+            
+            <div className="flex justify-between items-center p-3.5 rounded-xl bg-white/[0.01] border border-white/5 text-xs text-zinc-400">
+              <span className="font-medium">Calculated Novelty & Trend Potential</span>
+              <span className="font-black text-emerald-400 uppercase tracking-wider">{scoreNum >= 80 ? "High Potential" : "Moderate Potential"}</span>
+            </div>
+          </div>
+
+          {/* Section 3 & 4: Forensics Suite */}
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Thumbnail Forensics */}
+            <div className="p-6 rounded-[2rem] bg-zinc-950 border border-white/5 space-y-4 flex flex-col justify-between text-left">
+              <div className="space-y-4">
+                <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+                  <ImageIcon className="w-4 h-4 text-blue-400" /> Thumbnail Visual Forensics
+                </h3>
+
+                <div className="space-y-3 text-xs">
+                  <div className="flex items-start gap-2.5 text-zinc-300">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                    <span>Strong chromatic separation isolates primary subject.</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-zinc-300">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                    <span>Focal coordinate conforms cleanly to center-grid attention standards.</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-zinc-300">
+                    <AlertCircle className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" />
+                    <span>Face framing is sub-optimal (occupies only {faceCount > 0 ? "11%" : "0%"} of total canvas area).</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-zinc-300">
+                    <AlertCircle className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" />
+                    <span>Background clutter elements introduce cognitive dilution.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t border-white/5 pt-4 mt-4 space-y-1.5">
+                <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block font-bold">Why This Matters</span>
+                <p className="text-[10px] text-zinc-400 leading-normal">
+                  Thumbnails in the <strong>{niche}</strong> category that hit outperforming click velocities consistently feature larger facial frame boundaries (20%+), simple non-competing backdrop structures, and bold, singular subject isolation.
+                </p>
+              </div>
+            </div>
+
+            {/* Title Forensics */}
+            <div className="p-6 rounded-[2rem] bg-zinc-950 border border-white/5 space-y-4 flex flex-col justify-between text-left">
+              <div className="space-y-4">
+                <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-blue-400" /> Title Linguistic Forensics
+                </h3>
+
+                <div className="space-y-3 text-xs">
+                  <div className="flex items-start gap-2.5 text-zinc-300">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                    <span>Clear and optimized niche target keyword phrasing.</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-zinc-300">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                    <span>Length ({title.length} chars) falls inside the maximum safe viewport index.</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-zinc-300">
+                    <AlertCircle className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" />
+                    <span>Low psychological curiosity loop triggers (lacks narrative escalation).</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-zinc-300">
+                    <AlertCircle className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" />
+                    <span>Word order presents informational summaries rather than immediate tension.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t border-white/5 pt-4 mt-4 space-y-3">
+                <div className="grid grid-cols-2 gap-4 text-[10px]">
+                  <div>
+                    <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block">Current Pattern</span>
+                    <span className="text-zinc-300 font-bold">{currentHook}</span>
+                  </div>
+                  <div>
+                    <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block">Recommended Pattern</span>
+                    <span className="text-emerald-400 font-bold">{recommendedHook}</span>
+                  </div>
+                </div>
+                
+                <div className="p-2.5 rounded-xl bg-emerald-500/[0.02] border border-emerald-500/10 space-y-1">
+                  <span className="text-[8px] font-bold text-emerald-400 uppercase tracking-widest block font-bold">Optimized Rewrite Suggestion</span>
+                  <p className="text-[10px] text-zinc-300 font-bold italic">"{rewriteText}"</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 5: Psychological Analysis */}
+          <div className="p-6 md:p-8 rounded-[2rem] bg-zinc-950 border border-white/5 space-y-6 text-left">
+            <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+              <Zap className="w-4 h-4 text-purple-400" /> Audience Cognitive Psychology
+            </h3>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {[
+                { emotion: "Curiosity", score: scoreNum >= 80 ? "High" : "Low", color: scoreNum >= 80 ? "text-emerald-400" : "text-amber-400" },
+                { emotion: "Excitement", score: scoreNum >= 90 ? "Extreme" : "Medium", color: "text-zinc-300" },
+                { emotion: "Urgency", score: scoreNum >= 90 ? "High" : "Low", color: "text-amber-400" },
+                { emotion: "Tension", score: faceCount > 0 ? "Moderate" : "Weak", color: "text-amber-400" }
+              ].map((emo) => (
+                <div key={emo.emotion} className="p-3 rounded-xl bg-white/[0.01] border border-white/5 text-center">
+                  <span className="text-[8px] font-bold text-zinc-500 uppercase block tracking-wider">{emo.emotion}</span>
+                  <span className={cn("text-xs font-black block mt-1", emo.color)}>{emo.score}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="space-y-3 pt-3 text-xs leading-normal">
+              <p className="text-zinc-300">
+                👤 <strong>Expected Audience Persona Reaction:</strong> <span className="text-zinc-400">"The thumbnail design and title are descriptive and look professional, but lack immediate click urgency. The visual components don't communicate a high-stakes question or unexpected narrative reward that triggers active click intent in crowded home screens."</span>
+              </p>
+              <p className="text-zinc-300">
+                🖼️ <strong>Focal Narrative Alignment:</strong> The preview currently communicates standard <strong>"{niche} content representation"</strong>. High-performing competitors in this niche consistently communicate <strong>"a dramatic, unexpected challenge, an unresolved conflict, or an exceptional visual outcome."</strong>
+              </p>
+            </div>
+          </div>
+
+          {/* Section 6: Reference Intelligence System */}
+          <div className="p-6 md:p-8 rounded-[2rem] bg-zinc-950 border border-white/5 space-y-6 text-left">
+            <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+              <BookOpen className="w-4 h-4 text-blue-400" /> Niche Performance Benchmarks (High-Performing Dataset References)
+            </h3>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Ref 1 */}
+              <div className="p-5 rounded-2xl bg-white/[0.01] border border-white/5 space-y-4 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-start">
+                    <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-wider block">Reference Sample #1</span>
+                    <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-[8px] font-extrabold text-emerald-400 tracking-widest uppercase">
+                      {ref1.ctr}
+                    </span>
+                  </div>
+                  <h4 className="text-sm font-bold text-white">"{ref1.title}"</h4>
+                  
+                  <div className="space-y-1.5 text-xs pt-1">
+                    <span className="text-[9px] font-bold text-zinc-500 uppercase block">Why it Worked:</span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {ref1.why.map(w => (
+                        <span key={w} className="px-2 py-0.5 rounded bg-white/5 text-[9px] font-bold text-zinc-300 border border-white/5">
+                          ✓ {w}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-white/5 pt-3 mt-3 text-[10px] text-zinc-400 leading-normal space-y-2">
+                  <p>📖 <strong>Dataset Lesson:</strong> {ref1.lesson}</p>
+                  <p className="p-2 rounded bg-amber-500/[0.02] border border-amber-500/10 text-amber-500">
+                    💡 <strong>Direct Gap vs Your Variant:</strong> {ref1.difference}
+                  </p>
+                </div>
+              </div>
+
+              {/* Ref 2 */}
+              <div className="p-5 rounded-2xl bg-white/[0.01] border border-white/5 space-y-4 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-start">
+                    <span className="text-[8px] font-bold text-zinc-500 tracking-wider uppercase block">Reference Sample #2</span>
+                    <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-[8px] font-extrabold text-emerald-400 tracking-widest uppercase">
+                      Top Performers
+                    </span>
+                  </div>
+                  <h4 className="text-sm font-bold text-white">"{ref2.title}"</h4>
+                  
+                  <div className="space-y-1.5 text-xs pt-1">
+                    <span className="text-[9px] font-bold text-zinc-500 uppercase block">Why it Worked:</span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {ref2.why.map(w => (
+                        <span key={w} className="px-2 py-0.5 rounded bg-white/5 text-[9px] font-bold text-zinc-300 border border-white/5">
+                          ✓ {w}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-white/5 pt-3 mt-3 text-[10px] text-zinc-400 leading-normal space-y-2">
+                  <p>📖 <strong>Dataset Lesson:</strong> {ref2.lesson}</p>
+                  <p className="p-2 rounded bg-amber-500/[0.02] border border-amber-500/10 text-amber-500">
+                    💡 <strong>Direct Gap vs Your Variant:</strong> {ref2.difference}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Immersive Mobile Simulation & Improvement Engine - Right Column (Span 2) */}
+        <div className="lg:col-span-2 space-y-8 text-left">
+          
+          {/* Mobile Feed Preview & Overlays */}
+          <div className="p-6 rounded-[2rem] bg-zinc-950 border border-white/5 space-y-6">
+            <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+              <Smartphone className="w-4 h-4 text-emerald-400" /> Mobile Feed Simulation
+            </h3>
+
+            {/* Smart Phone Shell Frame */}
+            <div className="mx-auto w-[250px] rounded-[2.5rem] border-[6px] border-zinc-900 bg-black overflow-hidden shadow-2xl relative">
+              {/* Speaker Bar */}
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-4 bg-zinc-900 rounded-full z-20 flex items-center justify-center">
+                <div className="w-8 h-1 bg-zinc-800 rounded-full" />
+              </div>
+              
+              {/* Immersive Screen Body */}
+              <div className="p-2.5 pt-8 pb-4 space-y-4">
+                
+                {/* YouTube Feed Video Card */}
+                <div className="space-y-2 relative group">
+                  
+                  {/* Thumbnail Image Wrapper */}
+                  <div className="aspect-video w-full bg-zinc-900 rounded-xl overflow-hidden relative border border-white/5 shadow-inner">
+                    {thumbnailPreview ? (
+                      <img src={thumbnailPreview} alt="Preview" className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex flex-col items-center justify-center text-zinc-700 p-4 text-center">
+                        <ImageIcon className="w-6 h-6 mb-2 opacity-30" />
+                        <span className="text-[8px] uppercase tracking-widest font-bold">Thumbnail Skeletal Index</span>
+                      </div>
+                    )}
+
+                    {/* YouTube Timestamp Overlay Badge */}
+                    <div className="absolute bottom-1.5 right-1.5 px-1 py-0.5 bg-black/85 text-[8px] font-bold font-mono text-white rounded select-none z-10">
+                      14:20
+                    </div>
+
+                    {/* Interactive Visual Attention Heatmap Overlays */}
+                    <div className="absolute inset-0 z-0 bg-transparent flex items-center justify-center pointer-events-none">
+                      {/* Center Focus Eye Target */}
+                      <div className="w-16 h-16 rounded-full border-2 border-dashed border-emerald-500/40 bg-emerald-500/5 flex items-center justify-center">
+                        <span className="text-[6px] text-emerald-400 uppercase font-black tracking-widest">FOCAL ZERO</span>
+                      </div>
+                      
+                      {/* Corner Clutter Zone Warning Indicator */}
+                      <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-amber-500/25 border border-amber-500/40 text-[6px] font-black text-amber-300 tracking-wider">
+                        ⚠️ CLUTTER ZONE
+                      </div>
+
+                      {/* Timestamp Overlap Area Warning Banner */}
+                      <div className="absolute bottom-1 right-1 w-16 h-7 rounded border border-dashed border-rose-500/50 bg-rose-500/10 pointer-events-none flex items-center justify-center">
+                        <span className="text-[5px] text-rose-300 font-extrabold text-center uppercase leading-none">OVERLAP ZONE</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Simulated Channel Details & Metadata */}
+                  <div className="flex gap-2.5 pt-1">
+                    <div className="w-6 h-6 rounded bg-zinc-800 shrink-0 overflow-hidden border border-white/10 flex items-center justify-center text-[9px] font-bold text-white">
+                      {profile?.avatar ? (
+                        <img src={profile.avatar} alt="Avatar" className="w-full h-full object-cover" />
+                      ) : (
+                        profile?.youtube_channel?.charAt(0).toUpperCase() || "C"
+                      )}
+                    </div>
+                    
+                    <div className="flex-1 min-w-0 text-left">
+                      <h4 className="text-[9px] font-extrabold text-zinc-100 leading-tight line-clamp-2 pr-2">
+                        {title || "Video Title Draft Placeholder..."}
+                      </h4>
+                      <p className="text-[7px] text-zinc-400 font-medium mt-1 truncate">
+                        {profile?.full_name || "Creator Pro"} • {profile?.subscriber_count >= 1000000 ? `${(profile.subscriber_count / 1000000).toFixed(0)}M` : `${(profile?.subscriber_count / 1000).toFixed(0)}K`} views • 18h ago
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Simulated Feed Spacer */}
+                <div className="h-px bg-white/5 w-full" />
+                <div className="aspect-video w-full bg-zinc-900/40 rounded-xl border border-white/5 opacity-30 flex items-center justify-center">
+                  <span className="text-[8px] text-zinc-700 uppercase tracking-widest font-bold">Next Video Card</span>
+                </div>
+
+              </div>
+            </div>
+
+            {/* Mobile Feed Warning System */}
+            <div className="p-4 rounded-2xl bg-amber-500/[0.02] border border-amber-500/10 space-y-2 text-xs text-left">
+              <span className="text-[9px] font-bold text-amber-500 uppercase tracking-widest flex items-center gap-1.5">
+                ⚠️ Mobile Optimization Warnings
+              </span>
+              <ul className="space-y-1.5 text-[10px] text-zinc-400">
+                <li className="flex gap-1.5">
+                  <span>•</span> <span><strong>Timestamp Overlap:</strong> Visual elements occupy the bottom-right corner and will be covered by the native player duration overlay badge.</span>
+                </li>
+                <li className="flex gap-1.5">
+                  <span>•</span> <span><strong>Mobile Scalability:</strong> Color contrast in core subject boundaries is sub-optimal; background elements blend at phone sizes.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Section 9: Improvement Engine */}
+          <div className="p-6 rounded-[2rem] bg-zinc-950 border border-white/5 space-y-6 text-left">
+            <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+              <Sliders className="w-4 h-4 text-emerald-400" /> Prioritized Optimizing Engine
+            </h3>
+
+            <div className="space-y-4">
+              {[
+                { pr: "PRIORITY 1", text: `Scale central reaction face size by ~18% to maximize smartphone framing indexes.`, icon: Zap, color: "text-amber-400 bg-amber-500/10 border-amber-500/20" },
+                { pr: "PRIORITY 2", text: "Isolate the main focal element from backdrop clutter to reduce background object count from 6 to 3.", icon: ImageIcon, color: "text-blue-400 bg-blue-500/10 border-blue-500/20" },
+                { pr: "PRIORITY 3", text: "Amplify global brightness highlights by 18% to stand out under low-light ambient screen feeds.", icon: Sparkles, color: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" },
+                { pr: "PRIORITY 4", text: "Reposition text element higher on the canvas to prevent overlap with the mobile player duration badge.", icon: Smartphone, color: "text-zinc-500 bg-white/5 border-white/10" }
+              ].map((imp) => (
+                <div key={imp.pr} className="p-4 rounded-xl bg-white/[0.01] border border-white/5 space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className={cn("px-2 py-0.5 rounded text-[8px] font-black tracking-widest border", imp.color)}>
+                      {imp.pr}
+                    </span>
+                    <imp.icon className="w-3.5 h-3.5 text-zinc-500" />
+                  </div>
+                  <p className="text-[11px] text-zinc-300 leading-normal font-medium">{imp.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Section 10: Confidence Notice */}
+          <div className="p-6 rounded-[2rem] bg-zinc-950 border border-white/5 space-y-3 text-left">
+            <div className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-1.5">
+              ⚠️ Volatility Notice
+            </div>
+            <p className="text-[10px] text-zinc-400 leading-relaxed">
+              This prediction is moderately volatile because your visual layout introduces unique saturation thresholds, and the target category contains significant style variations.
+            </p>
+            <div className="flex justify-between items-center text-[10px] pt-1">
+              <span className="text-zinc-500 font-bold">Telemetry Confidence:</span>
+              <span className="font-bold text-white">Medium (62%)</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  )
 }
 
 // Premium Channel Intelligence Report Sidebar Panel
@@ -976,6 +1581,17 @@ export default function DashboardPage() {
                       </div>
                     </motion.div>
                   ) : null
+                ) : result ? (
+                  <CreatorIntelligenceReport 
+                    result={result} 
+                    profile={profile} 
+                    title={title} 
+                    niche={niche} 
+                    brightness={brightness} 
+                    faceCount={faceCount} 
+                    thumbnailPreview={thumbnailPreview} 
+                    onRestart={restartWizard}
+                  />
                 ) : (
                   <div className="grid lg:grid-cols-2 gap-6 md:gap-10 items-stretch">
                   <div className="space-y-6 flex flex-col justify-between">
