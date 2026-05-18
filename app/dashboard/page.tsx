@@ -78,14 +78,14 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto space-y-10">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+    <div className="max-w-6xl mx-auto space-y-6 md:space-y-10 px-4 sm:px-6 md:px-0">
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Creator Hub <span className="text-zinc-600 font-normal">v1.1</span></h1>
-          <p className="text-zinc-500 text-sm">Professional decision intelligence for pre-upload metadata.</p>
+          <h1 className="text-2xl md:text-3xl font-bold mb-2">Creator Hub <span className="text-zinc-600 font-normal">v1.1</span></h1>
+          <p className="text-zinc-500 text-xs md:text-sm">Professional decision intelligence for pre-upload metadata.</p>
         </div>
         
-        <div className="flex bg-white/5 border border-white/10 rounded-xl p-1 p-0.5">
+        <div className="flex bg-white/5 border border-white/10 rounded-xl p-1 overflow-x-auto max-w-full scrollbar-none shrink-0 self-start lg:self-auto">
             {[
                 { id: "analyze", icon: Search, label: "Analysis" },
                 { id: "compare", icon: GitCompare, label: "Comparison" },
@@ -95,7 +95,7 @@ export default function DashboardPage() {
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as any)}
                     className={cn(
-                        "flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all",
+                        "flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-[10px] md:text-xs font-bold uppercase tracking-widest transition-all whitespace-nowrap",
                         activeTab === tab.id ? "bg-white text-black" : "text-zinc-500 hover:text-white"
                     )}
                 >
@@ -106,7 +106,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-6 gap-10">
+      <div className="grid lg:grid-cols-6 gap-6 md:gap-10">
         <AnimatePresence mode="wait">
           {activeTab === "analyze" && (
             <motion.div 
@@ -114,15 +114,15 @@ export default function DashboardPage() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="lg:col-span-6 grid lg:grid-cols-2 gap-10"
+                className="lg:col-span-6 grid lg:grid-cols-2 gap-6 md:gap-10"
             >
-                <div className="space-y-8">
-                    <div className="aspect-video border-2 border-dashed border-white/5 rounded-[2.5rem] bg-white/[0.01] hover:bg-white/[0.03] hover:border-white/10 transition-all cursor-pointer flex flex-col items-center justify-center text-center group">
-                        <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                            <Upload className="w-6 h-6 text-zinc-500" />
+                <div className="space-y-6 md:space-y-8">
+                    <div className="aspect-video border-2 border-dashed border-white/5 rounded-3xl md:rounded-[2.5rem] bg-white/[0.01] hover:bg-white/[0.03] hover:border-white/10 transition-all cursor-pointer flex flex-col items-center justify-center text-center p-4 group">
+                        <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform">
+                            <Upload className="w-5 h-5 md:w-6 md:h-6 text-zinc-500" />
                         </div>
-                        <h3 className="font-bold mb-1">Upload Thumbnail</h3>
-                        <p className="text-[10px] text-zinc-600 font-bold uppercase tracking-widest">Supports PNG, JPG (Max 5MB)</p>
+                        <h3 className="font-bold text-sm md:text-base mb-1">Upload Thumbnail</h3>
+                        <p className="text-[9px] md:text-[10px] text-zinc-600 font-bold uppercase tracking-widest">Supports PNG, JPG (Max 5MB)</p>
                     </div>
 
                     <div className="space-y-6">
@@ -133,16 +133,16 @@ export default function DashboardPage() {
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 placeholder="Enter your best title variant..."
-                                className="w-full bg-white/[0.02] border border-white/5 rounded-2xl px-6 py-5 text-sm focus:outline-none focus:border-white/20 transition-all resize-none"
+                                className="w-full bg-white/[0.02] border border-white/5 rounded-2xl px-4 py-3 md:px-6 md:py-5 text-xs md:text-sm focus:outline-none focus:border-white/20 transition-all resize-none"
                             />
                         </div>
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-2 gap-4 md:gap-6">
                              <div className="space-y-3">
                                 <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Niche</label>
                                 <select 
                                     value={niche}
                                     onChange={(e) => setNiche(e.target.value)}
-                                    className="w-full bg-zinc-900 border border-white/5 rounded-xl px-4 py-3 text-xs focus:outline-none appearance-none cursor-pointer"
+                                    className="w-full bg-zinc-900 border border-white/5 rounded-xl px-3 py-2.5 md:px-4 md:py-3 text-xs focus:outline-none appearance-none cursor-pointer text-white"
                                 >
                                     <option value="Gaming">Gaming</option>
                                     <option value="Tech">Tech</option>
@@ -154,7 +154,7 @@ export default function DashboardPage() {
                                 <select 
                                     value={sensitivity}
                                     onChange={(e) => setSensitivity(e.target.value)}
-                                    className="w-full bg-zinc-900 border border-white/5 rounded-xl px-4 py-3 text-xs focus:outline-none appearance-none cursor-pointer"
+                                    className="w-full bg-zinc-900 border border-white/5 rounded-xl px-3 py-2.5 md:px-4 md:py-3 text-xs focus:outline-none appearance-none cursor-pointer text-white"
                                 >
                                     <option value="Balanced">Balanced</option>
                                     <option value="Strict">Strict</option>
@@ -164,7 +164,7 @@ export default function DashboardPage() {
                         </div>
 
                         {error && (
-                            <div className="p-6 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-xs font-semibold flex items-center gap-3">
+                            <div className="p-4 md:p-6 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-xs font-semibold flex items-center gap-3">
                                 <AlertCircle className="w-4 h-4 flex-shrink-0" />
                                 <div>
                                     <span className="font-bold">Execution Failed:</span> {error}
@@ -175,10 +175,10 @@ export default function DashboardPage() {
                         <button 
                             onClick={handleAnalyze}
                             disabled={isAnalyzing || !title.trim()}
-                            className="w-full py-5 rounded-2xl bg-white text-black font-bold hover:bg-zinc-200 transition-all flex items-center justify-center gap-3 relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full py-4 md:py-5 rounded-2xl bg-white text-black font-bold hover:bg-zinc-200 transition-all flex items-center justify-center gap-3 relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed text-xs md:text-sm shadow-lg"
                         >
                             {isAnalyzing ? (
-                                <div className="w-6 h-6 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                                <div className="w-5 h-5 md:w-6 md:h-6 border-2 border-black/20 border-t-black rounded-full animate-spin" />
                             ) : (
                                 <>
                                     <Sparkles className="w-4 h-4" />
@@ -191,73 +191,73 @@ export default function DashboardPage() {
 
                 <div className="relative">
                     {!result && !isAnalyzing ? (
-                        <div className="h-full border border-white/5 rounded-[3rem] bg-white/[0.01] flex flex-col items-center justify-center text-center p-12 text-zinc-600">
-                            <TrendingUp className="w-12 h-12 mb-6 opacity-10" />
-                            <p className="text-sm font-bold uppercase tracking-widest">Awaiting Transmission</p>
-                            <p className="text-xs max-w-xs mx-auto mt-2 leading-relaxed opacity-50">Upload metadata to trigger the ensemble analysis engine.</p>
+                        <div className="min-h-[250px] lg:h-full border border-white/5 rounded-[2rem] md:rounded-[3rem] bg-white/[0.01] flex flex-col items-center justify-center text-center p-8 md:p-12 text-zinc-600">
+                            <TrendingUp className="w-10 h-10 md:w-12 md:h-12 mb-4 md:mb-6 opacity-10" />
+                            <p className="text-xs md:text-sm font-bold uppercase tracking-widest">Awaiting Transmission</p>
+                            <p className="text-[10px] md:text-xs max-w-xs mx-auto mt-2 leading-relaxed opacity-50">Upload metadata to trigger the ensemble analysis engine.</p>
                         </div>
                     ) : isAnalyzing ? (
-                        <div className="h-full border border-white/5 rounded-[3rem] bg-white/[0.01] p-12 space-y-12">
+                        <div className="min-h-[300px] lg:h-full border border-white/5 rounded-[2rem] md:rounded-[3rem] bg-white/[0.01] p-6 md:p-12 space-y-8 md:space-y-12">
                              <div className="flex justify-between items-start animate-pulse">
-                                <div className="h-16 w-32 bg-white/5 rounded-2xl" />
-                                <div className="h-8 w-24 bg-white/5 rounded-xl" />
+                                <div className="h-12 w-24 md:h-16 md:w-32 bg-white/5 rounded-2xl" />
+                                <div className="h-6 w-16 md:h-8 md:w-24 bg-white/5 rounded-xl" />
                              </div>
-                             <div className="grid grid-cols-3 gap-4">
-                                <div className="h-20 bg-white/5 rounded-2xl" />
-                                <div className="h-20 bg-white/5 rounded-2xl" />
-                                <div className="h-20 bg-white/5 rounded-2xl" />
+                             <div className="grid grid-cols-3 gap-3 md:gap-4">
+                                <div className="h-16 md:h-20 bg-white/5 rounded-2xl" />
+                                <div className="h-16 md:h-20 bg-white/5 rounded-2xl" />
+                                <div className="h-16 md:h-20 bg-white/5 rounded-2xl" />
                              </div>
-                             <div className="space-y-6">
+                             <div className="space-y-4 md:space-y-6">
                                 <div className="h-4 w-1/3 bg-white/5 rounded" />
-                                <div className="h-32 bg-white/5 rounded-[2rem]" />
+                                <div className="h-24 md:h-32 bg-white/5 rounded-[1.5rem] md:rounded-[2rem]" />
                              </div>
                         </div>
                     ) : (
                         <motion.div 
                             initial={{ opacity: 0, scale: 0.98 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="glass-card p-12 border-white/10 premium-shadow relative overflow-hidden"
+                            className="glass-card p-6 md:p-12 border-white/10 premium-shadow relative overflow-hidden rounded-[2rem] md:rounded-[3rem]"
                         >
-                            <div className="absolute top-0 right-0 p-12 opacity-5">
-                                <Sparkles className="w-32 h-32" />
+                            <div className="absolute top-0 right-0 p-6 md:p-12 opacity-5 pointer-events-none">
+                                <Sparkles className="w-24 h-24 md:w-32 md:h-32" />
                             </div>
                             
-                            <div className="flex justify-between items-start mb-12">
+                            <div className="flex justify-between items-start mb-8 md:mb-12">
                                 <div>
-                                    <h3 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Predictive Score</h3>
-                                    <div className="text-8xl font-bold">{result.score}</div>
+                                    <h3 className="text-[9px] md:text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-1 md:mb-2">Predictive Score</h3>
+                                    <div className="text-6xl md:text-8xl font-bold tracking-tight">{result.score}</div>
                                 </div>
-                                <div className="px-4 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-xs font-bold uppercase tracking-widest">
+                                <div className="px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[10px] md:text-xs font-bold uppercase tracking-widest">
                                     {result.tier}-TIER
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-3 gap-4 mb-12">
-                                <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5">
-                                    <div className="text-[10px] font-bold text-zinc-500 uppercase mb-2">Confidence</div>
-                                    <div className="text-xs font-bold">{result.confidence} ({result.confidence_range || "±15 pts"})</div>
+                            <div className="grid grid-cols-3 gap-2 md:gap-4 mb-8 md:mb-12">
+                                <div className="p-3 md:p-5 rounded-xl md:rounded-2xl bg-white/[0.02] border border-white/5 text-center md:text-left">
+                                    <div className="text-[8px] md:text-[10px] font-bold text-zinc-500 uppercase mb-1 md:mb-2">Confidence</div>
+                                    <div className="text-[10px] md:text-xs font-bold whitespace-nowrap">{result.confidence}</div>
                                 </div>
-                                <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5">
-                                    <div className="text-[10px] font-bold text-zinc-500 uppercase mb-2">Reliability</div>
-                                    <div className={cn("text-xs font-bold", result.reliability === "Stable" ? "text-emerald-500" : "text-yellow-500")}>{result.reliability}</div>
+                                <div className="p-3 md:p-5 rounded-xl md:rounded-2xl bg-white/[0.02] border border-white/5 text-center md:text-left">
+                                    <div className="text-[8px] md:text-[10px] font-bold text-zinc-500 uppercase mb-1 md:mb-2">Reliability</div>
+                                    <div className={cn("text-[10px] md:text-xs font-bold whitespace-nowrap", result.reliability === "Stable" ? "text-emerald-500" : "text-yellow-500")}>{result.reliability}</div>
                                 </div>
-                                <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5">
-                                    <div className="text-[10px] font-bold text-zinc-500 uppercase mb-2">Risk Level</div>
-                                    <div className="text-xs font-bold text-blue-500">{result.risk_level || "Medium"}</div>
+                                <div className="p-3 md:p-5 rounded-xl md:rounded-2xl bg-white/[0.02] border border-white/5 text-center md:text-left">
+                                    <div className="text-[8px] md:text-[10px] font-bold text-zinc-500 uppercase mb-1 md:mb-2">Risk Level</div>
+                                    <div className="text-[10px] md:text-xs font-bold text-blue-400 whitespace-nowrap">{result.risk_level || "Medium"}</div>
                                 </div>
                             </div>
 
-                            <div className="space-y-10">
+                            <div className="space-y-8 md:space-y-10">
                                 {result.strengths && result.strengths.length > 0 && (
-                                    <div className="space-y-4">
-                                        <div className="flex items-center gap-2 text-[10px] font-bold text-emerald-500 uppercase tracking-widest">
+                                    <div className="space-y-3 md:space-y-4">
+                                        <div className="flex items-center gap-2 text-[9px] md:text-[10px] font-bold text-emerald-500 uppercase tracking-widest">
                                             <CheckCircle2 className="w-3.5 h-3.5" /> Core Strengths
                                         </div>
-                                        <div className="space-y-3">
+                                        <div className="space-y-2.5">
                                             {result.strengths.map((s: string) => (
-                                                <div key={s} className="flex items-center gap-3 text-xs text-zinc-300">
-                                                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                                                    {s}
+                                                <div key={s} className="flex items-start gap-2.5 text-xs text-zinc-300 leading-normal">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0 mt-1.5" />
+                                                    <span>{s}</span>
                                                 </div>
                                             ))}
                                         </div>
@@ -265,24 +265,24 @@ export default function DashboardPage() {
                                 )}
 
                                 {result.improvements && result.improvements.length > 0 && (
-                                    <div className="p-6 rounded-[2rem] bg-blue-500/5 border border-blue-500/10 space-y-4">
-                                        <div className="flex items-center gap-2 text-[10px] font-bold text-blue-400 uppercase tracking-widest">
+                                    <div className="p-4 md:p-6 rounded-2xl md:rounded-[2rem] bg-blue-500/5 border border-blue-500/10 space-y-3 md:space-y-4">
+                                        <div className="flex items-center gap-2 text-[9px] md:text-[10px] font-bold text-blue-400 uppercase tracking-widest">
                                             <Zap className="w-3.5 h-3.5" /> High-Lift Fixes
                                         </div>
-                                        <ul className="text-[11px] text-zinc-400 space-y-3">
+                                        <ul className="text-[10px] md:text-[11px] text-zinc-400 space-y-2.5">
                                             {result.improvements.map((i: string) => (
-                                                <li key={i} className="flex gap-2"><span>•</span> {i}</li>
+                                                <li key={i} className="flex gap-2"><span>•</span> <span>{i}</span></li>
                                             ))}
                                         </ul>
                                     </div>
                                 )}
 
                                 {result.factors && (
-                                    <div className="p-6 rounded-[2rem] bg-white/[0.01] border border-white/5 space-y-4">
-                                        <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
+                                    <div className="p-4 md:p-6 rounded-2xl md:rounded-[2rem] bg-white/[0.01] border border-white/5 space-y-3 md:space-y-4">
+                                        <div className="text-[9px] md:text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
                                             Visual & Linguistic Diagnostics
                                         </div>
-                                        <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-xs">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-xs">
                                             <div className="flex justify-between py-1.5 border-b border-white/5 text-zinc-500">
                                                 <span>Brightness</span>
                                                 <span className="text-white font-bold">{result.factors.brightness || 120}</span>
@@ -301,7 +301,7 @@ export default function DashboardPage() {
                                                 <span>Saturation</span>
                                                 <span className="text-white font-bold uppercase">{result.factors.saturation || "medium"}</span>
                                             </div>
-                                            <div className="flex justify-between py-1.5 border-b border-white/5 text-zinc-500 col-span-2">
+                                            <div className="flex justify-between py-1.5 border-b border-white/5 text-zinc-500 sm:col-span-2">
                                                 <span>Niche Alignment Coefficient</span>
                                                 <span className="text-blue-400 font-bold uppercase">{result.factors.niche_alignment || "high"}</span>
                                             </div>
@@ -323,13 +323,15 @@ export default function DashboardPage() {
                 exit={{ opacity: 0, y: -10 }}
                 className="lg:col-span-6"
             >
-                <div className="p-20 border-2 border-dashed border-white/5 rounded-[3rem] bg-white/[0.01] flex flex-col items-center justify-center text-center">
-                    <GitCompare className="w-16 h-16 text-zinc-800 mb-8" />
-                    <h2 className="text-2xl font-bold mb-4">Multi-Variant Ranking Mode</h2>
-                    <p className="text-zinc-500 max-w-md mx-auto leading-relaxed">
+                <div className="p-8 md:p-20 border-2 border-dashed border-white/5 rounded-[2rem] md:rounded-[3rem] bg-white/[0.01] flex flex-col items-center justify-center text-center space-y-4 md:space-y-6">
+                    <GitCompare className="w-12 h-12 md:w-16 md:h-16 text-zinc-800 shrink-0" />
+                    <h2 className="text-xl md:text-2xl font-bold">Multi-Variant Ranking Mode</h2>
+                    <p className="text-zinc-500 text-xs md:text-sm max-w-md mx-auto leading-relaxed">
                         Comparison Mode is exclusive to the Pro Beta Tier. Apply for access to rank up to 5 variants side-by-side.
                     </p>
-                    <button className="mt-8 px-8 py-3 rounded-full bg-white text-black font-bold text-sm">Request Pro Access</button>
+                    <button className="px-6 py-2.5 md:px-8 md:py-3 rounded-full bg-white text-black font-bold text-xs md:text-sm hover:bg-zinc-200 transition-all shadow-md">
+                      Request Pro Access
+                    </button>
                 </div>
             </motion.div>
           )}
