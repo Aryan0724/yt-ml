@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { supabaseServer } from "@/lib/supabase-server"
 import { sendEmail, getEmailTemplate } from "@/lib/mailer"
+import { getLocalApplicants, addOrUpdateLocalApplicant } from "@/lib/local-db"
 
 export async function POST(req: Request) {
   try {
@@ -10,33 +11,63 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing required applicant ID." }, { status: 400 })
     }
 
-    // Retrieve applicant info
-    const { data: applicant, error: fetchError } = await supabaseServer
-      .from("waitlist_users")
-      .select("*")
-      .eq("id", id)
-      .single()
+    // Retrieve applicant info from local or Supabase
+    let applicant: any = null
+    const localApps = getLocalApplicants()
+    const foundLocal = localApps.find((a) => a.id === id)
 
-    if (fetchError || !applicant) {
+    if (foundLocal) {
+      applicant = foundLocal
+    } else {
+      try {
+        const { data, error: fetchError } = await supabaseServer
+          .from("waitlist_users")
+          .select("*")
+          .eq("id", id)
+          .single()
+        
+        if (data) applicant = data
+      } catch (err: any) {
+        console.warn("Supabase fetch failed during approve, searching local registry:", err.message)
+      }
+    }
+
+    if (!applicant) {
       return NextResponse.json({ error: "Applicant not found." }, { status: 404 })
     }
 
     // Generate secure token if not already present
     const betaToken = applicant.beta_access_token || "ap_" + Math.random().toString(36).substring(2, 15)
 
-    // Update status to approved in Supabase
-    const { data: updated, error: updateError } = await supabaseServer
-      .from("waitlist_users")
-      .update({
-        status: "approved",
-        approved_at: new Date().toISOString(),
-        beta_access_token: betaToken,
-      })
-      .eq("id", id)
-      .select()
-      .single()
+    // 1. Update status to approved in local JSON fallback database
+    const updatedLocal = addOrUpdateLocalApplicant({
+      id: applicant.id,
+      email: applicant.email,
+      status: "approved",
+      approved_at: new Date().toISOString(),
+      beta_access_token: betaToken,
+    })
 
-    if (updateError) throw updateError
+    let updated = updatedLocal
+
+    // 2. Attempt update status to approved in Supabase
+    try {
+      const { data, error: updateError } = await supabaseServer
+        .from("waitlist_users")
+        .update({
+          status: "approved",
+          approved_at: new Date().toISOString(),
+          beta_access_token: betaToken,
+        })
+        .eq("id", id)
+        .select()
+        .single()
+
+      if (updateError) throw updateError
+      if (data) updated = data
+    } catch (err: any) {
+      console.warn("Supabase approve update failed, falling back to local JSON sync:", err.message)
+    }
 
     // Prepare Welcome Beta Onboarding Email
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://algopilot.integralgroups.in"

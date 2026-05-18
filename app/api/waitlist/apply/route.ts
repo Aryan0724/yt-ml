@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { supabaseServer } from "@/lib/supabase-server"
 import { sendEmail, getEmailTemplate } from "@/lib/mailer"
+import { addOrUpdateLocalApplicant } from "@/lib/local-db"
 
 export async function POST(req: Request) {
   try {
@@ -23,8 +24,21 @@ export async function POST(req: Request) {
     const subCountInt = parseInt(String(subscriberCount || "0"))
     const betaAccessToken = "ap_" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 
-    // Store in Supabase waitlist_users table
-    let user: any = null
+    // 1. Write to Local Fallback JSON Database (Guarantees active persistence)
+    const localUser = addOrUpdateLocalApplicant({
+      full_name: fullName,
+      email: email.toLowerCase(),
+      youtube_channel: youtubeChannel,
+      niche,
+      subscriber_count: subCountInt,
+      upload_frequency: uploadFrequency,
+      reason_for_joining: reasonForJoining,
+      status: "pending",
+      beta_access_token: betaAccessToken,
+    })
+
+    // 2. Attempt store in Supabase waitlist_users table
+    let user: any = localUser
     let dbError: any = null
 
     try {
@@ -50,14 +64,14 @@ export async function POST(req: Request) {
         .select()
         .single()
       
-      user = data
+      if (data) user = data
       dbError = error
     } catch (err: any) {
       dbError = err
     }
 
     if (dbError) {
-      console.warn("Database insert failed (falling back to email-only registry):", dbError)
+      console.warn("Database insert failed (falling back to local JSON + email-only registry):", dbError)
     }
 
     // Format subscribers for subject line (e.g. 42K, 1.2M)

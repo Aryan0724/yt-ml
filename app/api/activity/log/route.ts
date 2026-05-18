@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { supabaseServer } from "@/lib/supabase-server"
+import { getLocalApplicants, addOrUpdateLocalApplicant } from "@/lib/local-db"
 
 export async function POST(req: Request) {
   try {
@@ -9,14 +10,28 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing email or eventType." }, { status: 400 })
     }
 
-    // 1. Resolve user by email first to check their status
-    const { data: user, error: userError } = await supabaseServer
-      .from("waitlist_users")
-      .select("*")
-      .eq("email", email.toLowerCase())
-      .single()
+    // 1. Resolve user by email from local fallback first or Supabase
+    let user: any = null
+    const localApps = getLocalApplicants()
+    const foundLocal = localApps.find((a) => a.email.toLowerCase() === email.toLowerCase())
 
-    if (userError || !user) {
+    if (foundLocal) {
+      user = foundLocal
+    } else {
+      try {
+        const { data, error: userError } = await supabaseServer
+          .from("waitlist_users")
+          .select("*")
+          .eq("email", email.toLowerCase())
+          .single()
+        
+        if (data) user = data
+      } catch (err: any) {
+        console.warn("Supabase fetch failed during activity log, searching local registry:", err.message)
+      }
+    }
+
+    if (!user) {
       return NextResponse.json({ error: "No waitlist application found with this email.", status: "not_found" }, { status: 401 })
     }
 
@@ -34,21 +49,21 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid beta access pass token.", status: "unauthorized" }, { status: 401 })
     }
 
-    // 4. Log event in usage_logs
-    const { error: logError } = await supabaseServer.from("usage_logs").insert([
-      {
-        user_id: user.id,
-        event_type: eventType,
-        timestamp: new Date().toISOString(),
-        metadata: metadata || {},
-      },
-    ])
-
-    if (logError) {
-      console.error("Telemetry insert error:", logError)
+    // 4. Try log event in usage_logs table (Optional telemetry)
+    try {
+      await supabaseServer.from("usage_logs").insert([
+        {
+          user_id: user.id,
+          event_type: eventType,
+          timestamp: new Date().toISOString(),
+          metadata: metadata || {},
+        },
+      ])
+    } catch (err: any) {
+      console.warn("Usage telemetry table insert failed (Supabase offline).")
     }
 
-    // 5. Aggregate active indicators in waitlist_users
+    // 5. Aggregate active indicators in local JSON DB fallback & Supabase
     const updates: Record<string, any> = {}
     const nowStr = new Date().toISOString()
 
@@ -61,13 +76,21 @@ export async function POST(req: Request) {
     }
 
     if (Object.keys(updates).length > 0) {
-      const { error: updateError } = await supabaseServer
-        .from("waitlist_users")
-        .update(updates)
-        .eq("id", user.id)
+      // 5.1 Update in local fallback DB
+      addOrUpdateLocalApplicant({
+        id: user.id,
+        email: user.email,
+        ...updates
+      })
 
-      if (updateError) {
-        console.error("Stats increment failed:", updateError)
+      // 5.2 Attempt update in Supabase
+      try {
+        await supabaseServer
+          .from("waitlist_users")
+          .update(updates)
+          .eq("id", user.id)
+      } catch (err: any) {
+        console.warn("Supabase stats increment update failed:", err.message)
       }
     }
 
