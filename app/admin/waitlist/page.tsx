@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { 
   Users, CheckCircle, Clock, Search, ChevronRight, Play, 
-  FileText, MessageSquare, ShieldAlert, Award, Ban, AlertCircle, Sparkles, KeyRound
+  FileText, MessageSquare, ShieldAlert, Award, Ban, AlertCircle, Sparkles, KeyRound, Mail
 } from "lucide-react"
 
 interface Applicant {
@@ -39,6 +39,7 @@ export default function WaitlistDashboard() {
   const [actionLoading, setActionLoading] = useState(false)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [notesText, setNotesText] = useState("")
+  const [emailSending, setEmailSending] = useState(false)
 
   const loadData = async () => {
     try {
@@ -98,6 +99,32 @@ export default function WaitlistDashboard() {
       console.error(err)
     } finally {
       setActionLoading(false)
+    }
+  }
+
+  const handleSendEmail = async (id: string) => {
+    if (emailSending) return
+    setEmailSending(true)
+    setSuccessMessage(null)
+
+    try {
+      const res = await fetch("/api/admin/resend-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id })
+      })
+      const payload = await res.json()
+
+      if (payload.success) {
+        setSuccessMessage("Onboarding Welcome Pass sent via email!")
+      } else {
+        alert(payload.error || "Email delivery failed. Verify your API Key configuration.")
+      }
+    } catch (err) {
+      console.error(err)
+      alert("Network error while trying to send email.")
+    } finally {
+      setEmailSending(false)
     }
   }
 
@@ -380,8 +407,26 @@ export default function WaitlistDashboard() {
                         Copy Key
                       </button>
                     </div>
+                    <div className="pt-1.5">
+                      <button
+                        onClick={() => handleSendEmail(selectedApplicant.id)}
+                        disabled={emailSending}
+                        className="w-full py-2.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 font-bold text-[10px] uppercase tracking-wider border border-emerald-500/25 transition-all flex items-center justify-center gap-1.5 disabled:opacity-50"
+                      >
+                        {emailSending ? (
+                          <>
+                            <div className="w-3 h-3 border-2 border-emerald-400/20 border-t-emerald-400 rounded-full animate-spin" />
+                            Sending Onboarding Welcome...
+                          </>
+                        ) : (
+                          <>
+                            <Mail className="w-3.5 h-3.5" /> Send Pass via Email
+                          </>
+                        )}
+                      </button>
+                    </div>
                     <div className="text-[9px] text-zinc-500 font-medium leading-relaxed pt-0.5">
-                      💡 Standard email sending requires SMTP/Resend keys configured in your environment. You can copy this code and send it manually to the creator!
+                      💡 Standard email sending dispatches a welcome email with their pass. You can copy the code manually or tap to send it via Resend instantly!
                     </div>
                   </div>
                 )}
