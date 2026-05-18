@@ -3,6 +3,8 @@ import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Script from "next/script";
+import { PostHogProvider } from "./posthog-provider";
+import PostHogPageView from "./posthog-pageview";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
@@ -39,7 +41,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <PostHogProvider>
+            <PostHogPageView />
+            {children}
+          </PostHogProvider>
         </ThemeProvider>
       </body>
     </html>
