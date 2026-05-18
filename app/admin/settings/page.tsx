@@ -231,7 +231,7 @@ export default function AdminSettingsDesk() {
                 Use these direct endpoints to review advanced traffic funnels, crawling audits, and custom data streams live on official Google consoles.
               </p>
             </div>
-          </div>iv>
+          </div>
 
           {/* Onboarding Template */}
           <div className="p-8 rounded-[2rem] glass-card border-white/5 space-y-6">
