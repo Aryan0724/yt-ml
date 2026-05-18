@@ -40,6 +40,12 @@ async def analyze_metadata(
     title: str = Form(...),
     niche: str = Form(...),
     sensitivity: str = Form("Balanced"),
+    channel_title: str = Form("Unknown"),
+    face_count: int = Form(0),
+    brightness: float = Form(120.0),
+    video_length: float = Form(600.0),
+    upload_hour: int = Form(15),
+    is_weekend: int = Form(0),
     thumbnail: Optional[UploadFile] = File(None)
 ):
     try:
@@ -47,8 +53,12 @@ async def analyze_metadata(
         raw_input = {
             "title": title,
             "category": niche,
-            "face_count": 0,
-            "brightness": 120
+            "channel_title": channel_title,
+            "face_count": face_count,
+            "brightness": brightness,
+            "video_length": video_length,
+            "upload_hour": upload_hour,
+            "is_weekend": is_weekend
         }
         results = engine.analyze_single(raw_input)
         

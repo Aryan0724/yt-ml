@@ -69,6 +69,52 @@ export async function POST(req: Request) {
       console.warn("Supabase approve update failed, falling back to local JSON sync:", err.message)
     }
 
+    // 3. Sync creator channel statistics into Python ML Engine dataset (channel_stats.json)
+    try {
+      const fs = require("fs")
+      const path = require("path")
+      const statsFilePath = "d:\\research\\youtube_dataset\\channel_stats.json"
+      
+      if (fs.existsSync(statsFilePath)) {
+        let statsData: any = {}
+        try {
+          const fileContent = fs.readFileSync(statsFilePath, "utf8")
+          statsData = JSON.parse(fileContent)
+        } catch (jsonErr) {
+          console.error("Failed to parse channel_stats.json, initializing fresh:", jsonErr)
+        }
+
+        // Clean name: extract handle if full URL is inputted
+        let channelName = String(applicant.youtube_channel || "Unknown Creator").trim()
+        if (channelName.includes("youtube.com/")) {
+          const parts = channelName.split("youtube.com/")
+          channelName = parts[parts.length - 1].replace(/^(c\/|user\/|channel\/)/, "").replace("@", "").trim()
+        }
+
+        const subs = applicant.subscriber_count || 1000
+        const avgViews = Math.round(subs * 0.15)
+        const p90Views = avgViews * 4
+        const authorityScore = Math.max(1.0, parseFloat((Math.log10(Math.max(10, subs)) * 1.5).toFixed(2)))
+        const tierProxy = Math.min(5.0, parseFloat((Math.log10(Math.max(10, subs)) / 1.5).toFixed(1)))
+
+        statsData[channelName] = {
+          avg_views: avgViews,
+          p90_views: p90Views,
+          authority_score: authorityScore,
+          est_sub_count: subs,
+          channel_tier_proxy: tierProxy,
+          category_consistency: 1.0,
+          video_count: 10,
+          has_real_subs: true
+        }
+
+        fs.writeFileSync(statsFilePath, JSON.stringify(statsData, null, 2), "utf8")
+        console.log(`Successfully synced connected creator [${channelName}] to Python intelligence database.`)
+      }
+    } catch (fsErr) {
+      console.error("Failed to sync to channel_stats.json:", fsErr)
+    }
+
     // Prepare Welcome Beta Onboarding Email
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://algopilot.integralgroups.in"
     const loginLink = `${appUrl}/dashboard?token=${betaToken}&email=${encodeURIComponent(applicant.email)}`
