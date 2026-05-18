@@ -4,33 +4,29 @@ import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { 
   BarChart3, TrendingUp, Compass, Smartphone, Globe2, 
-  Layers, Zap, Sparkles, RefreshCw, ShieldAlert, Award
+  Layers, Zap, Sparkles, RefreshCw, ShieldAlert, Award, ArrowUpRight
 } from "lucide-react"
 
 export default function AnalyticsIntegratedPage() {
   const [loading, setLoading] = useState(true)
-  const [gaStats, setGaStats] = useState({
-    sessions: 14832,
-    activeUsers: 843,
-    bounceRate: "32.4%",
-    avgDuration: "14m 12s",
+  const [gaStats, setGaStats] = useState<{
+    sessions: number
+    activeUsers: number
+    bounceRate: string
+    avgDuration: string
+    live: boolean
+    devices: { name: string; share: number }[]
+    geo: { country: string; sessions: string; percentage: number; color: string }[]
+    referrals: { source: string; sessions: string; percentage: number; color: string }[]
+  }>({
+    sessions: 0,
+    activeUsers: 0,
+    bounceRate: "0%",
+    avgDuration: "0s",
     live: false,
-    devices: [
-      { name: "Desktop", share: 64 },
-      { name: "Mobile", share: 36 }
-    ],
-    geo: [
-      { country: "United States (US)", sessions: "6,412", percentage: 48, color: "bg-blue-500" },
-      { country: "India (IN)", sessions: "4,010", percentage: 30, color: "bg-purple-500" },
-      { country: "United Kingdom (UK)", sessions: "1,843", percentage: 14, color: "bg-teal-500" },
-      { country: "Canada (CA)", sessions: "1,042", percentage: 8, color: "bg-rose-500" }
-    ],
-    referrals: [
-      { source: "YouTube Referrals", sessions: "7,842", percentage: 55, color: "bg-red-500" },
-      { source: "Direct Traffic", sessions: "3,410", percentage: 24, color: "bg-zinc-500" },
-      { source: "Organic Search (GSC)", sessions: "2,012", percentage: 14, color: "bg-blue-500" },
-      { source: "Social Media / Twitter", sessions: "1,040", percentage: 7, color: "bg-sky-400" }
-    ]
+    devices: [],
+    geo: [],
+    referrals: []
   })
 
   const loadAnalytics = async () => {
@@ -81,15 +77,15 @@ export default function AnalyticsIntegratedPage() {
           </h2>
           <p className="text-xs text-zinc-500 mt-1">Centralized operational growth metrics synced from Google Analytics, PostHog, GSC, and GTM.</p>
         </div>
-        <div className="flex items-center gap-3">
-          <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest border ${
-            gaStats.live 
-              ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400 animate-pulse" 
-              : "bg-amber-500/10 border-amber-500/20 text-amber-400"
-          }`}>
-            <span className={`w-1.5 h-1.5 rounded-full ${gaStats.live ? "bg-emerald-500" : "bg-amber-500"}`} />
-            {gaStats.live ? "GA4 Live API Connected" : "GA4 Simulation Engine Active"}
-          </span>
+        <div className="flex flex-wrap items-center gap-3">
+          <a 
+            href="https://analytics.google.com/analytics/web/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[10px] uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-[0_0_20px_rgba(79,70,229,0.25)] border border-indigo-500/30"
+          >
+            Open Real Google Analytics <ArrowUpRight className="w-3.5 h-3.5" />
+          </a>
           
           <button 
             onClick={loadAnalytics}

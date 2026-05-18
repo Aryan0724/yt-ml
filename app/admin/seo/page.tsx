@@ -12,18 +12,20 @@ export default function SEOCommandPage() {
   const [sitemapLoading, setSitemapLoading] = useState(false)
   const [sitemapSuccess, setSitemapSuccess] = useState(false)
   
-  const [seoData, setSeoData] = useState({
-    clicks: 2410,
-    impressions: 84320,
-    ctr: "2.8%",
-    position: "14.2",
+  const [seoData, setSeoData] = useState<{
+    clicks: number
+    impressions: number
+    ctr: string
+    position: string
+    live: boolean
+    keywords: { keyword: string; pos: string; trend: string; volume: string }[]
+  }>({
+    clicks: 0,
+    impressions: 0,
+    ctr: "0%",
+    position: "0.0",
     live: false,
-    keywords: [
-      { keyword: "youtube title analyzer", pos: "#1.2", trend: "+0.4", volume: "1,800/mo" },
-      { keyword: "creator telemetry metrics", pos: "#2.4", trend: "+1.1", volume: "840/mo" },
-      { keyword: "algopilot decision tool", pos: "#3.1", trend: "+0.8", volume: "1,200/mo" },
-      { keyword: "thumbnail predictor ai", pos: "#4.8", trend: "+0.2", volume: "450/mo" }
-    ]
+    keywords: []
   })
 
   const loadSEOMetrics = async () => {
@@ -75,15 +77,15 @@ export default function SEOCommandPage() {
           <p className="text-xs text-zinc-500 mt-1">Monitor organic keywords, search impressions, crawl diagnostics, and indexing structures.</p>
         </div>
         
-        <div className="flex items-center gap-3">
-          <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest border ${
-            seoData.live 
-              ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400 animate-pulse" 
-              : "bg-amber-500/10 border-amber-500/20 text-amber-400"
-          }`}>
-            <span className={`w-1.5 h-1.5 rounded-full ${seoData.live ? "bg-emerald-500" : "bg-amber-500"}`} />
-            {seoData.live ? "GSC Live API Connected" : "GSC Simulation Engine Active"}
-          </span>
+        <div className="flex flex-wrap items-center gap-3">
+          <a 
+            href="https://search.google.com/search-console"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-[0_0_20px_rgba(37,99,235,0.25)] border border-blue-500/30"
+          >
+            Open Real Search Console <ArrowUpRight className="w-3.5 h-3.5" />
+          </a>
 
           <button 
             onClick={loadSEOMetrics}

@@ -198,38 +198,40 @@ export default function AdminSettingsDesk() {
 
         {/* Right Column: Google OAuth integration & Resend setup */}
         <div className="lg:col-span-1 space-y-6">
-          {/* Google OAuth Panel */}
+          {/* Google Launchpad Panel */}
           <div className="p-8 rounded-[2rem] glass-card border-white/5 space-y-6 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500" />
             <div>
               <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                <Link2 className="w-4 h-4 text-blue-400" /> Google Connections
+                <Link2 className="w-4 h-4 text-blue-400" /> Google Console Suite
               </h3>
-              <p className="text-xs text-zinc-500 mt-0.5">Integrate Google Analytics 4 and GSC using secure OAuth2 login</p>
+              <p className="text-xs text-zinc-500 mt-0.5">Direct quick-access shortcuts to launch your external Search Console & Google Analytics properties.</p>
             </div>
+ 
+            <div className="space-y-3 pt-2">
+              <a
+                href="https://search.google.com/search-console"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_0_15px_rgba(37,99,235,0.15)] border border-blue-500/20"
+              >
+                Launch Search Console <ExternalLink className="w-4 h-4" />
+              </a>
 
-            <div className="pt-2">
-              {googleConnected ? (
-                <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold flex items-center gap-2">
-                  <Check className="w-4 h-4" />
-                  <span>Google Account Linked Live</span>
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  onClick={handleConnectGoogle}
-                  disabled={googleAuthLoading}
-                  className="w-full py-4 rounded-xl bg-blue-500 text-white font-bold text-xs uppercase tracking-wider hover:bg-blue-400 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
-                >
-                  <ExternalLink className={`w-4 h-4 ${googleAuthLoading ? "animate-spin" : ""}`} /> 
-                  {googleAuthLoading ? "Loading Redirect..." : "🔌 Connect Google Account"}
-                </button>
-              )}
+              <a
+                href="https://analytics.google.com/analytics/web/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_0_15px_rgba(79,70,229,0.15)] border border-indigo-500/20"
+              >
+                Launch Google Analytics <ExternalLink className="w-4 h-4" />
+              </a>
+
               <p className="text-[10px] text-zinc-600 mt-3 text-center leading-relaxed">
-                Connects your GA4 property and Search Console search performance maps securely. No Service Accounts required.
+                Use these direct endpoints to review advanced traffic funnels, crawling audits, and custom data streams live on official Google consoles.
               </p>
             </div>
-          </div>
+          </div>iv>
 
           {/* Onboarding Template */}
           <div className="p-8 rounded-[2rem] glass-card border-white/5 space-y-6">

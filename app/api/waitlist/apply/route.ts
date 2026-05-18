@@ -24,31 +24,40 @@ export async function POST(req: Request) {
     const betaAccessToken = "ap_" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 
     // Store in Supabase waitlist_users table
-    const { data: user, error: dbError } = await supabaseServer
-      .from("waitlist_users")
-      .insert([
-        {
-          full_name: fullName,
-          email: email.toLowerCase(),
-          youtube_channel: youtubeChannel,
-          niche,
-          subscriber_count: subCountInt,
-          upload_frequency: uploadFrequency,
-          reason_for_joining: reasonForJoining,
-          status: "pending",
-          applied_at: new Date().toISOString(),
-          total_logins: 0,
-          total_analyses: 0,
-          beta_access_token: betaAccessToken,
-          notes: "",
-        },
-      ])
-      .select()
-      .single()
+    let user: any = null
+    let dbError: any = null
+
+    try {
+      const { data, error } = await supabaseServer
+        .from("waitlist_users")
+        .insert([
+          {
+            full_name: fullName,
+            email: email.toLowerCase(),
+            youtube_channel: youtubeChannel,
+            niche,
+            subscriber_count: subCountInt,
+            upload_frequency: uploadFrequency,
+            reason_for_joining: reasonForJoining,
+            status: "pending",
+            applied_at: new Date().toISOString(),
+            total_logins: 0,
+            total_analyses: 0,
+            beta_access_token: betaAccessToken,
+            notes: "",
+          },
+        ])
+        .select()
+        .single()
+      
+      user = data
+      dbError = error
+    } catch (err: any) {
+      dbError = err
+    }
 
     if (dbError) {
-      console.error("Database insert failed:", dbError)
-      return NextResponse.json({ error: "Database storage failed. Please check table config." }, { status: 500 })
+      console.warn("Database insert failed (falling back to email-only registry):", dbError)
     }
 
     // Format subscribers for subject line (e.g. 42K, 1.2M)
@@ -59,11 +68,22 @@ export async function POST(req: Request) {
       formattedSubs = `${(subCountInt / 1000).toFixed(0)}K`
     }
 
-    const emailSubject = `New AlgoPilot Beta Application — ${formattedSubs} ${niche} Creator`
+    const emailSubject = dbError
+      ? `🚨 [DB OFFLINE] New AlgoPilot Beta Application — ${formattedSubs} ${niche} Creator`
+      : `New AlgoPilot Beta Application — ${formattedSubs} ${niche} Creator`
+
     const adminUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://algopilot.integralgroups.in"}/admin`
 
+    const dbWarningBadge = dbError 
+      ? `<div style="background-color: #ef4444; border: 1px solid #dc2626; color: white; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; font-size: 13px;">
+          ⚠️ DATABASE CONNECTION ERROR: This application was NOT saved in your Supabase database because the database is offline or paused. 
+          Please log into your Supabase Dashboard and RESUME your project to reactivate database storage.
+         </div>`
+      : ""
+
     const emailContent = `
-      <span class="badge">New Beta Application</span>
+      ${dbWarningBadge}
+      <span class="badge" style="${dbError ? 'background-color: #ef4444; color: white;' : ''}">New Beta Application ${dbError ? '(Email Fallback)' : ''}</span>
       <h1 class="h1">A creator wants to pilot their content engine.</h1>
       <p class="paragraph">
         A new beta registration has been received for the closed-beta program of the AlgoPilot Creator Intelligence system.
@@ -114,7 +134,7 @@ export async function POST(req: Request) {
       html: getEmailTemplate(emailContent),
     })
 
-    return NextResponse.json({ success: true, applicantId: user.id })
+    return NextResponse.json({ success: true, applicantId: user?.id || "offline_registered" })
   } catch (err: any) {
     console.error("Waitlist Apply API Error:", err)
     return NextResponse.json({ error: err.message || "An unexpected API error occurred." }, { status: 500 })

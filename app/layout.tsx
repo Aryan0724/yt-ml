@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
-      <head>
+      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-background text-foreground`}>
         {/* Google Analytics (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-XBGTFZ9358"
@@ -33,8 +33,6 @@ export default function RootLayout({
             gtag('config', 'G-XBGTFZ9358');
           `}
         </Script>
-      </head>
-      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-background text-foreground`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

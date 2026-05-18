@@ -76,26 +76,16 @@ export async function getLiveGA4Metrics() {
   if (!authClient || !hasGaProperty) {
     return {
       live: false,
-      sessions: 14832,
-      activeUsers: 843,
-      bounceRate: "32.4%",
-      avgDuration: "14m 12s",
+      sessions: 0,
+      activeUsers: 0,
+      bounceRate: "0%",
+      avgDuration: "0s",
       devices: [
-        { name: "Desktop", share: 64 },
-        { name: "Mobile", share: 36 }
+        { name: "Desktop", share: 0 },
+        { name: "Mobile", share: 0 }
       ],
-      geo: [
-        { country: "United States (US)", sessions: "6,412", percentage: 48 },
-        { country: "India (IN)", sessions: "4,010", percentage: 30 },
-        { country: "United Kingdom (UK)", sessions: "1,843", percentage: 14 },
-        { country: "Canada (CA)", sessions: "1,042", percentage: 8 }
-      ],
-      referrals: [
-        { source: "YouTube Referrals", sessions: "7,842", percentage: 55 },
-        { source: "Direct Traffic", sessions: "3,410", percentage: 24 },
-        { source: "Organic Search (GSC)", sessions: "2,012", percentage: 14 },
-        { source: "Social Media / Twitter", sessions: "1,040", percentage: 7 }
-      ]
+      geo: [],
+      referrals: []
     }
   }
 
@@ -177,16 +167,13 @@ export async function getLiveGA4Metrics() {
     console.error("Failed to query dynamic GA4 analytics metrics:", err)
     return {
       live: false,
-      sessions: 14832,
-      activeUsers: 843,
-      bounceRate: "32.4%",
-      avgDuration: "14m 12s",
-      devices: [{ name: "Desktop", share: 64 }, { name: "Mobile", share: 36 }],
-      geo: [
-        { country: "United States (US)", sessions: "6,412", percentage: 48 },
-        { country: "India (IN)", sessions: "4,010", percentage: 30 }
-      ],
-      referrals: [{ source: "YouTube Referrals", sessions: "7,842", percentage: 55 }]
+      sessions: 0,
+      activeUsers: 0,
+      bounceRate: "0%",
+      avgDuration: "0s",
+      devices: [{ name: "Desktop", share: 0 }, { name: "Mobile", share: 0 }],
+      geo: [],
+      referrals: []
     }
   }
 }
@@ -218,16 +205,11 @@ export async function getLiveGSCMetrics() {
   if (!authClient || !hasGscUrl) {
     return {
       live: false,
-      clicks: 2410,
-      impressions: 84320,
-      ctr: "2.8%",
-      position: "14.2",
-      keywords: [
-        { keyword: "youtube title analyzer", pos: "#1.2", trend: "+0.4", volume: "1,800/mo" },
-        { keyword: "creator telemetry metrics", pos: "#2.4", trend: "+1.1", volume: "840/mo" },
-        { keyword: "algopilot decision tool", pos: "#3.1", trend: "+0.8", volume: "1,200/mo" },
-        { keyword: "thumbnail predictor ai", pos: "#4.8", trend: "+0.2", volume: "450/mo" }
-      ]
+      clicks: 0,
+      impressions: 0,
+      ctr: "0%",
+      position: "0.0",
+      keywords: []
     }
   }
 
@@ -287,13 +269,11 @@ export async function getLiveGSCMetrics() {
     console.error("Failed to query live Google Search Console metrics:", err)
     return {
       live: false,
-      clicks: 2410,
-      impressions: 84320,
-      ctr: "2.8%",
-      position: "14.2",
-      keywords: [
-        { keyword: "youtube title analyzer", pos: "#1.2", trend: "+0.4", volume: "1,800/mo" }
-      ]
+      clicks: 0,
+      impressions: 0,
+      ctr: "0%",
+      position: "0.0",
+      keywords: []
     }
   }
 }
