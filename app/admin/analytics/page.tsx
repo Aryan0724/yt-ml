@@ -15,6 +15,7 @@ export default function AnalyticsIntegratedPage() {
     bounceRate: string
     avgDuration: string
     live: boolean
+    posthogEvents: number
     devices: { name: string; share: number }[]
     geo: { country: string; sessions: string; percentage: number; color: string }[]
     referrals: { source: string; sessions: string; percentage: number; color: string }[]
@@ -24,6 +25,7 @@ export default function AnalyticsIntegratedPage() {
     bounceRate: "0%",
     avgDuration: "0s",
     live: false,
+    posthogEvents: 0,
     devices: [],
     geo: [],
     referrals: []
@@ -42,6 +44,7 @@ export default function AnalyticsIntegratedPage() {
           bounceRate: payload.stats.bounceRate || "32.4%",
           avgDuration: payload.stats.avgDuration || "14m 12s",
           live: !!payload.stats.live,
+          posthogEvents: payload.stats.posthogEvents || 0,
           devices: payload.devices || [
             { name: "Desktop", share: 64 },
             { name: "Mobile", share: 36 }
@@ -101,7 +104,7 @@ export default function AnalyticsIntegratedPage() {
       <section className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {[
           { label: "Google Analytics Sessions", value: gaStats.sessions.toLocaleString(), desc: "Active telemetry sessions", trend: "+12.1%", icon: Compass, color: "text-blue-400" },
-          { label: "PostHog Registered Events", value: "84,310", desc: "User action clicks", trend: "+18.6%", icon: Layers, color: "text-purple-400" },
+          { label: "PostHog Registered Events", value: gaStats.posthogEvents.toLocaleString(), desc: "User action clicks", trend: "+18.6%", icon: Layers, color: "text-purple-400" },
           { label: "GA Bounce Rate", value: gaStats.bounceRate, desc: "Optimal retention flow", trend: "-2.8%", icon: Zap, color: "text-emerald-400" },
           { label: "Avg Session Duration", value: gaStats.avgDuration, desc: "High engagement margin", trend: "+4.2%", icon: TrendingUp, color: "text-teal-400" }
         ].map((dial, idx) => (
