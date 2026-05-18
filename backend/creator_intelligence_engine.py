@@ -6,6 +6,8 @@ from v30_ranking_engine import RankingEngineV30
 from v40_heuristic_analyzer import HeuristicAnalyzer
 from v40_confidence_system import ConfidenceSystem
 from v40_accuracy_optimizer import EnsembleAccuracyOptimizer
+from core.channel_dna_engine import ChannelDNAEngine
+from core.competitor_engine import CompetitorEngine
 
 class CreatorIntelligenceEngine:
     def __init__(self, model_dir=None):
@@ -15,7 +17,9 @@ class CreatorIntelligenceEngine:
         self.optimizer = EnsembleAccuracyOptimizer(model_dir)
         self.heuristics = HeuristicAnalyzer(self.base_engine.cat_stats)
         self.confidence_system = ConfidenceSystem()
-        self.version = "1.1-ENSEMBLE-BETA"
+        self.version = "2.0-ULTIMATE-INTELLIGENCE"
+        self.channel_dna_engine = ChannelDNAEngine()
+        self.competitor_engine = CompetitorEngine()
 
     def analyze_single(self, raw_input: dict) -> dict:
         """
@@ -43,7 +47,32 @@ class CreatorIntelligenceEngine:
         elif blended >= 40: tier = "B"
         else: tier = "C"
 
-        # 5. Build Final Structure
+        # 5. Creator DNA & Competitor Layer
+        channel_title = raw_input.get("channel_title", "Unknown")
+        category = raw_input.get("category", "Entertainment")
+        title = raw_input.get("title", "")
+        
+        dna_profile = self.channel_dna_engine.analyze_channel(channel_title)
+        competitor_profile = self.competitor_engine.analyze_competitors(channel_title, title, category)
+        
+        # 6. Safe vs Breakout Scores
+        category_consistency = dna_profile.get("performance_baselines", {}).get("category_consistency", 0.85)
+        safe_score = int(np.clip((blended * 0.7) + (category_consistency * 30), 0, 100))
+        breakout_score = int(np.clip(breakout_prob * 100, 0, 100))
+        
+        safe_explanation = ""
+        breakout_explanation = ""
+        if blended >= 85:
+            safe_explanation = "This fits your channel DNA perfectly and holds exceptionally high appeal for your loyal subscribers."
+            breakout_explanation = "Extremely high expansion probability! Dynamic composition features trigger wide recommendations."
+        elif blended >= 70:
+            safe_explanation = "Steady core audience click-through rate expected. Visual assets are familiar to your viewers."
+            breakout_explanation = "Moderate potential to reach new viewers if the early retention is high."
+        else:
+            safe_explanation = "Subscribers may fail to recognize this upload as yours due to visual style deviations."
+            breakout_explanation = "Low expansion potential. The thumbnail lacks the extreme contrast required for broad recommendations."
+
+        # 7. Build Final Structure
         output = {
             "engine_version": self.version,
             "score": int(blended),
@@ -57,6 +86,14 @@ class CreatorIntelligenceEngine:
             "strengths": h_results['strengths'],
             "weaknesses": h_results['weaknesses'],
             "improvements": h_results['improvements'],
+            "channel_dna": dna_profile,
+            "competitor_analysis": competitor_profile,
+            "safe_vs_breakout": {
+                "safe_score": safe_score,
+                "safe_explanation": safe_explanation,
+                "breakout_score": breakout_score,
+                "breakout_explanation": breakout_explanation
+            },
             "raw_metrics": {
                 "ml_score": ml_score,
                 "heuristic_score": mq_score,

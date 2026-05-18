@@ -25,7 +25,7 @@ export default function DashboardLayout({
   const [creatorEmail, setCreatorEmail] = useState("")
   const [creatorToken, setCreatorToken] = useState("")
 
-  const verifyBetaPass = async (email: string, token: string, isInitial: boolean = false) => {
+  const verifyBetaPass = async (email: string, token: string, isInitial: boolean = false, signal?: AbortSignal) => {
     try {
       const res = await fetch("/api/activity/log", {
         method: "POST",
@@ -35,7 +35,8 @@ export default function DashboardLayout({
           token,
           eventType: isInitial ? "login" : "dashboard_usage",
           metadata: { path: window.location.pathname }
-        })
+        }),
+        signal,
       })
 
       const payload = await res.json()
@@ -60,13 +61,17 @@ export default function DashboardLayout({
           }
         }
       }
-    } catch (err) {
+    } catch (err: any) {
+      if (err?.name === "AbortError") return
       console.error("Verification failed:", err)
       setAuthState("gate")
     }
   }
 
   useEffect(() => {
+    const controller = new AbortController()
+    const signal = controller.signal
+
     // 1. Check URL parameters for direct beta access pass links
     const params = new URLSearchParams(window.location.search)
     const urlEmail = params.get("email")
@@ -77,7 +82,7 @@ export default function DashboardLayout({
       const newUrl = window.location.pathname
       window.history.replaceState({}, document.title, newUrl)
       
-      verifyBetaPass(urlEmail, urlToken, true)
+      verifyBetaPass(urlEmail, urlToken, true, signal)
       return
     }
 
@@ -86,9 +91,13 @@ export default function DashboardLayout({
     const localToken = localStorage.getItem("ap_beta_token")
 
     if (localEmail && localToken) {
-      verifyBetaPass(localEmail, localToken, true)
+      verifyBetaPass(localEmail, localToken, true, signal)
     } else {
       setAuthState("gate")
+    }
+
+    return () => {
+      controller.abort()
     }
   }, [])
 
