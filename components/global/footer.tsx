@@ -8,8 +8,14 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12 mb-16">
           <div className="col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-6 group">
-              <Zap className="w-6 h-6 text-white group-hover:rotate-12 transition-transform" />
-              <span className="font-display font-bold text-xl tracking-tight">AlgoPilot</span>
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 transition-transform group-hover:scale-105">
+                <path d="M50 12 L15 85 L35 85 L50 50 L65 85 L85 85 Z" fill="currentColor" />
+                <path d="M25 85 L50 65 L60 65 L35 85 Z" fill="hsl(var(--primary))" />
+              </svg>
+              <span className="font-display font-bold text-2xl tracking-tight">
+                <span className="text-foreground">Algo</span>
+                <span className="text-primary">Pilot</span>
+              </span>
             </Link>
             <p className="text-zinc-500 text-sm max-w-xs leading-relaxed">
               Pre-upload intelligence for serious creators. Analyze performance signals before you publish.
