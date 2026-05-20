@@ -3,6 +3,11 @@ import { supabaseServer } from "@/lib/supabase-server"
 import { sendEmail, getEmailTemplate } from "@/lib/mailer"
 
 export async function POST(req: Request) {
+  // Log env presence on every request for debugging
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+  console.log("[waitlist/apply] ENV CHECK — URL:", supabaseUrl ? "✅" : "❌ MISSING", "| SERVICE_KEY:", serviceKey ? "✅" : "❌ MISSING (will use anon key)")
+
   try {
     const body = await req.json()
     const {
@@ -57,9 +62,9 @@ export async function POST(req: Request) {
       .single()
 
     if (error) {
-      console.error("Supabase beta_waitlist insert error:", error)
+      console.error("[waitlist/apply] Supabase insert error:", JSON.stringify(error))
       return NextResponse.json(
-        { error: "Database insert failed: " + error.message },
+        { error: `Database insert failed: ${error.message} (code: ${error.code})` },
         { status: 500 }
       )
     }
