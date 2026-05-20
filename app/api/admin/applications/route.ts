@@ -11,7 +11,12 @@ export async function GET(req: Request) {
     
     let dbApplicants: any[] = []
     try {
-      const { data, error } = await supabaseServer.from("waitlist_users").select("*")
+      // Set a 3-second timeout to prevent Vercel gateway timeouts on paused databases
+      const queryPromise = supabaseServer.from("waitlist_users").select("*")
+      const timeoutPromise = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error("Database query timed out")), 3000)
+      )
+      const { data, error } = await Promise.race([queryPromise, timeoutPromise]) as any
       if (error) throw error
       dbApplicants = data || []
     } catch (err: any) {
