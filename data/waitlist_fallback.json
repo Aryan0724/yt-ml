@@ -12,10 +12,26 @@
     "applied_at": "2026-05-18T09:28:16.750Z",
     "beta_access_token": "ap_2fqjdzliiuuv8mubndyfm",
     "notes": "",
-    "total_logins": 28,
+    "total_logins": 30,
     "total_analyses": 25,
     "approved_at": "2026-05-18T09:28:53.044Z",
-    "last_login": "2026-05-18T17:45:30.425Z",
+    "last_login": "2026-05-20T06:00:46.365Z",
     "last_analysis_at": "2026-05-18T17:46:11.387Z"
+  },
+  {
+    "id": "ap_0cswfhjxuwm9",
+    "full_name": "dfg",
+    "email": "aryan.foracadmic@gmail.com",
+    "youtube_channel": "https://www.youtube.com/@VarunMayya",
+    "niche": "Education",
+    "subscriber_count": 999999,
+    "upload_frequency": "1-4 videos",
+    "reason_for_joining": "asdfxgcnhv",
+    "status": "pending",
+    "applied_at": "2026-05-20T07:51:31.776Z",
+    "beta_access_token": "ap_gp5rerqhgbu614t7qjkym9",
+    "notes": "",
+    "total_logins": 0,
+    "total_analyses": 0
   }
 ]

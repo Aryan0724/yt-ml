@@ -9,60 +9,59 @@ export async function GET(req: Request) {
     const nicheFilter = searchParams.get("niche")
     const sortBy = searchParams.get("sortBy") // subscribers_desc, subscribers_asc, applied_at_desc
     
-    let applicants: any[] = []
-    let dbError = null
-
+    let dbApplicants: any[] = []
     try {
-      let query = supabaseServer.from("waitlist_users").select("*")
-
-      if (statusFilter) {
-        query = query.eq("status", statusFilter)
-      }
-      
-      if (nicheFilter && nicheFilter !== "All Niches") {
-        query = query.eq("niche", nicheFilter)
-      }
-
-      if (sortBy === "subscribers_desc") {
-        query = query.order("subscriber_count", { ascending: false })
-      } else if (sortBy === "subscribers_asc") {
-        query = query.order("subscriber_count", { ascending: true })
-      } else {
-        query = query.order("applied_at", { ascending: false })
-      }
-
-      const { data, error } = await query
+      const { data, error } = await supabaseServer.from("waitlist_users").select("*")
       if (error) throw error
-      applicants = data || []
+      dbApplicants = data || []
     } catch (err: any) {
-      console.warn("Supabase fetch failed, falling back to local JSON database:", err.message)
-      dbError = err
+      console.warn("Supabase fetch failed, using local JSON database only:", err.message)
     }
 
-    // Fallback: If Supabase failed or returned no results, read from persistent local JSON
-    if (applicants.length === 0) {
-      let localApps = getLocalApplicants()
-      
-      if (statusFilter) {
-        localApps = localApps.filter((a) => a.status === statusFilter)
-      }
-      
-      if (nicheFilter && nicheFilter !== "All Niches") {
-        localApps = localApps.filter((a) => a.niche === nicheFilter)
-      }
+    // Load local fallback applicants
+    const localApps = getLocalApplicants()
 
-      if (sortBy === "subscribers_desc") {
-        localApps.sort((a, b) => b.subscriber_count - a.subscriber_count)
-      } else if (sortBy === "subscribers_asc") {
-        localApps.sort((a, b) => a.subscriber_count - b.subscriber_count)
-      } else {
-        localApps.sort((a, b) => new Date(b.applied_at).getTime() - new Date(a.applied_at).getTime())
+    // Merge by email (case-insensitive) to prevent duplicates, prioritizing Supabase DB records
+    const mergedMap = new Map<string, any>()
+
+    for (const app of localApps) {
+      if (app && app.email) {
+        mergedMap.set(app.email.toLowerCase().trim(), app)
       }
-      
-      applicants = localApps
     }
 
-    return NextResponse.json({ success: true, data: applicants })
+    for (const app of dbApplicants) {
+      if (app && app.email) {
+        mergedMap.set(app.email.toLowerCase().trim(), app)
+      }
+    }
+
+    let merged = Array.from(mergedMap.values())
+
+    // Apply filters in-memory on the merged dataset
+    if (statusFilter) {
+      merged = merged.filter((a) => a.status === statusFilter)
+    }
+
+    if (nicheFilter && nicheFilter !== "All Niches") {
+      merged = merged.filter((a) => a.niche && a.niche.toLowerCase() === nicheFilter.toLowerCase())
+    }
+
+    // Apply sorting
+    if (sortBy === "subscribers_desc") {
+      merged.sort((a, b) => (b.subscriber_count || 0) - (a.subscriber_count || 0))
+    } else if (sortBy === "subscribers_asc") {
+      merged.sort((a, b) => (a.subscriber_count || 0) - (b.subscriber_count || 0))
+    } else {
+      // Default: applied_at_desc
+      merged.sort((a, b) => {
+        const dateA = a.applied_at ? new Date(a.applied_at).getTime() : 0
+        const dateB = b.applied_at ? new Date(b.applied_at).getTime() : 0
+        return dateB - dateA
+      })
+    }
+
+    return NextResponse.json({ success: true, data: merged })
   } catch (err: any) {
     console.error("Admin Fetch Applications Error:", err)
     return NextResponse.json({ error: err.message || "Could not retrieve applicants database." }, { status: 500 })

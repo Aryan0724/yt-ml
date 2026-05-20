@@ -59,8 +59,30 @@ export async function POST(req: Request) {
           metadata: metadata || {},
         },
       ])
+
+      // 4.1 Also write to activity_feed if it is a relevant creator action
+      if (eventType === "thumbnail_analysis" || eventType === "comparison_analysis") {
+        const actionMap: Record<string, string> = {
+          thumbnail_analysis: "analyzed_thumbnails",
+          comparison_analysis: "compared_titles"
+        }
+        
+        await supabaseServer.from("activity_feed").insert([
+          {
+            user_id: user.id,
+            channel_id: user.youtube_channel ? user.youtube_channel.replace("https://youtube.com/", "").replace("@", "") : null,
+            country: metadata?.country || "US",
+            city: metadata?.city || "Austin",
+            niche: user.niche || "Gaming",
+            action_type: actionMap[eventType] || "analyzed_thumbnails",
+            timestamp: new Date().toISOString(),
+            consent_public_showcase: metadata?.consent_public_showcase || false,
+            allow_live_feed: metadata?.allow_live_feed !== undefined ? metadata.allow_live_feed : true
+          }
+        ])
+      }
     } catch (err: any) {
-      console.warn("Usage telemetry table insert failed (Supabase offline).")
+      console.warn("Usage telemetry or activity feed insert failed during logging:", err.message)
     }
 
     // 5. Aggregate active indicators in local JSON DB fallback & Supabase

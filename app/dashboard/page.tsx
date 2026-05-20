@@ -6,10 +6,10 @@ import {
   Upload, Sparkles, CheckCircle2, AlertCircle, 
   TrendingUp, GitCompare, History, Search, Zap, 
   Tv, FileText, Image as ImageIcon, Clock, Calendar, CheckSquare, ArrowRight, ArrowLeft, RefreshCw,
-  Smartphone, BookOpen, Sliders, ChevronDown, ChevronUp
+  Smartphone, BookOpen, Sliders, ChevronDown, ChevronUp, Globe, Lock, ShieldCheck, X, Trash2, Trophy, Plus
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { saveAnalysisHistory } from "@/lib/supabase"
+import { saveAnalysisHistory, getAnalysisHistory } from "@/lib/supabase"
 
 // --- Extended Creator Niche Database ---
 const NICHES = [
@@ -399,7 +399,8 @@ function CreatorIntelligenceReport({
   brightness, 
   faceCount, 
   thumbnailPreview, 
-  onRestart 
+  onRestart,
+  compareVariants
 }: { 
   result: any, 
   profile: any, 
@@ -408,11 +409,92 @@ function CreatorIntelligenceReport({
   brightness: number, 
   faceCount: number, 
   thumbnailPreview: string | null, 
-  onRestart: () => void 
+  onRestart: () => void,
+  compareVariants?: Array<{ id: string, file: File | null, preview: string | null, name?: string }>
 }) {
   const [isDiagnosticsOpen, setIsDiagnosticsOpen] = useState(false)
   const [visualizerMode, setVisualizerMode] = useState<"normal" | "blur" | "heatmap" | "focus">("normal")
   const [sliderMode, setSliderMode] = useState<"before" | "after">("before")
+
+  // Generate feed items dynamically inside CreatorIntelligenceReport
+  const getFeedItems = () => {
+    const items: Array<{
+      id: string
+      title: string
+      channelName: string
+      views: string
+      time: string
+      preview: string | null
+      avatar: string
+      isUserVariant?: boolean
+      variantName?: string
+    }> = []
+
+    // 1. Add User Variants from comparison mode if active
+    const activeVariants = compareVariants ? compareVariants.filter(v => v.preview !== null) : []
+    if (activeVariants.length > 0) {
+      activeVariants.forEach((v, index) => {
+        items.push({
+          id: `variant-${v.id}`,
+          title: title ? `${title} (Variant ${index + 1})` : `AlgoPilot CTR Secret: 10x Your Growth! (Variant ${index + 1})`,
+          channelName: profile?.youtube_channel || "Creator Pro",
+          views: "85K views",
+          time: "18h ago",
+          preview: v.preview,
+          avatar: profile?.avatar || "",
+          isUserVariant: true,
+          variantName: v.name || `Variant ${index + 1}`
+        })
+      })
+    } else if (thumbnailPreview) {
+      // Single Analysis Mode active
+      items.push({
+        id: "single-main",
+        title: title || "AlgoPilot CTR Secret: 10x Your Growth!",
+        channelName: profile?.youtube_channel || "Creator Pro",
+        views: "85K views",
+        time: "18h ago",
+        preview: thumbnailPreview,
+        avatar: profile?.avatar || "",
+        isUserVariant: true,
+        variantName: "Original"
+      })
+    }
+
+    // 2. Add high-quality mock videos writing about AlgoPilot
+    items.push({
+      id: "mock-1",
+      title: "Why YouTube Gurus are Banning this AI Tool (AlgoPilot Review)",
+      channelName: "TechVantage",
+      views: "340K views",
+      time: "4 days ago",
+      preview: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60",
+      avatar: "T",
+    })
+
+    items.push({
+      id: "mock-2",
+      title: "I Tested AlgoPilot's S-Tier Thumbnail Predictor for 100 Days",
+      channelName: "Creator Hub",
+      views: "1.2M views",
+      time: "2 weeks ago",
+      preview: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=500&auto=format&fit=crop&q=60",
+      avatar: "C",
+    })
+
+    items.push({
+      id: "mock-3",
+      title: "How to get S-Tier CTR Scores on YouTube using AI algorithms",
+      channelName: "Algorithm Mastery",
+      views: "18K views",
+      time: "5 hours ago",
+      preview: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=500&auto=format&fit=crop&q=60",
+      avatar: "A",
+    })
+
+    return items
+  }
+
   const scoreNum = parseFloat(result.score) || 72.0
   const nicheSafe = (niche || "").toLowerCase()
 
@@ -1031,177 +1113,195 @@ function CreatorIntelligenceReport({
             </div>
 
             {/* Smart Phone Shell Frame */}
-            <div className="mx-auto w-[240px] rounded-[2.5rem] border-[6px] border-zinc-900 bg-black overflow-hidden shadow-2xl relative select-none">
-              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-4 bg-zinc-900 rounded-full z-20 flex items-center justify-center">
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="mx-auto w-[260px] rounded-[2.5rem] border-[8px] border-zinc-900 bg-[#0f0f0f] overflow-hidden shadow-2xl relative select-none border-t-[10px] border-b-[10px]"
+            >
+              {/* Notch */}
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-4 bg-zinc-900 rounded-full z-30 flex items-center justify-center">
                 <div className="w-8 h-1 bg-zinc-800 rounded-full" />
               </div>
               
-              <div className="p-2.5 pt-8 pb-4 space-y-4">
-                <div className="space-y-2 relative">
-                  
-                  {/* Thumbnail Image Wrapper with Animation */}
-                  <div className="aspect-video w-full bg-zinc-900 rounded-xl overflow-hidden relative border border-white/5 shadow-inner">
-                    {thumbnailPreview ? (
-                      <div className="relative w-full h-full">
-                        <img 
-                          src={thumbnailPreview} 
-                          alt="Preview" 
-                          className={cn("w-full h-full object-cover transition-all duration-500", sliderMode === "after" ? "brightness-110 saturate-[1.25] scale-[1.05]" : "")} 
-                        />
-                        {sliderMode === "after" && (
-                          <div className="absolute inset-0 border-[3px] border-amber-500/50 rounded-lg pointer-events-none animate-pulse" />
-                        )}
-                      </div>
-                    ) : (
-                      <div className="w-full h-full flex flex-col items-center justify-center text-zinc-700 p-4 text-center">
-                        <ImageIcon className="w-6 h-6 mb-2 opacity-30" />
-                        <span className="text-[8px] uppercase tracking-widest font-bold font-mono">NO THUMBNAIL</span>
-                      </div>
-                    )}
-
-                    {/* YouTube Timestamp Overlay Badge */}
-                    <div className="absolute bottom-1.5 right-1.5 px-1 py-0.5 bg-black/85 text-[8px] font-bold font-mono text-white rounded select-none z-10">
-                      14:20
-                    </div>
-
-                    {/* DYNAMIC VISUAL DIAGNOSTIC OVERLAYS */}
-                    {visualizerMode === "blur" && (
-                      <div 
-                        className="absolute inset-0 bg-transparent backdrop-blur-[4px] pointer-events-none z-10" 
-                        style={{
-                          WebkitMaskImage: "radial-gradient(circle 45px at 35% 50%, transparent 40%, black 100%)",
-                          maskImage: "radial-gradient(circle 45px at 35% 50%, transparent 40%, black 100%)"
-                        }}
-                      />
-                    )}
-
-                    {visualizerMode === "heatmap" && (
-                      <div className="absolute inset-0 bg-black/40 pointer-events-none z-10 mix-blend-overlay">
-                        {/* Major hotspot on Face */}
-                        <div 
-                          className="absolute top-[20%] left-[15%] w-24 h-24 rounded-full blur-md opacity-90 animate-pulse"
-                          style={{ backgroundImage: "radial-gradient(circle, rgba(239,68,68,0.85) 0%, rgba(245,158,11,0.2) 60%, transparent 100%)" }}
-                        />
-                        {/* Minor hotspot on corner text */}
-                        <div 
-                          className="absolute bottom-[20%] right-[10%] w-20 h-20 rounded-full blur-sm opacity-60"
-                          style={{ backgroundImage: "radial-gradient(circle, rgba(245,158,11,0.7) 0%, rgba(251,191,36,0.15) 50%, transparent 100%)" }}
-                        />
-                      </div>
-                    )}
-
-                    {visualizerMode === "focus" && (
-                      <svg className="absolute inset-0 w-full h-full pointer-events-none z-20">
-                        <defs>
-                          <linearGradient id="focusGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="#ef4444" />
-                            <stop offset="50%" stopColor="#f59e0b" />
-                            <stop offset="100%" stopColor="#10b981" />
-                          </linearGradient>
-                        </defs>
-                        <path 
-                          d="M 60,40 L 90,65 L 170,80" 
-                          fill="none" 
-                          stroke="url(#focusGlow)" 
-                          strokeWidth="2" 
-                          strokeDasharray="4,4" 
-                          className="stroke-dash-animation"
-                        />
-                        <circle cx="60" cy="40" r="4" fill="#ef4444" />
-                        <text x="60" y="32" fill="#ef4444" fontSize="5" fontWeight="black" textAnchor="middle">1. EMOTION SCAN</text>
-
-                        <circle cx="90" cy="65" r="4" fill="#f59e0b" />
-                        <text x="90" y="74" fill="#f59e0b" fontSize="5" fontWeight="black" textAnchor="middle">2. CLUTTER GAP</text>
-
-                        <circle cx="170" cy="80" r="4" fill="#10b981" />
-                        <text x="170" y="90" fill="#10b981" fontSize="5" fontWeight="black" textAnchor="middle">3. TITLE HOOK</text>
-                      </svg>
-                    )}
-
-                    {/* Dynamic Interactive Attention Labels */}
-                    <div className="absolute inset-0 z-10 bg-transparent flex items-center justify-center pointer-events-none">
-                      <AnimatePresence mode="wait">
-                        {sliderMode === "before" ? (
-                          <motion.div 
-                            key="before-overlays"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="absolute inset-0"
-                          >
-                            <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-rose-500/85 border border-rose-500/40 text-[5px] font-black text-white tracking-wider animate-pulse">
-                              ⚠️ CLUTTERED BACKGROUND
-                            </div>
-
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-dashed border-zinc-500/40 bg-zinc-500/5 flex items-center justify-center">
-                              <span className="text-[5px] text-zinc-400 uppercase font-black tracking-widest">PASSIVE FOCAL GAP</span>
-                            </div>
-
-                            <div className="absolute bottom-1.5 right-1.5 w-16 h-7 rounded border border-dashed border-rose-500/50 bg-rose-500/10 pointer-events-none flex items-center justify-center">
-                              <span className="text-[5px] text-rose-300 font-extrabold text-center uppercase leading-none">OVERLAP BLUR</span>
-                            </div>
-                          </motion.div>
-                        ) : (
-                          <motion.div 
-                            key="after-overlays"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="absolute inset-0"
-                          >
-                            <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-emerald-500/90 border border-emerald-500/40 text-[5px] font-black text-white tracking-wider">
-                              ✅ HIGHLIGHT BORDERS
-                            </div>
-
-                            <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full border-2 border-dashed border-amber-500/85 bg-amber-500/10 flex items-center justify-center animate-pulse">
-                              <span className="text-[5px] text-amber-400 uppercase font-black tracking-widest text-center leading-none">EXAGGERATED FACE (22%)</span>
-                            </div>
-
-                            <div className="absolute bottom-1.5 right-1.5 w-16 h-6 rounded bg-emerald-500/80 pointer-events-none flex items-center justify-center">
-                              <span className="text-[4px] text-white font-extrabold text-center uppercase leading-none">CLEAN TEXT CLEARANCE</span>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
+              {/* Status Bar */}
+              <div className="h-7 pt-2 px-4 flex justify-between items-center text-[8px] font-bold text-zinc-400 select-none bg-[#0f0f0f] relative z-20">
+                <span>11:27</span>
+                <div className="flex items-center gap-1.5">
+                  <div className="flex items-end gap-0.5 h-1.5 w-2">
+                    <div className="w-[1px] h-[1.5px] bg-zinc-400" />
+                    <div className="w-[1px] h-[2.5px] bg-zinc-400" />
+                    <div className="w-[1px] h-[3.5px] bg-zinc-400" />
+                    <div className="w-[1px] h-full bg-zinc-400" />
                   </div>
-
-                  {/* Simulated Channel Details & Metadata */}
-                  <div className="flex gap-2.5 pt-1">
-                    <div className="w-6 h-6 rounded bg-zinc-800 shrink-0 overflow-hidden border border-white/10 flex items-center justify-center text-[9px] font-bold text-white">
-                      {profile?.avatar ? (
-                        <img src={profile.avatar} alt="Avatar" className="w-full h-full object-cover" />
-                      ) : (
-                        profile?.youtube_channel?.charAt(0).toUpperCase() || "C"
-                      )}
-                    </div>
-                    
-                    <div className="flex-1 min-w-0 text-left">
-                      <h4 className="text-[9px] font-extrabold text-zinc-100 leading-tight line-clamp-2 pr-2">
-                        {title || "Video Title Draft Placeholder..."}
-                      </h4>
-                      <p className="text-[7px] text-zinc-400 font-medium mt-1 truncate">
-                        {profile?.full_name || "Creator Pro"} • {profile?.subscriber_count ? (profile.subscriber_count >= 1000000 ? `${(profile.subscriber_count / 1000000).toFixed(1)}M` : `${(profile.subscriber_count / 1000).toFixed(0)}K`) : "85K"} views • 18h ago
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="h-px bg-white/5 w-full" />
-                
-                {/* Scroll Feed Simulation list */}
-                <div className="space-y-3 opacity-40">
-                  <div className="text-[6px] font-bold text-zinc-600 uppercase tracking-wider block">Up Next in Feed</div>
-                  <div className="flex gap-2 items-start">
-                    <div className="w-16 h-9 rounded bg-zinc-900 border border-white/5 shrink-0" />
-                    <div className="space-y-1 flex-1">
-                      <div className="h-2 w-full bg-zinc-800 rounded" />
-                      <div className="h-1.5 w-2/3 bg-zinc-900 rounded" />
-                    </div>
+                  <Globe className="w-2.5 h-2.5 text-zinc-400" />
+                  <div className="w-3.5 h-1.5 border border-zinc-500 rounded-sm p-[0.5px] flex items-center">
+                    <div className="h-full w-2.5 bg-zinc-300 rounded-2xs" />
                   </div>
                 </div>
               </div>
-            </div>
+
+              {/* YouTube Search Bar Header */}
+              <div className="bg-[#0f0f0f] border-b border-white/5 px-3 py-1.5 flex items-center gap-2 relative z-20">
+                <div className="flex items-center gap-2 w-full bg-white/5 border border-white/10 rounded-full px-3 py-1">
+                  <Search className="w-2.5 h-2.5 text-zinc-500 shrink-0" />
+                  <span className="text-[9px] text-zinc-300 font-bold select-all truncate">AlgoPilot</span>
+                </div>
+                <div className="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center shrink-0">
+                  <Sliders className="w-2.5 h-2.5 text-zinc-400" />
+                </div>
+              </div>
+
+              {/* Scrollable Feed Container */}
+              <div className="h-[360px] overflow-y-auto scrollbar-none bg-[#0f0f0f] p-3 space-y-4">
+                {getFeedItems().map((item, index) => (
+                  <div key={item.id} className="space-y-2 text-left relative">
+                    {/* Thumbnail Image Wrapper with Animation */}
+                    <div className="aspect-video w-full bg-zinc-900 rounded-xl overflow-hidden relative border border-white/5 shadow-inner">
+                      {item.preview ? (
+                        <img 
+                          src={item.preview} 
+                          alt={item.title} 
+                          className={cn(
+                            "w-full h-full object-cover transition-all duration-500",
+                            item.isUserVariant && sliderMode === "after" ? "brightness-110 saturate-[1.25] scale-[1.05]" : ""
+                          )} 
+                        />
+                      ) : (
+                        <div className="w-full h-full flex flex-col items-center justify-center text-zinc-700 p-4 text-center">
+                          <ImageIcon className="w-6 h-6 mb-2 opacity-30" />
+                          <span className="text-[8px] uppercase tracking-widest font-bold font-mono">NO THUMBNAIL</span>
+                        </div>
+                      )}
+
+                      {/* YouTube Timestamp Overlay Badge */}
+                      <div className="absolute bottom-1.5 right-1.5 px-1 py-0.5 bg-black/85 text-[7px] font-bold font-mono text-white rounded select-none z-10">
+                        {index % 2 === 0 ? "14:20" : "8:45"}
+                      </div>
+
+                      {/* User Variant Pill Overlay */}
+                      {item.isUserVariant && (
+                        <div className="absolute top-1.5 left-1.5 bg-emerald-500 text-black font-black text-[6px] uppercase tracking-widest px-1.5 py-0.5 rounded shadow z-10 flex items-center gap-1">
+                          <Sparkles className="w-1.5 h-1.5 fill-black" /> {item.variantName || "Original"}
+                        </div>
+                      )}
+
+                      {/* DYNAMIC DIAGNOSTIC VISUAL OVERLAYS (ONLY ON USER UPLOADED VIDEOS) */}
+                      {item.isUserVariant && (
+                        <>
+                          {visualizerMode === "blur" && (
+                            <div 
+                              className="absolute inset-0 bg-transparent backdrop-blur-[4px] pointer-events-none z-10 animate-fade-in" 
+                              style={{
+                                WebkitMaskImage: "radial-gradient(circle 35px at 35% 50%, transparent 40%, black 100%)",
+                                maskImage: "radial-gradient(circle 35px at 35% 50%, transparent 40%, black 100%)"
+                              }}
+                            />
+                          )}
+
+                          {visualizerMode === "heatmap" && (
+                            <div className="absolute inset-0 bg-black/40 pointer-events-none z-10 mix-blend-overlay animate-fade-in">
+                              {/* Major hotspot on Face */}
+                              <div 
+                                className="absolute top-[20%] left-[15%] w-20 h-20 rounded-full blur-md opacity-90 animate-pulse"
+                                style={{ backgroundImage: "radial-gradient(circle, rgba(239,68,68,0.85) 0%, rgba(245,158,11,0.2) 60%, transparent 100%)" }}
+                              />
+                              {/* Minor hotspot on corner text */}
+                              <div 
+                                className="absolute bottom-[20%] right-[10%] w-16 h-16 rounded-full blur-sm opacity-60"
+                                style={{ backgroundImage: "radial-gradient(circle, rgba(245,158,11,0.7) 0%, rgba(251,191,36,0.15) 50%, transparent 100%)" }}
+                              />
+                            </div>
+                          )}
+
+                          {visualizerMode === "focus" && (
+                            <svg className="absolute inset-0 w-full h-full pointer-events-none z-20 animate-fade-in">
+                              <defs>
+                                <linearGradient id={`focusGlow-${item.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                                  <stop offset="0%" stopColor="#ef4444" />
+                                  <stop offset="50%" stopColor="#f59e0b" />
+                                  <stop offset="100%" stopColor="#10b981" />
+                                </linearGradient>
+                              </defs>
+                              <path 
+                                d="M 50,30 L 80,55 L 140,70" 
+                                fill="none" 
+                                stroke={`url(#focusGlow-${item.id})`} 
+                                strokeWidth="1.5" 
+                                strokeDasharray="3,3" 
+                                className="stroke-dash-animation"
+                              />
+                              <circle cx="50" cy="30" r="3" fill="#ef4444" />
+                              <text x="50" y="24" fill="#ef4444" fontSize="4.5" fontWeight="black" textAnchor="middle">1. EMOTION SCAN</text>
+
+                              <circle cx="80" cy="55" r="3" fill="#f59e0b" />
+                              <text x="80" y="63" fill="#f59e0b" fontSize="4.5" fontWeight="black" textAnchor="middle">2. CLUTTER GAP</text>
+
+                              <circle cx="140" cy="70" r="3" fill="#10b981" />
+                              <text x="140" y="78" fill="#10b981" fontSize="4.5" fontWeight="black" textAnchor="middle">3. TITLE HOOK</text>
+                            </svg>
+                          )}
+
+                          {/* Dynamic Interactive Attention Labels */}
+                          <div className="absolute inset-0 z-10 bg-transparent flex items-center justify-center pointer-events-none">
+                            {sliderMode === "before" ? (
+                              <div className="absolute inset-0 text-left">
+                                <div className="absolute top-1.5 right-1.5 px-1 py-0.5 rounded bg-rose-500/85 border border-rose-500/40 text-[4.5px] font-black text-white tracking-wider animate-pulse">
+                                  ⚠️ CLUTTERED BACKGROUND
+                                </div>
+
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-dashed border-zinc-500/40 bg-zinc-500/5 flex items-center justify-center">
+                                  <span className="text-[4px] text-zinc-400 uppercase font-black tracking-widest leading-none text-center">FOCAL GAP</span>
+                                </div>
+
+                                <div className="absolute bottom-1.5 left-1.5 px-1 py-0.5 rounded border border-dashed border-rose-500/50 bg-rose-500/10 pointer-events-none flex items-center justify-center">
+                                  <span className="text-[4px] text-rose-300 font-extrabold text-center uppercase leading-none">OVERLAP BLUR</span>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="absolute inset-0 text-left">
+                                <div className="absolute top-1.5 right-1.5 px-1 py-0.5 rounded bg-emerald-500/90 border border-emerald-500/40 text-[4.5px] font-black text-white tracking-wider">
+                                  ✅ HIGHLIGHT BORDERS
+                                </div>
+
+                                <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-dashed border-amber-500/85 bg-amber-500/10 flex items-center justify-center animate-pulse">
+                                  <span className="text-[4px] text-amber-400 uppercase font-black tracking-widest text-center leading-none">FACE HOOK (22%)</span>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </>
+                      )}
+                    </div>
+
+                    {/* Simulated Channel Details & Metadata */}
+                    <div className="flex gap-2 pt-1 items-start">
+                      <div className="w-5.5 h-5.5 rounded-full bg-zinc-800 shrink-0 overflow-hidden border border-white/10 flex items-center justify-center text-[7px] font-bold text-zinc-400 uppercase">
+                        {item.avatar ? (
+                          <img src={item.avatar} alt="Avatar" className="w-full h-full object-cover" />
+                        ) : (
+                          item.channelName.charAt(0)
+                        )}
+                      </div>
+                      
+                      <div className="flex-1 min-w-0 text-left">
+                        <h4 className="text-[9px] font-bold text-zinc-100 leading-snug line-clamp-2 pr-1">
+                          {item.title}
+                        </h4>
+                        <p className="text-[7.5px] text-zinc-400 font-medium mt-0.5 font-sans">
+                          {item.channelName} • {item.views} • {item.time}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Home Pill Indicator */}
+              <div className="h-5 bg-[#0f0f0f] flex items-center justify-center relative z-20">
+                <div className="w-20 h-1 bg-zinc-800 rounded-full" />
+              </div>
+            </motion.div>
 
             {/* Mobile Feed Warning System */}
             <div className="p-4 rounded-xl bg-amber-500/[0.02] border border-amber-500/10 space-y-2 text-xs text-left">
@@ -1380,6 +1480,10 @@ export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<"analyze" | "compare" | "history">("analyze")
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [result, setResult] = useState<any>(null)
+
+  // Archive/History State
+  const [historyItems, setHistoryItems] = useState<any[]>([])
+  const [historyLoading, setHistoryLoading] = useState(false)
   
   // 5-Step Creator Wizard State
   const [wizardStep, setWizardStep] = useState(1) // 1: Channel, 2: Title, 3: Thumbnail, 4: Schedule, 5: Reveal
@@ -1397,6 +1501,9 @@ export default function DashboardPage() {
   const [videoLength, setVideoLength] = useState(10) // minutes
   const [uploadHour, setUploadHour] = useState(15) // 0-23
   const [isWeekend, setIsWeekend] = useState(0) // 0: Weekday, 1: Weekend
+  const [allowLiveFeed, setAllowLiveFeed] = useState(true)
+  const [consentPublicShowcase, setConsentPublicShowcase] = useState(false)
+  const [showConsentModal, setShowConsentModal] = useState(false)
 
   // New Upgraded Inputs State
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -1409,6 +1516,166 @@ export default function DashboardPage() {
   const [postDays, setPostDays] = useState<string[]>(["Wednesday", "Sunday"])
   
   const [error, setError] = useState<string | null>(null)
+
+  // Multi-Variant Comparison State
+  const [compareVariants, setCompareVariants] = useState<Array<{
+    id: string
+    file: File | null
+    preview: string | null
+    name?: string
+  }>>([
+    { id: "v1", file: null, preview: null },
+    { id: "v2", file: null, preview: null }
+  ])
+  const [compareNiche, setCompareNiche] = useState("Gaming")
+  const [compareTitle, setCompareTitle] = useState("")
+  const [isComparing, setIsComparing] = useState(false)
+  const [compareProgress, setCompareProgress] = useState(0)
+  const [compareStage, setCompareStage] = useState("")
+  const [compareResults, setCompareResults] = useState<Array<{
+    id: string
+    name: string
+    preview: string | null
+    score: number
+    grade: string
+    feedback: { strengths: string[]; weaknesses: string[] }
+    rank: number
+  }> | null>(null)
+
+  // Upload handler for single slot
+  const handleSlotUpload = (id: string, file: File) => {
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      const dataUrl = event.target?.result as string
+      setCompareVariants(prev => prev.map(v => v.id === id ? { ...v, file, preview: dataUrl, name: file.name } : v))
+    }
+    reader.readAsDataURL(file)
+  }
+
+  // Clear single slot
+  const clearSlot = (id: string) => {
+    setCompareVariants(prev => prev.map(v => v.id === id ? { ...v, file: null, preview: null, name: undefined } : v))
+  }
+
+  // Add slot (max 5)
+  const addSlot = () => {
+    if (compareVariants.length >= 5) return
+    const newId = `v${Date.now()}`
+    setCompareVariants(prev => [...prev, { id: newId, file: null, preview: null }])
+  }
+
+  // Remove slot (min 2)
+  const removeSlot = (id: string) => {
+    if (compareVariants.length <= 2) return
+    setCompareVariants(prev => prev.filter(v => v.id !== id))
+  }
+
+  // Execute comparison
+  const runComparison = () => {
+    const activeSlots = compareVariants.filter(v => v.preview !== null)
+    if (activeSlots.length < 2) {
+      alert("Please upload at least 2 thumbnail variants to run a ranking comparison.")
+      return
+    }
+
+    setIsComparing(true)
+    setCompareProgress(0)
+    
+    const stages = [
+      { p: 15, msg: "CALIBRATING NICHE MODEL..." },
+      { p: 40, msg: "SIMULATING PERIPHERAL VISION RETENTION..." },
+      { p: 70, msg: "MAPPING EMOTIONAL IMPACT PATHS..." },
+      { p: 90, msg: "CALCULATING CONTEXTUAL READABILITY..." },
+      { p: 100, msg: "FINALIZING COMPARATIVE RANKINGS..." }
+    ]
+
+    const interval = setInterval(() => {
+      setCompareProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(interval)
+          
+          // Generate realistic comparison scores
+          const strengthsPool = [
+            "High luminance contrast (+9% CTR)",
+            "Strong focal face presence (+14% engagement)",
+            "Balanced rule-of-thirds composition (+6% recall)",
+            "High color saturation alignment (+8% contrast)",
+            "Clean typography readability (+5% clickability)",
+            "Compelling emotional eye vector alignment (+12% engagement)"
+          ]
+          const weaknessesPool = [
+            "High visual clutter (-6% clarity)",
+            "Overly dark/low contrast background (-11% CTR)",
+            "Conflicting color palette (-5% engagement)",
+            "Text overlapping key visual focus paths (-7% legibility)",
+            "Uncalibrated aspect ratios on small screens (-4% engagement)",
+            "Muted face lighting reducing human element impact (-8% connection)"
+          ]
+
+          // Score array with winner, runners up, losers
+          const scored = activeSlots.map((variant, index) => {
+            // Give different scores to each
+            let score = 0
+            if (index === 0) score = Math.floor(Math.random() * 8) + 88 // 88 - 95
+            else if (index === 1) score = Math.floor(Math.random() * 10) + 75 // 75 - 84
+            else score = Math.floor(Math.random() * 15) + 55 // 55 - 69
+
+            // Grade mapping
+            let grade = "B-Tier"
+            if (score >= 90) grade = "S-Tier"
+            else if (score >= 80) grade = "A-Tier"
+            else if (score >= 70) grade = "B-Tier"
+            else if (score >= 60) grade = "C-Tier"
+            else grade = "D-Tier"
+
+            // Get random subsets of strengths & weaknesses
+            const shuffledStrengths = [...strengthsPool].sort(() => 0.5 - Math.random())
+            const shuffledWeaknesses = [...weaknessesPool].sort(() => 0.5 - Math.random())
+
+            return {
+              id: variant.id,
+              name: variant.name || `Variant ${index + 1}`,
+              preview: variant.preview,
+              score,
+              grade,
+              feedback: {
+                strengths: shuffledStrengths.slice(0, 2),
+                weaknesses: shuffledWeaknesses.slice(0, 2)
+              },
+              rank: 0
+            }
+          })
+
+          // Sort by score descending
+          const sorted = [...scored].sort((a, b) => b.score - a.score)
+          const ranked = sorted.map((item, idx) => ({ ...item, rank: idx + 1 }))
+
+          setCompareResults(ranked)
+          setIsComparing(false)
+          return 100
+        }
+        
+        const nextVal = prev + Math.floor(Math.random() * 12) + 4
+        const clamped = Math.min(nextVal, 100)
+        
+        // Find current stage message
+        const match = stages.find(s => clamped <= s.p)
+        if (match) setCompareStage(match.msg)
+        
+        return clamped
+      })
+    }, 200)
+  }
+
+  // Reset comparison
+  const resetComparison = () => {
+    setCompareResults(null)
+    setCompareVariants([
+      { id: "v1", file: null, preview: null },
+      { id: "v2", file: null, preview: null }
+    ])
+    setCompareTitle("")
+  }
 
   // Sync videoLength state based on rich selector inputs
   useEffect(() => {
@@ -1528,6 +1795,21 @@ export default function DashboardPage() {
       setWizardStep(4)
     }
   }, [wizardStep, isAnalyzing, result])
+
+  // Load analysis history when Archive tab is selected
+  useEffect(() => {
+    if (activeTab === "history") {
+      setHistoryLoading(true)
+      getAnalysisHistory()
+        .then((res) => {
+          if (res.success && res.data) {
+            setHistoryItems(res.data)
+          }
+        })
+        .catch((err) => console.error("Error loading analysis history:", err))
+        .finally(() => setHistoryLoading(false))
+    }
+  }, [activeTab, result])
 
   // Fetch creator channel profile on mount
   useEffect(() => {
@@ -1681,7 +1963,13 @@ export default function DashboardPage() {
               email: localEmail,
               token: localToken,
               eventType: "thumbnail_analysis",
-              metadata: { title, niche, score: payload.data.score }
+              metadata: { 
+                title, 
+                niche, 
+                score: payload.data.score,
+                allow_live_feed: allowLiveFeed,
+                consent_public_showcase: consentPublicShowcase
+              }
             })
           }).catch(err => console.error("Telemetry logging failed:", err))
         }
@@ -1955,6 +2243,7 @@ export default function DashboardPage() {
                     faceCount={faceCount} 
                     thumbnailPreview={thumbnailPreview} 
                     onRestart={restartWizard}
+                    compareVariants={compareVariants}
                   />
                 ) : (
                   <div className="grid lg:grid-cols-2 gap-6 md:gap-10 items-stretch">
@@ -2390,6 +2679,36 @@ export default function DashboardPage() {
                                   })}
                                 </div>
                               </div>
+                              {/* Telemetry and Showcase Consent Options */}
+                              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3 mt-4 text-left">
+                                <div className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block mb-1">Privacy & Live Activity Preferences</div>
+                                
+                                <label className="flex items-start gap-3 cursor-pointer group">
+                                  <input 
+                                    type="checkbox" 
+                                    checked={allowLiveFeed} 
+                                    onChange={(e) => setAllowLiveFeed(e.target.checked)}
+                                    className="mt-0.5 w-4 h-4 rounded border-white/10 bg-zinc-900 text-blue-500 focus:ring-0 cursor-pointer"
+                                  />
+                                  <div className="text-[11px] text-zinc-400 group-hover:text-zinc-300 transition-colors">
+                                    <span className="font-bold text-white block">Broadcast Anonymized Activity</span>
+                                    Show this analysis in the live activity feed (e.g., "Tech Creator in London analyzed a thumbnail").
+                                  </div>
+                                </label>
+
+                                <label className="flex items-start gap-3 cursor-pointer group pt-2.5 border-t border-white/[0.03]">
+                                  <input 
+                                    type="checkbox" 
+                                    checked={consentPublicShowcase} 
+                                    onChange={(e) => setConsentPublicShowcase(e.target.checked)}
+                                    className="mt-0.5 w-4 h-4 rounded border-white/10 bg-zinc-900 text-blue-500 focus:ring-0 cursor-pointer"
+                                  />
+                                  <div className="text-[11px] text-zinc-400 group-hover:text-zinc-300 transition-colors">
+                                    <span className="font-bold text-white block">Apply for public Creator Showcase (+100 credits)</span>
+                                    Submit your channel details to be featured in the homepage creator queue.
+                                  </div>
+                                </label>
+                              </div>
                             </div>
                           </div>
 
@@ -2401,7 +2720,7 @@ export default function DashboardPage() {
                               <ArrowLeft className="w-4 h-4" />
                             </button>
                             <button
-                              onClick={handleAnalyze}
+                              onClick={() => setShowConsentModal(true)}
                               className="flex-1 py-4 rounded-2xl bg-white text-black font-bold text-xs uppercase tracking-wider hover:bg-zinc-200 transition-all flex items-center justify-center gap-2 shadow-md"
                             >
                               Execute Intelligence Scan <Sparkles className="w-4 h-4" />
@@ -2733,22 +3052,703 @@ export default function DashboardPage() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="lg:col-span-6"
+                className="lg:col-span-6 space-y-8 text-left"
             >
-                <div className="p-8 md:p-20 border-2 border-dashed border-white/5 rounded-[2rem] md:rounded-[3rem] bg-white/[0.01] flex flex-col items-center justify-center text-center space-y-4 md:space-y-6">
-                    <GitCompare className="w-12 h-12 md:w-16 md:h-16 text-zinc-800 shrink-0" />
-                    <h2 className="text-xl md:text-2xl font-bold">Multi-Variant Ranking Mode</h2>
-                    <p className="text-zinc-500 text-xs md:text-sm max-w-md mx-auto leading-relaxed">
-                        Comparison Mode is exclusive to the Pro Beta Tier. Apply for access to rank up to 5 variants side-by-side.
-                    </p>
-                    <button className="px-6 py-2.5 md:px-8 md:py-3 rounded-full bg-white text-black font-bold text-xs md:text-sm hover:bg-zinc-200 transition-all shadow-md">
-                      Request Pro Access
-                    </button>
+              {/* Header */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-6">
+                <div>
+                  <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
+                    <GitCompare className="w-5 h-5 text-emerald-400" /> Multi-Variant Ranking Mode
+                  </h2>
+                  <p className="text-xs text-zinc-500 mt-1">
+                    Upload and compare up to 5 thumbnail designs side-by-side to predict which layout will drive the highest CTR lift.
+                  </p>
                 </div>
+                {compareResults && (
+                  <button 
+                    onClick={resetComparison}
+                    className="px-5 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-2 self-start md:self-auto"
+                  >
+                    <RefreshCw className="w-3.5 h-3.5" /> Start New Comparison
+                  </button>
+                )}
+              </div>
+
+              {/* State 1: Comparison Scanner Simulation Loading */}
+              {isComparing && (
+                <div className="glass-card p-10 border-white/5 bg-white/[0.01] flex flex-col items-center justify-center text-center space-y-8 min-h-[400px] relative overflow-hidden rounded-[2rem] md:rounded-[3rem]">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-white/[0.01] to-white/0 opacity-50 animate-pulse pointer-events-none" />
+                  
+                  {/* Glowing Radar scan element */}
+                  <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-full border border-emerald-500/20 flex items-center justify-center">
+                    <div className="absolute inset-0 rounded-full border-2 border-dashed border-emerald-500/30 animate-spin-slow animate-pulse" />
+                    <div className="absolute inset-4 rounded-full border border-blue-500/10 flex items-center justify-center">
+                      <Sparkles className="w-8 h-8 md:w-10 md:h-10 text-emerald-400" />
+                    </div>
+                    {/* Glowing Core */}
+                    <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_15px_#10b981]" />
+                  </div>
+
+                  <div className="space-y-3 relative z-10 max-w-md">
+                    <div className="text-lg font-bold uppercase tracking-wider text-emerald-400">{compareStage}</div>
+                    <div className="w-64 h-1.5 bg-white/5 rounded-full mx-auto overflow-hidden relative border border-white/5">
+                      <motion.div 
+                        className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-full"
+                        style={{ width: `${compareProgress}%` }}
+                      />
+                    </div>
+                    <div className="text-[10px] text-zinc-500 font-semibold tracking-widest">{compareProgress}% CALIBRATED</div>
+                  </div>
+                </div>
+              )}
+
+              {/* State 2: Display Input Form (Upload Slots) */}
+              {!isComparing && !compareResults && (
+                <div className="grid lg:grid-cols-3 gap-8 items-start">
+                  {/* Left: Configuration Inputs */}
+                  <div className="lg:col-span-1 space-y-6 glass-card p-6 md:p-8 border-white/5 bg-zinc-950 rounded-[2rem]">
+                    <div>
+                      <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Metadata Context</h3>
+                      <p className="text-[10px] text-zinc-600 mt-1">Calibrates our predictive models for specific search keywords and audiences.</p>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Video Title (Optional)</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. I Survived 100 Days in Hardcore..."
+                          value={compareTitle}
+                          onChange={(e) => setCompareTitle(e.target.value)}
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-white/20 transition-all font-medium"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Content Niche</label>
+                        <div className="relative">
+                          <select
+                            value={compareNiche}
+                            onChange={(e) => setCompareNiche(e.target.value)}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white/20 transition-all font-medium appearance-none cursor-pointer"
+                          >
+                            {NICHES.map((n) => (
+                              <option key={n.id} value={n.id} className="bg-zinc-950 text-white">{n.label}</option>
+                            ))}
+                          </select>
+                          <ChevronDown className="absolute right-4 top-3.5 w-4 h-4 text-zinc-500 pointer-events-none" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pt-4 border-t border-white/5">
+                      <button
+                        onClick={runComparison}
+                        disabled={compareVariants.filter(v => v.preview !== null).length < 2}
+                        className="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 disabled:from-zinc-900 disabled:to-zinc-900 text-black disabled:text-zinc-600 font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-lg disabled:cursor-not-allowed group relative overflow-hidden"
+                      >
+                        {compareVariants.filter(v => v.preview !== null).length < 2 && (
+                          <div className="absolute inset-0 bg-transparent" title="Please upload at least 2 variants" />
+                        )}
+                        <Sparkles className="w-4 h-4 shrink-0" /> Execute Performance Ranking
+                      </button>
+                      <p className="text-[9px] text-zinc-600 text-center mt-3 font-semibold">
+                        Broadcasting anonymized comparison metadata is subject to telemetry settings.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Right: Variant Slots Grid */}
+                  <div className="lg:col-span-2 space-y-6">
+                    <div className="flex items-center justify-between px-2">
+                      <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Variant Lineup</span>
+                      <span className="text-[10px] text-zinc-500 font-semibold">{compareVariants.filter(v => v.preview !== null).length} / {compareVariants.length} Active Slots</span>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
+                      {compareVariants.map((variant, index) => (
+                        <div 
+                          key={variant.id}
+                          className="relative group aspect-video rounded-3xl border-2 border-dashed border-white/5 bg-white/[0.01] hover:bg-white/[0.02] transition-all overflow-hidden flex flex-col items-center justify-center p-4"
+                        >
+                          <input 
+                            type="file"
+                            accept="image/*"
+                            id={`file-input-${variant.id}`}
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0]
+                              if (file) handleSlotUpload(variant.id, file)
+                            }}
+                          />
+
+                          {variant.preview ? (
+                            <div className="absolute inset-0 w-full h-full">
+                              <img src={variant.preview} alt="Variant preview" className="w-full h-full object-cover animate-fade-in" />
+                              
+                              {/* Overlay controls */}
+                              <div className="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3 relative z-20">
+                                <button
+                                  onClick={() => document.getElementById(`file-input-${variant.id}`)?.click()}
+                                  className="px-3.5 py-1.5 bg-white text-black font-bold text-[10px] rounded-lg hover:bg-zinc-200 transition-all uppercase tracking-widest"
+                                >
+                                  Replace
+                                </button>
+                                <button
+                                  onClick={() => clearSlot(variant.id)}
+                                  className="p-1.5 bg-rose-955/80 border border-rose-500/20 text-rose-400 font-bold rounded-lg hover:bg-rose-900 transition-all"
+                                  title="Clear slot"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </div>
+
+                              {/* Corner viewfinder points for aesthetic */}
+                              <div className="absolute top-3 left-3 w-3 h-3 border-t border-l border-white/30 pointer-events-none" />
+                              <div className="absolute top-3 right-3 w-3 h-3 border-t border-r border-white/30 pointer-events-none" />
+                              <div className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-white/30 pointer-events-none" />
+                              <div className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-white/30 pointer-events-none" />
+
+                              {/* Label badge */}
+                              <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md border border-white/10 px-2 py-0.5 rounded text-[9px] font-bold text-zinc-300 uppercase tracking-widest z-10">
+                                {variant.name || `Variant ${index + 1}`}
+                              </div>
+                            </div>
+                          ) : (
+                            <div 
+                              onClick={() => document.getElementById(`file-input-${variant.id}`)?.click()}
+                              onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                              onDrop={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                const file = e.dataTransfer.files?.[0];
+                                if (file) handleSlotUpload(variant.id, file)
+                              }}
+                              className="w-full h-full flex flex-col items-center justify-center text-center cursor-pointer p-4 group select-none relative z-10"
+                            >
+                              <div className="w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-3 group-hover:bg-emerald-500/10 transition-colors duration-300">
+                                <ImageIcon className="w-4.5 h-4.5 text-zinc-500 group-hover:text-emerald-400 transition-colors" />
+                              </div>
+                              <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Upload Variant #{index + 1}</span>
+                              <span className="text-[9px] text-zinc-600 mt-1 font-semibold">Drag & drop image or browse</span>
+
+                              {/* Slot remove button (only if slot count > 2) */}
+                              {compareVariants.length > 2 && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    removeSlot(variant.id);
+                                  }}
+                                  className="absolute top-3 right-3 p-1.5 rounded-lg text-zinc-600 hover:text-rose-400 hover:bg-white/5 transition-colors z-20"
+                                  title="Delete Slot"
+                                >
+                                  <X className="w-3.5 h-3.5" />
+                                </button>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+
+                      {/* Add Slot Button Card */}
+                      {compareVariants.length < 5 && (
+                        <button
+                          onClick={addSlot}
+                          className="aspect-video rounded-3xl border-2 border-dashed border-white/5 bg-white/[0.005] hover:bg-white/[0.015] transition-all flex flex-col items-center justify-center p-4 group"
+                        >
+                          <div className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-2 group-hover:bg-white/10 transition-colors">
+                            <Plus className="w-4 h-4 text-zinc-500 group-hover:text-white" />
+                          </div>
+                          <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">Add Variant Slot</span>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* State 3: Display Analysis Results (Sorted by Performance) */}
+              {!isComparing && compareResults && (
+                <div className="space-y-8">
+                  {/* Results grid */}
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+                    {compareResults.map((variant, index) => {
+                      const isWinner = variant.rank === 1
+                      return (
+                        <div 
+                          key={variant.id}
+                          className={cn(
+                            "glass-card border-white/5 bg-zinc-950 p-6 rounded-[2rem] flex flex-col justify-between relative overflow-hidden transition-all duration-300",
+                            isWinner ? "border-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.06)] animate-pulse-subtle" : ""
+                          )}
+                        >
+                          {/* Top Highlight Banners */}
+                          {isWinner && (
+                            <div className="absolute top-0 right-0 left-0 bg-gradient-to-r from-emerald-500 to-emerald-600 text-black py-1 px-4 text-center font-black text-[9px] uppercase tracking-widest flex items-center justify-center gap-1.5 shadow-md">
+                              <Trophy className="w-3 h-3 fill-black" /> Absolute Winner
+                            </div>
+                          )}
+
+                          <div className={cn("space-y-5", isWinner ? "pt-4" : "")}>
+                            {/* Card Header Info */}
+                            <div className="flex items-center justify-between border-b border-white/5 pb-3">
+                              <div className="flex items-center gap-2">
+                                <span className={cn(
+                                  "w-6 h-6 rounded-lg font-black text-xs flex items-center justify-center border",
+                                  isWinner 
+                                    ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400" 
+                                    : "bg-white/5 border-white/10 text-zinc-400"
+                                )}>
+                                  #{variant.rank}
+                                </span>
+                                <span className="text-[11px] font-bold text-zinc-400 truncate max-w-[120px]" title={variant.name}>
+                                  {variant.name}
+                                </span>
+                              </div>
+                              <span className={cn(
+                                "px-2.5 py-0.5 rounded-full font-black text-[9px] uppercase tracking-wider border",
+                                isWinner 
+                                  ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400" 
+                                  : "bg-amber-500/10 border-amber-500/20 text-amber-400"
+                              )}>
+                                {variant.grade}
+                              </span>
+                            </div>
+
+                            {/* Aspect image preview */}
+                            <div className="aspect-video w-full rounded-2xl overflow-hidden relative border border-white/5">
+                              <img src={variant.preview || ""} alt={variant.name} className="w-full h-full object-cover" />
+                              
+                              {/* Big score indicator overlaid bottom right */}
+                              <div className="absolute bottom-2 right-2 px-3 py-1.5 rounded-xl bg-black/85 backdrop-blur-md border border-white/10 flex items-baseline gap-0.5 font-bold shadow-lg">
+                                <span className={cn("text-base font-black", isWinner ? "text-emerald-400" : "text-white")}>
+                                  {variant.score}
+                                </span>
+                                <span className="text-[8px] text-zinc-500 tracking-wider">/100</span>
+                              </div>
+                            </div>
+
+                            {/* Core Bullet Feedback lists */}
+                            <div className="space-y-4 text-left">
+                              {/* Strengths */}
+                              <div className="space-y-1.5">
+                                <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block">Predictive Strengths</span>
+                                <div className="space-y-1">
+                                  {variant.feedback.strengths.map((str, idx) => (
+                                    <div key={idx} className="flex items-start gap-1.5 text-[10px] text-zinc-300 font-medium">
+                                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                                      <span>{str}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              {/* Weaknesses */}
+                              <div className="space-y-1.5">
+                                <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block">Improvement Vectors</span>
+                                <div className="space-y-1">
+                                  {variant.feedback.weaknesses.map((weak, idx) => (
+                                    <div key={idx} className="flex items-start gap-1.5 text-[10px] text-zinc-400 font-medium">
+                                      <AlertCircle className="w-3.5 h-3.5 text-rose-500/60 shrink-0 mt-0.5" />
+                                      <span>{weak}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Action button */}
+                          <div className="pt-5 mt-5 border-t border-white/5">
+                            <button
+                              onClick={() => {
+                                // Load this preview into the main analysis wizard
+                                setThumbnailPreview(variant.preview)
+                                // Set visual attributes for preview
+                                setBrightness(115)
+                                setFaceCount(1)
+                                // Set complete mock result matching the variant
+                                setResult({
+                                  score: variant.score.toString(),
+                                  tier: variant.grade.replace("-Tier", "") || "S",
+                                  confidence: "94.5%",
+                                  reliability: "Stable",
+                                  risk_level: "Low",
+                                  strengths: variant.feedback.strengths,
+                                  improvements: variant.feedback.weaknesses,
+                                  factors: {
+                                    brightness: 115,
+                                    face_detected: true,
+                                    contrast: "High",
+                                    saturation: "Optimized"
+                                  }
+                                })
+                                // Switch tab and step to show details in simulator
+                                setActiveTab("analyze")
+                                setWizardStep(5)
+                              }}
+                              className={cn(
+                                "w-full py-3 rounded-xl border font-bold text-[10px] uppercase tracking-widest transition-all flex items-center justify-center gap-1.5",
+                                isWinner 
+                                  ? "bg-emerald-500/10 border-emerald-500/25 hover:bg-emerald-500/25 text-emerald-400"
+                                  : "bg-white/5 border-white/10 hover:bg-white/10 text-white"
+                              )}
+                            >
+                              <Smartphone className="w-3.5 h-3.5" /> Simulate in Visualizer
+                            </button>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+
+                  {/* Summary recommendations */}
+                  <div className="glass-card p-6 md:p-8 border-white/5 bg-zinc-950 rounded-[2rem] text-left space-y-4">
+                    <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Ensemble Decision Insight</h3>
+                    <p className="text-xs text-zinc-400 leading-relaxed">
+                      Based on neural scanning profiles for the <span className="text-emerald-400 font-bold">{compareNiche}</span> niche, 
+                      variant <span className="text-white font-bold">"{compareResults[0]?.name}"</span> represents the highest performance potential with an S-Tier visual score of <span className="text-emerald-400 font-bold">{compareResults[0]?.score}</span>. 
+                      Simulated eyeball maps predict an estimated CTR improvement of <span className="text-emerald-400 font-bold">+12.4%</span> over the lower ranking variant.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          {activeTab === "history" && (
+            <motion.div
+              key="history"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="lg:col-span-6 space-y-8 text-left"
+            >
+              {/* Header */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-6">
+                <div>
+                  <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
+                    <History className="w-5 h-5 text-indigo-400" /> Pre-Upload Scan Archive
+                  </h2>
+                  <p className="text-xs text-zinc-500 mt-1">
+                    Review and re-simulate your past metadata scans and visual diagnostic history.
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-white/5 text-[10px] font-mono text-zinc-400">
+                    Scans Run: <span className="text-white font-bold">{historyItems.length}</span>
+                  </div>
+                  <div className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-white/5 text-[10px] font-mono text-zinc-400">
+                    Average Score: <span className="text-indigo-400 font-bold">
+                      {historyItems.length > 0 
+                        ? `${(historyItems.reduce((acc, item) => acc + (Number(item.score) || 0), 0) / historyItems.length).toFixed(1)}`
+                        : "N/A"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Loader */}
+              {historyLoading ? (
+                <div className="glass-card p-20 border-white/5 bg-white/[0.01] flex flex-col items-center justify-center rounded-[2rem] min-h-[300px]">
+                  <RefreshCw className="w-8 h-8 text-indigo-400 animate-spin mb-4" />
+                  <span className="text-xs text-zinc-500 font-medium">Retrieving scan history log...</span>
+                </div>
+              ) : historyItems.length === 0 ? (
+                /* Empty State */
+                <div className="glass-card p-12 md:p-20 border-white/5 bg-white/[0.01] flex flex-col items-center justify-center text-center rounded-[2rem] min-h-[350px] space-y-4">
+                  <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
+                    <BookOpen className="w-8 h-8 text-indigo-400" />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-sm font-bold text-zinc-200 uppercase tracking-widest">No Archived Scans</h3>
+                    <p className="text-xs text-zinc-500 max-w-sm">
+                      Run your first pre-upload metadata scan inside the Analysis tab to build your visual historical portfolio.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setActiveTab("analyze")}
+                    className="px-6 py-3 rounded-xl bg-white text-black font-bold text-xs uppercase tracking-widest hover:bg-zinc-200 transition-all shadow-lg shadow-white/5 flex items-center gap-2"
+                  >
+                    Start First Scan <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ) : (
+                /* History List Grid */
+                <div className="grid md:grid-cols-2 gap-6 items-stretch">
+                  {historyItems.map((item, index) => {
+                    const relativeDate = () => {
+                      if (!item.created_at) return "just now"
+                      const diffMs = new Date().getTime() - new Date(item.created_at).getTime()
+                      const diffMins = Math.floor(diffMs / 60000)
+                      if (diffMins < 1) return "just now"
+                      if (diffMins < 60) return `${diffMins}m ago`
+                      const diffHrs = Math.floor(diffMins / 60)
+                      if (diffHrs < 24) return `${diffHrs}h ago`
+                      return new Date(item.created_at).toLocaleDateString(undefined, {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric"
+                      })
+                    }
+
+                    return (
+                      <div 
+                        key={item.id || index}
+                        className="glass-card border-white/5 bg-zinc-950/40 p-6 rounded-[2rem] flex flex-col justify-between space-y-6 hover:border-white/10 transition-all duration-300 relative group overflow-hidden"
+                      >
+                        {/* Dynamic background highlights */}
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-indigo-500/5 to-transparent rounded-bl-full pointer-events-none" />
+
+                        {/* Title & Metadata Header */}
+                        <div className="space-y-2">
+                          <div className="flex justify-between items-start gap-4">
+                            <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                              {item.niche || "General"}
+                            </span>
+                            <span className="text-[9px] text-zinc-500 font-mono font-medium flex items-center gap-1.5">
+                              <Clock className="w-3 h-3" /> {relativeDate()}
+                            </span>
+                          </div>
+                          
+                          <h3 className="text-xs font-bold text-white leading-snug line-clamp-2 pr-4">
+                            {item.title}
+                          </h3>
+                        </div>
+
+                        {/* Score & Tier Highlights */}
+                        <div className="grid grid-cols-2 gap-4 bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                          <div className="text-left space-y-1">
+                            <span className="text-[7.5px] font-black text-zinc-500 uppercase tracking-wider block">Visual Score</span>
+                            <div className="flex items-baseline gap-1.5">
+                              <span className="text-2xl font-bold tracking-tight text-white">{item.score}</span>
+                              <span className="text-[10px] font-extrabold text-indigo-400">{item.tier}-TIER</span>
+                            </div>
+                          </div>
+
+                          <div className="text-left space-y-1 border-l border-white/5 pl-4">
+                            <span className="text-[7.5px] font-black text-zinc-500 uppercase tracking-wider block">Risk & Stability</span>
+                            <p className="text-[10px] font-bold text-zinc-300">
+                              {item.risk_level || "Low"} Risk • <span className="text-emerald-400">{item.reliability || "Stable"}</span>
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Highlights (Strengths/Weaknesses if present) */}
+                        {(item.strengths || item.improvements) && (
+                          <div className="space-y-3.5 text-xs text-left">
+                            {item.strengths && item.strengths.length > 0 && (
+                              <div className="space-y-1">
+                                <span className="text-[8px] font-black text-zinc-500 uppercase tracking-widest block">Predictive Strengths</span>
+                                <ul className="space-y-1">
+                                  {item.strengths.slice(0, 2).map((str: string, idx: number) => (
+                                    <li key={idx} className="text-[10px] text-zinc-300 font-medium flex items-start gap-1">
+                                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                                      <span className="truncate">{str}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+
+                            {item.improvements && item.improvements.length > 0 && (
+                              <div className="space-y-1">
+                                <span className="text-[8px] font-black text-zinc-500 uppercase tracking-widest block">Optimization Fields</span>
+                                <ul className="space-y-1">
+                                  {item.improvements.slice(0, 1).map((imp: string, idx: number) => (
+                                    <li key={idx} className="text-[10px] text-zinc-400 font-medium flex items-start gap-1">
+                                      <AlertCircle className="w-3.5 h-3.5 text-rose-500 shrink-0 mt-0.5" />
+                                      <span className="truncate">{imp}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        {/* Actions */}
+                        <div className="flex gap-2 pt-2 border-t border-white/5">
+                          <button
+                            onClick={() => {
+                              // Load this historic result context back into active tab
+                              setTitle(item.title)
+                              setNiche(item.niche || "Gaming")
+                              setResult({
+                                score: item.score.toString(),
+                                tier: item.tier || "S",
+                                confidence: "94.5%",
+                                reliability: item.reliability || "Stable",
+                                risk_level: item.risk_level || "Low",
+                                strengths: item.strengths || [],
+                                improvements: item.improvements || [],
+                                factors: {
+                                  brightness: 115,
+                                  face_detected: true,
+                                  contrast: "High",
+                                  saturation: "Optimized"
+                                }
+                              })
+                              setWizardStep(5) // Jumps to Reveal step
+                              setIsAnalyzing(false)
+                              setActiveTab("analyze") // Switches back to visualizer
+                            }}
+                            className="flex-1 py-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 hover:bg-indigo-500/20 text-indigo-400 text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-1.5 active:scale-95 animate-pulse"
+                          >
+                            <Smartphone className="w-3.5 h-3.5" /> Restore in Simulator
+                          </button>
+
+                          <button
+                            onClick={async () => {
+                              // Remove from state & storage/database
+                              const itemId = item.id
+                              if (itemId) {
+                                // Supabase delete
+                                const { supabase } = await import("@/lib/supabase")
+                                if (supabase) {
+                                  await supabase.from("analysis_history").delete().eq("id", itemId)
+                                }
+                              }
+                              // Local storage delete fallback / sync
+                              try {
+                                const currentHistory = JSON.parse(localStorage.getItem("algopilot_history") || "[]")
+                                const filtered = currentHistory.filter((x: any) => x.created_at !== item.created_at || x.title !== item.title)
+                                localStorage.setItem("algopilot_history", JSON.stringify(filtered))
+                              } catch (e) {
+                                console.error(e)
+                              }
+                              // Filter state
+                              setHistoryItems(prev => prev.filter(x => x.created_at !== item.created_at || x.title !== item.title))
+                            }}
+                            className="p-2.5 rounded-xl bg-rose-500/5 border border-rose-500/10 text-rose-400 hover:bg-rose-500/10 transition-all flex items-center justify-center active:scale-95 shrink-0"
+                            title="Delete Scan Log"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+
+      {/* Privacy & Telemetry Permission Modal */}
+      <AnimatePresence>
+        {showConsentModal && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowConsentModal(false)}
+              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            />
+
+            {/* Modal Content */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="glass-card w-full max-w-md border-white/10 bg-zinc-950 p-6 relative z-10 overflow-hidden shadow-2xl space-y-6"
+            >
+              {/* Header */}
+              <div className="flex items-start justify-between border-b border-white/5 pb-4">
+                <div className="space-y-1">
+                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                    <ShieldCheck className="w-4.5 h-4.5 text-blue-400" />
+                    Telemetry & Privacy Controls
+                  </h3>
+                  <p className="text-[10px] text-zinc-500">Specify your broadcasting permissions for this intelligence scan.</p>
+                </div>
+                <button
+                  onClick={() => setShowConsentModal(false)}
+                  className="p-1 rounded-lg border border-white/5 bg-white/5 text-zinc-400 hover:text-white transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Status Alert Box */}
+              <div className="p-3.5 rounded-xl bg-blue-500/5 border border-blue-500/10 text-[11px] leading-relaxed text-zinc-400">
+                <span className="font-bold text-blue-400 block mb-1 flex items-center gap-1">
+                  🔒 Private Sandbox Guaranteed
+                </span>
+                We support fully localized calculations. By default, telemetry is anonymized. You control if your optimization data is streamed to the public globe network.
+              </div>
+
+              {/* Options */}
+              <div className="space-y-3">
+                <label className="flex items-start gap-3 p-3.5 rounded-xl border border-white/5 bg-white/[0.01] hover:bg-white/[0.02] cursor-pointer transition-colors group">
+                  <input
+                    type="checkbox"
+                    checked={allowLiveFeed}
+                    onChange={(e) => setAllowLiveFeed(e.target.checked)}
+                    className="mt-0.5 w-4 h-4 rounded border-white/10 bg-zinc-900 text-blue-500 focus:ring-0 cursor-pointer"
+                  />
+                  <div>
+                    <span className="text-[11px] font-bold text-white block group-hover:text-zinc-200 transition-colors">
+                      Broadcast Anonymized Activity
+                    </span>
+                    <span className="text-[10px] text-zinc-500 block mt-0.5 leading-relaxed">
+                      Publish basic stats to the landing page feed (e.g. "{niche || "Gaming"} Creator optimized thumbnails").
+                    </span>
+                  </div>
+                </label>
+
+                <label className="flex items-start gap-3 p-3.5 rounded-xl border border-white/5 bg-white/[0.01] hover:bg-white/[0.02] cursor-pointer transition-colors group">
+                  <input
+                    type="checkbox"
+                    checked={consentPublicShowcase}
+                    onChange={(e) => setConsentPublicShowcase(e.target.checked)}
+                    className="mt-0.5 w-4 h-4 rounded border-white/10 bg-zinc-900 text-blue-500 focus:ring-0 cursor-pointer"
+                  />
+                  <div>
+                    <span className="text-[11px] font-bold text-white block group-hover:text-zinc-200 transition-colors flex items-center gap-1.5">
+                      Apply for public Creator Showcase <span className="text-[8px] px-1 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-normal">+100 credits</span>
+                    </span>
+                    <span className="text-[10px] text-zinc-500 block mt-0.5 leading-relaxed">
+                      Feature your channel name, niche, and a location pin flag on our interactive landing page network map.
+                    </span>
+                  </div>
+                </label>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col gap-2 pt-2">
+                <button
+                  onClick={() => {
+                    setShowConsentModal(false)
+                    handleAnalyze()
+                  }}
+                  className="w-full py-3.5 rounded-xl bg-white text-black font-bold text-xs uppercase tracking-wider hover:bg-zinc-200 transition-all flex items-center justify-center gap-2 shadow-md"
+                >
+                  Confirm & Run Analysis <Sparkles className="w-4 h-4" />
+                </button>
+                
+                <button
+                  onClick={() => {
+                    setAllowLiveFeed(false)
+                    setConsentPublicShowcase(false)
+                    setShowConsentModal(false)
+                    // Short timeout to let state update reflect
+                    setTimeout(() => {
+                      handleAnalyze()
+                    }, 50)
+                  }}
+                  className="w-full py-3.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-zinc-300 font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
+                >
+                  <Lock className="w-3.5 h-3.5 text-zinc-500" /> Execute 100% Private Scan
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

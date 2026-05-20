@@ -1,15 +1,51 @@
 import { NextResponse } from "next/server"
 import { supabaseServer } from "@/lib/supabase-server"
 import { getLiveGA4Metrics } from "@/lib/google-analytics"
+import { getLocalApplicants } from "@/lib/local-db"
 
 export async function GET() {
   try {
-    // 1. Fetch live metrics from Supabase DB
-    const { data: users, error: userError } = await supabaseServer
-      .from("waitlist_users")
-      .select("status, niche, subscriber_count, total_logins, total_analyses")
+    // 1. Fetch live metrics from Supabase DB and local JSON fallback
+    let dbUsers: any[] = []
+    try {
+      const { data, error } = await supabaseServer
+        .from("waitlist_users")
+        .select("status, niche, subscriber_count, total_logins, total_analyses, email")
+      if (error) throw error
+      dbUsers = data || []
+    } catch (err: any) {
+      console.warn("Supabase fetch failed during analytics compilation:", err.message)
+    }
 
-    if (userError) throw userError
+    const localApps = getLocalApplicants()
+
+    // Merge by email to prevent duplicates, prioritizing Supabase DB records
+    const mergedMap = new Map<string, any>()
+    for (const app of localApps) {
+      if (app && app.email) {
+        mergedMap.set(app.email.toLowerCase().trim(), {
+          status: app.status,
+          niche: app.niche,
+          subscriber_count: app.subscriber_count || 0,
+          total_logins: app.total_logins || 0,
+          total_analyses: app.total_analyses || 0
+        })
+      }
+    }
+
+    for (const app of dbUsers) {
+      if (app && app.email) {
+        mergedMap.set(app.email.toLowerCase().trim(), {
+          status: app.status,
+          niche: app.niche,
+          subscriber_count: app.subscriber_count || 0,
+          total_logins: app.total_logins || 0,
+          total_analyses: app.total_analyses || 0
+        })
+      }
+    }
+
+    const users = Array.from(mergedMap.values())
 
     // 2. Fetch live metrics from Google Analytics 4
     const gaMetrics = await getLiveGA4Metrics()

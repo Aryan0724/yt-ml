@@ -88,3 +88,33 @@ export async function saveAnalysisHistory(historyItem: {
     return { success: false, error: e }
   }
 }
+
+/**
+ * Retrieves the pre-upload metadata analysis runs history.
+ */
+export async function getAnalysisHistory() {
+  if (supabase) {
+    try {
+      const { data, error } = await supabase
+        .from("analysis_history")
+        .select("*")
+        .order("created_at", { ascending: false })
+      
+      if (error) throw error
+      return { success: true, source: "supabase", data }
+    } catch (err) {
+      console.warn("Supabase history fetch failed, falling back to local storage:", err)
+    }
+  }
+  
+  try {
+    const existing = JSON.parse(localStorage.getItem("algopilot_history") || "[]")
+    const sorted = [...existing].sort((a: any, b: any) => 
+      new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    )
+    return { success: true, source: "localStorage", data: sorted }
+  } catch (e) {
+    console.error("Local storage history load failed:", e)
+    return { success: false, error: e, data: [] }
+  }
+}
