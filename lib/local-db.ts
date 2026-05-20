@@ -1,5 +1,6 @@
 import fs from "fs"
 import path from "path"
+import fallbackData from "../data/waitlist_fallback.json"
 
 const dbPath = path.join(process.cwd(), "data", "waitlist_fallback.json")
 
@@ -36,10 +37,14 @@ export function getLocalApplicants(): LocalApplicant[] {
   try {
     ensureDbDirectory()
     const content = fs.readFileSync(dbPath, "utf-8")
-    return JSON.parse(content) as LocalApplicant[]
+    const parsed = JSON.parse(content) as LocalApplicant[]
+    if (parsed.length === 0 && fallbackData && fallbackData.length > 0) {
+      return fallbackData as LocalApplicant[]
+    }
+    return parsed
   } catch (err) {
-    console.error("Local DB Read Warning:", err)
-    return []
+    console.warn("Local DB Read Warning, falling back to static JSON bundle:", err)
+    return (fallbackData || []) as LocalApplicant[]
   }
 }
 
