@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
 import { google } from "googleapis"
 
+export const runtime = "nodejs"
+
 export async function GET() {
   try {
     const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID

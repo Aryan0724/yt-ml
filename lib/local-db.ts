@@ -21,12 +21,17 @@ export interface LocalApplicant {
   email: string
   youtube_channel: string
   niche: string
+  country?: string
   subscriber_count: number
   upload_frequency: string
   reason_for_joining: string
   status: "pending" | "approved" | "rejected" | "suspended"
   applied_at: string
   approved_at?: string
+  last_login?: string
+  last_analysis_at?: string
+  daily_usage_limit?: number
+  usage_remaining?: number
   total_logins: number
   total_analyses: number
   beta_access_token: string

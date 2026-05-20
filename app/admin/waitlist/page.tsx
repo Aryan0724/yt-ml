@@ -10,11 +10,11 @@ import {
   RefreshCw, ExternalLink, Plus, BarChart3, Flag
 } from "lucide-react"
 
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 // Supabase client for realtime (uses anon key — safe for browser)
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+const supabase = supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null
+
 
 interface Applicant {
   id: string
@@ -131,7 +131,7 @@ export default function WaitlistDashboard() {
   const [sortBy, setSortBy] = useState("created_at_desc")
   const [searchQuery, setSearchQuery] = useState("")
 
-  const realtimeRef = useRef<ReturnType<typeof supabase.channel> | null>(null)
+  const realtimeRef = useRef<any>(null)
 
   const loadData = async () => {
     try {
@@ -157,7 +157,10 @@ export default function WaitlistDashboard() {
 
   // Realtime subscription
   useEffect(() => {
-    realtimeRef.current = supabase
+    const realtimeClient = supabase
+    if (!realtimeClient) return
+
+    realtimeRef.current = realtimeClient
       .channel("beta_waitlist_changes")
       .on(
         "postgres_changes",

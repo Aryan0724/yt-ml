@@ -2,6 +2,8 @@ import { NextResponse } from "next/server"
 import { supabaseServer } from "@/lib/supabase-server"
 import { getLocalApplicants, addOrUpdateLocalApplicant } from "@/lib/local-db"
 
+export const runtime = "nodejs"
+
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url)
@@ -12,7 +14,7 @@ export async function GET(req: Request) {
     let dbApplicants: any[] = []
     try {
       // Set a 3-second timeout to prevent Vercel gateway timeouts on paused databases
-      const queryPromise = supabaseServer.from("waitlist_users").select("*")
+      const queryPromise = supabaseServer.from("beta_waitlist").select("*")
       const timeoutPromise = new Promise<never>((_, reject) =>
         setTimeout(() => reject(new Error("Database query timed out")), 3000)
       )
@@ -88,7 +90,7 @@ export async function POST(req: Request) {
     // 2. Attempt updating in Supabase waitlist_users table
     try {
       const { data, error } = await supabaseServer
-        .from("waitlist_users")
+        .from("beta_waitlist")
         .update({ notes: notes || "" })
         .eq("id", id)
         .select()

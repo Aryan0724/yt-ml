@@ -4,9 +4,9 @@ import { useState, useEffect } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { 
+import {
   LayoutDashboard, Users, Clock, BarChart3, Search, 
-  BookOpen, Activity, MessageSquare, ShieldCheck, HeartPulse, 
+  BookOpen, Activity, MessageSquare, ShieldCheck, HeartPulse,
   Settings, LogOut, KeyRound, AlertCircle, Menu, X, ArrowLeft
 } from "lucide-react"
 
@@ -20,6 +20,7 @@ const NAV_ITEMS = [
   { label: "Live Activity", href: "/admin/activity", icon: Activity },
   { label: "Creator Feedback", href: "/admin/feedback", icon: MessageSquare },
   { label: "System Health", href: "/admin/system", icon: HeartPulse },
+  { label: "Beta Auth Debug", href: "/admin/debug-auth", icon: KeyRound },
   { label: "Settings Desk", href: "/admin/settings", icon: Settings }
 ]
 

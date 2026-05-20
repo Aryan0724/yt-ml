@@ -2,6 +2,8 @@ import { NextResponse } from "next/server"
 import { supabaseServer } from "@/lib/supabase-server"
 import { getLocalApplicants, addOrUpdateLocalApplicant } from "@/lib/local-db"
 
+export const runtime = "nodejs"
+
 // High-fidelity fallback creator activities to ensure the dashboard feels alive
 const SIMULATED_FEED_POOL = [
   { country: "US", city: "Austin", niche: "Gaming", action_type: "analyzed_thumbnails" },
@@ -136,10 +138,10 @@ export async function POST(req: Request) {
 
     userId = localUser.id
 
-    // Check if we can sync to Supabase waitlist_users
+    // Check if we can sync to Supabase beta_waitlist
     try {
       const { data: dbUser } = await supabaseServer
-        .from("waitlist_users")
+        .from("beta_waitlist")
         .select("id")
         .eq("email", email.toLowerCase())
         .single()
@@ -147,9 +149,9 @@ export async function POST(req: Request) {
       if (dbUser) {
         userId = dbUser.id
       } else {
-        // Create in Supabase waitlist_users
+        // Create in Supabase beta_waitlist
         const { data: insertedDbUser } = await supabaseServer
-          .from("waitlist_users")
+          .from("beta_waitlist")
           .insert([
             {
               id: localUser.id,
@@ -171,7 +173,7 @@ export async function POST(req: Request) {
         if (insertedDbUser) userId = insertedDbUser.id
       }
     } catch (err: any) {
-      console.warn("Could not sync waitlist_users for showcase request in Supabase:", err.message)
+      console.warn("Could not sync beta_waitlist for showcase request in Supabase:", err.message)
     }
 
     // 2. Insert record into activity_feed

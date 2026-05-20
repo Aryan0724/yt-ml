@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
 import { supabaseServer } from "@/lib/supabase-server"
 
+export const runtime = "nodejs"
+
 // Vercel Cron Job — runs at midnight UTC daily
 // Schedule configured in vercel.json: "0 0 * * *"
 export async function GET(req: Request) {

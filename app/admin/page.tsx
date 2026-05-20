@@ -19,6 +19,8 @@ const SPARKLINES = {
 
 export default function AdminMainDashboard() {
   const [loading, setLoading] = useState(true)
+  const [supabaseHealthLoading, setSupabaseHealthLoading] = useState(true)
+  const [supabaseHealth, setSupabaseHealth] = useState<any>(null)
   const [stats, setStats] = useState({
     totalApplications: 0,
     approvedCreators: 0,
@@ -49,8 +51,39 @@ export default function AdminMainDashboard() {
     }
   }
 
+  const loadSupabaseHealth = async () => {
+    try {
+      setSupabaseHealthLoading(true)
+      const [envRes, testRes] = await Promise.all([
+        fetch("/api/debug/env"),
+        fetch("/api/test-supabase"),
+      ])
+      const [envData, testData] = await Promise.all([
+        envRes.json(),
+        testRes.json(),
+      ])
+
+      setSupabaseHealth({
+        envResOk: envRes.ok,
+        testResOk: testRes.ok,
+        envData,
+        testData,
+      })
+    } catch (err: any) {
+      setSupabaseHealth({
+        error: err.message || "Supabase health probe failed.",
+      })
+    } finally {
+      setSupabaseHealthLoading(false)
+    }
+  }
+
   useEffect(() => {
     loadData()
+  }, [])
+
+  useEffect(() => {
+    loadSupabaseHealth()
   }, [])
 
   return (
@@ -77,6 +110,79 @@ export default function AdminMainDashboard() {
             Live Ingestion Active
           </span>
         </div>
+      </section>
+
+      <section className="p-5 rounded-[2rem] glass-card border-white/5 space-y-4">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <h3 className="text-sm font-bold text-white flex items-center gap-2">
+              <ShieldAlert className="w-4 h-4 text-amber-400" />
+              Supabase Connection Probe
+            </h3>
+            <p className="text-[10px] text-zinc-500 mt-1">Production runtime, env presence, and direct REST/client checks.</p>
+          </div>
+          <button
+            onClick={loadSupabaseHealth}
+            className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] font-bold uppercase tracking-widest text-white hover:bg-white/10 transition-all flex items-center gap-2"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${supabaseHealthLoading ? "animate-spin" : ""}`} />
+            Refresh Probe
+          </button>
+        </div>
+
+        {supabaseHealthLoading ? (
+          <div className="grid md:grid-cols-3 gap-3">
+            {["Loading env", "Testing REST", "Testing client"].map((label) => (
+              <div key={label} className="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
+                <div className="text-[9px] uppercase tracking-widest text-zinc-500">{label}</div>
+                <div className="mt-3 h-4 w-24 rounded bg-white/5 animate-pulse" />
+              </div>
+            ))}
+          </div>
+        ) : supabaseHealth?.error ? (
+          <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-300 text-xs">
+            {supabaseHealth.error}
+          </div>
+        ) : (
+          <div className="grid lg:grid-cols-3 gap-3">
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
+              <div className="text-[9px] uppercase tracking-widest text-zinc-500">Env Loaded</div>
+              <div className="text-sm font-bold text-white">
+                {supabaseHealth?.envData?.snapshot?.envLoaded ? "Yes" : "No"}
+              </div>
+              <div className="text-[10px] text-zinc-500 break-all">
+                {supabaseHealth?.envData?.snapshot?.supabaseUrlMasked || "missing"}
+              </div>
+              <div className="text-[10px] text-zinc-500">
+                Service role: {supabaseHealth?.envData?.snapshot?.serviceKeyLoaded ? "present" : "missing"}
+              </div>
+            </div>
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
+              <div className="text-[9px] uppercase tracking-widest text-zinc-500">REST Probe</div>
+              <div className="text-sm font-bold text-white">
+                {supabaseHealth?.testData?.directProbe?.ok ? "OK" : "Failed"}
+              </div>
+              <div className="text-[10px] text-zinc-500">
+                Status: {supabaseHealth?.testData?.directProbe?.status || 0} {supabaseHealth?.testData?.directProbe?.statusText || ""}
+              </div>
+              <div className="text-[10px] text-zinc-500 break-all line-clamp-2">
+                {supabaseHealth?.testData?.targetUrl || "No target URL"}
+              </div>
+            </div>
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
+              <div className="text-[9px] uppercase tracking-widest text-zinc-500">Client Probe</div>
+              <div className="text-sm font-bold text-white">
+                {supabaseHealth?.testData?.clientProbe?.ok ? "OK" : "Failed"}
+              </div>
+              <div className="text-[10px] text-zinc-500">
+                Rows fetched: {supabaseHealth?.testData?.clientProbe?.rows ?? 0}
+              </div>
+              <div className="text-[10px] text-zinc-500 break-all line-clamp-2">
+                {supabaseHealth?.testData?.clientProbe?.error?.message || supabaseHealth?.testData?.directProbe?.error?.message || "No error"}
+              </div>
+            </div>
+          </div>
+        )}
       </section>
 
       {loading ? (

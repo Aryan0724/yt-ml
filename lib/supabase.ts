@@ -1,7 +1,8 @@
 import { createClient } from "@supabase/supabase-js"
+import { normalizeEnvValue } from "@/lib/supabase-diagnostics"
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ""
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
+const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL)
+const supabaseAnonKey = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) || "eyJhbGciOiJIUzI1NiIsInR5cCI6ImFub24iLCJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im91Y3dsbmhiZnlkYXVna21rcHp5IiwiaWF0IjoxNzc4OTk5ODQ2LCJleHAiOjIwOTQ1NzU4NDZ9.QMmneQ9hTlPLjTla254lujL1HwZ-5N-bxzUvwZ803EU"
 
 // Initialize Supabase if keys are present
 export const isSupabaseConfigured = !!(supabaseUrl && supabaseAnonKey)
@@ -108,8 +109,11 @@ export async function getAnalysisHistory() {
   }
   
   try {
-    const existing = JSON.parse(localStorage.getItem("algopilot_history") || "[]")
-    const sorted = [...existing].sort((a: any, b: any) => 
+    const existing = JSON.parse(localStorage.getItem("algopilot_history") || "[]") as Array<{
+      created_at: string
+      [key: string]: unknown
+    }>
+    const sorted = [...existing].sort((a, b) => 
       new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
     )
     return { success: true, source: "localStorage", data: sorted }

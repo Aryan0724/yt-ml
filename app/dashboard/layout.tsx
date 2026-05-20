@@ -50,14 +50,16 @@ export default function DashboardLayout({
         setAuthState("authorized")
       } else {
         // Handle custom status triages
-        if (payload.status === "pending") {
+        if (payload.reason === "pending" || payload.status === "pending") {
           setAuthState("pending")
-        } else if (payload.status === "suspended" || payload.status === "rejected") {
+          setErrorMessage(null)
+        } else if (payload.reason === "suspended" || payload.status === "suspended" || payload.status === "rejected") {
           setAuthState("suspended")
+          setErrorMessage(null)
         } else {
           setAuthState("gate")
           if (!isInitial) {
-            setErrorMessage(payload.error || "Invalid beta pass token.")
+            setErrorMessage(payload.error || payload.reason || "Invalid beta pass token.")
           }
         }
       }

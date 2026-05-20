@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
-import { supabaseServer } from "@/lib/supabase-server"
 import { getLocalApplicants } from "@/lib/local-db"
+import { resolveBetaAuth, normalizeAuthEmail, normalizeAuthToken } from "@/lib/beta-auth"
+
+export const runtime = "nodejs"
 
 export async function POST(req: Request) {
   try {
@@ -10,28 +12,34 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing session email or token." }, { status: 400 })
     }
 
-    const emailLower = email.toLowerCase().trim()
+    const emailLower = normalizeAuthEmail(email)
+    const normalizedToken = normalizeAuthToken(token)
+    console.log("[creator/profile] lookup", {
+      email,
+      normalizedEmail: emailLower,
+      tokenPrefix: normalizedToken ? `${normalizedToken.slice(0, 8)}...` : "",
+    })
 
-    // 1. Try fetching from Supabase database first
+    const authResult = await resolveBetaAuth(emailLower, normalizedToken)
+    console.log("[creator/profile] lookup result", authResult.debug)
+
+    // Fallback to Local JSON Database registry if needed
     let creator: any = null
-    try {
-      const { data, error } = await supabaseServer
-        .from("waitlist_users")
-        .select("full_name, email, youtube_channel, niche, subscriber_count, upload_frequency, status")
-        .eq("email", emailLower)
-        .eq("beta_access_token", token)
-        .single()
-
-      if (data) creator = data
-    } catch (err: any) {
-      console.warn("Supabase fetch failed during creator profile read:", err.message)
-    }
-
-    // 2. Fallback to Local JSON Database registry
-    if (!creator) {
+    if (authResult.ok) {
+      const user = authResult.user
+      creator = {
+        full_name: user.full_name,
+        email: user.email,
+        youtube_channel: user.youtube_channel,
+        niche: user.niche,
+        subscriber_count: user.subscriber_count,
+        upload_frequency: user.upload_frequency,
+        status: user.status,
+      }
+    } else {
       const localApps = getLocalApplicants()
       const foundLocal = localApps.find(
-        (a) => a.email.toLowerCase() === emailLower && a.beta_access_token === token
+        (a) => a.email.toLowerCase() === emailLower && a.beta_access_token === normalizedToken
       )
       if (foundLocal) {
         creator = {
@@ -47,7 +55,14 @@ export async function POST(req: Request) {
     }
 
     if (!creator) {
-      return NextResponse.json({ error: "Unauthorized beta pass credential." }, { status: 401 })
+      return NextResponse.json(
+        {
+          error: authResult.ok ? "Unauthorized beta pass credential." : authResult.error,
+          reason: authResult.ok ? "invalid" : authResult.status,
+          debug: authResult.debug,
+        },
+        { status: authResult.ok ? 401 : authResult.status === "not_found" ? 404 : authResult.status === "pending" ? 403 : 401 }
+      )
     }
 
     return NextResponse.json({ success: true, profile: creator })

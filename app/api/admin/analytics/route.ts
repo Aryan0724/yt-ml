@@ -3,6 +3,8 @@ import { supabaseServer } from "@/lib/supabase-server"
 import { getLiveGA4Metrics } from "@/lib/google-analytics"
 import { getLocalApplicants } from "@/lib/local-db"
 
+export const runtime = "nodejs"
+
 export async function GET() {
   try {
     // 1. Fetch live metrics from Supabase DB and local JSON fallback
@@ -10,8 +12,8 @@ export async function GET() {
     try {
       // Set a 3-second timeout to prevent Vercel gateway timeouts on paused databases
       const queryPromise = supabaseServer
-        .from("waitlist_users")
-        .select("status, niche, subscriber_count, total_logins, total_analyses, email")
+        .from("beta_waitlist")
+        .select("status, niche, subscriber_count, total_scans_used, email")
       const timeoutPromise = new Promise<never>((_, reject) =>
         setTimeout(() => reject(new Error("Database query timed out")), 3000)
       )
@@ -44,8 +46,8 @@ export async function GET() {
           status: app.status,
           niche: app.niche,
           subscriber_count: app.subscriber_count || 0,
-          total_logins: app.total_logins || 0,
-          total_analyses: app.total_analyses || 0
+          total_logins: 0,
+          total_analyses: app.total_scans_used || 0
         })
       }
     }

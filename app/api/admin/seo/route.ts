@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
 import { getLiveGSCMetrics } from "@/lib/google-analytics"
 
+export const runtime = "nodejs"
+
 export async function GET() {
   try {
     const seoMetrics = await getLiveGSCMetrics()

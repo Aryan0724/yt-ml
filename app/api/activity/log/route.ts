@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server"
 import { supabaseServer } from "@/lib/supabase-server"
 import { getLocalApplicants, addOrUpdateLocalApplicant } from "@/lib/local-db"
+import { resolveBetaAuth, normalizeAuthEmail, normalizeAuthToken } from "@/lib/beta-auth"
+
+export const runtime = "nodejs"
 
 export async function POST(req: Request) {
   try {
@@ -10,44 +13,31 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing email or eventType." }, { status: 400 })
     }
 
-    // 1. Resolve user by email from local fallback first or Supabase
-    let user: any = null
-    const localApps = getLocalApplicants()
-    const foundLocal = localApps.find((a) => a.email.toLowerCase() === email.toLowerCase())
+    const normalizedEmail = normalizeAuthEmail(email)
+    const normalizedToken = normalizeAuthToken(token)
+    console.log("[activity/log] auth lookup", {
+      email,
+      normalizedEmail,
+      tokenPrefix: normalizedToken ? `${normalizedToken.slice(0, 8)}...` : "",
+      eventType,
+    })
 
-    if (foundLocal) {
-      user = foundLocal
-    } else {
-      try {
-        const { data, error: userError } = await supabaseServer
-          .from("waitlist_users")
-          .select("*")
-          .eq("email", email.toLowerCase())
-          .single()
-        
-        if (data) user = data
-      } catch (err: any) {
-        console.warn("Supabase fetch failed during activity log, searching local registry:", err.message)
-      }
+    const authResult = await resolveBetaAuth(normalizedEmail, normalizedToken)
+    console.log("[activity/log] auth lookup result", authResult.debug)
+
+    if (!authResult.ok) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: authResult.error,
+          reason: authResult.status,
+          debug: authResult.debug,
+        },
+        { status: authResult.status === "not_found" ? 404 : authResult.status === "pending" ? 403 : 401 }
+      )
     }
 
-    if (!user) {
-      return NextResponse.json({ error: "No waitlist application found with this email.", status: "not_found" }, { status: 401 })
-    }
-
-    // 2. Enforce Status triages
-    if (user.status === "pending") {
-      return NextResponse.json({ error: "Application is still under review.", status: "pending" }, { status: 403 })
-    }
-
-    if (user.status === "rejected" || user.status === "suspended") {
-      return NextResponse.json({ error: "Access pass is suspended or expired.", status: user.status }, { status: 403 })
-    }
-
-    // 3. If token is supplied, validate it
-    if (token && user.beta_access_token !== token) {
-      return NextResponse.json({ error: "Invalid beta access pass token.", status: "unauthorized" }, { status: 401 })
-    }
+    const user = authResult.user
 
     // 4. Try log event in usage_logs table (Optional telemetry)
     try {
@@ -108,7 +98,7 @@ export async function POST(req: Request) {
       // 5.2 Attempt update in Supabase
       try {
         await supabaseServer
-          .from("waitlist_users")
+          .from("beta_waitlist")
           .update(updates)
           .eq("id", user.id)
       } catch (err: any) {

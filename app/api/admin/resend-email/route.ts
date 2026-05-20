@@ -3,6 +3,8 @@ import { supabaseServer } from "@/lib/supabase-server"
 import { sendEmail, getEmailTemplate } from "@/lib/mailer"
 import { getLocalApplicants } from "@/lib/local-db"
 
+export const runtime = "nodejs"
+
 export async function POST(req: Request) {
   try {
     const { id } = await req.json()
@@ -21,7 +23,7 @@ export async function POST(req: Request) {
     } else {
       try {
         const { data, error: fetchError } = await supabaseServer
-          .from("waitlist_users")
+          .from("beta_waitlist")
           .select("*")
           .eq("id", id)
           .single()

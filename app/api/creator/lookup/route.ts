@@ -2,6 +2,8 @@ import { NextResponse } from "next/server"
 import fs from "fs"
 import path from "path"
 
+export const runtime = "nodejs"
+
 export async function POST(req: Request) {
   try {
     const { handle } = await req.json()

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server"
 import { google } from "googleapis"
 import { supabaseServer } from "@/lib/supabase-server"
 
+export const runtime = "nodejs"
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)
