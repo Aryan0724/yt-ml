@@ -9,3 +9,6 @@ python-dotenv
 joblib
 xgboost
 scikit-learn
+opencv-python-headless
+Pillow
+easyocr
