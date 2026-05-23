@@ -598,6 +598,7 @@ function CreatorIntelligenceReport({
   const [isTierExplainerOpen, setIsTierExplainerOpen] = useState(false)
   const [isFixChecklistOpen, setIsFixChecklistOpen] = useState(false)
   const [visualizerMode, setVisualizerMode] = useState<"normal" | "blur" | "heatmap" | "focus">("normal")
+  const [isCalculatingFocus, setIsCalculatingFocus] = useState(false)
   const [showDebugPanel, setShowDebugPanel] = useState(false)
 
   // Find first active variant preview, or fallback to the single thumbnailPreview
@@ -648,36 +649,68 @@ function CreatorIntelligenceReport({
       variantName: selectedVariant?.name || "Original"
     })
 
-    // 2. Add high-quality mock videos writing about AlgoPilot
-    items.push({
-      id: "mock-1",
-      title: "Why YouTube Gurus are Banning this AI Tool (AlgoPilot Review)",
-      channelName: "TechVantage",
-      views: "340K views",
-      time: "4 days ago",
-      preview: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60",
-      avatar: "T",
-    })
+    // 1.5 Add other user variants if they exist (simulate A/B testing in the feed)
+    if (compareVariants && compareVariants.length > 1) {
+      compareVariants.filter(v => v.id !== activeSimVariantId).forEach((v, idx) => {
+        items.push({
+          id: `user-variant-${v.id}`,
+          title: `[Variant ${idx + 2}] ` + (title || "AlgoPilot CTR Secret: 10x Your Growth!"),
+          channelName: profile?.youtube_channel || "Creator Pro",
+          views: "NEW",
+          time: "Just now",
+          preview: v.preview,
+          avatar: profile?.avatar || "",
+          isUserVariant: false, // We mark as false so it doesn't get the glowing focus effects of the main selected one
+          variantName: v.name
+        })
+      })
+    }
 
-    items.push({
-      id: "mock-2",
-      title: "I Tested AlgoPilot's S-Tier Thumbnail Predictor for 100 Days",
-      channelName: "Creator Hub",
-      views: "1.2M views",
-      time: "2 weeks ago",
-      preview: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=500&auto=format&fit=crop&q=60",
-      avatar: "C",
-    })
+    // 2. Add real competitive YouTube videos if available
+    if (ytVideos && ytVideos.length > 0) {
+      ytVideos.slice(0, 6).forEach((vid, idx) => {
+        items.push({
+          id: `yt-${vid.videoId}`,
+          title: vid.title,
+          channelName: vid.channelTitle,
+          views: `${(vid.viewCount / 1000).toFixed(0)}K views`,
+          time: new Date(vid.publishedAt).toLocaleDateString(),
+          preview: vid.thumbnailUrl,
+          avatar: vid.channelTitle.charAt(0),
+        })
+      })
+    } else {
+      // 3. Fallback to high-quality mock tech/gaming videos (realistic placeholders)
+      items.push({
+        id: "mock-1",
+        title: "I Built a $10,000 Trading Bot from Scratch",
+        channelName: "TechVantage",
+        views: "340K views",
+        time: "4 days ago",
+        preview: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80",
+        avatar: "T",
+      })
 
-    items.push({
-      id: "mock-3",
-      title: "How to get S-Tier CTR Scores on YouTube using AI algorithms",
-      channelName: "Algorithm Mastery",
-      views: "18K views",
-      time: "5 hours ago",
-      preview: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=500&auto=format&fit=crop&q=60",
-      avatar: "A",
-    })
+      items.push({
+        id: "mock-2",
+        title: "This New AI Feature Changes Everything (Next.js 14)",
+        channelName: "Code Mastery",
+        views: "1.2M views",
+        time: "2 weeks ago",
+        preview: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=800&auto=format&fit=crop&q=80",
+        avatar: "C",
+      })
+
+      items.push({
+        id: "mock-3",
+        title: "The Truth About YouTube's New Algorithm Update",
+        channelName: "Creator Hub",
+        views: "18K views",
+        time: "5 hours ago",
+        preview: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&auto=format&fit=crop&q=80",
+        avatar: "C",
+      })
+    }
 
     return items
   }
@@ -1191,13 +1224,12 @@ function CreatorIntelligenceReport({
             {/* Diagnostic Toggles */}
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Visual Diagnostic Overlays</label>
-              <div className="grid grid-cols-2 gap-2 text-[9px] font-bold uppercase tracking-wider">
+              <div className="grid grid-cols-3 gap-2">
                 {[
-                  { id: "normal", label: "Normal Scan" },
-                  { id: "blur", label: "Peripheral Blur" },
+                  { id: "normal", label: "Standard Feed" },
                   { id: "heatmap", label: "Attention Heatmap" },
-                  { id: "focus", label: "Eye Focus Path" }
-                ].map((mode) => (
+                  { id: "blur", label: "Peripheral Blur" }
+                ].map(mode => (
                   <button
                     key={mode.id}
                     onClick={() => setVisualizerMode(mode.id as any)}
@@ -1211,6 +1243,26 @@ function CreatorIntelligenceReport({
                     {mode.label}
                   </button>
                 ))}
+              </div>
+
+              {/* Dedicated Eye Tracking Simulation Action */}
+              <div className="mt-4">
+                <button
+                  onClick={() => {
+                    setVisualizerMode("focus")
+                    setIsCalculatingFocus(true)
+                    setTimeout(() => setIsCalculatingFocus(false), 1500)
+                  }}
+                  className={cn(
+                    "w-full py-3 rounded-xl border flex items-center justify-center gap-2 font-bold transition-all",
+                    visualizerMode === "focus" 
+                      ? "bg-indigo-500/20 border-indigo-500/50 text-indigo-400" 
+                      : "bg-white/5 border-white/10 text-zinc-300 hover:bg-white/10"
+                  )}
+                >
+                  <ScanEye className="w-4 h-4" />
+                  {isCalculatingFocus ? "Calculating Saccade Paths..." : "Run Eye-Tracking Simulation"}
+                </button>
               </div>
             </div>
 
@@ -1333,26 +1385,24 @@ function CreatorIntelligenceReport({
                           )}
 
                           {visualizerMode === "focus" && (
-                            <svg className="absolute inset-0 w-full h-full pointer-events-none z-20 animate-fade-in">
+                            <svg className={cn(
+                              "absolute inset-0 w-full h-full z-20 transition-opacity duration-500",
+                              isCalculatingFocus ? "opacity-0" : "opacity-100"
+                            )}>
                               <defs>
                                 <linearGradient id={`focusGlow-${item.id}`} x1="0%" y1="0%" x2="100%" y2="100%">
-                                  <stop offset="0%" stopColor="#10b981" />
-                                  <stop offset="50%" stopColor="#f59e0b" />
-                                  <stop offset="100%" stopColor="#10b981" />
+                                  <stop offset="0%" stopColor="#818cf8" />
+                                  <stop offset="50%" stopColor="#c084fc" />
+                                  <stop offset="100%" stopColor="#f472b6" />
                                 </linearGradient>
+                                <filter id="glow">
+                                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                  <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                  </feMerge>
+                                </filter>
                               </defs>
-                              <path 
-                                d="M 50,30 L 80,55 L 140,70" 
-                                fill="none" 
-                                stroke="#10b981" 
-                                strokeWidth="1.5" 
-                                strokeDasharray="3,3" 
-                                className="stroke-dash-animation"
-                              />
-                              <circle cx="50" cy="30" r="3" fill="#ef4444" />
-                              <text x="50" y="24" fill="#ef4444" fontSize="4.5" fontWeight="black" textAnchor="middle">1. EMOTION SCAN</text>
-
-                              <circle cx="80" cy="55" r="3" fill="#f59e0b" />
                               <text x="80" y="63" fill="#f59e0b" fontSize="4.5" fontWeight="black" textAnchor="middle">2. CLUTTER GAP</text>
 
                               <circle cx="140" cy="70" r="3" fill="#10b981" />
