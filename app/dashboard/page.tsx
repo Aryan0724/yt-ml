@@ -2194,9 +2194,7 @@ export default function DashboardPage() {
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [result, setResult] = useState<any>(null)
 
-  // Archive/History State
-  const [historyItems, setHistoryItems] = useState<any[]>([])
-  const [historyLoading, setHistoryLoading] = useState(false)
+  // Archive/History State managed by dedicated page now
 
   // YouTube Live Data State
   const [ytChannel, setYtChannel] = useState<YTChannel | null>(null)
@@ -2233,7 +2231,7 @@ export default function DashboardPage() {
   const [postFrequency, setPostFrequency] = useState("2-3 videos/week")
   const [postDays, setPostDays] = useState<string[]>(["Wednesday", "Sunday"])
   const [transcript, setTranscript] = useState("")
-  const [isHistoryOpen, setIsHistoryOpen] = useState(false)
+  // History is now on dedicated page
   const [activeSlotId, setActiveSlotId] = useState<string | null>(null)
   
   const [error, setError] = useState<string | null>(null)
@@ -2599,20 +2597,37 @@ export default function DashboardPage() {
     }
   }, [wizardStep, isAnalyzing, result])
 
-  // Load analysis history when History drawer is opened
+  // Load history item if redirected from History page
   useEffect(() => {
-    if (isHistoryOpen) {
-      setHistoryLoading(true)
-      getAnalysisHistory()
-        .then((res) => {
-          if (res.success && res.data) {
-            setHistoryItems(res.data)
+    const historyData = sessionStorage.getItem("algopilot_load_history")
+    if (historyData) {
+      try {
+        const item = JSON.parse(historyData)
+        setTitle(item.title || "")
+        setNiche(item.niche || "Gaming")
+        setResult({
+          score: item.score?.toString() || "75",
+          tier: item.tier || "B",
+          confidence: "94.5%",
+          reliability: item.reliability || "Stable",
+          risk_level: item.risk_level || "Medium",
+          strengths: item.strengths || ["Good potential engagement"],
+          improvements: item.improvements || ["Tweak saturation levels"],
+          factors: {
+            brightness: 120,
+            face_detected: true,
+            contrast: "Medium",
+            saturation: "Standard"
           }
         })
-        .catch((err) => console.error("Error loading analysis history:", err))
-        .finally(() => setHistoryLoading(false))
+        setWizardStep(5)
+      } catch (err) {
+        console.error("Error parsing history data", err)
+      } finally {
+        sessionStorage.removeItem("algopilot_load_history")
+      }
     }
-  }, [isHistoryOpen, result])
+  }, [])
 
   // Fetch creator channel profile on mount
   useEffect(() => {
@@ -2958,14 +2973,6 @@ export default function DashboardPage() {
           <h1 className="text-2xl md:text-3xl font-bold mb-2">Creator Hub <span className="text-zinc-600 font-normal">v1.1</span></h1>
           <p className="text-zinc-500 text-xs md:text-sm">Professional decision intelligence for pre-upload metadata.</p>
         </div>
-        
-        <button
-          onClick={() => setIsHistoryOpen(true)}
-          className="flex items-center gap-1.5 md:gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] md:text-xs font-bold uppercase tracking-widest text-zinc-300 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap self-start lg:self-auto"
-        >
-          <History className="w-3.5 h-3.5" />
-          History
-        </button>
       </div>
 
       <div className="grid lg:grid-cols-6 gap-6 md:gap-10">
@@ -3826,127 +3833,6 @@ export default function DashboardPage() {
         </AnimatePresence>
       </div>
 
-      {/* History Drawer */}
-      <AnimatePresence>
-        {isHistoryOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsHistoryOpen(false)}
-              className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
-            />
-            
-            {/* Drawer */}
-            <motion.aside
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 30, stiffness: 250 }}
-              className="fixed top-0 right-0 z-50 w-full max-w-md h-full bg-zinc-950/95 border-l border-white/10 shadow-2xl p-6 overflow-y-auto flex flex-col backdrop-blur-md"
-            >
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold flex items-center gap-2 text-white">
-                  <History className="w-5 h-5 text-indigo-400" />
-                  Scan History
-                </h2>
-                <button
-                  onClick={() => setIsHistoryOpen(false)}
-                  className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
-                >
-                  <X className="w-5 h-5 text-zinc-400" />
-                </button>
-              </div>
-
-              {historyLoading ? (
-                <div className="flex-grow flex items-center justify-center">
-                  <RefreshCw className="w-6 h-6 animate-spin text-indigo-400" />
-                </div>
-              ) : historyItems.length === 0 ? (
-                <div className="flex-grow flex flex-col items-center justify-center text-zinc-500 text-sm gap-2">
-                  <p>No scans found in history.</p>
-                  <p className="text-[10px] text-zinc-600">Run a scan to save it here.</p>
-                </div>
-              ) : (
-                <div className="flex-grow overflow-y-auto space-y-4 pr-1">
-                  {historyItems.map((item, idx) => (
-                    <div
-                      key={item.id || item.created_at || idx}
-                      className="group relative p-4 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/10 hover:bg-white/[0.04] transition-all flex flex-col gap-2"
-                    >
-                      <div className="flex justify-between items-start gap-4">
-                        <button
-                          onClick={() => {
-                            setTitle(item.title)
-                            setNiche(item.niche || "Gaming")
-                            setResult({
-                              score: item.score?.toString() || "75",
-                              tier: item.tier || "B",
-                              confidence: "94.5%",
-                              reliability: item.reliability || "Stable",
-                              risk_level: item.risk_level || "Medium",
-                              strengths: item.strengths || ["Good potential engagement"],
-                              improvements: item.improvements || ["Tweak saturation levels"],
-                              factors: {
-                                brightness: 120,
-                                face_detected: true,
-                                contrast: "Medium",
-                                saturation: "Standard"
-                              }
-                            })
-                            setWizardStep(5)
-                            setIsHistoryOpen(false)
-                          }}
-                          className="text-left flex-1 min-w-0"
-                        >
-                          <p className="text-xs font-semibold text-white truncate group-hover:text-zinc-300 transition-colors">
-                            {item.title}
-                          </p>
-                          <span className="text-[9px] text-zinc-500">
-                            {item.niche} • ${new Date(item.created_at).toLocaleDateString()}
-                          </span>
-                        </button>
-                        
-                        <div className="flex items-center gap-2">
-                          <span className={cn(
-                            "text-[10px] font-black px-2 py-0.5 rounded tracking-wide",
-                            item.tier === "S" ? "bg-amber-500/20 text-amber-300 border border-amber-500/30" :
-                            item.tier === "A" ? "bg-indigo-500/20 text-indigo-300 border border-indigo-500/30" :
-                            item.tier === "B" ? "bg-sky-500/20 text-sky-300 border border-sky-500/30" :
-                            "bg-zinc-500/20 text-zinc-300 border border-zinc-500/30"
-                          )}>
-                            {item.tier}-Tier
-                          </span>
-                          <button
-                            onClick={async () => {
-                              const confirmDelete = confirm("Are you sure you want to delete this scan?")
-                              if (!confirmDelete) return
-                              const res = await deleteAnalysisHistory(item.id, item.created_at)
-                              if (res.success) {
-                                setHistoryItems(prev => prev.filter(x => {
-                                  if (item.id && x.id === item.id) return false
-                                  if (item.created_at && x.created_at === item.created_at) return false
-                                  return true
-                                }))
-                              }
-                            }}
-                            className="p-1 rounded bg-rose-500/10 hover:bg-rose-500/25 border border-rose-500/20 text-rose-400 hover:text-rose-300 transition-colors"
-                            title="Delete from history"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
 
       {/* Privacy & Telemetry Permission Modal */}
       <AnimatePresence>
