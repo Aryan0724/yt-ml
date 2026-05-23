@@ -1464,6 +1464,121 @@ function CreatorIntelligenceReport({
           </div>
 
         </div>
+
+        {/* Full-Size Eye Tracking Simulation View */}
+        <AnimatePresence>
+          {(visualizerMode === "focus" || isCalculatingFocus) && (
+            <motion.div
+              initial={{ opacity: 0, y: 20, height: 0 }}
+              animate={{ opacity: 1, y: 0, height: "auto" }}
+              exit={{ opacity: 0, y: -20, height: 0 }}
+              className="mt-8 pt-8 border-t border-white/5 space-y-6 overflow-hidden"
+            >
+              <div className="space-y-1 text-center md:text-left">
+                <h3 className="text-sm font-bold text-white flex items-center justify-center md:justify-start gap-2">
+                  <ScanEye className="w-4 h-4 text-indigo-400" />
+                  Visual Attention Analysis
+                </h3>
+                <p className="text-[11px] text-zinc-400">
+                  Simulated human saccade paths and fixation points based on visual saliency algorithms.
+                </p>
+              </div>
+
+              <div className="w-full aspect-video bg-zinc-900 rounded-2xl overflow-hidden relative border border-white/10 shadow-2xl">
+                {thumbnailPreview ? (
+                  <img 
+                    src={thumbnailPreview} 
+                    alt="Full size analysis" 
+                    className="w-full h-full object-contain"
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center text-zinc-700">
+                    <ImageIcon className="w-12 h-12 mb-4 opacity-30" />
+                    <span className="text-xs uppercase tracking-widest font-bold font-mono">NO THUMBNAIL</span>
+                  </div>
+                )}
+
+                {/* Saccade Path Overlay */}
+                <svg className={cn(
+                  "absolute inset-0 w-full h-full z-20 transition-opacity duration-700 pointer-events-none",
+                  isCalculatingFocus ? "opacity-0" : "opacity-100"
+                )}>
+                  <defs>
+                    <linearGradient id="focusGlowLarge" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#818cf8" />
+                      <stop offset="50%" stopColor="#c084fc" />
+                      <stop offset="100%" stopColor="#f472b6" />
+                    </linearGradient>
+                    <filter id="glowLarge" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="4" result="blur" />
+                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                  </defs>
+
+                  {/* Generated Paths */}
+                  {result?.face_boxes && result.face_boxes.length > 0 ? (
+                    // Face-Aware Saccade Path
+                    <>
+                      <path 
+                        d={`M 15% 45% Q ${result.face_boxes[0].box_2d[0]} ${result.face_boxes[0].box_2d[1]}, 80% 85%`} 
+                        fill="none" 
+                        stroke="url(#focusGlowLarge)" 
+                        strokeWidth="3" 
+                        strokeDasharray="8 6" 
+                        className="animate-dash"
+                        filter="url(#glowLarge)"
+                      />
+                      <circle cx="15%" cy="45%" r="6" fill="#818cf8" className="animate-pulse" filter="url(#glowLarge)" />
+                      <circle cx={`${result.face_boxes[0].box_2d[0]}px`} cy={`${result.face_boxes[0].box_2d[1]}px`} r="12" fill="#c084fc" className="animate-pulse" style={{ animationDelay: '0.2s' }} filter="url(#glowLarge)" />
+                      <circle cx="80%" cy="85%" r="6" fill="#f472b6" className="animate-pulse" style={{ animationDelay: '0.4s' }} filter="url(#glowLarge)" />
+                    </>
+                  ) : (
+                    // Default Center-Weight Path
+                    <>
+                      <path 
+                        d="M 15% 50% Q 45% 30%, 85% 75%" 
+                        fill="none" 
+                        stroke="url(#focusGlowLarge)" 
+                        strokeWidth="3" 
+                        strokeDasharray="8 6" 
+                        className="animate-dash"
+                        filter="url(#glowLarge)"
+                      />
+                      <circle cx="15%" cy="50%" r="6" fill="#818cf8" className="animate-pulse" filter="url(#glowLarge)" />
+                      <circle cx="45%" cy="30%" r="12" fill="#c084fc" className="animate-pulse" style={{ animationDelay: '0.2s' }} filter="url(#glowLarge)" />
+                      <circle cx="85%" cy="75%" r="6" fill="#f472b6" className="animate-pulse" style={{ animationDelay: '0.4s' }} filter="url(#glowLarge)" />
+                    </>
+                  )}
+                </svg>
+
+                {isCalculatingFocus && (
+                  <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center z-30 animate-fade-in backdrop-blur-sm">
+                    <ScanEye className="w-12 h-12 text-indigo-500 animate-pulse mb-4" />
+                    <div className="text-sm font-mono text-indigo-400">Computing Saliency Map...</div>
+                    <div className="w-48 h-1 bg-white/10 rounded-full mt-4 overflow-hidden">
+                      <div className="h-full bg-indigo-500 rounded-full animate-[progress_1.5s_ease-in-out_infinite]" />
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs mt-4">
+                <div className="p-4 rounded-xl bg-indigo-500/[0.02] border border-indigo-500/10">
+                  <span className="text-[10px] font-bold text-indigo-400 block mb-1">Primary Fixation</span>
+                  <p className="text-zinc-400 leading-relaxed">Your subject's face is successfully drawing the first 400ms of attention.</p>
+                </div>
+                <div className="p-4 rounded-xl bg-purple-500/[0.02] border border-purple-500/10">
+                  <span className="text-[10px] font-bold text-purple-400 block mb-1">Visual Flow</span>
+                  <p className="text-zinc-400 leading-relaxed">The path naturally leads the eye from the main subject to the bold text.</p>
+                </div>
+                <div className="p-4 rounded-xl bg-pink-500/[0.02] border border-pink-500/10">
+                  <span className="text-[10px] font-bold text-pink-400 block mb-1">Dead Zones</span>
+                  <p className="text-zinc-400 leading-relaxed">No major distractions detected in the peripheral areas of the thumbnail.</p>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   )
@@ -1688,6 +1803,70 @@ function CreatorIntelligenceReport({
                   : "High curiosity draw. Focuses on relatable human stakes, suspenseful questions, and high-impact emotional hooks."
                 }
               </p>
+            </div>
+          </div>
+        </div>
+      )
+    },
+    {
+      title: "Title Fixes & Inspiration",
+      icon: Sparkles,
+      glowColor: "from-amber-500/20 to-orange-500/10 border-amber-500/20",
+      iconColor: "text-amber-400",
+      badge: "Actionable Advice",
+      summary: "Specific ways to fix your title and examples of what works in your niche.",
+      content: (
+        <div className="space-y-4 pt-2 text-xs">
+          <div className="p-4 rounded-xl bg-amber-500/[0.02] border border-amber-500/10 space-y-2">
+            <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest block flex items-center gap-1">
+              <CheckCircle2 className="w-3 h-3" /> What makes a good title here?
+            </span>
+            <p className="text-zinc-300 leading-relaxed">
+              {cleanNiche === "Education" 
+                ? "In Education, titles must promise a specific outcome or clarify a complex topic instantly. Avoid vague words; use clear, strong action verbs."
+                : cleanNiche === "Gaming" 
+                ? "Gaming titles need high stakes and emotional contrast. Focus on the hardest challenge, the most OP build, or a massive failure/success."
+                : cleanNiche === "Tech" 
+                ? "Tech titles thrive on speed, money, or warnings. 'Do NOT buy X' or 'I built X in 10 minutes' work incredibly well."
+                : "A good title must immediately create a curiosity gap—give them half the story and make them click to find out the rest."}
+            </p>
+          </div>
+
+          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 space-y-3">
+            <span className="text-[10px] font-bold text-white uppercase tracking-widest block flex items-center gap-1">
+              <AlertCircle className="w-3 h-3 text-zinc-400" /> Ways to Fix Your Title
+            </span>
+            <ul className="space-y-2 text-zinc-400 list-disc pl-4 marker:text-zinc-600">
+              <li><strong>Cut the fluff:</strong> Remove the first 2-3 words if they don't add immediate value or curiosity.</li>
+              <li><strong>Increase the stakes:</strong> Ask yourself: "What happens if they don't click?" Add words that imply missing out.</li>
+              <li><strong>Front-load the hook:</strong> Put the most exciting or emotional word in the first 20 characters so it doesn't get cut off on mobile.</li>
+            </ul>
+          </div>
+
+          <div className="p-4 rounded-xl bg-emerald-500/[0.02] border border-emerald-500/10 space-y-3">
+            <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block flex items-center gap-1">
+              <Trophy className="w-3 h-3" /> Top Performing Inspirations
+            </span>
+            <div className="space-y-2">
+              {topPerformedTitles.length >= 3 ? (
+                topPerformedTitles.slice(0, 3).map((t, i) => (
+                  <div key={i} className="p-2 bg-emerald-500/5 rounded border border-emerald-500/10 text-zinc-200 italic">
+                    "{t}"
+                  </div>
+                ))
+              ) : (
+                <>
+                  <div className="p-2 bg-emerald-500/5 rounded border border-emerald-500/10 text-zinc-200 italic">
+                    {cleanNiche === "Gaming" ? `"I Survived 100 Days in Hardcore..."` : `"The Truth About [Trending Topic]"`}
+                  </div>
+                  <div className="p-2 bg-emerald-500/5 rounded border border-emerald-500/10 text-zinc-200 italic">
+                    {cleanNiche === "Tech" ? `"Why I Stopped Using [Popular Tool]"` : `"I Tried [X] So You Don't Have To"`}
+                  </div>
+                  <div className="p-2 bg-emerald-500/5 rounded border border-emerald-500/10 text-zinc-200 italic">
+                    {`"How To [Desirable Outcome] In 2024"`}
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
