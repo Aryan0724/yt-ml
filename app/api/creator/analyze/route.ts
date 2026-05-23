@@ -49,12 +49,46 @@ export async function POST(req: Request) {
         return NextResponse.json(errData, { status: response.status })
       }
     } catch (localErr: any) {
-      console.error("Local python connection failed:", localErr.message)
-      recordAnalysisFailure("Local Python engine unreachable", localErr.message)
-      return NextResponse.json(
-        { error: "Analysis backend is unreachable. Ensure the Python engine is running.", detail: localErr.message },
-        { status: 503 }
-      )
+      console.warn("Local python connection failed:", localErr.message)
+      
+      // Try remote railway backend next (essential for Vercel production deployments)
+      try {
+        const response = await fetch("https://yt-ml-production-870b.up.railway.app/analyze", {
+          method: "POST",
+          body: formData,
+          headers: {
+            "Accept": "application/json",
+          },
+        })
+
+        if (response.ok) {
+          const payload = await response.json()
+          if (payload.status === "success") {
+            const latency = Date.now() - startTime
+            recordAnalysisSuccess(latency, payload)
+            return NextResponse.json(payload)
+          } else {
+            return NextResponse.json(payload, { status: 400 })
+          }
+        } else {
+          // Forward actual error from remote backend
+          let errData;
+          try {
+            errData = await response.json()
+          } catch(e) {
+            errData = { detail: `Remote backend returned status ${response.status} without JSON` }
+          }
+          recordAnalysisFailure(`Remote backend error: ${response.status}`, errData)
+          return NextResponse.json(errData, { status: response.status })
+        }
+      } catch (remoteErr: any) {
+        console.error("Remote python connection failed:", remoteErr.message)
+        recordAnalysisFailure("Both local and remote Python engines unreachable", remoteErr.message)
+        return NextResponse.json(
+          { error: "Analysis backend is unreachable. Ensure the Python engine is running.", detail: remoteErr.message },
+          { status: 503 }
+        )
+      }
     }
   } catch (err: any) {
     console.error("Server API route analyze error:", err)
