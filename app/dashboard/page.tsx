@@ -673,11 +673,11 @@ function CreatorIntelligenceReport({
         items.push({
           id: `yt-${vid.videoId}`,
           title: vid.title,
-          channelName: vid.channelTitle,
+          channelName: profile?.youtube_channel || "Creator",
           views: `${(vid.viewCount / 1000).toFixed(0)}K views`,
           time: new Date(vid.publishedAt).toLocaleDateString(),
           preview: vid.thumbnailUrl,
-          avatar: vid.channelTitle.charAt(0),
+          avatar: profile?.youtube_channel?.charAt(0) || "C",
         })
       })
     } else {
