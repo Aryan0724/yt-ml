@@ -10,7 +10,6 @@ export function Sidebar() {
 
   const items = [
     { id: "analyze", icon: BarChart3, label: "Single Analysis", href: "/dashboard" },
-    { id: "compare", icon: Layout, label: "Comparison Mode", href: "/dashboard/compare" },
     { id: "history", icon: History, label: "History", href: "/dashboard/history" },
   ]
 
