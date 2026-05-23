@@ -18,7 +18,7 @@ export async function POST(req: Request) {
       )
     }
 
-    // Try local python backend first
+    // Try local python backend
     try {
       const response = await fetch("http://127.0.0.1:8000/analyze", {
         method: "POST",
@@ -34,50 +34,34 @@ export async function POST(req: Request) {
           const latency = Date.now() - startTime
           recordAnalysisSuccess(latency, payload)
           return NextResponse.json(payload)
+        } else {
+          return NextResponse.json(payload, { status: 400 })
         }
+      } else {
+        // Forward the actual error from the backend
+        let errData;
+        try {
+          errData = await response.json()
+        } catch(e) {
+          errData = { detail: `Backend returned status ${response.status} without JSON` }
+        }
+        recordAnalysisFailure(`Local backend error: ${response.status}`, errData)
+        return NextResponse.json(errData, { status: response.status })
       }
-      
-      console.warn("Local python backend returned non-ok status. Trying remote backend...")
     } catch (localErr: any) {
-      console.warn("Local python connection failed:", localErr.message)
+      console.error("Local python connection failed:", localErr.message)
+      recordAnalysisFailure("Local Python engine unreachable", localErr.message)
+      return NextResponse.json(
+        { error: "Analysis backend is unreachable. Ensure the Python engine is running.", detail: localErr.message },
+        { status: 503 }
+      )
     }
-
-    // Try remote railway backend next
-    try {
-      const response = await fetch("https://yt-ml-production-870b.up.railway.app/analyze", {
-        method: "POST",
-        body: formData,
-        headers: {
-          "Accept": "application/json",
-        },
-      })
-
-      if (response.ok) {
-        const payload = await response.json()
-        if (payload.status === "success") {
-          const latency = Date.now() - startTime
-          recordAnalysisSuccess(latency, payload)
-          return NextResponse.json(payload)
-        }
-      }
-      
-      console.warn("Remote python backend returned non-ok status.")
-    } catch (remoteErr: any) {
-      console.warn("Remote python connection failed:", remoteErr.message)
-    }
-
-    // If both backend attempts failed, return the 400 Bad Request error indicating insufficient thumbnail data
-    recordAnalysisFailure("Both local and remote python engines failed to respond.")
-    return NextResponse.json(
-      { error: "Analysis confidence too low due to insufficient thumbnail data." },
-      { status: 400 }
-    )
   } catch (err: any) {
     console.error("Server API route analyze error:", err)
     recordAnalysisFailure("Exception caught in route handler", err.message)
     return NextResponse.json(
-      { error: "Analysis confidence too low due to insufficient thumbnail data.", detail: err.message },
-      { status: 400 }
+      { error: "Internal server routing error.", detail: err.message },
+      { status: 500 }
     )
   }
 }
