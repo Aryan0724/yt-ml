@@ -6,7 +6,7 @@ import {
   Upload, Sparkles, CheckCircle2, AlertCircle, 
   TrendingUp, GitCompare, History, Search, Zap, 
   Tv, FileText, Image as ImageIcon, Clock, Calendar, CheckSquare, ArrowRight, ArrowLeft, RefreshCw,
-  Smartphone, BookOpen, Sliders, ChevronDown, ChevronUp, Globe, Lock, ShieldCheck, X, Trash2, Trophy, Plus
+  Smartphone, BookOpen, Sliders, ChevronDown, ChevronUp, Globe, Lock, ShieldCheck, X, Trash2, Trophy, Plus, ScanEye
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { saveAnalysisHistory, getAnalysisHistory, deleteAnalysisHistory } from "@/lib/supabase"
@@ -556,7 +556,6 @@ function generateChannelAudit(channelName: string, niche: string) {
       }
     ]
   }
-
   return nicheData[cleanNiche] || fallback
 }
 // ============================================================================
@@ -581,7 +580,8 @@ function CreatorIntelligenceReport({
   thumbnailPreview, 
   onRestart,
   compareVariants,
-  compareResults
+  compareResults,
+  ytVideos
 }: { 
   result: any, 
   profile: any, 
@@ -592,7 +592,8 @@ function CreatorIntelligenceReport({
   thumbnailPreview: string | null, 
   onRestart: () => void,
   compareVariants?: Array<{ id: string, file: File | null, preview: string | null, name?: string }>,
-  compareResults?: any[] | null
+  compareResults?: any[] | null,
+  ytVideos?: any[] | null
 }) {
   const [isDiagnosticsOpen, setIsDiagnosticsOpen] = useState(false)
   const [isTierExplainerOpen, setIsTierExplainerOpen] = useState(false)
@@ -3349,6 +3350,7 @@ export default function DashboardPage() {
                     onRestart={restartWizard}
                     compareVariants={compareVariants}
                     compareResults={compareResults}
+                    ytVideos={ytVideos}
                   />
                 ) : (
                   <div className="w-full">

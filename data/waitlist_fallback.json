@@ -66,10 +66,10 @@
     "applied_at": "2026-05-22T03:14:00.000Z",
     "beta_access_token": "bw_cvddwzmexch22vwm",
     "notes": "Manually approved by admin.",
-    "total_logins": 24,
-    "total_analyses": 7,
+    "total_logins": 28,
+    "total_analyses": 9,
     "approved_at": "2026-05-22T03:14:00.000Z",
-    "last_login": "2026-05-23T16:37:27.102Z",
-    "last_analysis_at": "2026-05-23T16:27:06.353Z"
+    "last_login": "2026-05-23T16:43:38.913Z",
+    "last_analysis_at": "2026-05-23T16:42:18.875Z"
   }
 ]
