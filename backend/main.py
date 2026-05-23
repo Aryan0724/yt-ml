@@ -50,17 +50,29 @@ async def analyze_metadata(
 ):
     try:
         if thumbnail is None:
-            raise HTTPException(status_code=400, detail="Analysis confidence too low due to insufficient thumbnail data.")
+            raise HTTPException(status_code=400, detail="No thumbnail file uploaded.")
         
         contents = await thumbnail.read()
+        if not contents:
+            raise HTTPException(status_code=400, detail="Uploaded thumbnail file is empty.")
+            
         import numpy as np
         import cv2
+        from PIL import Image
+        import io
         from core.visual_analyzer import analyze_image
         
-        nparr = np.frombuffer(contents, np.uint8)
-        img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-        if img is None:
-            raise HTTPException(status_code=400, detail="Analysis confidence too low due to insufficient thumbnail data.")
+        try:
+            # Decode using Pillow which supports many more formats (WebP, etc.)
+            pil_image = Image.open(io.BytesIO(contents)).convert('RGB')
+            # Convert RGB to BGR for OpenCV
+            img = cv2.cvtColor(np.array(pil_image), cv2.COLOR_RGB2BGR)
+        except Exception as e:
+            # Fallback to OpenCV native decode if Pillow fails
+            nparr = np.frombuffer(contents, np.uint8)
+            img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+            if img is None:
+                raise HTTPException(status_code=400, detail=f"Failed to decode image format. Ensure it's a valid JPG, PNG, or WEBP. File size: {len(contents)} bytes. Decode error: {str(e)}")
             
         visual_metrics = analyze_image(img)
         

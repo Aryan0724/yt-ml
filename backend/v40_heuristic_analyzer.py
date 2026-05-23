@@ -180,7 +180,9 @@ class HeuristicAnalyzer:
         # 7. Niche/Category Specific Checks
         category = raw.get('category', '').lower()
         if 'news' in category or 'politics' in category:
-            if saturation_score > 70 or contrast_score > 70 or 'Saturated' in raw.get('palette_desc', ''):
+            sat_score = raw.get('saturation_score', 0)
+            cont_score = raw.get('contrast_score', 0)
+            if sat_score > 70 or cont_score > 70 or 'Saturated' in raw.get('palette_desc', ''):
                 weaknesses.append("Gaming-style aesthetics detected in a News/Politics niche")
                 improvements.append({
                     "title": "Restore Journalistic Tone",
