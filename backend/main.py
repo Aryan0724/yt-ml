@@ -49,19 +49,47 @@ async def analyze_metadata(
     thumbnail: Optional[UploadFile] = File(None)
 ):
     try:
-        # Construct raw inputs for the ensemble engine
+        if thumbnail is None:
+            raise HTTPException(status_code=400, detail="Analysis confidence too low due to insufficient thumbnail data.")
+        
+        contents = await thumbnail.read()
+        import numpy as np
+        import cv2
+        from core.visual_analyzer import analyze_image
+        
+        nparr = np.frombuffer(contents, np.uint8)
+        img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        if img is None:
+            raise HTTPException(status_code=400, detail="Analysis confidence too low due to insufficient thumbnail data.")
+            
+        visual_metrics = analyze_image(img)
+        
+        # Construct raw inputs for the ensemble engine using real metrics
         raw_input = {
             "title": title,
             "category": niche,
             "channel_title": channel_title,
-            "face_count": face_count,
-            "brightness": brightness,
+            "face_count": visual_metrics["face_count"],
+            "face_boxes": visual_metrics["face_boxes"],
+            "average_face_area_pct": visual_metrics["average_face_area_pct"],
+            "emotional_visibility_score": visual_metrics["emotional_visibility_score"],
+            "clutter_level_rating": visual_metrics["clutter_level_rating"],
+            "ocr_text": visual_metrics["ocr_text"],
+            "text_density": visual_metrics["text_density"],
+            "mobile_readability": visual_metrics["mobile_readability"],
+            "brightness": visual_metrics["brightness"],
+            "contrast": visual_metrics["contrast"],
+            "contrast_score": visual_metrics["contrast_score"],
+            "saturation": visual_metrics["saturation"],
+            "saturation_score": visual_metrics["saturation_score"],
+            "palette_desc": visual_metrics["palette_desc"],
             "video_length": video_length,
             "upload_hour": upload_hour,
             "is_weekend": is_weekend
         }
         results = engine.analyze_single(raw_input)
         
+        # Include raw debug metrics in response if needed
         return {
             "status": "success",
             "data": results,
@@ -70,6 +98,8 @@ async def analyze_metadata(
                 "engine_version": results.get("engine_version", "1.1.0")
             }
         }
+    except HTTPException as he:
+        raise he
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

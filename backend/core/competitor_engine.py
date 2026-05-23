@@ -8,7 +8,7 @@ class CompetitorEngine:
             model_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         self.model_dir = model_dir
 
-    def analyze_competitors(self, channel_title: str, title: str, category: str) -> dict:
+    def analyze_competitors(self, channel_title: str, title: str, category: str, raw_input: dict = None) -> dict:
         """
         Identifies relevant competitors in the creator's niche and performs comparative analysis.
         """
@@ -116,27 +116,77 @@ class CompetitorEngine:
                 }
             ]
 
-        # Generate Comparative Scores
-        your_visual_strength = int(np.clip(41 + np.random.uniform(-3, 3), 0, 100))
+        # Extract actual metrics if raw_input is present
+        brightness = raw_input.get('brightness', 128) if raw_input else 128
+        contrast_score = raw_input.get('contrast_score', 50.0) if raw_input else 50.0
+        saturation_score = raw_input.get('saturation_score', 50.0) if raw_input else 50.0
+        clutter_level_rating = raw_input.get('clutter_level_rating', 5.0) if raw_input else 5.0
+        face_count = raw_input.get('face_count', 0) if raw_input else 0
+        emotional_visibility_score = raw_input.get('emotional_visibility_score', 0.0) if raw_input else 0.0
+        mobile_readability = raw_input.get('mobile_readability', 75.0) if raw_input else 75.0
+
+        # Generate Comparative Niche Averages
         niche_visual_strength = 72
-        
-        your_curiosity = int(np.clip(33 + np.random.uniform(-3, 3), 0, 100))
         niche_curiosity = 68
-        
-        your_readability = int(np.clip(58 + np.random.uniform(-3, 3), 0, 100))
         niche_readability = 84
-        
-        your_intensity = int(np.clip(27 + np.random.uniform(-3, 3), 0, 100))
         niche_intensity = 79
+
+        # Calculate User Scores based on real OpenCV metrics
+        # 1. Visual strength: contrast + saturation - brightness penalties - clutter penalties
+        brightness_penalty = 0
+        if brightness < 100:
+            brightness_penalty = (100 - brightness) * 0.5
+        elif brightness > 200:
+            brightness_penalty = (brightness - 200) * 0.5
+            
+        clutter_penalty = 0
+        if clutter_level_rating > 6.5:
+            clutter_penalty = (clutter_level_rating - 6.5) * 8.0
+            
+        your_visual_strength = float(np.clip(
+            (0.3 * contrast_score) + 
+            (0.3 * saturation_score) + 
+            (0.4 * (100.0 - brightness_penalty * 2.0)) - 
+            clutter_penalty,
+            15.0, 100.0
+        ))
+
+        # 2. Curiosity trigger: based on title words + emotional face visibility
+        title_curiosity_bonus = 0
+        curiosity_words = ["secret", "mistake", "survived", "vs", "history", "uncovered", "why", "how", "dangerous", "broke", "ultimate", "survive"]
+        for word in curiosity_words:
+            if word in title.lower():
+                title_curiosity_bonus += 12
+        title_curiosity_bonus = min(35, title_curiosity_bonus)
+        
+        if face_count > 0:
+            your_curiosity = 30 + emotional_visibility_score * 0.4 + title_curiosity_bonus
+        else:
+            your_curiosity = 35 + contrast_score * 0.2 + title_curiosity_bonus
+        your_curiosity = float(np.clip(your_curiosity, 15.0, 100.0))
+
+        # 3. Readability: maps to mobile readability
+        your_readability = float(np.clip(mobile_readability, 10.0, 100.0))
+
+        # 4. Emotional Intensity: maps to face expression or contrast
+        if face_count > 0:
+            your_intensity = float(np.clip(emotional_visibility_score, 10.0, 100.0))
+        else:
+            your_intensity = float(np.clip(contrast_score * 0.7, 10.0, 100.0))
+
+        # Adjust competitor similarity scores based on visual distance to average
+        for comp in competitors:
+            diff_factor = abs(your_visual_strength - niche_visual_strength) / 100.0
+            comp["similarity_score"] = float(np.clip(comp["similarity_score"] - diff_factor * 0.1, 0.4, 0.98))
 
         return {
             "niche_competitors": competitors,
             "what_competitors_do_differently": differences,
             "competitive_position": {
-                "visual_attention_strength": {"you": your_visual_strength, "average": niche_visual_strength},
-                "curiosity_trigger_index": {"you": your_curiosity, "average": niche_curiosity},
-                "mobile_readability_rating": {"you": your_readability, "average": niche_readability},
-                "emotional_intensity_rating": {"you": your_intensity, "average": niche_intensity}
+                "visual_attention_strength": {"you": int(your_visual_strength), "average": niche_visual_strength},
+                "curiosity_trigger_index": {"you": int(your_curiosity), "average": niche_curiosity},
+                "mobile_readability_rating": {"you": int(your_readability), "average": niche_readability},
+                "emotional_intensity_rating": {"you": int(your_intensity), "average": niche_intensity}
             },
             "clickable_competitor_references": references
         }

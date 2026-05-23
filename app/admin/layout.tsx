@@ -19,7 +19,7 @@ const NAV_ITEMS = [
   { label: "Blogs & CMS", href: "/admin/blogs", icon: BookOpen },
   { label: "Live Activity", href: "/admin/activity", icon: Activity },
   { label: "Creator Feedback", href: "/admin/feedback", icon: MessageSquare },
-  { label: "System Health", href: "/admin/system", icon: HeartPulse },
+  { label: "System Health", href: "/admin/system-health", icon: HeartPulse },
   { label: "Beta Auth Debug", href: "/admin/debug-auth", icon: KeyRound },
   { label: "Settings Desk", href: "/admin/settings", icon: Settings }
 ]

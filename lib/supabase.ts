@@ -122,3 +122,45 @@ export async function getAnalysisHistory() {
     return { success: false, error: e, data: [] }
   }
 }
+
+/**
+ * Deletes a pre-upload metadata analysis run from history.
+ */
+export async function deleteAnalysisHistory(id?: string | number, createdAt?: string) {
+  if (supabase) {
+    try {
+      let query = supabase.from("analysis_history").delete()
+      if (id) {
+        query = query.eq("id", id)
+      } else if (createdAt) {
+        query = query.eq("created_at", createdAt)
+      } else {
+        throw new Error("Missing identifier to delete history item")
+      }
+      const { data, error } = await query
+      if (error) throw error
+      return { success: true, source: "supabase", data }
+    } catch (err) {
+      console.warn("Supabase history delete failed, falling back to local storage:", err)
+    }
+  }
+
+  try {
+    const existing = JSON.parse(localStorage.getItem("algopilot_history") || "[]") as Array<{
+      id?: string | number
+      created_at: string
+      [key: string]: unknown
+    }>
+    const filtered = existing.filter(item => {
+      if (id && item.id === id) return false
+      if (createdAt && item.created_at === createdAt) return false
+      return true
+    })
+    localStorage.setItem("algopilot_history", JSON.stringify(filtered))
+    return { success: true, source: "localStorage" }
+  } catch (e) {
+    console.error("Local storage history delete failed:", e)
+    return { success: false, error: e }
+  }
+}
+

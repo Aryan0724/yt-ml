@@ -173,14 +173,14 @@ export default function DashboardLayout({
                 <div className="space-y-1.5">
                   <label className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest flex items-center justify-between">
                     <span>Beta Access Token</span>
-                    <span className="text-[8px] text-zinc-600 font-normal">Begins with ap_</span>
+                    <span className="text-[8px] text-zinc-600 font-normal">Begins with bw_</span>
                   </label>
                   <input
                     required
                     type="text"
                     value={tokenInput}
                     onChange={(e) => setTokenInput(e.target.value)}
-                    placeholder="ap_xxxxxxxxxxxx"
+                    placeholder="bw_xxxxxxxxxxxx"
                     className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-white/20 transition-all text-white font-mono placeholder-zinc-700"
                   />
                 </div>

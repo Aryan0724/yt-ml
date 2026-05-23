@@ -5,7 +5,7 @@
 -- Table to store real-time activities for social proof feed
 create table if not exists activity_feed (
   id uuid default gen_random_uuid() primary key,
-  user_id uuid references waitlist_users(id) on delete set null,
+  user_id text references beta_waitlist(id) on delete set null,
   channel_id text, -- Custom YouTube handle/link
   country text not null, -- E.g. 'United States', 'India', 'Japan', etc.
   city text not null, -- E.g. 'Austin', 'Mumbai', 'Tokyo', etc.

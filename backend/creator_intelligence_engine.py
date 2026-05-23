@@ -20,13 +20,14 @@ class CreatorIntelligenceEngine:
         self.version = "2.0-ULTIMATE-INTELLIGENCE"
         self.channel_dna_engine = ChannelDNAEngine()
         self.competitor_engine = CompetitorEngine()
+        self.last_input = None
+        self.last_output = None
 
     def analyze_single(self, raw_input: dict) -> dict:
         """
         Full structured analysis for a single thumbnail/title.
         """
         # 1. Base Scores & Ensemble Optimization
-        # We now use the Ensemble Optimizer which blends ML + Behavioral + Calibration
         processed = self.base_engine._relativize(raw_input)
         blended, behav_report = self.optimizer.optimize_prediction(raw_input)
         
@@ -42,18 +43,19 @@ class CreatorIntelligenceEngine:
         )
         
         # 4. Tier Assignment
-        if blended >= 85: tier = "S"
-        elif blended >= 70: tier = "A"
-        elif blended >= 40: tier = "B"
-        else: tier = "C"
+        if blended >= 90: tier = "S"
+        elif blended >= 80: tier = "A"
+        elif blended >= 70: tier = "B"
+        elif blended >= 60: tier = "C"
+        else: tier = "D"
 
         # 5. Creator DNA & Competitor Layer
         channel_title = raw_input.get("channel_title", "Unknown")
         category = raw_input.get("category", "Entertainment")
         title = raw_input.get("title", "")
         
-        dna_profile = self.channel_dna_engine.analyze_channel(channel_title)
-        competitor_profile = self.competitor_engine.analyze_competitors(channel_title, title, category)
+        dna_profile = self.channel_dna_engine.analyze_channel(channel_title, raw_input)
+        competitor_profile = self.competitor_engine.analyze_competitors(channel_title, title, category, raw_input)
         
         # 6. Safe vs Breakout Scores
         category_consistency = dna_profile.get("performance_baselines", {}).get("category_consistency", 0.85)
@@ -72,7 +74,43 @@ class CreatorIntelligenceEngine:
             safe_explanation = "Subscribers may fail to recognize this upload as yours due to visual style deviations."
             breakout_explanation = "Low expansion potential. The thumbnail lacks the extreme contrast required for broad recommendations."
 
-        # 7. Build Final Structure
+        # 7. Debug Features & Output Variance Validation
+        debug_metrics = {
+            "face_detected": raw_input.get("face_count", 0) > 0,
+            "face_count": raw_input.get("face_count", 0),
+            "face_boxes": raw_input.get("face_boxes", []),
+            "ocr_text": raw_input.get("ocr_text", ""),
+            "brightness": float(raw_input.get("brightness", 128.0)),
+            "contrast_score": int(raw_input.get("contrast_score", 50)),
+            "saturation_score": int(raw_input.get("saturation_score", 50)),
+            "clutter_level_rating": float(raw_input.get("clutter_level_rating", 5.0)),
+            "mobile_readability": raw_input.get("mobile_readability", 100),
+            "text_density": int(raw_input.get("text_density", 0)),
+            "curiosity_score": int(processed.get("hook_score", 0.5) * 100)
+        }
+
+        # Variance checking
+        possible_static_output_bug = False
+        if self.last_input is not None and self.last_output is not None:
+            different_inputs = (
+                (self.last_input.get("title") != raw_input.get("title")) or
+                (abs(self.last_input.get("brightness", 0) - raw_input.get("brightness", 0)) > 2) or
+                (self.last_input.get("face_count") != raw_input.get("face_count"))
+            )
+            # Compare generated improvements titles
+            last_titles = [imp.get("title") for imp in self.last_output.get("improvements", []) if isinstance(imp, dict)]
+            current_titles = [imp.get("title") for imp in h_results["improvements"] if isinstance(imp, dict)]
+            same_recommendations = (last_titles == current_titles and len(last_titles) > 0)
+            
+            if different_inputs and same_recommendations:
+                possible_static_output_bug = True
+
+        # Cache inputs/outputs
+        self.last_input = raw_input.copy()
+        # Create a copy of the improvements for later validation comparison
+        self.last_output = {"improvements": h_results["improvements"]}
+
+        # 8. Build Final Structure
         output = {
             "engine_version": self.version,
             "score": int(blended),
@@ -98,7 +136,9 @@ class CreatorIntelligenceEngine:
                 "ml_score": ml_score,
                 "heuristic_score": mq_score,
                 "breakout_prob": breakout_prob
-            }
+            },
+            "debug": debug_metrics,
+            "possible_static_output_bug": possible_static_output_bug
         }
         return output
 

@@ -19,11 +19,12 @@ class ChannelDNAEngine:
             except Exception as e:
                 print(f"Error loading channel_stats: {e}")
 
-    def analyze_channel(self, channel_identifier: str) -> dict:
+    def analyze_channel(self, channel_identifier: str, raw_input: dict = None) -> dict:
         """
         Analyzes a creator's channel history, baseline metrics,
         visual styling signatures, title psychology preferences, and audience signals.
         """
+        import hashlib
         # Clean identifier (strip @, URLs etc.)
         cleaned_id = channel_identifier.strip()
         if "youtube.com/" in cleaned_id:
@@ -41,18 +42,27 @@ class ChannelDNAEngine:
                 cleaned_id = key
                 break
         
-        # If not found, generate a highly realistic mocked profile based on niche/name keywords
+        # Stable seed generation based on channel identifier
+        seed_int = int(hashlib.md5(cleaned_id.lower().encode('utf-8')).hexdigest(), 16) % 10**8
+        rng = np.random.default_rng(seed_int)
+
+        # If not found, generate a highly realistic stable profile based on stable seed
         if not chan_data:
-            # Fallback data
+            avg_views = int(rng.uniform(25000, 750000))
+            p90_views = int(avg_views * rng.uniform(1.8, 3.5))
+            subs = int(avg_views * rng.uniform(8.0, 45.0))
+            video_count = int(rng.uniform(40, 1200))
+            category_consistency = float(rng.uniform(0.75, 0.99))
+            
             chan_data = {
-                "avg_views": 85000,
-                "p90_views": 240000,
-                "authority_score": 5.8,
-                "est_sub_count": 180000,
-                "video_count": 42,
-                "category_consistency": 0.85
+                "avg_views": avg_views,
+                "p90_views": p90_views,
+                "authority_score": float(rng.uniform(3.5, 9.9)),
+                "est_sub_count": subs,
+                "video_count": video_count,
+                "category_consistency": category_consistency
             }
-            # Special overrides for specific channel patterns
+            # Special overrides for specific channel patterns (with stable RNG)
             if "shemaroo" in cleaned_id.lower():
                 chan_data = {
                     "avg_views": 137000,
@@ -85,6 +95,7 @@ class ChannelDNAEngine:
         avg_views = chan_data.get("avg_views", 50000)
         p90_views = chan_data.get("p90_views", 150000)
         subs = chan_data.get("est_sub_count", 100000)
+        category_consistency = chan_data.get("category_consistency", 0.85)
         
         median_views = int(avg_views * 0.85)
         top_10_threshold = int(p90_views)
@@ -113,6 +124,24 @@ class ChannelDNAEngine:
         authority_wording = 8.5 if "tech" in cleaned_id.lower() or "mkbhd" in cleaned_id.lower() else 3.8
         controversy_markers = 4.5 if "news" in cleaned_id.lower() else 1.2
 
+        # Extract current visual metrics if raw_input is present
+        curr_brightness = raw_input.get("brightness", avg_brightness) if raw_input else avg_brightness
+        curr_face_count = raw_input.get("face_count", 0) if raw_input else 0
+        curr_saturation = raw_input.get("saturation_score", avg_saturation) if raw_input else avg_saturation
+        curr_clutter = raw_input.get("clutter_level_rating", clutter_level) if raw_input else clutter_level
+        curr_text_density = raw_input.get("text_density", typography_density) if raw_input else typography_density
+        category = raw_input.get("category", "Entertainment") if raw_input else "Entertainment"
+
+        # Dynamic consistency style calculation
+        brightness_diff = abs(curr_brightness - avg_brightness) / 255.0
+        saturation_diff = abs(curr_saturation - avg_saturation) / 100.0
+        clutter_diff = abs(curr_clutter - clutter_level) / 10.0
+        
+        style_match = 100.0 - (brightness_diff * 20.0 + saturation_diff * 20.0 + clutter_diff * 20.0)
+        if (curr_face_count > 0 and face_frequency < 0.4) or (curr_face_count == 0 and face_frequency > 0.6):
+            style_match -= 15.0
+        style_match = max(45, min(99, int(style_match)))
+
         # Infer channel behavioral classifications
         identity = "high-density entertainment"
         preference = "familiar faces + comedic context"
@@ -120,88 +149,124 @@ class ChannelDNAEngine:
         pattern = "curiosity-gap stakes hooks"
         patterns = ["extreme reactions", "large bold yellow font", "highly isolated product center"]
 
-        if "game" in cleaned_id.lower() or "play" in cleaned_id.lower():
+        if "game" in cleaned_id.lower() or "play" in cleaned_id.lower() or "game" in category.lower():
             identity = "high-action gameplay challenge"
             preference = "intense reaction faces + game assets"
             dominant_style = "cluttered high-contrast elements"
             pattern = "stakes challenge hooks"
             patterns = ["exaggerated gameplay expressions", "red focal circle markers", "bold scale framing"]
-        elif "tech" in cleaned_id.lower() or "mkbhd" in cleaned_id.lower():
+        elif "tech" in cleaned_id.lower() or "mkbhd" in cleaned_id.lower() or "tech" in category.lower():
             identity = "premium product diagnostics"
             preference = "hyper-isolated devices + clean aesthetics"
             dominant_style = "dark matte sleek minimalism"
             pattern = "unexpected truth comparisons"
             patterns = ["matte backdrop contrast", "device product isolation", "clean lower-third typography"]
-        elif "shemaroo" in cleaned_id.lower() or "movie" in cleaned_id.lower() or "comedy" in cleaned_id.lower():
+        elif "shemaroo" in cleaned_id.lower() or "movie" in cleaned_id.lower() or "comedy" in cleaned_id.lower() or "entertainment" in category.lower():
             identity = "high-density nostalgia comedy"
             preference = "highly recognizable Bollywood actors + comedy conflict"
             dominant_style = "warm saturated group frames"
             pattern = "nostalgic conflict highlights"
             patterns = ["split-screen character reactions", "warm saturated outlines", "high-stakes curiosity quotes"]
 
-        # Generate a realistic mock list of 5 recent videos with views, title, duration, upload date
-        recent_videos = []
-        video_titles = []
-        if "shemaroo" in cleaned_id.lower() or "movie" in cleaned_id.lower() or "comedy" in cleaned_id.lower():
+        # Generate titles using the stable seed and category
+        cat_lower = category.lower()
+        if "shemaroo" in cleaned_id.lower() or "movie" in cleaned_id.lower() or "comedy" in cat_lower or "entertainment" in cat_lower:
             video_titles = [
-                "Double Dhamaal Hilarious Comedy Compilation",
-                "Golmaal Classic Comic Scene Set!",
-                "Dhamaal Fun Unlimited Best Moments",
-                "Phir Hera Pheri Ultimate Comedy Ride",
-                "Welcome (2007) Epic Scenes Compilation"
+                f"{cleaned_id} Classic Comedy Collection",
+                "Hilarious Blockbuster Scenes Compilation",
+                "Retro Hits & Laughs Special",
+                "Superhit Comedy Scene Vol 4",
+                "Best Comic Moments Compilation"
             ]
-        elif "game" in cleaned_id.lower() or "play" in cleaned_id.lower():
+        elif "game" in cleaned_id.lower() or "play" in cleaned_id.lower() or "gaming" in cat_lower:
             video_titles = [
                 "I Survived 100 Days in a Hardcore Desert World!",
                 "Speedrunner vs 3 Professional Hunters",
                 "This Hardcore Challenge Almost Broke Me...",
-                "World's Most Cluttered Speedrun Challenge",
-                "I Spent 24 Hours in Minecraft Virtual Reality"
+                "Ultimate Minecraft Speedrun Competition",
+                "24 Hours In The Most Dangerous Realm"
             ]
-        elif "tech" in cleaned_id.lower() or "mkbhd" in cleaned_id.lower():
+        elif "tech" in cleaned_id.lower() or "mkbhd" in cleaned_id.lower() or "tech" in cat_lower:
             video_titles = [
-                "The Smartphone of the Future (MKBHD Review)",
-                "I Built a $500 Smart Desk Upgrade",
-                "The Real Reason You Shouldn't Buy the New AI Laptop",
+                "The Smartphone of the Future (Review)",
+                "I Built the Ultimate Smart Desk Setup",
+                "Why You Shouldn't Buy the New AI Laptop",
                 "Is This the Ultimate Gaming Tablet?",
                 "My Desk Setup Tour (2026 Edition)"
             ]
         else:
             video_titles = [
-                "How I Mastered My Channel Strategy in 2026",
-                "The Truth I Wish I Knew Earlier...",
+                f"How I Mastered {category} in 30 Days",
+                "The Real Secret of My Growth...",
                 "Testing the Absolute Limit of My Setup",
-                "Why Your Channels Are Bypassed by Creators",
-                "I Secretly Lived in a Tiny House for 7 Days"
+                "Why Most Creators Fail at This",
+                "I Spent 24 Hours in a Tiny Room"
             ]
 
-        # Populate recent videos
-        for i, title in enumerate(video_titles):
-            # First index is low or custom according to Shemaroo Movies low view velocity bug details
-            if "shemaroo" in cleaned_id.lower() and i == 0:
-                views = 137000
-            else:
-                views = int(avg_views * np.random.uniform(0.6, 2.2 if i == 0 else 1.3))
+        # Populate recent videos with matched structures
+        recent_videos = []
+        for i, v_title in enumerate(video_titles):
+            views_factor = rng.uniform(0.5, 2.3)
+            views = int(avg_views * views_factor)
             
+            dur_min = int(rng.uniform(5, 25))
+            dur_sec = int(rng.uniform(0, 59))
+            duration = f"{dur_min:02d}:{dur_sec:02d}"
+            
+            if views_factor > 1.3:
+                status = "OUTPERFORMED"
+                status_color = "text-emerald-400 bg-emerald-500/10 border-emerald-500/20"
+                ctr = f"{rng.uniform(9.0, 15.5):.1f}%"
+                if curr_face_count > 0:
+                    worked = "Vibrant facial framing and high-intensity shock expression engaged viewers early."
+                else:
+                    worked = "High-contrast object isolation and minimal typographic layout drove strong feed prominence."
+                notWorked = "Minor audience retention dip during the long sponsorships mid-roll."
+            elif views_factor < 0.7:
+                status = "UNDERPERFORMING"
+                status_color = "text-rose-400 bg-rose-500/10 border-rose-500/20"
+                ctr = f"{rng.uniform(2.5, 5.0):.1f}%"
+                worked = "Solid title search term density."
+                if curr_brightness < 90:
+                    notWorked = "Dark background layout reduced visibility in dark-mode recommendation feeds."
+                elif curr_clutter > 6.0:
+                    notWorked = "High background visual clutter created visual noise, raising mobile skip rates."
+                else:
+                    notWorked = "Low typography scale made details hard to read on mobile screens."
+            else:
+                status = "STABLE"
+                status_color = "text-blue-400 bg-blue-500/10 border-blue-500/20"
+                ctr = f"{rng.uniform(5.5, 8.8):.1f}%"
+                worked = "Familiar niche theme color palettes and standard baseline composition."
+                notWorked = "Standard visual layout lacked the high curiosity hooks needed for breakout reach."
+                
             recent_videos.append({
-                "title": title,
+                "title": v_title,
                 "views": views,
-                "upload_age": f"{i*3 + 1} days ago",
-                "duration": "14:20" if i % 2 == 0 else "18:05",
-                "worked_well": "Large recognizable comedic expressions + saturated orange highlights" if views > avg_views else "Symmetrical gameplay elements did not pop",
-                "not_worked": "Thumbnail character placement got clipped by duration overlay badge" if views < avg_views else "None. Balanced visual margins drove robust early click conversions."
+                "duration": duration,
+                "ctr": ctr,
+                "status": status,
+                "statusColor": status_color,
+                "worked": worked,
+                "notWorked": notWorked
             })
 
         return {
             "channel_title": cleaned_id,
             "subscribers": subs,
+            "subscriber_base": subs,
             "video_count": chan_data.get("video_count", 15),
+            "niche": category,
+            "upload_frequency": "2-3 videos/week" if rng.uniform() > 0.5 else "1-2 videos/week",
+            "optimal_upload_window": "Wednesdays @ 4:00 PM & Saturdays @ 11:00 AM" if rng.uniform() > 0.5 else "Daily @ 12:00 PM & 6:00 PM (IST)",
+            "style_profile": f"{'Vibrant' if curr_saturation > 75 else 'Matte'}, {'High Contrast' if curr_brightness > 120 else 'Sleek Minimalism'}, {'Reactive Face' if curr_face_count > 0 else 'Typography Focus'}",
             "performance_baselines": {
                 "median_views": median_views,
                 "top_10_percent_threshold": top_10_threshold,
                 "low_performer_threshold": low_performer_threshold,
                 "velocity_p50_48h": velocity_p50,
-                "velocity_p90_48h": velocity_p90
+                "velocity_p90_48h": velocity_p90,
+                "category_consistency": category_consistency
             },
             "visual_style_profile": {
                 "average_brightness": avg_brightness,
@@ -229,5 +294,7 @@ class ChannelDNAEngine:
                 "title_pattern": pattern,
                 "high_performing_patterns": patterns
             },
-            "last_5_videos_analysis": recent_videos
+            "last_5_videos_analysis": recent_videos,
+            "recent_audits": recent_videos,
+            "style_match_percentage": style_match
         }

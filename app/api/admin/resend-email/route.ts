@@ -39,7 +39,7 @@ export async function POST(req: Request) {
     }
 
     // Generate token if not present (although it should be)
-    const betaToken = applicant.beta_access_token || "ap_" + Math.random().toString(36).substring(2, 15)
+    const betaToken = applicant.beta_access_token || "bw_" + Math.random().toString(36).substring(2, 15)
 
     // Prepare Welcome Beta Onboarding Email
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://algopilot.integralgroups.in"

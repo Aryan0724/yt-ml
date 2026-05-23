@@ -85,7 +85,7 @@ export function saveLocalApplicants(applicants: LocalApplicant[]): void {
       throw new Error("Cannot create a new local applicant without an email address.")
     }
     result = {
-      id: applicant.id || "ap_" + Math.random().toString(36).substring(2, 15),
+      id: applicant.id || "bw_" + Math.random().toString(36).substring(2, 15),
       full_name: applicant.full_name || "",
       email: emailLower,
       youtube_channel: applicant.youtube_channel || "",
@@ -95,7 +95,7 @@ export function saveLocalApplicants(applicants: LocalApplicant[]): void {
       reason_for_joining: applicant.reason_for_joining || "",
       status: applicant.status || "pending",
       applied_at: applicant.applied_at || new Date().toISOString(),
-      beta_access_token: applicant.beta_access_token || "ap_" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+      beta_access_token: applicant.beta_access_token || "bw_" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
       notes: applicant.notes || "",
       total_logins: applicant.total_logins || 0,
       total_analyses: applicant.total_analyses || 0,

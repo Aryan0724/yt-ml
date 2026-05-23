@@ -54,6 +54,13 @@ export async function POST(req: Request) {
       }
     }
 
+    if (creator) {
+      if (creator.email && creator.email.toLowerCase() === "deepalic511@gmail.com") {
+        creator.youtube_channel = "https://www.youtube.com/@ConceptClearHaiwithDeepali"
+        creator.niche = "Education"
+      }
+    }
+
     if (!creator) {
       return NextResponse.json(
         {
