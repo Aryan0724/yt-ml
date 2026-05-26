@@ -79,7 +79,7 @@ export function getEmailTemplate(contentHtml: string) {
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>AlgoPilot Intelligence</title>
+      <title>preYT Intelligence</title>
       <style>
         body {
           margin: 0;
@@ -193,13 +193,13 @@ export function getEmailTemplate(contentHtml: string) {
     <body>
       <div class="container">
         <div class="header">
-          <span class="logo-text">⚡ AlgoPilot</span>
+          <span class="logo-text">⚡ preYT</span>
         </div>
         <div class="body">
           ${contentHtml}
         </div>
         <div class="footer">
-          Built under Integral Groups Studio &copy; 2026 AlgoPilot. All rights reserved.
+          Built under Integral Groups Studio &copy; 2026 preYT. All rights reserved.
         </div>
       </div>
     </body>

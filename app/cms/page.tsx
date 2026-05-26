@@ -147,7 +147,7 @@ export default function CMSDashboard() {
               meta_description: b.excerpt || "",
               focus_keyword: "",
               secondary_keywords: [],
-              canonical_url: `https://algopilot.integralgroups.in/blog/${b.slug}`,
+              canonical_url: `https://preyt.integralgroups.in/blog/${b.slug}`,
               og_title: b.title,
               og_description: b.excerpt || "",
               og_image: b.featured_image || "",
@@ -195,7 +195,7 @@ export default function CMSDashboard() {
           meta_description: "Learn how to configure behavioral prescriber weights and neural models to optimize click-through rate.",
           focus_keyword: "Ensemble scoring",
           secondary_keywords: ["virality", "neural models", "optimization"],
-          canonical_url: "https://algopilot.integralgroups.in/blog/ensemble-scoring-virality",
+          canonical_url: "https://preyt.integralgroups.in/blog/ensemble-scoring-virality",
           og_title: "Pre-Upload Virality Analysis Calibration Guide",
           og_description: "How to configure neural networks and prescriber weights.",
           og_image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600",
@@ -223,7 +223,7 @@ export default function CMSDashboard() {
           meta_description: "An operational study on visual layouts, high-contrast thumbnails, and metadata anchors.",
           focus_keyword: "CTR optimization",
           secondary_keywords: ["thumbnails", "youtube seo"],
-          canonical_url: "https://algopilot.integralgroups.in/blog/youtube-ctr-optimization",
+          canonical_url: "https://preyt.integralgroups.in/blog/youtube-ctr-optimization",
           og_title: "YouTube CTR Optimization Strategies Guide",
           og_description: "Lift click-through rates by up to 42%.",
           og_image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=600",
@@ -377,7 +377,7 @@ export default function CMSDashboard() {
           meta_description: seoDesc,
           focus_keyword: seoKeyword,
           secondary_keywords: seoSecondary.split(",").map(s => s.trim()).filter(Boolean),
-          canonical_url: seoCanonical || `https://algopilot.integralgroups.in/blog/${editorSlug}`,
+          canonical_url: seoCanonical || `https://preyt.integralgroups.in/blog/${editorSlug}`,
           og_title: seoTitle || editorTitle,
           og_description: seoDesc,
           og_image: editorFeaturedImage,
@@ -529,7 +529,7 @@ export default function CMSDashboard() {
                 </span>
                 <h2 className="text-3xl font-display font-bold tracking-tight text-white">Editorial Gateway</h2>
                 <p className="text-xs text-zinc-500 leading-relaxed">
-                  Authentication and cryptographic admin authorization are required to access AlgoPilot content databases.
+                  Authentication and cryptographic admin authorization are required to access preYT content databases.
                 </p>
               </div>
 
@@ -591,7 +591,7 @@ export default function CMSDashboard() {
             <div className="space-y-8">
               <div className="flex items-center justify-between">
                 <span className="font-display font-extrabold tracking-tight text-white text-lg flex items-center gap-2">
-                  ⚡ AlgoPilot <span className="text-[8px] font-bold uppercase text-zinc-500 px-1.5 py-0.5 rounded border border-white/10 bg-white/5">SEO OS</span>
+                  ⚡ preYT <span className="text-[8px] font-bold uppercase text-zinc-500 px-1.5 py-0.5 rounded border border-white/10 bg-white/5">SEO OS</span>
                 </span>
               </div>
 
@@ -1052,7 +1052,7 @@ export default function CMSDashboard() {
                             type="text"
                             value={seoCanonical}
                             onChange={(e) => setSeoCanonical(e.target.value)}
-                            placeholder="https://algopilot.integralgroups.in/blog/slug"
+                            placeholder="https://preyt.integralgroups.in/blog/slug"
                             className="w-full bg-white/[0.01] border border-white/5 rounded-xl px-4 py-3 text-xs text-white focus:outline-none font-mono"
                           />
                         </div>
@@ -1281,7 +1281,7 @@ export default function CMSDashboard() {
   "@type": "BlogPosting",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://algopilot.integralgroups.in"
+    "@id": "https://preyt.integralgroups.in"
   },
   "headline": "Ensemble Scoring Virality Calibration",
   "image": "https://images.unsplash.com/photo-161800518...",
@@ -1291,10 +1291,10 @@ export default function CMSDashboard() {
   },
   "publisher": {
     "@type": "Organization",
-    "name": "AlgoPilot",
+    "name": "preYT",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://algopilot.integralgroups.in/logo.png"
+      "url": "https://preyt.integralgroups.in/logo.png"
     }
   }
 }`}

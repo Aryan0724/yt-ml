@@ -33,7 +33,7 @@ export function Preview() {
                 viewport={{ once: true }}
                 className="text-zinc-400 text-lg leading-relaxed max-w-xl"
               >
-                Most tools give you a random number. AlgoPilot provides a deep technical diagnostic of your pre-upload metadata, identifying psychological hooks, visual clarity, and novelty risk to help you make smarter decisions.
+                Most tools give you a random number. preYT provides a deep technical diagnostic of your pre-upload metadata, identifying psychological hooks, visual clarity, and novelty risk to help you make smarter decisions.
               </motion.p>
             </div>
 

@@ -640,7 +640,7 @@ function CreatorIntelligenceReport({
     // 1. Add User Video
     items.push({
       id: "user-video",
-      title: title || "AlgoPilot CTR Secret: 10x Your Growth!",
+      title: title || "preYT CTR Secret: 10x Your Growth!",
       channelName: profile?.youtube_channel || "Creator Pro",
       views: "85K views",
       time: "18h ago",
@@ -655,7 +655,7 @@ function CreatorIntelligenceReport({
       compareVariants.filter(v => v.id !== activeSimVariantId).forEach((v, idx) => {
         items.push({
           id: `user-variant-${v.id}`,
-          title: `[Variant ${idx + 2}] ` + (title || "AlgoPilot CTR Secret: 10x Your Growth!"),
+          title: `[Variant ${idx + 2}] ` + (title || "preYT CTR Secret: 10x Your Growth!"),
           channelName: profile?.youtube_channel || "Creator Pro",
           views: "NEW",
           time: "Just now",
@@ -856,12 +856,12 @@ function CreatorIntelligenceReport({
   return (
     <div className="space-y-8 animate-fade-in w-full text-left font-sans">
       {/* Dynamic Immersive Header */}
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 border-b border-white/5 pb-8">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 border-b border-zinc-200 pb-8">
         <div>
-          <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-400 text-[10px] font-bold uppercase tracking-widest block w-fit mb-2">
-            AlgoPilot — AI Creative Strategist
+          <span className="px-3 py-1 rounded-full bg-black/5 border border-zinc-200 text-zinc-500 text-[10px] font-bold uppercase tracking-widest block w-fit mb-2">
+            preYT — AI Creative Strategist
           </span>
-          <h1 className="text-2xl md:text-3xl font-black tracking-tight text-white">Creative War Room</h1>
+          <h1 className="text-2xl md:text-3xl font-black tracking-tight text-black">Creative War Room</h1>
           <p className="text-zinc-500 text-xs mt-1">Niche battlefield strategist, high-fidelity scanning synthesis, and expected outcome metrics.</p>
         </div>
 
@@ -872,14 +872,14 @@ function CreatorIntelligenceReport({
               "px-5 py-3 rounded-xl border text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2",
               showDebugPanel 
                 ? "bg-amber-500/10 border-amber-500/30 text-amber-400 hover:bg-amber-500/20" 
-                : "bg-white/5 border-white/10 text-zinc-300 hover:bg-white/10"
+                : "bg-black/5 border-zinc-200 text-zinc-600 hover:bg-black/5"
             )}
           >
             <Sliders className="w-4 h-4" /> {showDebugPanel ? "Hide Debug Console" : "Show Debug Console"}
           </button>
           <button 
             onClick={onRestart}
-            className="px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-zinc-300 text-xs font-bold uppercase tracking-wider hover:bg-white/10 transition-all flex items-center gap-2"
+            className="px-5 py-3 rounded-xl bg-black/5 border border-zinc-200 text-zinc-600 text-xs font-bold uppercase tracking-wider hover:bg-black/5 transition-all flex items-center gap-2"
           >
             <RefreshCw className="w-4 h-4" /> Restart Scan & Load Variant
           </button>
@@ -887,25 +887,25 @@ function CreatorIntelligenceReport({
       </div>
 
       {/* 1. PREDICTED TIER HERO (FIRST SECTION) */}
-      <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-zinc-900 to-black border border-white/10 shadow-2xl relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-zinc-900 to-black border border-zinc-200 shadow-2xl relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.05),transparent_50%)] pointer-events-none" />
         <div className="space-y-2">
           <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-black uppercase tracking-widest block w-fit">
             Neural Ensemble Prediction
           </span>
-          <h2 className="text-3xl md:text-4xl font-black tracking-tight text-white leading-tight">
+          <h2 className="text-3xl md:text-4xl font-black tracking-tight text-black leading-tight">
             Expected Feed Rating
           </h2>
-          <p className="text-zinc-400 text-xs max-w-xl leading-relaxed">
+          <p className="text-zinc-500 text-xs max-w-xl leading-relaxed">
             Your draft was evaluated by our CatBoost model against category parameters. Restoring historical averages suggests the following performance tier:
           </p>
         </div>
-        <div className="flex items-center gap-6 shrink-0 bg-white/[0.02] border border-white/5 p-6 rounded-3xl w-full md:w-auto justify-between md:justify-start">
+        <div className="flex items-center gap-6 shrink-0 bg-white/[0.02] border border-zinc-200 p-6 rounded-3xl w-full md:w-auto justify-between md:justify-start">
           <div className="text-center">
             <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block mb-0.5">Ensemble Score</span>
-            <div className="text-4xl md:text-5xl font-black text-white tracking-tight">{result.score}</div>
+            <div className="text-4xl md:text-5xl font-black text-black tracking-tight">{result.score}</div>
           </div>
-          <div className="w-[1px] h-12 bg-white/10" />
+          <div className="w-[1px] h-12 bg-black/5" />
           <div className="text-center">
             <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block mb-0.5 font-sans">Predicted Tier</span>
             <div className={cn(
@@ -923,60 +923,60 @@ function CreatorIntelligenceReport({
       </div>
 
       {/* 2. COLLAPSIBLE TIER DEFINITIONS EXPLAINER */}
-      <div className="p-6 rounded-[2rem] bg-zinc-950 border border-white/5 space-y-3">
+      <div className="p-6 rounded-[2rem] bg-white border border-zinc-200 space-y-3">
         <button 
           onClick={() => setIsTierExplainerOpen(!isTierExplainerOpen)}
-          className="w-full flex justify-between items-center text-xs font-bold text-zinc-400 uppercase tracking-widest focus:outline-none"
+          className="w-full flex justify-between items-center text-xs font-bold text-zinc-500 uppercase tracking-widest focus:outline-none"
         >
           <span className="flex items-center gap-2">
             <Trophy className="w-4 h-4 text-amber-400 animate-pulse" /> Tier Definitions & Distribution Models
           </span>
-          {isTierExplainerOpen ? <ChevronUp className="w-4 h-4 text-zinc-400" /> : <ChevronDown className="w-4 h-4 text-zinc-400" />}
+          {isTierExplainerOpen ? <ChevronUp className="w-4 h-4 text-zinc-500" /> : <ChevronDown className="w-4 h-4 text-zinc-500" />}
         </button>
 
         {isTierExplainerOpen && (
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 pt-4 border-t border-white/5 text-[10px] md:text-[11px] leading-relaxed text-left animate-fade-in">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 pt-4 border-t border-zinc-200 text-[10px] md:text-[11px] leading-relaxed text-left animate-fade-in">
             <div className="p-3.5 rounded-xl bg-emerald-500/[0.02] border border-emerald-500/10 space-y-1">
               <div className="font-black text-emerald-400 text-[11px]">S-Tier (90-100)</div>
-              <p className="text-zinc-400">Viral expansion probability. Peak mobile-feed readability & hook synergy.</p>
+              <p className="text-zinc-500">Viral expansion probability. Peak mobile-feed readability & hook synergy.</p>
             </div>
             <div className="p-3.5 rounded-xl bg-blue-500/[0.02] border border-blue-500/10 space-y-1">
               <div className="font-black text-blue-400 text-[11px]">A-Tier (80-89)</div>
-              <p className="text-zinc-400">Highly competitive. Dominant focal cues and optimal niche layout.</p>
+              <p className="text-zinc-500">Highly competitive. Dominant focal cues and optimal niche layout.</p>
             </div>
             <div className="p-3.5 rounded-xl bg-amber-500/[0.02] border border-amber-500/10 space-y-1">
               <div className="font-black text-amber-400 text-[11px]">B-Tier (70-79)</div>
-              <p className="text-zinc-400">Stable benchmark. Meets niche standards but suffers focal point bleed.</p>
+              <p className="text-zinc-500">Stable benchmark. Meets niche standards but suffers focal point bleed.</p>
             </div>
             <div className="p-3.5 rounded-xl bg-orange-500/[0.02] border border-orange-500/10 space-y-1">
               <div className="font-black text-orange-400 text-[11px]">C-Tier (60-69)</div>
-              <p className="text-zinc-400">Moderate friction. Dark highlights or semantic title dilution reduces click rates.</p>
+              <p className="text-zinc-500">Moderate friction. Dark highlights or semantic title dilution reduces click rates.</p>
             </div>
             <div className="p-3.5 rounded-xl bg-rose-500/[0.02] border border-rose-500/10 space-y-1">
               <div className="font-black text-rose-400 text-[11px]">D-Tier (&lt;60)</div>
-              <p className="text-zinc-400">High feed-skipping. Severe object clutter or overlapping bounds.</p>
+              <p className="text-zinc-500">High feed-skipping. Severe object clutter or overlapping bounds.</p>
             </div>
           </div>
         )}
       </div>
 
       {/* 3. CATBOOST JUSTIFICATION METRICS */}
-      <div className="p-8 rounded-[2rem] bg-zinc-950 border border-white/5 space-y-6 text-left relative overflow-hidden">
+      <div className="p-8 rounded-[2rem] bg-white border border-zinc-200 space-y-6 text-left relative overflow-hidden">
         <div className="absolute top-0 right-0 p-8 opacity-[0.02] pointer-events-none">
           <Sliders className="w-24 h-24 text-blue-400" />
         </div>
         <div className="space-y-1">
           <span className="text-[9px] font-black uppercase tracking-widest text-zinc-500 block">Feature Weights & Metrics</span>
-          <h3 className="text-lg font-bold text-white">Prediction Justification</h3>
-          <p className="text-zinc-400 text-xs mt-0.5">
+          <h3 className="text-lg font-bold text-black">Prediction Justification</h3>
+          <p className="text-zinc-500 text-xs mt-0.5">
             The CatBoost model calculated the classification score based on the following specific semantic and visual weights:
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs">
-          <div className="p-5 rounded-2xl bg-white/[0.01] border border-white/5 space-y-1.5">
+          <div className="p-5 rounded-2xl bg-white/[0.01] border border-zinc-200 space-y-1.5">
             <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block">Linguistic Hook Weight</span>
-            <div className="text-sm font-bold text-white flex items-center gap-1.5">
+            <div className="text-sm font-bold text-black flex items-center gap-1.5">
               {title.length < 15 ? (
                 <>⚠️ Weak/Gibberish Hook <span className="text-rose-400 text-[11px] font-mono">(-12.4)</span></>
               ) : title.length < 50 ? (
@@ -989,9 +989,9 @@ function CreatorIntelligenceReport({
             </div>
             <span className="text-[10px] text-zinc-500 block">Length: {title.length} characters</span>
           </div>
-          <div className="p-5 rounded-2xl bg-white/[0.01] border border-white/5 space-y-1.5">
+          <div className="p-5 rounded-2xl bg-white/[0.01] border border-zinc-200 space-y-1.5">
             <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block">Luminance Contrast</span>
-            <div className="text-sm font-bold text-white flex items-center gap-1.5">
+            <div className="text-sm font-bold text-black flex items-center gap-1.5">
               {brightness > 170 ? (
                 <>🌅 Overexposed <span className="text-rose-400 text-[11px] font-mono">(-6.4)</span></>
               ) : brightness < 90 ? (
@@ -1006,14 +1006,14 @@ function CreatorIntelligenceReport({
       </div>
 
       {/* 4. COLLAPSIBLE WHAT TO FIX CHECKLIST */}
-      <div className="p-6 md:p-8 rounded-[2rem] bg-zinc-950 border border-white/5 space-y-4">
-        <div className="w-full flex justify-between items-center text-xs font-bold text-zinc-400 uppercase tracking-widest">
+      <div className="p-6 md:p-8 rounded-[2rem] bg-white border border-zinc-200 space-y-4">
+        <div className="w-full flex justify-between items-center text-xs font-bold text-zinc-500 uppercase tracking-widest">
           <span className="flex items-center gap-2">
             <CheckSquare className="w-4 h-4 text-emerald-400" /> WHAT TO FIX CHECKLIST ({fixes.filter((f: any) => f.isPrimary).length} Critical Items)
           </span>
         </div>
 
-        <div className="space-y-4 pt-4 border-t border-white/5 text-left animate-fade-in">
+        <div className="space-y-4 pt-4 border-t border-zinc-200 text-left animate-fade-in">
             {fixes.map((fix: any) => (
               <div 
                 key={fix.num} 
@@ -1033,7 +1033,7 @@ function CreatorIntelligenceReport({
                       "w-7 h-7 rounded-xl font-mono font-black text-xs flex items-center justify-center shrink-0 mt-0.5 border",
                       fix.isPrimary 
                         ? "bg-rose-500/10 border-rose-500/20 text-rose-400" 
-                        : "bg-zinc-800 border-white/10 text-zinc-400"
+                        : "bg-zinc-800 border-zinc-200 text-zinc-500"
                     )}>
                       #{fix.num}
                     </span>
@@ -1042,25 +1042,25 @@ function CreatorIntelligenceReport({
                         <span className={cn("inline-block px-2.5 py-0.5 rounded text-[8px] font-black uppercase tracking-widest border mb-1.5", fix.tierClass)}>
                           {fix.tier}
                         </span>
-                        <h4 className="text-sm font-bold text-white leading-none">{fix.title}</h4>
+                        <h4 className="text-sm font-bold text-black leading-none">{fix.title}</h4>
                       </div>
                       <div className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-xs">
                         <div>
                           <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block mb-0.5">Current Problem</span>
-                          <span className="text-zinc-300 leading-normal">{fix.current}</span>
+                          <span className="text-zinc-600 leading-normal">{fix.current}</span>
                         </div>
                         <div>
                           <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block mb-0.5 text-emerald-400">Recommendation</span>
-                          <span className="text-zinc-300 leading-normal font-semibold">{fix.recommended}</span>
+                          <span className="text-zinc-600 leading-normal font-semibold">{fix.recommended}</span>
                         </div>
                       </div>
-                      <div className="text-xs pt-2 border-t border-white/[0.03] text-zinc-400 leading-relaxed">
-                        <strong className="text-zinc-300 block text-[9px] uppercase tracking-wider mb-0.5 font-bold">Psychological Outcome:</strong>
+                      <div className="text-xs pt-2 border-t border-white/[0.03] text-zinc-500 leading-relaxed">
+                        <strong className="text-zinc-600 block text-[9px] uppercase tracking-wider mb-0.5 font-bold">Psychological Outcome:</strong>
                         {fix.why}
                       </div>
                     </div>
                   </div>
-                  <div className="text-right shrink-0 w-full sm:w-auto pt-2 sm:pt-0 border-t border-white/5 sm:border-t-0 flex justify-between sm:block">
+                  <div className="text-right shrink-0 w-full sm:w-auto pt-2 sm:pt-0 border-t border-zinc-200 sm:border-t-0 flex justify-between sm:block">
                     <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block mb-0.5">Expected Lift</span>
                     <span className="text-sm font-black text-emerald-400">{fix.improvement}</span>
                   </div>
@@ -1071,10 +1071,10 @@ function CreatorIntelligenceReport({
       </div>
 
       {/* 5. THUMBNAIL VARIANT COMPARISON (RENDERING THE 3 SLOTS WITH METRICS & BADGES) */}
-      <div className="p-8 rounded-[2rem] bg-zinc-950 border border-white/5 space-y-6 text-left">
+      <div className="p-8 rounded-[2rem] bg-white border border-zinc-200 space-y-6 text-left">
         <div>
           <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block mb-1">COMPARATIVE VARIANT ANALYSIS</span>
-          <h3 className="text-lg font-bold text-white">Visual Matrix Comparison</h3>
+          <h3 className="text-lg font-bold text-black">Visual Matrix Comparison</h3>
           <p className="text-zinc-500 text-xs mt-0.5">Rankings, pros & cons, brightness levels, and facial density counts across uploaded drafts.</p>
         </div>
 
@@ -1084,8 +1084,8 @@ function CreatorIntelligenceReport({
               <div 
                 key={variant.id} 
                 className={cn(
-                  "p-5 rounded-2xl border flex flex-col justify-between space-y-4 hover:border-white/10 transition-all bg-white/[0.002] relative",
-                  variant.rank === 1 ? "border-emerald-500/30 bg-emerald-500/[0.01]" : "border-white/5"
+                  "p-5 rounded-2xl border flex flex-col justify-between space-y-4 hover:border-zinc-200 transition-all bg-white/[0.002] relative",
+                  variant.rank === 1 ? "border-emerald-500/30 bg-emerald-500/[0.01]" : "border-zinc-200"
                 )}
               >
                 {variant.rank === 1 && (
@@ -1095,7 +1095,7 @@ function CreatorIntelligenceReport({
                 )}
                 
                 <div className="space-y-4">
-                  <div className="aspect-video w-full rounded-xl overflow-hidden bg-zinc-900 border border-white/5 relative">
+                  <div className="aspect-video w-full rounded-xl overflow-hidden bg-white border border-zinc-200 relative">
                     {variant.preview ? (
                       <img src={variant.preview} alt={variant.name} className="w-full h-full object-cover" />
                     ) : (
@@ -1103,38 +1103,38 @@ function CreatorIntelligenceReport({
                     )}
                     <span className={cn(
                       "absolute bottom-2 left-2 px-2.5 py-0.5 rounded text-[8px] font-black uppercase tracking-widest shadow-md z-10",
-                      variant.rank === 1 ? "bg-emerald-500 text-black" : "bg-zinc-800 text-zinc-400"
+                      variant.rank === 1 ? "bg-emerald-500 text-black" : "bg-zinc-800 text-zinc-500"
                     )}>
                       Rank #{variant.rank}
                     </span>
-                    <span className="absolute bottom-2 right-2 px-2 py-0.5 bg-black/85 text-[8px] font-mono text-white rounded select-none z-10">
+                    <span className="absolute bottom-2 right-2 px-2 py-0.5 bg-black/85 text-[8px] font-mono text-black rounded select-none z-10">
                       Score: {variant.score}
                     </span>
                   </div>
 
                   <div>
-                    <h4 className="text-xs font-bold text-white truncate">{variant.name}</h4>
+                    <h4 className="text-xs font-bold text-black truncate">{variant.name}</h4>
                     <p className="text-[10px] text-zinc-500 mt-0.5">Predicted grade: <span className="text-emerald-400 font-bold">{variant.grade}</span></p>
                   </div>
 
-                  <div className="grid grid-cols-1 gap-2 text-[9px] border-t border-white/5 pt-2 font-mono">
+                  <div className="grid grid-cols-1 gap-2 text-[9px] border-t border-zinc-200 pt-2 font-mono">
                     <div className="p-2 rounded bg-white/[0.01] border border-white/[0.03]">
                       <span className="text-zinc-500 block uppercase">Brightness</span>
-                      <span className="text-zinc-200 block font-bold">{variant.data?.brightness || 128}</span>
+                      <span className="text-zinc-700 block font-bold">{variant.data?.brightness || 128}</span>
                     </div>
                   </div>
 
-                  <div className="space-y-3 border-t border-white/5 pt-3 text-[10px] leading-relaxed">
+                  <div className="space-y-3 border-t border-zinc-200 pt-3 text-[10px] leading-relaxed">
                     <div className="space-y-1">
                       <span className="text-emerald-400 font-bold uppercase tracking-wider block text-[8px]">✅ Strengths</span>
                       {variant.feedback.strengths.map((str: string, i: number) => (
-                        <div key={i} className="text-zinc-300 flex items-start gap-1"><span>•</span> <span>{str}</span></div>
+                        <div key={i} className="text-zinc-600 flex items-start gap-1"><span>•</span> <span>{str}</span></div>
                       ))}
                     </div>
                     <div className="space-y-1 pt-1.5 border-t border-white/[0.03]">
                       <span className="text-amber-400 font-bold uppercase tracking-wider block text-[8px]">⚠️ Weaknesses</span>
                       {variant.feedback.weaknesses.map((weak: string, i: number) => (
-                        <div key={i} className="text-zinc-400 flex items-start gap-1"><span>•</span> <span>{weak}</span></div>
+                        <div key={i} className="text-zinc-500 flex items-start gap-1"><span>•</span> <span>{weak}</span></div>
                       ))}
                     </div>
                   </div>
@@ -1142,7 +1142,7 @@ function CreatorIntelligenceReport({
               </div>
             ))
           ) : (
-            <div className="col-span-3 p-6 text-center rounded-2xl border border-white/5 bg-white/[0.002] text-zinc-500 italic text-xs">
+            <div className="col-span-3 p-6 text-center rounded-2xl border border-zinc-200 bg-white/[0.002] text-zinc-500 italic text-xs">
               Variant comparison is only available in multi-thumbnail uploads.
             </div>
           )}
@@ -1155,43 +1155,43 @@ function CreatorIntelligenceReport({
           <TrendingUp className="w-4 h-4 text-emerald-400" />
           <span className="text-[9px] font-black text-emerald-400 uppercase tracking-widest">POST-FIX IMPACT METRIC FORECAST</span>
         </div>
-        <h3 className="text-lg font-bold text-white">Projected Engagement Lift</h3>
-        <p className="text-xs text-zinc-400">
+        <h3 className="text-lg font-bold text-black">Projected Engagement Lift</h3>
+        <p className="text-xs text-zinc-500">
           Applying the fixes (clutter reduction + facial reaction scaling) shifts the attention density profile of your layout, producing an expected:
         </p>
-        <div className="p-6 rounded-2xl bg-black/40 border border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="p-6 rounded-2xl bg-[#FAF9F6] border border-zinc-200 flex flex-col sm:flex-row justify-between items-center gap-4">
           <div>
             <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block">CTR Shift Probability</span>
             <div className="text-3xl font-black text-emerald-400 mt-1">{potentialImprovement} Lift</div>
           </div>
-          <div className="text-zinc-400 text-xs max-w-sm font-normal">
-            Based on competitive models in the <strong className="text-white font-bold">{niche}</strong> category, clean structural bounds reduce peripheral feed skipping dramatically.
+          <div className="text-zinc-500 text-xs max-w-sm font-normal">
+            Based on competitive models in the <strong className="text-black font-bold">{niche}</strong> category, clean structural bounds reduce peripheral feed skipping dramatically.
           </div>
         </div>
       </div>
 
       {/* 7. REACH SYNERGY */}
-      <div className="p-8 rounded-[2rem] bg-zinc-950 border border-white/5 space-y-4 text-left">
+      <div className="p-8 rounded-[2rem] bg-white border border-zinc-200 space-y-4 text-left">
         <div className="flex items-center gap-2">
           <Zap className="w-4 h-4 text-blue-400 animate-pulse" />
           <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">CHANNEL RHYTHM & REACH SYNERGY</span>
         </div>
-        <h3 className="text-lg font-bold text-white">Subscriber Authority Buffer</h3>
-        <p className="text-xs text-zinc-400 leading-relaxed">
-          Your historical upload frequency of <strong className="text-white">{profile?.upload_frequency || "2-3 videos/week"}</strong> and subscriber base of <strong className="text-white">{(profile?.subscriber_count || 1000).toLocaleString()}</strong> act as an authority buffer. The model factors in this seed audience velocity, ensuring that early CTR gains compound search recommendation signals in the first 24 hours.
+        <h3 className="text-lg font-bold text-black">Subscriber Authority Buffer</h3>
+        <p className="text-xs text-zinc-500 leading-relaxed">
+          Your historical upload frequency of <strong className="text-black">{profile?.upload_frequency || "2-3 videos/week"}</strong> and subscriber base of <strong className="text-black">{(profile?.subscriber_count || 1000).toLocaleString()}</strong> act as an authority buffer. The model factors in this seed audience velocity, ensuring that early CTR gains compound search recommendation signals in the first 24 hours.
         </p>
       </div>
 
       {/* 8. YOUTUBE MOBILE FEED SIMULATOR */}
-      <div className="p-8 rounded-[2rem] bg-zinc-950 border border-white/5 space-y-6 text-left relative overflow-hidden">
+      <div className="p-8 rounded-[2rem] bg-white border border-zinc-200 space-y-6 text-left relative overflow-hidden">
         <div className="absolute top-0 right-0 p-8 opacity-[0.02] pointer-events-none">
           <Smartphone className="w-24 h-24 text-emerald-400" />
         </div>
         
         <div>
           <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500 block mb-1">LIVE FEED SIMULATOR</span>
-          <h3 className="text-lg font-bold text-white">YouTube Mobile Feed Simulator</h3>
-          <p className="text-xs text-zinc-400 mt-1">Preview how your variants capture scanning focus against standard YouTube recommendations.</p>
+          <h3 className="text-lg font-bold text-black">YouTube Mobile Feed Simulator</h3>
+          <p className="text-xs text-zinc-500 mt-1">Preview how your variants capture scanning focus against standard YouTube recommendations.</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center pt-2">
@@ -1208,12 +1208,12 @@ function CreatorIntelligenceReport({
                       "px-4 py-3 rounded-xl border text-xs font-bold transition-all text-left flex justify-between items-center w-full",
                       activeSimVariantId === variant.id 
                         ? "bg-white text-black border-white" 
-                        : "bg-white/5 border-white/10 text-zinc-400 hover:text-white"
+                        : "bg-black/5 border-zinc-200 text-zinc-500 hover:text-black"
                     )}
                   >
                     <span className="truncate pr-4">{variant.name || `Variant ${index + 1}`}</span>
                     {activeSimVariantId === variant.id ? (
-                      <span className="px-2 py-0.5 rounded bg-black text-white text-[8px] font-black shrink-0">ACTIVE</span>
+                      <span className="px-2 py-0.5 rounded bg-black text-black text-[8px] font-black shrink-0">ACTIVE</span>
                     ) : (
                       <span className="text-[8px] text-zinc-500 uppercase shrink-0">Swap Feed</span>
                     )}
@@ -1237,8 +1237,8 @@ function CreatorIntelligenceReport({
                     className={cn(
                       "py-2.5 px-3 rounded-lg border text-center transition-all truncate",
                       visualizerMode === mode.id 
-                        ? "bg-white/10 border-white/20 text-white" 
-                        : "bg-transparent border-transparent text-zinc-500 hover:text-zinc-300"
+                        ? "bg-black/5 border-white/20 text-black" 
+                        : "bg-transparent border-transparent text-zinc-500 hover:text-zinc-600"
                     )}
                   >
                     {mode.label}
@@ -1258,7 +1258,7 @@ function CreatorIntelligenceReport({
                     "w-full py-3 rounded-xl border flex items-center justify-center gap-2 font-bold transition-all",
                     visualizerMode === "focus" 
                       ? "bg-indigo-500/20 border-indigo-500/50 text-indigo-400" 
-                      : "bg-white/5 border-white/10 text-zinc-300 hover:bg-white/10"
+                      : "bg-black/5 border-zinc-200 text-zinc-600 hover:bg-black/5"
                   )}
                 >
                   <ScanEye className="w-4 h-4" />
@@ -1271,7 +1271,7 @@ function CreatorIntelligenceReport({
               <span className="text-[9px] font-bold text-amber-500 uppercase tracking-widest flex items-center gap-1.5 font-bold">
                 ⚠️ Mobile Optimization Warnings
               </span>
-              <ul className="space-y-1.5 text-[10px] text-zinc-400">
+              <ul className="space-y-1.5 text-[10px] text-zinc-500">
                 <li className="flex gap-1.5">
                   <span>•</span> <span><strong>Timestamp Overlap:</strong> Visual hook elements occupy the bottom-right corner and will be covered by the native player duration badge.</span>
                 </li>
@@ -1291,12 +1291,12 @@ function CreatorIntelligenceReport({
               className="w-[260px] rounded-[2.5rem] border-[8px] border-zinc-900 bg-[#0f0f0f] overflow-hidden shadow-2xl relative select-none border-t-[10px] border-b-[10px]"
             >
               {/* Notch */}
-              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-4 bg-zinc-900 rounded-full z-30 flex items-center justify-center">
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-4 bg-white rounded-full z-30 flex items-center justify-center">
                 <div className="w-8 h-1 bg-zinc-800 rounded-full" />
               </div>
               
               {/* Status Bar */}
-              <div className="h-7 pt-2 px-4 flex justify-between items-center text-[8px] font-bold text-zinc-400 select-none bg-[#0f0f0f] relative z-20">
+              <div className="h-7 pt-2 px-4 flex justify-between items-center text-[8px] font-bold text-zinc-500 select-none bg-[#0f0f0f] relative z-20">
                 <span>11:27</span>
                 <div className="flex items-center gap-1.5">
                   <div className="flex items-end gap-0.5 h-1.5 w-2">
@@ -1305,7 +1305,7 @@ function CreatorIntelligenceReport({
                     <div className="w-[1px] h-[3.5px] bg-zinc-400" />
                     <div className="w-[1px] h-full bg-zinc-400" />
                   </div>
-                  <Globe className="w-2.5 h-2.5 text-zinc-400" />
+                  <Globe className="w-2.5 h-2.5 text-zinc-500" />
                   <div className="w-3.5 h-1.5 border border-zinc-500 rounded-sm p-[0.5px] flex items-center">
                     <div className="h-full w-2.5 bg-zinc-300 rounded-2xs" />
                   </div>
@@ -1313,13 +1313,13 @@ function CreatorIntelligenceReport({
               </div>
 
               {/* YouTube Search Bar Header */}
-              <div className="bg-[#0f0f0f] border-b border-white/5 px-3 py-1.5 flex items-center gap-2 relative z-20">
-                <div className="flex items-center gap-2 w-full bg-white/5 border border-white/10 rounded-full px-3 py-1">
+              <div className="bg-[#0f0f0f] border-b border-zinc-200 px-3 py-1.5 flex items-center gap-2 relative z-20">
+                <div className="flex items-center gap-2 w-full bg-black/5 border border-zinc-200 rounded-full px-3 py-1">
                   <Search className="w-2.5 h-2.5 text-zinc-500 shrink-0" />
-                  <span className="text-[9px] text-zinc-300 font-bold select-all truncate">AlgoPilot</span>
+                  <span className="text-[9px] text-zinc-600 font-bold select-all truncate">preYT</span>
                 </div>
-                <div className="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center shrink-0">
-                  <Sliders className="w-2.5 h-2.5 text-zinc-400" />
+                <div className="w-5 h-5 rounded-full bg-black/5 flex items-center justify-center shrink-0">
+                  <Sliders className="w-2.5 h-2.5 text-zinc-500" />
                 </div>
               </div>
 
@@ -1328,7 +1328,7 @@ function CreatorIntelligenceReport({
                 {getFeedItems().map((item, index) => (
                   <div key={item.id} className="space-y-2 text-left relative">
                     {/* Thumbnail Image Wrapper with Animation */}
-                    <div className="aspect-video w-full bg-zinc-900 rounded-xl overflow-hidden relative border border-white/5 shadow-inner">
+                    <div className="aspect-video w-full bg-white rounded-xl overflow-hidden relative border border-zinc-200 shadow-inner">
                       {item.preview ? (
                         <img 
                           src={item.preview} 
@@ -1346,7 +1346,7 @@ function CreatorIntelligenceReport({
                       )}
 
                       {/* YouTube Timestamp Overlay Badge */}
-                      <div className="absolute bottom-1.5 right-1.5 px-1 py-0.5 bg-black/85 text-[7px] font-bold font-mono text-white rounded select-none z-10">
+                      <div className="absolute bottom-1.5 right-1.5 px-1 py-0.5 bg-black/85 text-[7px] font-bold font-mono text-black rounded select-none z-10">
                         {index % 2 === 0 ? "14:20" : "8:45"}
                       </div>
 
@@ -1371,7 +1371,7 @@ function CreatorIntelligenceReport({
                           )}
 
                           {visualizerMode === "heatmap" && (
-                            <div className="absolute inset-0 bg-black/40 pointer-events-none z-10 mix-blend-overlay animate-fade-in">
+                            <div className="absolute inset-0 bg-[#FAF9F6] pointer-events-none z-10 mix-blend-overlay animate-fade-in">
                               {/* Major hotspot on Face */}
                               <div 
                                 className="absolute top-[20%] left-[15%] w-20 h-20 rounded-full blur-md opacity-90 animate-pulse"
@@ -1415,12 +1415,12 @@ function CreatorIntelligenceReport({
                           <div className="absolute inset-0 z-10 bg-transparent flex items-center justify-center pointer-events-none">
                             {visualizerMode === "normal" && (
                               <div className="absolute inset-0 text-left">
-                                <div className="absolute top-1.5 right-1.5 px-1 py-0.5 rounded bg-rose-500/85 border border-rose-500/40 text-[4.5px] font-black text-white tracking-wider animate-pulse">
+                                <div className="absolute top-1.5 right-1.5 px-1 py-0.5 rounded bg-rose-500/85 border border-rose-500/40 text-[4.5px] font-black text-black tracking-wider animate-pulse">
                                   ⚠️ CLUTTERED BACKGROUND
                                 </div>
 
                                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-dashed border-zinc-500/40 bg-zinc-500/5 flex items-center justify-center">
-                                  <span className="text-[4px] text-zinc-400 uppercase font-black tracking-widest leading-none text-center">FOCAL GAP</span>
+                                  <span className="text-[4px] text-zinc-500 uppercase font-black tracking-widest leading-none text-center">FOCAL GAP</span>
                                 </div>
 
                                 <div className="absolute bottom-1.5 left-1.5 px-1 py-0.5 rounded border border-dashed border-rose-500/50 bg-rose-500/10 pointer-events-none flex items-center justify-center">
@@ -1435,7 +1435,7 @@ function CreatorIntelligenceReport({
 
                     {/* Simulated Channel Details & Metadata */}
                     <div className="flex gap-2 pt-1 items-start">
-                      <div className="w-5.5 h-5.5 rounded-full bg-zinc-800 shrink-0 overflow-hidden border border-white/10 flex items-center justify-center text-[7px] font-bold text-zinc-400 uppercase">
+                      <div className="w-5.5 h-5.5 rounded-full bg-zinc-800 shrink-0 overflow-hidden border border-zinc-200 flex items-center justify-center text-[7px] font-bold text-zinc-500 uppercase">
                         {item.avatar ? (
                           <img src={item.avatar} alt="Avatar" className="w-full h-full object-cover" />
                         ) : (
@@ -1447,7 +1447,7 @@ function CreatorIntelligenceReport({
                         <h4 className="text-[9px] font-bold text-zinc-100 leading-snug line-clamp-2 pr-1">
                           {item.title}
                         </h4>
-                        <p className="text-[7.5px] text-zinc-400 font-medium mt-0.5 font-sans">
+                        <p className="text-[7.5px] text-zinc-500 font-medium mt-0.5 font-sans">
                           {item.channelName} • {item.views} • {item.time}
                         </p>
                       </div>
@@ -1472,19 +1472,19 @@ function CreatorIntelligenceReport({
               initial={{ opacity: 0, y: 20, height: 0 }}
               animate={{ opacity: 1, y: 0, height: "auto" }}
               exit={{ opacity: 0, y: -20, height: 0 }}
-              className="mt-8 pt-8 border-t border-white/5 space-y-6 overflow-hidden"
+              className="mt-8 pt-8 border-t border-zinc-200 space-y-6 overflow-hidden"
             >
               <div className="space-y-1 text-center md:text-left">
-                <h3 className="text-sm font-bold text-white flex items-center justify-center md:justify-start gap-2">
+                <h3 className="text-sm font-bold text-black flex items-center justify-center md:justify-start gap-2">
                   <ScanEye className="w-4 h-4 text-indigo-400" />
                   Visual Attention Analysis
                 </h3>
-                <p className="text-[11px] text-zinc-400">
+                <p className="text-[11px] text-zinc-500">
                   Simulated human saccade paths and fixation points based on visual saliency algorithms.
                 </p>
               </div>
 
-              <div className="w-full aspect-video bg-zinc-900 rounded-2xl overflow-hidden relative border border-white/10 shadow-2xl">
+              <div className="w-full aspect-video bg-white rounded-2xl overflow-hidden relative border border-zinc-200 shadow-2xl">
                 {thumbnailPreview ? (
                   <img 
                     src={thumbnailPreview} 
@@ -1555,7 +1555,7 @@ function CreatorIntelligenceReport({
                   <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center z-30 animate-fade-in backdrop-blur-sm">
                     <ScanEye className="w-12 h-12 text-indigo-500 animate-pulse mb-4" />
                     <div className="text-sm font-mono text-indigo-400">Computing Saliency Map...</div>
-                    <div className="w-48 h-1 bg-white/10 rounded-full mt-4 overflow-hidden">
+                    <div className="w-48 h-1 bg-black/5 rounded-full mt-4 overflow-hidden">
                       <div className="h-full bg-indigo-500 rounded-full animate-[progress_1.5s_ease-in-out_infinite]" />
                     </div>
                   </div>
@@ -1565,15 +1565,15 @@ function CreatorIntelligenceReport({
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs mt-4">
                 <div className="p-4 rounded-xl bg-indigo-500/[0.02] border border-indigo-500/10">
                   <span className="text-[10px] font-bold text-indigo-400 block mb-1">Primary Fixation</span>
-                  <p className="text-zinc-400 leading-relaxed">Your subject's face is successfully drawing the first 400ms of attention.</p>
+                  <p className="text-zinc-500 leading-relaxed">Your subject's face is successfully drawing the first 400ms of attention.</p>
                 </div>
                 <div className="p-4 rounded-xl bg-purple-500/[0.02] border border-purple-500/10">
                   <span className="text-[10px] font-bold text-purple-400 block mb-1">Visual Flow</span>
-                  <p className="text-zinc-400 leading-relaxed">The path naturally leads the eye from the main subject to the bold text.</p>
+                  <p className="text-zinc-500 leading-relaxed">The path naturally leads the eye from the main subject to the bold text.</p>
                 </div>
                 <div className="p-4 rounded-xl bg-pink-500/[0.02] border border-pink-500/10">
                   <span className="text-[10px] font-bold text-pink-400 block mb-1">Dead Zones</span>
-                  <p className="text-zinc-400 leading-relaxed">No major distractions detected in the peripheral areas of the thumbnail.</p>
+                  <p className="text-zinc-500 leading-relaxed">No major distractions detected in the peripheral areas of the thumbnail.</p>
                 </div>
               </div>
             </motion.div>
@@ -1726,28 +1726,28 @@ function CreatorIntelligenceReport({
       content: (
         <div className="space-y-4 pt-2 text-xs">
           <div className="grid grid-cols-2 gap-2">
-            <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+            <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200">
               <span className="text-[9px] text-zinc-500 uppercase tracking-wider block mb-0.5">Average Title Length</span>
-              <strong className="text-white text-xs">{avgTitleLength} chars</strong>
-              <span className="text-[9px] text-zinc-400 block mt-0.5">{textDensityWord}</span>
+              <strong className="text-black text-xs">{avgTitleLength} chars</strong>
+              <span className="text-[9px] text-zinc-500 block mt-0.5">{textDensityWord}</span>
             </div>
-            <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+            <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200">
               <span className="text-[9px] text-zinc-500 uppercase tracking-wider block mb-0.5">Title Hook Frequency</span>
-              <strong className="text-white text-xs">{hookPct}% of videos</strong>
-              <span className="text-[9px] text-zinc-400 block mt-0.5">Leverages curiosity markers</span>
+              <strong className="text-black text-xs">{hookPct}% of videos</strong>
+              <span className="text-[9px] text-zinc-500 block mt-0.5">Leverages curiosity markers</span>
             </div>
           </div>
 
           {/* Visual Gauges */}
-          <div className="p-3 rounded-xl bg-white/[0.01] border border-white/5 space-y-3">
+          <div className="p-3 rounded-xl bg-white/[0.01] border border-zinc-200 space-y-3">
             {/* Title Length Optimum Track */}
             <div className="space-y-1.5">
-              <div className="flex justify-between text-[9px] text-zinc-400">
+              <div className="flex justify-between text-[9px] text-zinc-500">
                 <span>Short (30)</span>
                 <span className="text-emerald-400 font-bold">Optimal (45-60)</span>
                 <span>Long (90)</span>
               </div>
-              <div className="relative h-1.5 bg-zinc-800/80 rounded-full overflow-hidden border border-white/5">
+              <div className="relative h-1.5 bg-zinc-800/80 rounded-full overflow-hidden border border-zinc-200">
                 {/* Highlight optimal range */}
                 <div className="absolute left-[25%] top-0 h-full w-[25%] bg-emerald-500/25 border-x border-emerald-400/10" />
                 {/* Indicator needle */}
@@ -1763,24 +1763,24 @@ function CreatorIntelligenceReport({
                 })()}
               </div>
               <div className="flex justify-between items-center text-[8.5px]">
-                <span className="text-zinc-500">Your average: <strong className="text-zinc-300">{avgTitleLength} chars</strong></span>
-                <span className="text-zinc-400 font-medium">{textDensityWord}</span>
+                <span className="text-zinc-500">Your average: <strong className="text-zinc-600">{avgTitleLength} chars</strong></span>
+                <span className="text-zinc-500 font-medium">{textDensityWord}</span>
               </div>
             </div>
 
             {/* Hook Frequency progress track */}
             <div className="space-y-1.5">
-              <div className="flex justify-between text-[9px] text-zinc-400">
+              <div className="flex justify-between text-[9px] text-zinc-500">
                 <span>Curiosity Hook Penetration</span>
                 <strong className="text-emerald-400">{hookPct}%</strong>
               </div>
-              <div className="h-1.5 bg-zinc-800/80 rounded-full overflow-hidden border border-white/5 relative">
+              <div className="h-1.5 bg-zinc-800/80 rounded-full overflow-hidden border border-zinc-200 relative">
                 <div 
                   className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500 shadow-[0_0_6px_rgba(16,185,129,0.3)]" 
                   style={{ width: `${hookPct}%` }} 
                 />
               </div>
-              <p className="text-[8.5px] text-zinc-400 leading-normal">
+              <p className="text-[8.5px] text-zinc-500 leading-normal">
                 {hookPct >= 70 
                   ? "Exceptional use of cognitive pattern interrupts (numbers, questions, triggers)." 
                   : hookPct >= 40 
@@ -1793,7 +1793,7 @@ function CreatorIntelligenceReport({
           <div className="space-y-2">
             <div>
               <span className="text-[9px] text-zinc-500 uppercase tracking-wider block mb-0.5">Audience Psychology Profile</span>
-              <p className="text-zinc-300 leading-relaxed text-[11px]">
+              <p className="text-zinc-600 leading-relaxed text-[11px]">
                 {cleanNiche === "Education" 
                   ? "Concept-first validation. The titles trigger cognitive tension by addressing hidden gaps in existing knowledge or offering immediate structural clarity."
                   : cleanNiche === "Tech"
@@ -1821,7 +1821,7 @@ function CreatorIntelligenceReport({
             <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest block flex items-center gap-1">
               <CheckCircle2 className="w-3 h-3" /> What makes a good title here?
             </span>
-            <p className="text-zinc-300 leading-relaxed">
+            <p className="text-zinc-600 leading-relaxed">
               {cleanNiche === "Education" 
                 ? "In Education, titles must promise a specific outcome or clarify a complex topic instantly. Avoid vague words; use clear, strong action verbs."
                 : cleanNiche === "Gaming" 
@@ -1832,11 +1832,11 @@ function CreatorIntelligenceReport({
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 space-y-3">
-            <span className="text-[10px] font-bold text-white uppercase tracking-widest block flex items-center gap-1">
-              <AlertCircle className="w-3 h-3 text-zinc-400" /> Ways to Fix Your Title
+          <div className="p-4 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-3">
+            <span className="text-[10px] font-bold text-black uppercase tracking-widest block flex items-center gap-1">
+              <AlertCircle className="w-3 h-3 text-zinc-500" /> Ways to Fix Your Title
             </span>
-            <ul className="space-y-2 text-zinc-400 list-disc pl-4 marker:text-zinc-600">
+            <ul className="space-y-2 text-zinc-500 list-disc pl-4 marker:text-zinc-600">
               <li><strong>Cut the fluff:</strong> Remove the first 2-3 words if they don't add immediate value or curiosity.</li>
               <li><strong>Increase the stakes:</strong> Ask yourself: "What happens if they don't click?" Add words that imply missing out.</li>
               <li><strong>Front-load the hook:</strong> Put the most exciting or emotional word in the first 20 characters so it doesn't get cut off on mobile.</li>
@@ -1850,19 +1850,19 @@ function CreatorIntelligenceReport({
             <div className="space-y-2">
               {topPerformedTitles.length >= 3 ? (
                 topPerformedTitles.slice(0, 3).map((t, i) => (
-                  <div key={i} className="p-2 bg-emerald-500/5 rounded border border-emerald-500/10 text-zinc-200 italic">
+                  <div key={i} className="p-2 bg-emerald-500/5 rounded border border-emerald-500/10 text-zinc-700 italic">
                     "{t}"
                   </div>
                 ))
               ) : (
                 <>
-                  <div className="p-2 bg-emerald-500/5 rounded border border-emerald-500/10 text-zinc-200 italic">
+                  <div className="p-2 bg-emerald-500/5 rounded border border-emerald-500/10 text-zinc-700 italic">
                     {cleanNiche === "Gaming" ? `"I Survived 100 Days in Hardcore..."` : `"The Truth About [Trending Topic]"`}
                   </div>
-                  <div className="p-2 bg-emerald-500/5 rounded border border-emerald-500/10 text-zinc-200 italic">
+                  <div className="p-2 bg-emerald-500/5 rounded border border-emerald-500/10 text-zinc-700 italic">
                     {cleanNiche === "Tech" ? `"Why I Stopped Using [Popular Tool]"` : `"I Tried [X] So You Don't Have To"`}
                   </div>
-                  <div className="p-2 bg-emerald-500/5 rounded border border-emerald-500/10 text-zinc-200 italic">
+                  <div className="p-2 bg-emerald-500/5 rounded border border-emerald-500/10 text-zinc-700 italic">
                     {`"How To [Desirable Outcome] In 2024"`}
                   </div>
                 </>
@@ -1886,8 +1886,8 @@ function CreatorIntelligenceReport({
               {topPerformedTitles.length > 0 && (
                 <div className="p-3 rounded-xl bg-emerald-500/[0.02] border border-emerald-500/10 space-y-1">
                   <span className="text-[9px] text-emerald-400 uppercase tracking-wider font-bold block">Winning Format Trigger</span>
-                  <div className="text-zinc-200 font-semibold italic text-[11px]">"{topPerformedTitles[0]}"</div>
-                  <p className="text-[10px] text-zinc-400 leading-normal pt-1">
+                  <div className="text-zinc-700 font-semibold italic text-[11px]">"{topPerformedTitles[0]}"</div>
+                  <p className="text-[10px] text-zinc-500 leading-normal pt-1">
                     This high-performer utilizes clear concept visualization. Titles structured with active problem-framing outperform your baseline views by average.
                   </p>
                 </div>
@@ -1895,8 +1895,8 @@ function CreatorIntelligenceReport({
               {underPerformedTitles.length > 0 && (
                 <div className="p-3 rounded-xl bg-rose-500/[0.02] border border-rose-500/10 space-y-1">
                   <span className="text-[9px] text-rose-400 uppercase tracking-wider font-bold block">Friction Point Trap</span>
-                  <div className="text-zinc-200 font-semibold italic text-[11px]">"{underPerformedTitles[0]}"</div>
-                  <p className="text-[10px] text-zinc-400 leading-normal pt-1">
+                  <div className="text-zinc-700 font-semibold italic text-[11px]">"{underPerformedTitles[0]}"</div>
+                  <p className="text-[10px] text-zinc-500 leading-normal pt-1">
                     Underperforming layouts often suffer from higher character length and lack of clear emotional stake in the first 40 characters.
                   </p>
                 </div>
@@ -1904,9 +1904,9 @@ function CreatorIntelligenceReport({
             </div>
           ) : (
             <div className="space-y-2.5">
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
+              <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
                 <span className="text-[9px] text-blue-400 uppercase tracking-wider font-bold block">Typical Niche Outperformers</span>
-                <p className="text-zinc-300 leading-normal text-[11px]">
+                <p className="text-zinc-600 leading-normal text-[11px]">
                   {cleanNiche === "Education"
                     ? "Explainers answering 'Why X is ruined' or 'How X actually works' see +38% higher view velocity than standard tutorials."
                     : cleanNiche === "Tech"
@@ -1930,23 +1930,23 @@ function CreatorIntelligenceReport({
       content: (
         <div className="space-y-2.5 pt-2 text-xs">
           <div className="grid grid-cols-2 gap-2">
-            <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
+            <div className="p-2.5 rounded-xl bg-white/[0.02] border border-zinc-200">
               <span className="text-[9px] text-zinc-500 block mb-0.5 uppercase tracking-wider">Content Archetype</span>
-              <strong className="text-zinc-200 block font-bold">
+              <strong className="text-zinc-700 block font-bold">
                 {cleanNiche === "Education" ? "The Concept Architect"
                  : cleanNiche === "Tech" ? "The Tech Explainer"
                  : cleanNiche === "Gaming" ? "The Stakes Storyteller"
                  : "The Trend Curator"}
               </strong>
             </div>
-            <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5">
+            <div className="p-2.5 rounded-xl bg-white/[0.02] border border-zinc-200">
               <span className="text-[9px] text-zinc-500 block mb-0.5 uppercase tracking-wider">Niche Authority</span>
-              <strong className="text-zinc-200 block font-bold">Top 8% Authority</strong>
+              <strong className="text-zinc-700 block font-bold">Top 8% Authority</strong>
             </div>
           </div>
           <div>
             <span className="text-[9px] text-zinc-500 uppercase tracking-wider block mb-0.5">Competitive Advantage</span>
-            <p className="text-zinc-300 leading-normal text-[11px]">
+            <p className="text-zinc-600 leading-normal text-[11px]">
               {cleanNiche === "Education" 
                 ? "Translating dense academic concept schemas into highly structured visual animations. The zero-fluff approach creates high credibility."
                 : cleanNiche === "Tech"
@@ -1967,9 +1967,9 @@ function CreatorIntelligenceReport({
       summary: "Compares title strategies and thumbnail visual design with key competitors.",
       content: (
         <div className="space-y-2.5 pt-2 text-xs">
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
+          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
             <span className="text-[9px] text-zinc-500 uppercase tracking-wider block font-bold">The Competitor Gap</span>
-            <p className="text-zinc-300 leading-normal text-[11px]">
+            <p className="text-zinc-600 leading-normal text-[11px]">
               {cleanNiche === "Education"
                 ? "Competitors are making standard textbook explainers. Your gap is the 'historical case study' angle: explaining the math/science through real world disasters."
                 : cleanNiche === "Tech"
@@ -1978,9 +1978,9 @@ function CreatorIntelligenceReport({
               }
             </p>
           </div>
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
+          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
             <span className="text-[9px] text-zinc-500 uppercase tracking-wider block font-bold">Thumbnail Style Gap</span>
-            <p className="text-zinc-300 leading-normal text-[11px]">
+            <p className="text-zinc-600 leading-normal text-[11px]">
               {cleanNiche === "Education" || cleanNiche === "Tech"
                 ? "Niche is saturated with bright, messy text overlays and default brand logos. A sleek, minimal layout featuring a glowing graphic vector on solid dark background has 2.4x higher feed standout."
                 : "Feed is crowded with standard faces. A split composition showing clear, high-contrast action outcomes triggers immediate clicks."
@@ -1999,18 +1999,18 @@ function CreatorIntelligenceReport({
       summary: "Examines click intent vs return viewer rate and conceptual hook pacing.",
       content: (
         <div className="space-y-3 pt-2 text-xs">
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
+          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
             <span className="text-[9px] text-zinc-500 uppercase tracking-wider block font-bold">Click vs. Return Rates</span>
-            <p className="text-zinc-300 leading-normal text-[11px]">
+            <p className="text-zinc-600 leading-normal text-[11px]">
               {cleanNiche === "Education" || cleanNiche === "Tech"
                 ? "Your search-traffic videos convert high intent clicks but fail to build return subscriber browse loops. Solve this by framing the end of the video as a teaser for your next concept."
                 : "Your browse viewers are highly loyal, but click conversion (CTR) fluctuates. Streamline thumbnail visual elements to reduce mental load."
               }
             </p>
           </div>
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
+          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
             <span className="text-[9px] text-zinc-500 uppercase tracking-wider block font-bold">Curiosity Optimization</span>
-            <p className="text-zinc-300 leading-normal text-[11px]">
+            <p className="text-zinc-600 leading-normal text-[11px]">
               Keep the thumbnail completely clear (single focal symbol) so the viewer understands the subject in 0.1s. Use the title to inject the tension or paradox (why the default option fails).
             </p>
           </div>
@@ -2026,7 +2026,7 @@ function CreatorIntelligenceReport({
       summary: "Monitors repetition decay and ensures visual branding consistency.",
       content: (
         <div className="space-y-3 pt-2 text-xs">
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1.5">
+          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1.5">
             <span className="text-[9px] text-zinc-500 uppercase tracking-wider block font-bold">Format Fatigue Level</span>
             <div className="flex items-center gap-2">
               <div className="flex-1 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
@@ -2034,13 +2034,13 @@ function CreatorIntelligenceReport({
               </div>
               <span className={cn("text-[10px] font-bold", fatigueTextClass)}>{fatigueLabel} ({fatiguePct}%)</span>
             </div>
-            <p className="text-[10px] text-zinc-400 leading-normal pt-1">
+            <p className="text-[10px] text-zinc-500 leading-normal pt-1">
               {fatigueDesc}
             </p>
           </div>
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
+          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
             <span className="text-[9px] text-zinc-500 uppercase tracking-wider block font-bold">Visual Branding Strength</span>
-            <p className="text-zinc-300 leading-normal text-[11px]">
+            <p className="text-zinc-600 leading-normal text-[11px]">
               Consistent typography and dark backdrops build recognizable presence. Enhance branding by locking in 2 accent colors (e.g. Electric Cyan and Neon Orange) for your glowing elements.
             </p>
           </div>
@@ -2058,13 +2058,13 @@ function CreatorIntelligenceReport({
         <div className="space-y-2.5 pt-2 text-xs">
           <div className="p-3 rounded-xl bg-rose-500/[0.01] border border-rose-500/10 space-y-1">
             <span className="text-[9px] text-rose-400 uppercase tracking-wider font-bold block">1. Intro Value Lag</span>
-            <p className="text-zinc-300 leading-relaxed text-[11px]">
+            <p className="text-zinc-600 leading-relaxed text-[11px]">
               Your video intro retention curve drops significantly in the first 15 seconds. Cut out the pleasantries, general channel definitions, and greetings. Jump straight into visual proof of the title's claim.
             </p>
           </div>
           <div className="p-3 rounded-xl bg-rose-500/[0.01] border border-rose-500/10 space-y-1">
             <span className="text-[9px] text-rose-400 uppercase tracking-wider font-bold block">2. Framework Over-Siloing</span>
-            <p className="text-zinc-300 leading-relaxed text-[11px]">
+            <p className="text-zinc-600 leading-relaxed text-[11px]">
               Focusing too heavily on a single technical tool or mathematical sub-topic limits the size of the seeded viewer pool. Frame titles around broad developer/student issues.
             </p>
           </div>
@@ -2082,7 +2082,7 @@ function CreatorIntelligenceReport({
         <div className="space-y-2.5 pt-2 text-xs">
           <div className="p-3 rounded-xl bg-emerald-500/[0.01] border border-emerald-500/10 space-y-1">
             <span className="text-[9px] text-emerald-400 uppercase tracking-wider font-bold block">High-Stakes Explainer Series</span>
-            <p className="text-zinc-300 leading-relaxed text-[11px]">
+            <p className="text-zinc-600 leading-relaxed text-[11px]">
               {cleanNiche === "Education"
                 ? "Format: 'The Math Mistake that Cost $X Million'. Analyze historic software and structural bugs with deep visual equations."
                 : cleanNiche === "Tech"
@@ -2093,7 +2093,7 @@ function CreatorIntelligenceReport({
           </div>
           <div className="p-3 rounded-xl bg-emerald-500/[0.01] border border-emerald-500/10 space-y-1">
             <span className="text-[9px] text-emerald-400 uppercase tracking-wider font-bold block">Stylistic Leverage</span>
-            <p className="text-zinc-300 leading-relaxed text-[11px]">
+            <p className="text-zinc-600 leading-relaxed text-[11px]">
               Utilize vector diagrams, high-resolution static models, and dark, high-contrast layouts. This projects premium value and commands higher CPMs.
             </p>
           </div>
@@ -2108,15 +2108,15 @@ function CreatorIntelligenceReport({
       badge: "Strategic Action Timeline",
       summary: "A concrete schedule of immediate fixes, medium-term scaling, and long-term goals.",
       content: (
-        <div className="pt-2 text-xs relative pl-4 border-l border-white/10 ml-2.5 space-y-5">
+        <div className="pt-2 text-xs relative pl-4 border-l border-zinc-200 ml-2.5 space-y-5">
           {/* Step 1 */}
           <div className="relative">
             {/* Glowing Bullet */}
             <div className="absolute -left-[21.5px] top-1 w-2.5 h-2.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.8)] border border-white/20" />
             <div>
               <span className="text-[8px] font-bold text-indigo-400 uppercase tracking-widest block">Phase 1: Day 1 - 30</span>
-              <strong className="text-zinc-200 block text-[11px] mt-0.5">Immediate Tuning (Next 30 Days)</strong>
-              <p className="text-zinc-400 text-[10px] leading-relaxed mt-1">
+              <strong className="text-zinc-700 block text-[11px] mt-0.5">Immediate Tuning (Next 30 Days)</strong>
+              <p className="text-zinc-500 text-[10px] leading-relaxed mt-1">
                 Optimize mobile thumbnail text and contrast. Remove intros containing lag or calls-to-action before the main concept hook. Ensure titles are under 55 characters.
               </p>
             </div>
@@ -2127,8 +2127,8 @@ function CreatorIntelligenceReport({
             <div className="absolute -left-[21.5px] top-1 w-2.5 h-2.5 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)] border border-white/20" />
             <div>
               <span className="text-[8px] font-bold text-purple-400 uppercase tracking-widest block">Phase 2: Day 30 - 90</span>
-              <strong className="text-zinc-200 block text-[11px] mt-0.5">Format Stabilization (Next 90 Days)</strong>
-              <p className="text-zinc-400 text-[10px] leading-relaxed mt-1">
+              <strong className="text-zinc-700 block text-[11px] mt-0.5">Format Stabilization (Next 90 Days)</strong>
+              <p className="text-zinc-500 text-[10px] leading-relaxed mt-1">
                 Establish 2 primary repeatable visual templates. Create custom playlists grouping conceptual pathways together to encourage session retention.
               </p>
             </div>
@@ -2139,8 +2139,8 @@ function CreatorIntelligenceReport({
             <div className="absolute -left-[21.5px] top-1 w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] border border-white/20" />
             <div>
               <span className="text-[8px] font-bold text-emerald-400 uppercase tracking-widest block">Phase 3: Day 90 - 360</span>
-              <strong className="text-zinc-200 block text-[11px] mt-0.5">Category Domination (Long-term)</strong>
-              <p className="text-zinc-400 text-[10px] leading-relaxed mt-1">
+              <strong className="text-zinc-700 block text-[11px] mt-0.5">Category Domination (Long-term)</strong>
+              <p className="text-zinc-500 text-[10px] leading-relaxed mt-1">
                 Diversify traffic source by launching a companion newsletter/repo to capture off-platform search authority and secure premium CPM sponsorships.
               </p>
             </div>
@@ -2152,10 +2152,10 @@ function CreatorIntelligenceReport({
 
   if (inline) {
     return (
-      <div className="space-y-6 !mt-6 pt-6 border-t border-white/5 text-left w-full">
+      <div className="space-y-6 !mt-6 pt-6 border-t border-zinc-200 text-left w-full">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-1">
           <div className="flex items-center gap-2.5 flex-wrap">
-            <h4 className="text-xs md:text-sm font-black text-white uppercase tracking-widest flex items-center gap-2">
+            <h4 className="text-xs md:text-sm font-black text-black uppercase tracking-widest flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-emerald-400 animate-pulse" />
               Channel DNA Strategic Intelligence
             </h4>
@@ -2169,7 +2169,7 @@ function CreatorIntelligenceReport({
                 Live YT Data Active
               </span>
             ) : (
-              <span className="px-2 py-0.5 rounded-full bg-zinc-500/10 border border-zinc-500/20 text-zinc-400 text-[8px] font-bold uppercase tracking-wider shrink-0">
+              <span className="px-2 py-0.5 rounded-full bg-zinc-500/10 border border-zinc-500/20 text-zinc-500 text-[8px] font-bold uppercase tracking-wider shrink-0">
                 Niche Benchmarks
               </span>
             )}
@@ -2177,13 +2177,13 @@ function CreatorIntelligenceReport({
           <div className="flex items-center gap-2 self-start sm:self-auto">
             <button 
               onClick={expandAll} 
-              className="text-[9px] font-bold text-zinc-400 hover:text-white uppercase tracking-wider transition-all px-2.5 py-1 bg-white/5 hover:bg-white/10 rounded-lg border border-white/5 active:scale-95"
+              className="text-[9px] font-bold text-zinc-500 hover:text-black uppercase tracking-wider transition-all px-2.5 py-1 bg-black/5 hover:bg-black/5 rounded-lg border border-zinc-200 active:scale-95"
             >
               Expand All
             </button>
             <button 
               onClick={collapseAll} 
-              className="text-[9px] font-bold text-zinc-400 hover:text-white uppercase tracking-wider transition-all px-2.5 py-1 bg-white/5 hover:bg-white/10 rounded-lg border border-white/5 active:scale-95"
+              className="text-[9px] font-bold text-zinc-500 hover:text-black uppercase tracking-wider transition-all px-2.5 py-1 bg-black/5 hover:bg-black/5 rounded-lg border border-zinc-200 active:scale-95"
             >
               Collapse All
             </button>
@@ -2193,25 +2193,25 @@ function CreatorIntelligenceReport({
         {/* Live Telemetry Stats Summary Grid */}
         <div className="grid grid-cols-3 gap-3">
           {/* Card 1 */}
-          <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 relative overflow-hidden group hover:border-emerald-500/20 transition-all duration-300">
+          <div className="p-3 rounded-2xl bg-white/[0.02] border border-zinc-200 relative overflow-hidden group hover:border-emerald-500/20 transition-all duration-300">
             <div className="absolute top-0 right-0 w-16 h-16 bg-emerald-500/5 rounded-full blur-xl group-hover:bg-emerald-500/10 transition-all" />
             <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block mb-1">View Velocity</span>
-            <span className="text-[11px] sm:text-xs md:text-sm font-black text-white block tracking-tight truncate">{viewVelocityStr}</span>
-            <span className="text-[8px] text-zinc-400 block mt-1 font-medium">Recent average</span>
+            <span className="text-[11px] sm:text-xs md:text-sm font-black text-black block tracking-tight truncate">{viewVelocityStr}</span>
+            <span className="text-[8px] text-zinc-500 block mt-1 font-medium">Recent average</span>
           </div>
           {/* Card 2 */}
-          <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 relative overflow-hidden group hover:border-blue-500/20 transition-all duration-300">
+          <div className="p-3 rounded-2xl bg-white/[0.02] border border-zinc-200 relative overflow-hidden group hover:border-blue-500/20 transition-all duration-300">
             <div className="absolute top-0 right-0 w-16 h-16 bg-blue-500/5 rounded-full blur-xl group-hover:bg-blue-500/10 transition-all" />
             <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block mb-1">Engagement Rate</span>
-            <span className="text-[11px] sm:text-xs md:text-sm font-black text-white block tracking-tight truncate">{engagementRateStr}</span>
-            <span className="text-[8px] text-zinc-400 block mt-1 font-medium">Likes-to-views ratio</span>
+            <span className="text-[11px] sm:text-xs md:text-sm font-black text-black block tracking-tight truncate">{engagementRateStr}</span>
+            <span className="text-[8px] text-zinc-500 block mt-1 font-medium">Likes-to-views ratio</span>
           </div>
           {/* Card 3 */}
-          <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 relative overflow-hidden group hover:border-purple-500/20 transition-all duration-300">
+          <div className="p-3 rounded-2xl bg-white/[0.02] border border-zinc-200 relative overflow-hidden group hover:border-purple-500/20 transition-all duration-300">
             <div className="absolute top-0 right-0 w-16 h-16 bg-purple-500/5 rounded-full blur-xl group-hover:bg-purple-500/10 transition-all" />
             <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block mb-1">Video Catalog</span>
-            <span className="text-[11px] sm:text-xs md:text-sm font-black text-white block tracking-tight truncate">{indexedVideosCountStr}</span>
-            <span className="text-[8px] text-zinc-400 block mt-1 font-medium">Telemetry coverage</span>
+            <span className="text-[11px] sm:text-xs md:text-sm font-black text-black block tracking-tight truncate">{indexedVideosCountStr}</span>
+            <span className="text-[8px] text-zinc-500 block mt-1 font-medium">Telemetry coverage</span>
           </div>
         </div>
 
@@ -2225,25 +2225,25 @@ function CreatorIntelligenceReport({
                 className={cn(
                   "rounded-2xl border transition-all duration-300 overflow-hidden",
                   isExpanded 
-                    ? `bg-gradient-to-br ${sec.glowColor} border-t-white/10 shadow-lg shadow-black/20` 
-                    : "border-white/5 hover:border-white/10 bg-white/[0.01] hover:bg-white/[0.02]",
+                    ? `bg-gradient-to-br ${sec.glowColor} border-t-black/10 shadow-lg shadow-black/20` 
+                    : "border-zinc-200 hover:border-zinc-200 bg-white/[0.01] hover:bg-white/[0.02]",
                   idx === 8 && "md:col-span-2"
                 )}
               >
                 <div className="w-full p-4 flex items-center justify-between text-left gap-3 animate-fade-in">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className={cn("p-2 rounded-xl bg-white/5 shrink-0", sec.iconColor)}>
+                    <div className={cn("p-2 rounded-xl bg-black/5 shrink-0", sec.iconColor)}>
                       <Icon className="w-4 h-4" />
                     </div>
                     <div className="min-w-0">
                       <span className="text-[9px] text-zinc-500 font-medium block uppercase tracking-wider">{sec.badge}</span>
-                      <h5 className="text-xs font-bold text-white truncate">{sec.title}</h5>
+                      <h5 className="text-xs font-bold text-black truncate">{sec.title}</h5>
                     </div>
                   </div>
                 </div>
 
-                <div className="px-4 pb-4 border-t border-white/5 bg-black/10">
-                  <p className="text-[10px] text-zinc-400 leading-relaxed mb-3 pt-3">{sec.summary}</p>
+                <div className="px-4 pb-4 border-t border-zinc-200 bg-black/10">
+                  <p className="text-[10px] text-zinc-500 leading-relaxed mb-3 pt-3">{sec.summary}</p>
                   {sec.content}
                 </div>
               </div>
@@ -2255,11 +2255,11 @@ function CreatorIntelligenceReport({
   }
 
   return (
-    <div className="glass-card p-6 md:p-8 border-white/10 rounded-[2rem] h-full flex flex-col justify-between space-y-6 overflow-y-auto scrollbar-thin text-left">
+    <div className="bg-white shadow-2xl rounded-2xl border border-zinc-200 p-6 md:p-8 border-zinc-200 rounded-[2rem] h-full flex flex-col justify-between space-y-6 overflow-y-auto scrollbar-thin text-left">
       <div className="space-y-6">
         {/* Profile Header */}
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-blue-500 flex items-center justify-center font-bold text-white shadow-lg shadow-emerald-500/20 text-xl border border-white/15 overflow-hidden shrink-0">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-blue-500 flex items-center justify-center font-bold text-black shadow-lg shadow-emerald-500/20 text-xl border border-white/15 overflow-hidden shrink-0">
             {ytChannel?.avatarUrl ? (
               <img src={ytChannel.avatarUrl} alt={ytChannel.title} className="w-full h-full object-cover" />
             ) : profile.avatar ? (
@@ -2270,10 +2270,10 @@ function CreatorIntelligenceReport({
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-1.5">
-              <h3 className="text-md font-bold text-white truncate">{ytChannel?.title || profile.full_name || "Creator Pro"}</h3>
-              {ytChannel && <span className="w-3.5 h-3.5 rounded-full bg-red-500 flex items-center justify-center text-[7px] font-black text-white shrink-0" title="Live YouTube Data">▶</span>}
+              <h3 className="text-md font-bold text-black truncate">{ytChannel?.title || profile.full_name || "Creator Pro"}</h3>
+              {ytChannel && <span className="w-3.5 h-3.5 rounded-full bg-red-500 flex items-center justify-center text-[7px] font-black text-black shrink-0" title="Live YouTube Data">▶</span>}
             </div>
-            <p className="text-xs text-zinc-400 truncate">@{profile.youtube_channel || "handle"}</p>
+            <p className="text-xs text-zinc-500 truncate">@{profile.youtube_channel || "handle"}</p>
           </div>
           <div className="text-right shrink-0">
             <span className={`px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest ${ ytChannel ? "bg-red-500/10 border border-red-500/20 text-red-400" : "bg-emerald-500/10 border border-emerald-500/20 text-emerald-400"}`}>
@@ -2284,27 +2284,27 @@ function CreatorIntelligenceReport({
 
         {/* Dynamic Audits and Badges */}
         <div className="grid grid-cols-3 gap-2.5">
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
+          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
             <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block">Subscribers</span>
-            <div className="text-xs font-bold text-white">
+            <div className="text-xs font-bold text-black">
               {ytLoading ? <span className="text-zinc-600 animate-pulse">…</span> : subscriberCount !== null ? Number(subscriberCount).toLocaleString() : "—"}
             </div>
           </div>
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
+          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
             <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block">Total Videos</span>
             <div className="text-[10px] font-bold text-blue-400 truncate">
               {ytChannel ? ytChannel.videoCount.toLocaleString() : audit.saturation.split(" ")[0]}
             </div>
           </div>
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
+          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
             <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block">Upload Freq.</span>
             <div className="text-xs font-bold text-emerald-400 truncate">{uploadFrequency}</div>
           </div>
         </div>
 
         {/* 9 Strategic Sections Accordion */}
-        <div className="space-y-3 pt-4 border-t border-white/5">
-          <h4 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5 mb-2">
+        <div className="space-y-3 pt-4 border-t border-zinc-200">
+          <h4 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-1.5 mb-2">
             <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
             CHANNEL DNA STRATEGIC INTELLIGENCE
           </h4>
@@ -2317,18 +2317,18 @@ function CreatorIntelligenceReport({
                   key={idx} 
                   className={cn(
                     "rounded-2xl border transition-all duration-300 overflow-hidden bg-gradient-to-br bg-white/[0.01]",
-                    isExpanded ? `border-white/20 bg-white/[0.02] shadow-lg shadow-black/20` : "border-white/5 hover:border-white/10 hover:bg-white/[0.02]"
+                    isExpanded ? `border-white/20 bg-white/[0.02] shadow-lg shadow-black/20` : "border-zinc-200 hover:border-zinc-200 hover:bg-white/[0.02]"
                   )}
                 >
                   <div className="w-full p-4 flex items-center justify-between text-left gap-3">
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className={cn("p-2 rounded-xl bg-white/5 shrink-0", sec.iconColor)}>
+                      <div className={cn("p-2 rounded-xl bg-black/5 shrink-0", sec.iconColor)}>
                         <Icon className="w-4 h-4" />
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-xs font-bold text-white">{sec.title}</span>
-                          <span className="px-1.5 py-0.5 rounded-[4px] bg-white/5 text-[7px] font-bold uppercase tracking-widest text-zinc-400 border border-white/5">
+                          <span className="text-xs font-bold text-black">{sec.title}</span>
+                          <span className="px-1.5 py-0.5 rounded-[4px] bg-black/5 text-[7px] font-bold uppercase tracking-widest text-zinc-500 border border-zinc-200">
                             {sec.badge}
                           </span>
                         </div>
@@ -2337,7 +2337,7 @@ function CreatorIntelligenceReport({
                     </div>
                   </div>
 
-                  <div className="p-4 pt-0 border-t border-white/5 text-zinc-300">
+                  <div className="p-4 pt-0 border-t border-zinc-200 text-zinc-600">
                     {sec.content}
                   </div>
                 </div>
@@ -2347,9 +2347,9 @@ function CreatorIntelligenceReport({
         </div>
 
         {/* Recent Videos — REAL YouTube Data or labelled benchmarks */}
-        <div className="space-y-3 pt-4 border-t border-white/5">
+        <div className="space-y-3 pt-4 border-t border-zinc-200">
           <div className="flex items-center justify-between">
-            <h4 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+            <h4 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-1.5">
               <TrendingUp className="w-3.5 h-3.5 text-blue-400" />
               {hasRealVideos ? "Recent Videos (Live from YouTube)" : "Niche Industry Benchmarks"}
             </h4>
@@ -2374,26 +2374,26 @@ function CreatorIntelligenceReport({
             {hasRealVideos ? (
               ytVideos!.map((vid) => (
                 <a key={vid.videoId} href={vid.youtubeUrl} target="_blank" rel="noopener noreferrer"
-                  className="block p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-2 hover:border-white/15 hover:bg-white/[0.04] transition-all text-xs"
+                  className="block p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-2 hover:border-white/15 hover:bg-white/[0.04] transition-all text-xs"
                 >
                   <div className="flex gap-3 items-start">
                     {vid.thumbnailUrl && (
-                      <img src={vid.thumbnailUrl} alt={vid.title} className="w-20 h-12 rounded-lg object-cover shrink-0 border border-white/5" />
+                      <img src={vid.thumbnailUrl} alt={vid.title} className="w-20 h-12 rounded-lg object-cover shrink-0 border border-zinc-200" />
                     )}
                     <div className="flex-1 min-w-0 space-y-1">
                       <div className="flex justify-between items-start gap-2">
-                        <p className="text-xs font-bold text-white line-clamp-2 leading-snug flex-1">{vid.title}</p>
+                        <p className="text-xs font-bold text-black line-clamp-2 leading-snug flex-1">{vid.title}</p>
                         <span className={`px-2 py-0.5 rounded text-[8px] font-black tracking-wider shrink-0 ${vid.statusColor}`}>{vid.status}</span>
                       </div>
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[9px] text-zinc-500">
-                        <span>👁 <strong className="text-white">{vid.viewCountFormatted} views</strong></span>
-                        <span>👍 <strong className="text-zinc-300">{vid.likeCount.toLocaleString()}</strong></span>
+                        <span>👁 <strong className="text-black">{vid.viewCountFormatted} views</strong></span>
+                        <span>👍 <strong className="text-zinc-600">{vid.likeCount.toLocaleString()}</strong></span>
                         <span className="text-zinc-600">{vid.relativeTime}</span>
                       </div>
                       <div className="text-[9px]">
                         {vid.performanceRatio >= 1.5 ? <span className="text-emerald-400 font-bold">↑ {Math.round((vid.performanceRatio-1)*100)}% above channel avg</span>
                         : vid.performanceRatio < 0.75 ? <span className="text-rose-400 font-bold">↓ {Math.round((1-vid.performanceRatio)*100)}% below channel avg</span>
-                        : <span className="text-zinc-400">≈ Near channel average</span>}
+                        : <span className="text-zinc-500">≈ Near channel average</span>}
                       </div>
                     </div>
                   </div>
@@ -2401,12 +2401,12 @@ function CreatorIntelligenceReport({
               ))
             ) : (
               !ytLoading && audit.videos.map((vid: any, i: number) => (
-                <div key={i} className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1.5 text-xs opacity-70">
+                <div key={i} className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1.5 text-xs opacity-70">
                   <div className="flex justify-between items-start gap-2">
-                    <p className="text-xs font-bold text-zinc-300 line-clamp-2 flex-1">{vid.title}</p>
+                    <p className="text-xs font-bold text-zinc-600 line-clamp-2 flex-1">{vid.title}</p>
                     <span className={`px-2 py-0.5 rounded text-[8px] font-black tracking-wider shrink-0 ${vid.statusColor}`}>BENCHMARK</span>
                   </div>
-                  <div className="text-[9px] text-zinc-600">Niche Avg CTR: <strong className="text-zinc-400">{vid.ctr}</strong></div>
+                  <div className="text-[9px] text-zinc-600">Niche Avg CTR: <strong className="text-zinc-500">{vid.ctr}</strong></div>
                 </div>
               ))
             )}
@@ -2829,7 +2829,7 @@ export default function DashboardPage() {
 
   // Load history item if redirected from History page
   useEffect(() => {
-    const historyData = sessionStorage.getItem("algopilot_load_history")
+    const historyData = sessionStorage.getItem("preyt_load_history")
     if (historyData) {
       try {
         const item = JSON.parse(historyData)
@@ -2854,7 +2854,7 @@ export default function DashboardPage() {
       } catch (err) {
         console.error("Error parsing history data", err)
       } finally {
-        sessionStorage.removeItem("algopilot_load_history")
+        sessionStorage.removeItem("preyt_load_history")
       }
     }
   }, [])
@@ -3216,7 +3216,7 @@ export default function DashboardPage() {
                 className="lg:col-span-6 space-y-8"
             >
                 {/* Visual Step Progress Indicator */}
-                <div className="glass-card p-4 border-white/5 rounded-2xl w-full">
+                <div className="bg-white shadow-2xl rounded-2xl border border-zinc-200 p-4 border-zinc-200 rounded-2xl w-full">
                   <div className="flex justify-between items-center overflow-x-auto scrollbar-none gap-4">
                     {steps.map((s, idx) => {
                       const StepIcon = s.icon
@@ -3228,13 +3228,13 @@ export default function DashboardPage() {
                             "w-8 h-8 rounded-lg flex items-center justify-center border text-[11px] font-bold transition-all",
                             isCompleted ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-500" :
                             isActive ? "bg-white text-black border-white" :
-                            "bg-white/5 border-white/10 text-zinc-500"
+                            "bg-black/5 border-zinc-200 text-zinc-500"
                           )}>
                             <StepIcon className="w-3.5 h-3.5" />
                           </div>
                           <span className={cn(
                             "text-[10px] uppercase font-bold tracking-wider hidden sm:block whitespace-nowrap",
-                            isActive ? "text-white" : isCompleted ? "text-emerald-500" : "text-zinc-500"
+                            isActive ? "text-black" : isCompleted ? "text-emerald-500" : "text-zinc-500"
                           )}>
                             {s.label}
                           </span>
@@ -3255,8 +3255,8 @@ export default function DashboardPage() {
                   >
                     <AlertCircle className="w-5 h-5 shrink-0 text-rose-400 mt-0.5" />
                     <div className="space-y-1">
-                      <p className="font-bold text-white uppercase tracking-wider text-[10px]">Analysis Execution Failed</p>
-                      <p className="text-zinc-300 leading-relaxed">{error}</p>
+                      <p className="font-bold text-black uppercase tracking-wider text-[10px]">Analysis Execution Failed</p>
+                      <p className="text-zinc-600 leading-relaxed">{error}</p>
                     </div>
                   </motion.div>
                 )}
@@ -3264,7 +3264,7 @@ export default function DashboardPage() {
                 {/* Wizard Panel Content Grid */}
                 {wizardStep === 1 ? (
                   profileLoading ? (
-                    <div className="h-64 bg-white/5 rounded-[2rem] animate-pulse flex items-center justify-center">
+                    <div className="h-64 bg-black/5 rounded-[2rem] animate-pulse flex items-center justify-center">
                       <span className="text-xs text-zinc-500 font-bold uppercase tracking-widest">Retrieving stats...</span>
                     </div>
                   ) : (
@@ -3283,7 +3283,7 @@ export default function DashboardPage() {
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          className="glass-card p-6 md:p-10 border-white/10 rounded-[2rem] md:rounded-[2.5rem] relative overflow-hidden flex flex-col space-y-8 animate-fade-in"
+                          className="bg-white shadow-2xl rounded-2xl border border-zinc-200 p-6 md:p-10 border-zinc-200 rounded-[2rem] md:rounded-[2.5rem] relative overflow-hidden flex flex-col space-y-8 animate-fade-in"
                         >
                           {!profile && (
                             <div className="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/10 text-amber-400 text-xs">
@@ -3294,7 +3294,7 @@ export default function DashboardPage() {
                           {/* Top Header Row with Avatar and Stats */}
                           <div className="flex flex-col lg:flex-row gap-6 justify-between items-start lg:items-center">
                             <div className="flex items-center gap-5">
-                              <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-emerald-500 to-blue-500 flex items-center justify-center font-bold text-white shadow-lg shadow-emerald-500/20 text-2xl border border-white/15 overflow-hidden shrink-0">
+                              <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-emerald-500 to-blue-500 flex items-center justify-center font-bold text-black shadow-lg shadow-emerald-500/20 text-2xl border border-white/15 overflow-hidden shrink-0">
                                 {activeProfile.avatar ? (
                                   <img src={activeProfile.avatar} alt="Avatar" className="w-full h-full object-cover animate-fade-in" />
                                 ) : (
@@ -3303,39 +3303,39 @@ export default function DashboardPage() {
                               </div>
                               <div>
                                 <div className="flex items-center gap-2 flex-wrap">
-                                  <h2 className="text-xl md:text-2xl font-black text-white">{activeProfile.full_name || "Creator Pro"}</h2>
-                                  <span className="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center text-[8px] font-black text-white shrink-0" title="Verified Creator Account">✓</span>
+                                  <h2 className="text-xl md:text-2xl font-black text-black">{activeProfile.full_name || "Creator Pro"}</h2>
+                                  <span className="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center text-[8px] font-black text-black shrink-0" title="Verified Creator Account">✓</span>
                                   <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[8px] font-bold uppercase tracking-widest animate-pulse">
                                     Telemetry Layer 1 Active
                                   </span>
                                 </div>
-                                <p className="text-xs md:text-sm text-zinc-400 mt-0.5">@{activeProfile.youtube_channel || "handle"}</p>
+                                <p className="text-xs md:text-sm text-zinc-500 mt-0.5">@{activeProfile.youtube_channel || "handle"}</p>
                               </div>
                             </div>
 
                             {/* Top Right Quick Stats Grid */}
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full lg:w-auto">
-                              <div className="p-3 px-4 rounded-xl bg-white/[0.02] border border-white/5 space-y-0.5 min-w-[110px]">
+                              <div className="p-3 px-4 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-0.5 min-w-[110px]">
                                 <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block">Subscribers</span>
-                                <div className="text-xs font-bold text-white">
+                                <div className="text-xs font-bold text-black">
                                   {ytLoading ? <span className="text-zinc-600 animate-pulse">…</span>
                                     : (ytChannel?.subscriberCount ?? activeProfile.subscriber_count) != null
                                       ? Number(ytChannel?.subscriberCount ?? activeProfile.subscriber_count).toLocaleString()
                                       : "—"}
                                 </div>
                               </div>
-                              <div className="p-3 px-4 rounded-xl bg-white/[0.02] border border-white/5 space-y-0.5 min-w-[110px]">
+                              <div className="p-3 px-4 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-0.5 min-w-[110px]">
                                 <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block">Total Videos</span>
                                 <div className="text-xs font-bold text-emerald-500">
                                   {ytLoading ? <span className="text-zinc-600 animate-pulse">…</span>
                                     : ytChannel ? ytChannel.videoCount.toLocaleString() : "—"}
                                 </div>
                               </div>
-                              <div className="p-3 px-4 rounded-xl bg-white/[0.02] border border-white/5 space-y-0.5 min-w-[110px]">
+                              <div className="p-3 px-4 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-0.5 min-w-[110px]">
                                 <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block">Category Focus</span>
-                                <div className="text-xs font-bold text-white truncate max-w-[90px]">{niche}</div>
+                                <div className="text-xs font-bold text-black truncate max-w-[90px]">{niche}</div>
                               </div>
-                              <div className="p-3 px-4 rounded-xl bg-white/[0.02] border border-white/5 space-y-0.5 min-w-[110px]">
+                              <div className="p-3 px-4 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-0.5 min-w-[110px]">
                                 <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block">Growth Rhythm</span>
                                 <div className="text-xs font-bold text-blue-400 truncate max-w-[90px]">{activeProfile.upload_frequency || "Weekly"}</div>
                               </div>
@@ -3343,9 +3343,9 @@ export default function DashboardPage() {
                           </div>
 
                           {/* Middle Insights Row */}
-                          <div className="grid md:grid-cols-3 gap-4 pt-4 border-t border-white/5">
+                          <div className="grid md:grid-cols-3 gap-4 pt-4 border-t border-zinc-200">
                             {/* Average Title Length */}
-                            <div className="p-4 rounded-xl bg-white/[0.01] border border-white/5 space-y-1">
+                            <div className="p-4 rounded-xl bg-white/[0.01] border border-zinc-200 space-y-1">
                               <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block">Average Title Length</span>
                               <div className="text-lg font-bold text-emerald-400">
                                 {ytLoading ? <span className="text-zinc-600 animate-pulse text-sm">…</span>
@@ -3356,9 +3356,9 @@ export default function DashboardPage() {
                               <span className="text-[9px] text-zinc-500">Optimal range is 45-60 characters</span>
                             </div>
                             {/* Total Views */}
-                            <div className="p-4 rounded-xl bg-white/[0.01] border border-white/5 space-y-1">
+                            <div className="p-4 rounded-xl bg-white/[0.01] border border-zinc-200 space-y-1">
                               <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block">Total Channel Views</span>
-                              <div className="text-lg font-bold text-white">
+                              <div className="text-lg font-bold text-black">
                                 {ytLoading ? <span className="text-zinc-600 animate-pulse text-sm">…</span>
                                   : ytChannel ? (
                                     ytChannel.totalViews >= 1_000_000
@@ -3371,7 +3371,7 @@ export default function DashboardPage() {
                               <span className="text-[9px] text-zinc-500">Lifetime channel views</span>
                             </div>
                             {/* Saturation Level */}
-                            <div className="p-4 rounded-xl bg-white/[0.01] border border-white/5 space-y-1">
+                            <div className="p-4 rounded-xl bg-white/[0.01] border border-zinc-200 space-y-1">
                               <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block">Niche Saturation Analysis</span>
                               <div className="text-lg font-bold text-blue-400">{audit.saturation}</div>
                               <span className="text-[9px] text-zinc-500">Competitive landscape</span>
@@ -3379,25 +3379,25 @@ export default function DashboardPage() {
                           </div>
 
                           {/* Tactical Advice banner */}
-                          <div className="p-5 rounded-2xl bg-white/[0.01] border border-white/5 space-y-2 text-xs">
+                          <div className="p-5 rounded-2xl bg-white/[0.01] border border-zinc-200 space-y-2 text-xs">
                             <div className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-1.5">
                               <Sparkles className="w-3.5 h-3.5 text-emerald-400" /> Channel Rhythm & Cohort Strategy
                             </div>
-                            <p className="text-zinc-300 leading-normal text-xs md:text-sm">
-                              <span className="text-zinc-500 font-semibold">Optimal Upload Window:</span> <strong className="text-white font-bold">{audit.optimalTime}</strong>
+                            <p className="text-zinc-600 leading-normal text-xs md:text-sm">
+                              <span className="text-zinc-500 font-semibold">Optimal Upload Window:</span> <strong className="text-black font-bold">{audit.optimalTime}</strong>
                             </p>
-                            <p className="text-zinc-300 leading-normal text-xs md:text-sm">
+                            <p className="text-zinc-600 leading-normal text-xs md:text-sm">
                               <span className="text-zinc-500 font-semibold">Tactical Advice:</span> {audit.velocityTip}
                             </p>
                           </div>
 
                           {/* Deep Analysis Panel */}
-                          <div className="grid md:grid-cols-2 gap-6 !mt-6 pt-6 border-t border-white/5">
+                          <div className="grid md:grid-cols-2 gap-6 !mt-6 pt-6 border-t border-zinc-200">
                             <div className="p-5 rounded-2xl bg-emerald-500/[0.02] border border-emerald-500/10 space-y-3">
                               <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs uppercase tracking-widest">
                                 <CheckCircle2 className="w-4 h-4" /> Good Hooks & Cadence (Working Well)
                               </div>
-                              <ul className="space-y-2 text-xs text-zinc-300">
+                              <ul className="space-y-2 text-xs text-zinc-600">
                                 <li className="flex gap-2">
                                   <span className="text-emerald-500">•</span>
                                   <span>Consistent thumbnail contrast levels (average brightness between 110-150) in top videos.</span>
@@ -3416,7 +3416,7 @@ export default function DashboardPage() {
                               <div className="flex items-center gap-2 text-rose-400 font-bold text-xs uppercase tracking-widest">
                                 <AlertCircle className="w-4 h-4" /> Frictional Anchors & Gaps (Failing Elements)
                               </div>
-                              <ul className="space-y-2 text-xs text-zinc-300">
+                              <ul className="space-y-2 text-xs text-zinc-600">
                                 <li className="flex gap-2">
                                   <span className="text-rose-500">•</span>
                                   <span>High clutter index on multiple thumbnail variations, creating focal point bleed.</span>
@@ -3443,9 +3443,9 @@ export default function DashboardPage() {
                           />
 
                           {/* Outlier Video Insights */}
-                          <div className="space-y-4 !mt-6 pt-6 border-t border-white/5">
+                          <div className="space-y-4 !mt-6 pt-6 border-t border-zinc-200">
                             <div className="flex items-center justify-between">
-                              <h4 className="text-[10px] md:text-xs font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-1.5">
+                              <h4 className="text-[10px] md:text-xs font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-1.5">
                                 <TrendingUp className="w-4 h-4 text-blue-400" />
                                 Outlier Video Insights
                               </h4>
@@ -3458,22 +3458,22 @@ export default function DashboardPage() {
                               {ytVideos && ytVideos.length > 0 ? (
                                 ytVideos.slice(0, 6).map((vid) => (
                                   <a key={vid.videoId} href={vid.youtubeUrl} target="_blank" rel="noopener noreferrer"
-                                    className="p-4 rounded-2xl bg-white/[0.01] border border-white/5 space-y-2 hover:border-white/10 hover:bg-white/[0.03] transition-all text-xs flex flex-col justify-between"
+                                    className="p-4 rounded-2xl bg-white/[0.01] border border-zinc-200 space-y-2 hover:border-zinc-200 hover:bg-white/[0.03] transition-all text-xs flex flex-col justify-between"
                                   >
                                     <div>
                                       {vid.thumbnailUrl && (
                                         <img src={vid.thumbnailUrl} alt={vid.title}
-                                          className="w-full h-20 object-cover rounded-xl border border-white/5 mb-1" />
+                                          className="w-full h-20 object-cover rounded-xl border border-zinc-200 mb-1" />
                                       )}
                                       <div className="flex justify-between items-start gap-1">
                                         <span className={`px-2 py-0.5 rounded text-[8px] font-black tracking-wider shrink-0 ${vid.statusColor}`}>{vid.status}</span>
                                         <span className="text-[9px] text-zinc-500">{vid.relativeTime}</span>
                                       </div>
-                                      <p className="text-xs font-bold text-white line-clamp-2 leading-snug">{vid.title}</p>
+                                      <p className="text-xs font-bold text-black line-clamp-2 leading-snug">{vid.title}</p>
                                     </div>
                                     <div className="pt-2 border-t border-white/[0.03] space-y-1">
                                       <div className="flex justify-between text-[9px] text-zinc-500">
-                                        <span>Views: <strong className="text-white">{vid.viewCountFormatted}</strong></span>
+                                        <span>Views: <strong className="text-black">{vid.viewCountFormatted}</strong></span>
                                         <span>👍 {vid.likeCount.toLocaleString()}</span>
                                       </div>
                                       <div className="text-[9px]">
@@ -3488,7 +3488,7 @@ export default function DashboardPage() {
                                 ))
                               ) : (
                                 audit.videos.map((vid: any, i: number) => (
-                                  <div key={i} className="p-4 rounded-2xl bg-white/[0.01] border border-white/5 space-y-3 text-xs flex flex-col justify-between">
+                                  <div key={i} className="p-4 rounded-2xl bg-white/[0.01] border border-zinc-200 space-y-3 text-xs flex flex-col justify-between">
                                     <div className="space-y-2">
                                       <div className="flex justify-between items-center gap-2">
                                         <span className={cn("px-2 py-0.5 rounded text-[8px] font-black tracking-wider shrink-0", vid.status === "OUTPERFORMED" ? "text-emerald-400 bg-emerald-500/10 border border-emerald-500/20" : vid.status === "UNDERPERFORMING" ? "text-rose-400 bg-rose-500/10 border border-rose-500/20" : "text-blue-400 bg-blue-500/10 border border-blue-500/20")}>
@@ -3496,9 +3496,9 @@ export default function DashboardPage() {
                                         </span>
                                         <span className="text-[9px] text-zinc-500">Avg CTR: {vid.ctr}</span>
                                       </div>
-                                      <p className="text-xs font-bold text-white line-clamp-3 leading-snug">{vid.title}</p>
+                                      <p className="text-xs font-bold text-black line-clamp-3 leading-snug">{vid.title}</p>
                                     </div>
-                                    <div className="text-zinc-400">
+                                    <div className="text-zinc-500">
                                       <strong className="text-rose-400 font-bold">Why it failed:</strong> {vid.notWorked}
                                     </div>
                                   </div>
@@ -3542,7 +3542,7 @@ export default function DashboardPage() {
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
                           exit={{ opacity: 0, x: 10 }}
-                          className="glass-card p-6 md:p-8 border-white/10 space-y-6 rounded-[2rem] flex-1 flex flex-col justify-between"
+                          className="bg-white shadow-2xl rounded-2xl border border-zinc-200 p-6 md:p-8 border-zinc-200 space-y-6 rounded-[2rem] flex-1 flex flex-col justify-between"
                         >
                           <div className="space-y-6">
                             <div>
@@ -3557,7 +3557,7 @@ export default function DashboardPage() {
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 placeholder="e.g. I Spent 100 Hours Crafting the Ultimate Minecraft World"
-                                className="w-full bg-white/[0.02] border border-white/5 rounded-2xl px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-white/20 transition-all resize-none text-white font-medium"
+                                className="w-full bg-white/[0.02] border border-zinc-200 rounded-2xl px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-white/20 transition-all resize-none text-black font-medium"
                               />
                             </div>
 
@@ -3567,7 +3567,7 @@ export default function DashboardPage() {
                                 <select
                                   value={niche}
                                   onChange={(e) => setNiche(e.target.value)}
-                                  className="w-full bg-zinc-900 border border-white/5 rounded-xl px-4 py-3 text-xs md:text-sm focus:outline-none appearance-none cursor-pointer text-white font-medium hover:border-white/10 transition-colors"
+                                  className="w-full bg-white border border-zinc-200 rounded-xl px-4 py-3 text-xs md:text-sm focus:outline-none appearance-none cursor-pointer text-black font-medium hover:border-zinc-200 transition-colors"
                                 >
                                   {NICHES.map((n) => (
                                     <option key={n.id} value={n.id}>
@@ -3586,7 +3586,7 @@ export default function DashboardPage() {
                                 value={transcript}
                                 onChange={(e) => setTranscript(e.target.value)}
                                 placeholder="Paste your video's script or first 30 seconds hook here to analyze linguistic pacing and retention coefficients..."
-                                className="w-full bg-white/[0.02] border border-white/5 rounded-2xl px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-white/20 transition-all resize-none text-white font-medium placeholder-zinc-600"
+                                className="w-full bg-white/[0.02] border border-zinc-200 rounded-2xl px-4 py-3 text-xs md:text-sm focus:outline-none focus:border-white/20 transition-all resize-none text-black font-medium placeholder-zinc-600"
                               />
                             </div>
                           </div>
@@ -3594,7 +3594,7 @@ export default function DashboardPage() {
                           <div className="flex gap-4 mt-6">
                             <button
                               onClick={() => setWizardStep(1)}
-                              className="px-4 rounded-2xl border border-white/10 hover:bg-white/5 text-zinc-500 hover:text-white transition-all flex items-center justify-center"
+                              className="px-4 rounded-2xl border border-zinc-200 hover:bg-black/5 text-zinc-500 hover:text-black transition-all flex items-center justify-center"
                             >
                               <ArrowLeft className="w-4 h-4" />
                             </button>
@@ -3616,7 +3616,7 @@ export default function DashboardPage() {
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
                           exit={{ opacity: 0, x: 10 }}
-                          className="glass-card p-6 md:p-8 border-white/10 space-y-6 rounded-[2rem] flex-1 flex flex-col justify-between"
+                          className="bg-white shadow-2xl rounded-2xl border border-zinc-200 p-6 md:p-8 border-zinc-200 space-y-6 rounded-[2rem] flex-1 flex flex-col justify-between"
                         >
                           <div className="space-y-6">
                             <div>
@@ -3658,8 +3658,8 @@ export default function DashboardPage() {
                                     }
                                   }}
                                   className={cn(
-                                    "aspect-video md:aspect-[4/3] border-2 border-dashed border-white/5 rounded-3xl bg-white/[0.01] hover:bg-white/[0.03] hover:border-white/10 transition-all cursor-pointer flex flex-col items-center justify-center text-center p-3 group relative overflow-hidden shadow-2xl",
-                                    variant.preview ? "border-solid border-emerald-500/20 bg-black/40" : ""
+                                    "aspect-video md:aspect-[4/3] border-2 border-dashed border-zinc-200 rounded-3xl bg-white/[0.01] hover:bg-white/[0.03] hover:border-zinc-200 transition-all cursor-pointer flex flex-col items-center justify-center text-center p-3 group relative overflow-hidden shadow-2xl",
+                                    variant.preview ? "border-solid border-emerald-500/20 bg-[#FAF9F6]" : ""
                                   )}
                                 >
                                   {variant.preview ? (
@@ -3694,7 +3694,7 @@ export default function DashboardPage() {
                                               e.stopPropagation();
                                               clearSlot(variant.id);
                                             }}
-                                            className="absolute top-2 right-2 p-1 rounded bg-black/60 hover:bg-black/90 text-white transition-colors"
+                                            className="absolute top-2 right-2 p-1 rounded bg-black/60 hover:bg-black/90 text-black transition-colors"
                                           >
                                             <X className="w-3 h-3" />
                                           </button>
@@ -3704,7 +3704,7 @@ export default function DashboardPage() {
                                   ) : (
                                     <>
                                       <Upload className="w-4 h-4 text-zinc-500 mb-1 group-hover:scale-110 transition-transform animate-pulse" />
-                                      <span className="text-[10px] font-bold text-white group-hover:text-emerald-400 transition-colors">Slot {index + 1}</span>
+                                      <span className="text-[10px] font-bold text-black group-hover:text-emerald-400 transition-colors">Slot {index + 1}</span>
                                       <span className="text-[7px] text-zinc-500 uppercase font-bold tracking-widest mt-0.5">Click to upload</span>
                                     </>
                                   )}
@@ -3718,14 +3718,14 @@ export default function DashboardPage() {
                                 {compareVariants.map((variant, index) => {
                                   const hasImage = variant.preview !== null
                                   return (
-                                    <div key={variant.id} className="p-3 rounded-2xl bg-white/[0.01] border border-white/5 space-y-2 text-left">
-                                      <div className="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">
+                                    <div key={variant.id} className="p-3 rounded-2xl bg-white/[0.01] border border-zinc-200 space-y-2 text-left">
+                                      <div className="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">
                                         Variant {index + 1} Telemetry
                                       </div>
                                       <div className="grid grid-cols-1 gap-2 text-[10px]">
                                         <div className="space-y-0.5">
                                           <span className="text-zinc-500 block">Brightness</span>
-                                          <span className={cn("font-bold", !hasImage ? "text-zinc-600" : "text-white")}>
+                                          <span className={cn("font-bold", !hasImage ? "text-zinc-600" : "text-black")}>
                                             {variant.isScanning ? "..." : hasImage ? variant.brightness : "—"}
                                           </span>
                                         </div>
@@ -3749,7 +3749,7 @@ export default function DashboardPage() {
                           <div className="flex gap-4 mt-6">
                             <button
                               onClick={() => setWizardStep(2)}
-                              className="px-4 rounded-2xl border border-white/10 hover:bg-white/5 text-zinc-500 hover:text-white transition-all flex items-center justify-center shrink-0"
+                              className="px-4 rounded-2xl border border-zinc-200 hover:bg-black/5 text-zinc-500 hover:text-black transition-all flex items-center justify-center shrink-0"
                             >
                               <ArrowLeft className="w-4 h-4" />
                             </button>
@@ -3771,7 +3771,7 @@ export default function DashboardPage() {
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
                           exit={{ opacity: 0, x: 10 }}
-                          className="glass-card p-6 md:p-8 border-white/10 space-y-6 rounded-[2rem] flex-1 flex flex-col justify-between"
+                          className="bg-white shadow-2xl rounded-2xl border border-zinc-200 p-6 md:p-8 border-zinc-200 space-y-6 rounded-[2rem] flex-1 flex flex-col justify-between"
                         >
                           <div className="space-y-6">
                             <div>
@@ -3783,7 +3783,7 @@ export default function DashboardPage() {
                               {/* Duration Class Selection */}
                               <div className="space-y-2">
                                 <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Video Duration Profile</label>
-                                <div className="flex gap-2 p-1 bg-white/5 border border-white/10 rounded-2xl">
+                                <div className="flex gap-2 p-1 bg-black/5 border border-zinc-200 rounded-2xl">
                                   {[
                                     { id: "short", label: "YouTube Short (<1m)" },
                                     { id: "standard", label: "Standard Video (<1h)" },
@@ -3796,7 +3796,7 @@ export default function DashboardPage() {
                                         "flex-1 py-2.5 rounded-xl text-[10px] font-bold transition-all",
                                         videoDurationType === d.id
                                           ? "bg-white text-black"
-                                          : "text-zinc-400 hover:text-white"
+                                          : "text-zinc-500 hover:text-black"
                                       )}
                                     >
                                       {d.label}
@@ -3812,7 +3812,7 @@ export default function DashboardPage() {
                                     <div className="space-y-2">
                                       <div className="flex justify-between text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
                                         <span>Hours</span>
-                                        <span className="text-white">{durationHours} hr</span>
+                                        <span className="text-black">{durationHours} hr</span>
                                       </div>
                                       <input
                                         type="range"
@@ -3820,14 +3820,14 @@ export default function DashboardPage() {
                                         max="5"
                                         value={durationHours}
                                         onChange={(e) => setDurationHours(Number(e.target.value))}
-                                        className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white"
+                                        className="w-full h-1 bg-black/5 rounded-lg appearance-none cursor-pointer accent-white"
                                       />
                                     </div>
                                   )}
                                   <div className="space-y-2 col-span-2 sm:col-span-1">
                                     <div className="flex justify-between text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
                                       <span>Minutes</span>
-                                      <span className="text-white">{durationMinutes} min</span>
+                                      <span className="text-black">{durationMinutes} min</span>
                                     </div>
                                     <input
                                       type="range"
@@ -3835,7 +3835,7 @@ export default function DashboardPage() {
                                       max="59"
                                       value={durationMinutes}
                                       onChange={(e) => setDurationMinutes(Number(e.target.value))}
-                                      className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white"
+                                      className="w-full h-1 bg-black/5 rounded-lg appearance-none cursor-pointer accent-white"
                                     />
                                   </div>
                                 </div>
@@ -3849,7 +3849,7 @@ export default function DashboardPage() {
                                     <select
                                       value={uploadHour}
                                       onChange={(e) => setUploadHour(Number(e.target.value))}
-                                      className="w-full bg-zinc-900 border border-white/5 rounded-xl px-3 py-2.5 text-xs md:text-sm focus:outline-none appearance-none cursor-pointer text-white font-medium hover:border-white/10 transition-colors"
+                                      className="w-full bg-white border border-zinc-200 rounded-xl px-3 py-2.5 text-xs md:text-sm focus:outline-none appearance-none cursor-pointer text-black font-medium hover:border-zinc-200 transition-colors"
                                     >
                                       {Array.from({ length: 24 }).map((_, h) => (
                                         <option key={h} value={h}>
@@ -3870,7 +3870,7 @@ export default function DashboardPage() {
                                         "flex-1 py-2 rounded-xl border text-xs font-semibold transition-all",
                                         isWeekend === 0 
                                           ? "bg-white text-black border-white" 
-                                          : "bg-white/[0.02] border-white/5 text-zinc-400 hover:text-white"
+                                          : "bg-white/[0.02] border-zinc-200 text-zinc-500 hover:text-black"
                                       )}
                                     >
                                       Weekday
@@ -3881,7 +3881,7 @@ export default function DashboardPage() {
                                         "flex-1 py-2 rounded-xl border text-xs font-semibold transition-all",
                                         isWeekend === 1 
                                           ? "bg-white text-black border-white" 
-                                          : "bg-white/[0.02] border-white/5 text-zinc-400 hover:text-white"
+                                          : "bg-white/[0.02] border-zinc-200 text-zinc-500 hover:text-black"
                                       )}
                                     >
                                       Weekend
@@ -3910,7 +3910,7 @@ export default function DashboardPage() {
                                           "px-3 py-1.5 rounded-full border text-[10px] font-bold uppercase tracking-wider transition-all",
                                           isSelected
                                             ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
-                                            : "bg-white/[0.02] border-white/5 text-zinc-400 hover:text-white"
+                                            : "bg-white/[0.02] border-zinc-200 text-zinc-500 hover:text-black"
                                         )}
                                       >
                                         {d.slice(0, 3)}
@@ -3920,7 +3920,7 @@ export default function DashboardPage() {
                                 </div>
                               </div>
                               {/* Telemetry and Showcase Consent Options */}
-                              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3 mt-4 text-left">
+                              <div className="p-4 rounded-2xl bg-white/[0.02] border border-zinc-200 space-y-3 mt-4 text-left">
                                 <div className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block mb-1">Privacy & Live Activity Preferences</div>
                                 
                                 <label className="flex items-start gap-3 cursor-pointer group">
@@ -3928,10 +3928,10 @@ export default function DashboardPage() {
                                     type="checkbox" 
                                     checked={allowLiveFeed} 
                                     onChange={(e) => setAllowLiveFeed(e.target.checked)}
-                                    className="mt-0.5 w-4 h-4 rounded border-white/10 bg-zinc-900 text-blue-500 focus:ring-0 cursor-pointer"
+                                    className="mt-0.5 w-4 h-4 rounded border-zinc-200 bg-white text-blue-500 focus:ring-0 cursor-pointer"
                                   />
-                                  <div className="text-[11px] text-zinc-400 group-hover:text-zinc-300 transition-colors">
-                                    <span className="font-bold text-white block">Broadcast Anonymized Activity</span>
+                                  <div className="text-[11px] text-zinc-500 group-hover:text-zinc-600 transition-colors">
+                                    <span className="font-bold text-black block">Broadcast Anonymized Activity</span>
                                     Show this analysis in the live activity feed (e.g., "Tech Creator in London analyzed a thumbnail").
                                   </div>
                                 </label>
@@ -3941,10 +3941,10 @@ export default function DashboardPage() {
                                     type="checkbox" 
                                     checked={consentPublicShowcase} 
                                     onChange={(e) => setConsentPublicShowcase(e.target.checked)}
-                                    className="mt-0.5 w-4 h-4 rounded border-white/10 bg-zinc-900 text-blue-500 focus:ring-0 cursor-pointer"
+                                    className="mt-0.5 w-4 h-4 rounded border-zinc-200 bg-white text-blue-500 focus:ring-0 cursor-pointer"
                                   />
-                                  <div className="text-[11px] text-zinc-400 group-hover:text-zinc-300 transition-colors">
-                                    <span className="font-bold text-white block">Apply for public Creator Showcase (+100 credits)</span>
+                                  <div className="text-[11px] text-zinc-500 group-hover:text-zinc-600 transition-colors">
+                                    <span className="font-bold text-black block">Apply for public Creator Showcase (+100 credits)</span>
                                     Submit your channel details to be featured in the homepage creator queue.
                                   </div>
                                 </label>
@@ -3955,7 +3955,7 @@ export default function DashboardPage() {
                           <div className="flex gap-4 mt-6">
                             <button
                               onClick={() => setWizardStep(3)}
-                              className="px-4 rounded-2xl border border-white/10 hover:bg-white/5 text-zinc-500 hover:text-white transition-all flex items-center justify-center shrink-0"
+                              className="px-4 rounded-2xl border border-zinc-200 hover:bg-black/5 text-zinc-500 hover:text-black transition-all flex items-center justify-center shrink-0"
                             >
                               <ArrowLeft className="w-4 h-4" />
                             </button>
@@ -3976,7 +3976,7 @@ export default function DashboardPage() {
                           initial={{ opacity: 0, scale: 0.98 }}
                           animate={{ opacity: 1, scale: 1 }}
                           exit={{ opacity: 0 }}
-                          className="glass-card p-8 md:p-12 border-white/10 rounded-[2rem] flex-1 flex flex-col justify-center space-y-8 relative overflow-hidden"
+                          className="bg-white shadow-2xl rounded-2xl border border-zinc-200 p-8 md:p-12 border-zinc-200 rounded-[2rem] flex-1 flex flex-col justify-center space-y-8 relative overflow-hidden"
                         >
                           {/* Self-contained moving laser scan line */}
                           <style>{`
@@ -3992,19 +3992,19 @@ export default function DashboardPage() {
                           <div className="absolute inset-x-0 w-full h-[6px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent opacity-30 animate-scan-laser pointer-events-none" />
 
                           <div className="flex flex-col items-center text-center space-y-4">
-                            <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center relative">
+                            <div className="w-12 h-12 rounded-2xl bg-black/5 border border-zinc-200 flex items-center justify-center relative">
                               <div className="absolute inset-0 rounded-2xl border border-emerald-500/30 animate-ping" />
                               <Sparkles className="w-5 h-5 text-emerald-400 animate-pulse" />
                             </div>
                             
                             <div>
-                              <h3 className="font-black text-sm uppercase tracking-widest text-white">Live Strategy Synthesis</h3>
+                              <h3 className="font-black text-sm uppercase tracking-widest text-black">Live Strategy Synthesis</h3>
                               <p className="text-[10px] text-zinc-500 mt-1 max-w-xs mx-auto">Evaluating visual and semantic patterns relative to niche leaders...</p>
                             </div>
                           </div>
 
                           {/* Progress List */}
-                          <div className="space-y-3.5 max-w-md mx-auto w-full pt-4 border-t border-white/5">
+                          <div className="space-y-3.5 max-w-md mx-auto w-full pt-4 border-t border-zinc-200">
                             {[
                               "Scanning thumbnail composition...",
                               "Detecting emotional focus...",
@@ -4021,9 +4021,9 @@ export default function DashboardPage() {
                                   className={cn(
                                     "flex items-center justify-between p-3 rounded-xl border transition-all duration-300 text-left",
                                     isFinished 
-                                      ? "bg-emerald-500/[0.02] border-emerald-500/10 text-zinc-300" 
+                                      ? "bg-emerald-500/[0.02] border-emerald-500/10 text-zinc-600" 
                                       : isCurrent 
-                                      ? "bg-amber-500/[0.02] border-amber-500/20 text-white shadow-[0_0_15px_rgba(245,158,11,0.02)]" 
+                                      ? "bg-amber-500/[0.02] border-amber-500/20 text-black shadow-[0_0_15px_rgba(245,158,11,0.02)]" 
                                       : "bg-white/[0.002] border-transparent text-zinc-600 opacity-40"
                                   )}
                                 >
@@ -4083,12 +4083,12 @@ export default function DashboardPage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="glass-card w-full max-w-md border-white/10 bg-zinc-950 p-6 relative z-10 overflow-hidden shadow-2xl space-y-6"
+              className="bg-white shadow-2xl rounded-2xl border border-zinc-200 w-full max-w-md border-zinc-200 bg-white p-6 relative z-10 overflow-hidden shadow-2xl space-y-6"
             >
               {/* Header */}
-              <div className="flex items-start justify-between border-b border-white/5 pb-4">
+              <div className="flex items-start justify-between border-b border-zinc-200 pb-4">
                 <div className="space-y-1">
-                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                  <h3 className="text-sm font-bold text-black flex items-center gap-2">
                     <ShieldCheck className="w-4.5 h-4.5 text-blue-400" />
                     Telemetry & Privacy Controls
                   </h3>
@@ -4096,14 +4096,14 @@ export default function DashboardPage() {
                 </div>
                 <button
                   onClick={() => setShowConsentModal(false)}
-                  className="p-1 rounded-lg border border-white/5 bg-white/5 text-zinc-400 hover:text-white transition-colors"
+                  className="p-1 rounded-lg border border-zinc-200 bg-black/5 text-zinc-500 hover:text-black transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
               {/* Status Alert Box */}
-              <div className="p-3.5 rounded-xl bg-blue-500/5 border border-blue-500/10 text-[11px] leading-relaxed text-zinc-400">
+              <div className="p-3.5 rounded-xl bg-blue-500/5 border border-blue-500/10 text-[11px] leading-relaxed text-zinc-500">
                 <span className="font-bold text-blue-400 block mb-1 flex items-center gap-1">
                   🔒 Private Sandbox Guaranteed
                 </span>
@@ -4112,15 +4112,15 @@ export default function DashboardPage() {
 
               {/* Options */}
               <div className="space-y-3">
-                <label className="flex items-start gap-3 p-3.5 rounded-xl border border-white/5 bg-white/[0.01] hover:bg-white/[0.02] cursor-pointer transition-colors group">
+                <label className="flex items-start gap-3 p-3.5 rounded-xl border border-zinc-200 bg-white/[0.01] hover:bg-white/[0.02] cursor-pointer transition-colors group">
                   <input
                     type="checkbox"
                     checked={allowLiveFeed}
                     onChange={(e) => setAllowLiveFeed(e.target.checked)}
-                    className="mt-0.5 w-4 h-4 rounded border-white/10 bg-zinc-900 text-blue-500 focus:ring-0 cursor-pointer"
+                    className="mt-0.5 w-4 h-4 rounded border-zinc-200 bg-white text-blue-500 focus:ring-0 cursor-pointer"
                   />
                   <div>
-                    <span className="text-[11px] font-bold text-white block group-hover:text-zinc-200 transition-colors">
+                    <span className="text-[11px] font-bold text-black block group-hover:text-zinc-700 transition-colors">
                       Broadcast Anonymized Activity
                     </span>
                     <span className="text-[10px] text-zinc-500 block mt-0.5 leading-relaxed">
@@ -4129,15 +4129,15 @@ export default function DashboardPage() {
                   </div>
                 </label>
 
-                <label className="flex items-start gap-3 p-3.5 rounded-xl border border-white/5 bg-white/[0.01] hover:bg-white/[0.02] cursor-pointer transition-colors group">
+                <label className="flex items-start gap-3 p-3.5 rounded-xl border border-zinc-200 bg-white/[0.01] hover:bg-white/[0.02] cursor-pointer transition-colors group">
                   <input
                     type="checkbox"
                     checked={consentPublicShowcase}
                     onChange={(e) => setConsentPublicShowcase(e.target.checked)}
-                    className="mt-0.5 w-4 h-4 rounded border-white/10 bg-zinc-900 text-blue-500 focus:ring-0 cursor-pointer"
+                    className="mt-0.5 w-4 h-4 rounded border-zinc-200 bg-white text-blue-500 focus:ring-0 cursor-pointer"
                   />
                   <div>
-                    <span className="text-[11px] font-bold text-white block group-hover:text-zinc-200 transition-colors flex items-center gap-1.5">
+                    <span className="text-[11px] font-bold text-black block group-hover:text-zinc-700 transition-colors flex items-center gap-1.5">
                       Apply for public Creator Showcase <span className="text-[8px] px-1 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-normal">+100 credits</span>
                     </span>
                     <span className="text-[10px] text-zinc-500 block mt-0.5 leading-relaxed">
@@ -4169,7 +4169,7 @@ export default function DashboardPage() {
                       handleAnalyze()
                     }, 50)
                   }}
-                  className="w-full py-3.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-zinc-300 font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
+                  className="w-full py-3.5 rounded-xl bg-black/5 border border-zinc-200 hover:bg-black/5 text-zinc-600 font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
                 >
                   <Lock className="w-3.5 h-3.5 text-zinc-500" /> Execute 100% Private Scan
                 </button>

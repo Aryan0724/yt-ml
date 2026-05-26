@@ -1,12 +1,20 @@
-import { Navbar } from "@/components/global/navbar";
-import { Footer } from "@/components/global/footer";
+import { NavbarLight } from "@/components/landing/navbar-light";
+import { FooterLight } from "@/components/landing/footer-light";
 import { PageTransition } from "@/components/global/page-transition";
-import { Zap, GitBranch, RefreshCcw, Sparkles } from "lucide-react";
+import { Zap, RefreshCcw, Sparkles } from "lucide-react";
 
 const updates = [
   {
-    version: "1.1.0",
+    version: "2.1.0",
     date: "May 2026",
+    title: "The Editorial Update",
+    desc: "Complete UI overhaul to the Blueprint/Editorial design system. Warm paper textures, structural grid lines, and Fragment Mono for technical labels.",
+    icon: Sparkles,
+    features: ["Editorial Design System", "Blueprint Grid Layout", "Fragment Mono Typography", "Noise Texture Overlay"]
+  },
+  {
+    version: "1.1.0",
+    date: "April 2026",
     title: "The Ensemble Update",
     desc: "Major architecture upgrade blending structural ML with behavioral psychology rules.",
     icon: Sparkles,
@@ -14,7 +22,7 @@ const updates = [
   },
   {
     version: "1.0.4",
-    date: "April 2026",
+    date: "March 2026",
     title: "Confidence Calibration",
     desc: "Introduced the confidence interval system to map prediction reliability.",
     icon: RefreshCcw,
@@ -22,9 +30,9 @@ const updates = [
   },
   {
     version: "1.0.0",
-    date: "March 2026",
+    date: "February 2026",
     title: "Core Launch",
-    desc: "Initial deployment of the AlgoPilot research engine.",
+    desc: "Initial deployment of the preYT research engine.",
     icon: Zap,
     features: ["Single Analysis Mode", "Linguistic Audit", "Visual Clarity Scoring"]
   }
@@ -33,44 +41,47 @@ const updates = [
 export default function ChangelogPage() {
   return (
     <PageTransition>
-      <Navbar />
-      <main className="pt-44 pb-32 px-6">
-        <section className="max-w-4xl mx-auto mb-24 text-center">
-          <h1 className="text-5xl md:text-7xl font-bold mb-8">System <br /><span className="text-gradient">Evolution.</span></h1>
-          <p className="text-zinc-500 text-xl">Tracking the progression of creator intelligence architecture.</p>
+      <NavbarLight />
+      <main className="pt-24 pb-32 px-6 bg-[#FAF9F6] min-h-screen">
+        <section className="max-w-[1200px] mx-auto mb-16 pt-12">
+          <div className="text-[9px] font-mono font-bold text-[#FF0000] uppercase tracking-[0.2em] mb-4">[ SYSTEM EVOLUTION ]</div>
+          <h1 className="font-display text-5xl md:text-6xl font-bold mb-4 text-zinc-900 tracking-tight">
+            System <br /><span className="text-[#FF0000]">Evolution.</span>
+          </h1>
+          <p className="text-xs font-mono text-zinc-500">Tracking the progression of creator intelligence architecture.</p>
         </section>
 
-        <section className="max-w-4xl mx-auto space-y-24 relative">
-          {/* Vertical Line */}
-          <div className="absolute top-0 left-0 md:left-1/2 w-px h-full bg-white/5 -translate-x-px" />
-
+        <section className="max-w-[1200px] mx-auto space-y-px relative">
           {updates.map((update, i) => (
-            <div key={update.version} className={`relative flex flex-col md:flex-row items-center gap-12 ${i % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
-               {/* Center Icon */}
-               <div className="absolute left-0 md:left-1/2 w-12 h-12 rounded-full bg-black border border-white/10 flex items-center justify-center -translate-x-1/2 z-10">
-                  <update.icon className="w-5 h-5 text-blue-500" />
+            <div key={update.version} className="relative flex flex-col md:flex-row items-stretch gap-0 border border-zinc-200 bg-white hover:border-zinc-400 transition-all group">
+               <div className="absolute top-0 left-0 bottom-0 w-[3px] bg-[#FF0000] opacity-0 group-hover:opacity-100 transition-opacity" />
+               
+               {/* Version marker */}
+               <div className="w-full md:w-32 flex-shrink-0 p-6 border-b md:border-b-0 md:border-r border-zinc-100 flex flex-col justify-between">
+                 <div>
+                   <div className="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest mb-1">{update.date}</div>
+                   <div className="font-mono text-xs font-bold text-zinc-900">v{update.version}</div>
+                 </div>
+                 <div className="w-8 h-8 rounded-[3px] bg-[#FAF9F6] border border-zinc-200 flex items-center justify-center mt-4 shadow-sm">
+                   <update.icon className="w-3.5 h-3.5 text-[#FF0000]" />
+                 </div>
                </div>
 
-               <div className="w-full md:w-1/2 p-10 rounded-[2.5rem] glass-card border-white/5 hover:border-white/10 transition-all">
-                  <div className="flex justify-between items-start mb-6">
-                    <div>
-                        <div className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1">{update.date}</div>
-                        <h3 className="text-2xl font-bold">{update.title}</h3>
-                    </div>
-                    <div className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-zinc-500">v{update.version}</div>
-                  </div>
-                  <p className="text-zinc-500 text-sm mb-6 leading-relaxed">{update.desc}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {update.features.map(f => (
-                        <span key={f} className="px-3 py-1 rounded-full bg-white/[0.02] border border-white/5 text-[9px] font-bold text-zinc-600 uppercase tracking-widest">{f}</span>
-                    ))}
-                  </div>
+               <div className="flex-1 p-8">
+                 <div className="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest mb-2">[ RELEASE_{String(updates.length - i).padStart(2, '0')} ]</div>
+                 <h3 className="font-display text-xl font-bold text-zinc-900 mb-2">{update.title}</h3>
+                 <p className="text-xs font-mono text-zinc-500 mb-5 leading-relaxed max-w-xl">{update.desc}</p>
+                 <div className="flex flex-wrap gap-2">
+                   {update.features.map(f => (
+                       <span key={f} className="px-2.5 py-1 rounded-[3px] bg-[#FAF9F6] border border-zinc-200 text-[8px] font-mono font-bold text-zinc-500 uppercase tracking-widest">{f}</span>
+                   ))}
+                 </div>
                </div>
             </div>
           ))}
         </section>
       </main>
-      <Footer />
+      <FooterLight />
     </PageTransition>
   )
 }

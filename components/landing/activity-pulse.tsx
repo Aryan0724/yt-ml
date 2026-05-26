@@ -143,7 +143,7 @@ function getGeoCoords(countryStr: string): { lon: number; lat: number } | undefi
 
 // Helper to resolve niche creators safely and case-insensitively
 function getCreatorsForNiche(nicheStr: string): string[] {
-  if (!nicheStr) return ["@AlgoPilotCreator"]
+  if (!nicheStr) return ["@preYTCreator"]
   const normalized = nicheStr.trim().toLowerCase()
   for (const [key, list] of Object.entries(NICHE_CREATORS)) {
     const keyLower = key.toLowerCase()
@@ -157,7 +157,7 @@ function getCreatorsForNiche(nicheStr: string): string[] {
       return list
     }
   }
-  return ["@AlgoPilotCreator"]
+  return ["@preYTCreator"]
 }
 
 // Helper to resolve niche icons case-insensitively
@@ -785,7 +785,7 @@ export function ActivityPulse() {
             GLOBAL CREATOR PULSE
           </h2>
           <p className="text-zinc-500 text-sm max-w-md">
-            Real-time metadata, thumbnail calibration, and strategy audits performed across the AlgoPilot creator network.
+            Real-time metadata, thumbnail calibration, and strategy audits performed across the preYT creator network.
           </p>
         </div>
 

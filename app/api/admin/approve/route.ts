@@ -91,12 +91,12 @@ export async function POST(req: Request) {
     }
 
     // Send approval welcome email
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://algopilot.integralgroups.in"
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://preyt.integralgroups.in"
     const loginLink = `${appUrl}/dashboard?token=${betaToken}&email=${encodeURIComponent(applicant.email)}`
 
     const welcomeContent = `
       <span class="badge">Application Approved</span>
-      <h1 class="h1">Welcome to the AlgoPilot Closed Beta.</h1>
+      <h1 class="h1">Welcome to the preYT Closed Beta.</h1>
       <p class="paragraph">
         Congratulations ${applicant.full_name}! Your application has been approved by our engineering team.
         You now have <strong style="color: #10b981;">${applicant.daily_usage_limit} AI scans per day</strong>.
@@ -124,7 +124,7 @@ export async function POST(req: Request) {
     try {
       await sendEmail({
         to: applicant.email,
-        subject: "🎉 You're in — AlgoPilot Beta Access Approved",
+        subject: "🎉 You're in — preYT Beta Access Approved",
         html: getEmailTemplate(welcomeContent),
       })
     } catch (emailErr) {

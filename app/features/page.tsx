@@ -1,5 +1,5 @@
-import { Navbar } from "@/components/global/navbar";
-import { Footer } from "@/components/global/footer";
+import { NavbarLight } from "@/components/landing/navbar-light";
+import { FooterLight } from "@/components/landing/footer-light";
 import { PageTransition } from "@/components/global/page-transition";
 import { GitCompare, Target, ShieldAlert, BarChart3, MessageSquare, Zap, RefreshCcw, Layout } from "lucide-react";
 
@@ -45,46 +45,54 @@ const features = [
 export default function FeaturesPage() {
   return (
     <PageTransition>
-      <Navbar />
-      <main className="pt-44 pb-32">
-        <section className="px-6 max-w-7xl mx-auto text-center mb-32">
-          <h1 className="text-5xl md:text-8xl font-bold mb-8">The Full Intelligence <br /><span className="text-gradient">Suite.</span></h1>
-          <p className="text-zinc-500 text-xl max-w-2xl mx-auto">
+      <NavbarLight />
+      <main className="pt-24 pb-32 bg-[#FAF9F6] min-h-screen">
+        <div className="relative w-full border-b border-zinc-200">
+          <div className="absolute top-0 left-[8%] lg:left-[15%] -translate-y-1/2 bg-[#FAF9F6] px-3 text-[8px] font-mono text-zinc-400 font-bold tracking-wider">[ 01 / CAPABILITIES ]</div>
+        </div>
+        <section className="px-6 max-w-[1200px] mx-auto text-center mb-24 pt-20">
+          <div className="text-[9px] font-mono font-bold text-[#FF0000] uppercase tracking-[0.2em] mb-4">[ FULL INTELLIGENCE SUITE ]</div>
+          <h1 className="font-display text-5xl md:text-7xl font-bold mb-6 text-zinc-900 tracking-tight">
+            The Full Intelligence <br /><span className="text-[#FF0000]">Suite.</span>
+          </h1>
+          <p className="text-xs font-mono text-zinc-500 max-w-2xl mx-auto leading-relaxed">
             Everything you need to optimize your upload strategy and reduce performance anxiety.
           </p>
         </section>
 
-        <section className="px-6 max-w-7xl mx-auto space-y-32">
+        <section className="px-6 max-w-[1200px] mx-auto space-y-16 pb-8">
           {features.map((feature, i) => (
-            <div key={feature.title} className={`flex flex-col ${i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-20 items-center`}>
-                <div className="flex-1 space-y-8">
-                    <div className="w-16 h-16 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center">
-                        <feature.icon className="w-8 h-8 text-zinc-400" />
+            <div key={feature.title} className={`flex flex-col ${i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-16 items-center border-t border-zinc-200 pt-16`}>
+                <div className="flex-1 space-y-6">
+                    <div className="w-12 h-12 rounded-[4px] bg-white border border-zinc-200 flex items-center justify-center shadow-[2px_2px_0px_rgba(0,0,0,0.04)]">
+                        <feature.icon className="w-5 h-5 text-zinc-500" />
                     </div>
-                    <h2 className="text-4xl font-bold">{feature.title}</h2>
-                    <p className="text-zinc-400 text-lg leading-relaxed">{feature.desc}</p>
-                    <p className="text-zinc-500 leading-relaxed">{feature.details}</p>
-                    <div className="pt-4">
-                        <button className="flex items-center gap-2 text-sm font-bold text-white group">
+                    <div className="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">[ {String(i + 1).padStart(2, '0')} / MODULE ]</div>
+                    <h2 className="font-display text-3xl font-bold text-zinc-900 tracking-tight">{feature.title}</h2>
+                    <p className="text-sm font-mono text-zinc-500 leading-relaxed">{feature.desc}</p>
+                    <p className="text-xs font-mono text-zinc-400 leading-relaxed">{feature.details}</p>
+                    <div className="pt-2">
+                        <button className="flex items-center gap-2 text-[10px] font-mono font-bold text-zinc-600 hover:text-black uppercase tracking-widest transition-colors">
                             Explore Technical Docs
-                            <Zap className="w-4 h-4 text-blue-500 transition-transform group-hover:scale-125" />
+                            <Zap className="w-3 h-3 text-[#FF0000]" />
                         </button>
                     </div>
                 </div>
-                <div className="flex-1 w-full aspect-video rounded-[3rem] bg-zinc-950/50 border border-white/5 relative overflow-hidden flex items-center justify-center">
-                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/[0.02] to-transparent" />
-                    <feature.icon className="w-32 h-32 text-zinc-800 opacity-20" />
-                    <div className="absolute bottom-12 left-12 right-12">
-                         <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
-                            <div className="h-full bg-blue-500 w-[70%]" />
+                <div className="flex-1 w-full aspect-video rounded-[4px] bg-white border border-zinc-200 relative overflow-hidden flex items-center justify-center shadow-[4px_4px_0px_rgba(0,0,0,0.04)]">
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.01)_1px,transparent_1px)] bg-[size:20px_20px]" />
+                    <feature.icon className="w-24 h-24 text-zinc-100" />
+                    <div className="absolute bottom-8 left-8 right-8">
+                         <div className="h-1 w-full bg-zinc-100 rounded overflow-hidden">
+                            <div className="h-full bg-[#FF0000]/60 w-[70%]" />
                          </div>
+                         <div className="text-[7px] font-mono text-zinc-400 mt-1.5 uppercase tracking-widest">Performance Index</div>
                     </div>
                 </div>
             </div>
           ))}
         </section>
       </main>
-      <Footer />
+      <FooterLight />
     </PageTransition>
   )
 }

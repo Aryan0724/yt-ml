@@ -39,7 +39,7 @@ export function AmbientBackground() {
         this.vx = (Math.random() - 0.5) * 0.2
         this.vy = (Math.random() - 0.5) * 0.2
         this.radius = Math.random() * 1.75 + 0.75
-        this.color = Math.random() > 0.4 ? "rgba(16, 185, 129, 0.45)" : "rgba(59, 130, 246, 0.4)"
+        this.color = Math.random() > 0.4 ? "rgba(255, 0, 0, 0.45)" : "rgba(255, 255, 255, 0.2)"
       }
 
       update() {
@@ -88,7 +88,7 @@ export function AmbientBackground() {
           // Connect close particles with fading lines
           if (dist < 140) {
             const alpha = (1 - dist / 140) * 0.25
-            ctx.strokeStyle = `rgba(16, 185, 129, ${alpha})`
+            ctx.strokeStyle = `rgba(255, 0, 0, ${alpha})`
             ctx.beginPath()
             ctx.moveTo(p1.x, p1.y)
             ctx.lineTo(p2.x, p2.y)
@@ -123,9 +123,9 @@ export function AmbientBackground() {
       />
 
       {/* Floating Ambient Glow Orbs */}
-      <div className="absolute top-[10%] left-[-10%] w-[550px] h-[550px] rounded-full bg-emerald-500/20 blur-[130px] animate-float-slow will-change-transform" />
-      <div className="absolute top-[40%] right-[-15%] w-[650px] h-[650px] rounded-full bg-blue-500/18 blur-[140px] animate-float-delayed will-change-transform" />
-      <div className="absolute bottom-[15%] left-[5%] w-[500px] h-[500px] rounded-full bg-purple-500/12 blur-[125px] animate-float-slow will-change-transform" />
+      <div className="absolute top-[10%] left-[-10%] w-[550px] h-[550px] rounded-full bg-red-600/20 blur-[130px] animate-float-slow will-change-transform" />
+      <div className="absolute top-[40%] right-[-15%] w-[650px] h-[650px] rounded-full bg-red-500/10 blur-[140px] animate-float-delayed will-change-transform" />
+      <div className="absolute bottom-[15%] left-[5%] w-[500px] h-[500px] rounded-full bg-white/5 blur-[125px] animate-float-slow will-change-transform" />
 
       {/* Live drifting intelligence nodes network canvas */}
       <canvas 

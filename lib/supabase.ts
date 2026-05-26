@@ -41,9 +41,9 @@ export async function saveWaitlistEntry(entry: {
   
   // Fallback to local storage persistence
   try {
-    const existing = JSON.parse(localStorage.getItem("algopilot_waitlist") || "[]")
+    const existing = JSON.parse(localStorage.getItem("preyt_waitlist") || "[]")
     existing.push({ ...entry, created_at: timestamp })
-    localStorage.setItem("algopilot_waitlist", JSON.stringify(existing))
+    localStorage.setItem("preyt_waitlist", JSON.stringify(existing))
     return { success: true, source: "localStorage" }
   } catch (e) {
     console.error("Local storage fallback failed:", e)
@@ -80,9 +80,9 @@ export async function saveAnalysisHistory(historyItem: {
   
   // Fallback to local storage persistence
   try {
-    const existing = JSON.parse(localStorage.getItem("algopilot_history") || "[]")
+    const existing = JSON.parse(localStorage.getItem("preyt_history") || "[]")
     existing.push({ ...historyItem, created_at: timestamp })
-    localStorage.setItem("algopilot_history", JSON.stringify(existing))
+    localStorage.setItem("preyt_history", JSON.stringify(existing))
     return { success: true, source: "localStorage" }
   } catch (e) {
     console.error("Local storage fallback failed:", e)
@@ -109,7 +109,7 @@ export async function getAnalysisHistory() {
   }
   
   try {
-    const existing = JSON.parse(localStorage.getItem("algopilot_history") || "[]") as Array<{
+    const existing = JSON.parse(localStorage.getItem("preyt_history") || "[]") as Array<{
       created_at: string
       [key: string]: unknown
     }>
@@ -146,7 +146,7 @@ export async function deleteAnalysisHistory(id?: string | number, createdAt?: st
   }
 
   try {
-    const existing = JSON.parse(localStorage.getItem("algopilot_history") || "[]") as Array<{
+    const existing = JSON.parse(localStorage.getItem("preyt_history") || "[]") as Array<{
       id?: string | number
       created_at: string
       [key: string]: unknown
@@ -156,7 +156,7 @@ export async function deleteAnalysisHistory(id?: string | number, createdAt?: st
       if (createdAt && item.created_at === createdAt) return false
       return true
     })
-    localStorage.setItem("algopilot_history", JSON.stringify(filtered))
+    localStorage.setItem("preyt_history", JSON.stringify(filtered))
     return { success: true, source: "localStorage" }
   } catch (e) {
     console.error("Local storage history delete failed:", e)

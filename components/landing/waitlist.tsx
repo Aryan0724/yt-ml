@@ -13,7 +13,7 @@ export function Waitlist() {
         <div className="relative z-10 space-y-8">
             <h2 className="text-4xl md:text-6xl font-bold">Join the <span className="text-gradient">Next Generation</span> <br /> of Creator Intelligence.</h2>
             <p className="text-zinc-500 text-lg max-w-xl mx-auto">
-                We are currently in a closed beta phase, manually onboarding high-signal creators into the AlgoPilot ecosystem.
+                We are currently in a closed beta phase, manually onboarding high-signal creators into the preYT ecosystem.
             </p>
             <div className="pt-8">
                 <Link 

@@ -2,7 +2,7 @@ import { MetadataRoute } from "next"
 import { supabaseServer } from "@/lib/supabase-server"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://algopilot.integralgroups.in"
+  const baseUrl = "https://preyt.integralgroups.in"
 
   // 1. Static Core Marketing & Platform Pages
   const staticRoutes = [

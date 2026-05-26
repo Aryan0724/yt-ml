@@ -47,7 +47,7 @@ export default function HistoryPage() {
 
   const handleLoadScan = (item: any) => {
     // Pass the scan data back to the dashboard wizard
-    sessionStorage.setItem("algopilot_load_history", JSON.stringify(item))
+    sessionStorage.setItem("preyt_load_history", JSON.stringify(item))
     router.push("/dashboard")
   }
 
@@ -61,7 +61,7 @@ export default function HistoryPage() {
         <button 
           onClick={loadHistory}
           disabled={loading}
-          className="px-6 py-2.5 rounded-xl border border-white/10 bg-white/5 text-sm font-bold hover:bg-white/10 flex items-center gap-2 transition-all disabled:opacity-50"
+          className="px-6 py-2.5 rounded-xl border border-zinc-200 bg-black/5 text-sm font-bold hover:bg-black/5 flex items-center gap-2 transition-all disabled:opacity-50"
         >
           <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} /> Refresh
         </button>
@@ -75,9 +75,9 @@ export default function HistoryPage() {
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-12 rounded-[2rem] border border-white/5 flex flex-col items-center justify-center text-center space-y-4 bg-white/[0.01]"
+          className="p-12 rounded-[2rem] border border-zinc-200 flex flex-col items-center justify-center text-center space-y-4 bg-white/[0.01]"
         >
-          <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center text-zinc-500">
+          <div className="w-16 h-16 rounded-full bg-black/5 flex items-center justify-center text-zinc-500">
             <History className="w-8 h-8" />
           </div>
           <h3 className="text-xl font-bold">No history found</h3>
@@ -102,14 +102,14 @@ export default function HistoryPage() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ delay: i * 0.05 }}
                 onClick={() => handleLoadScan(item)}
-                className="group p-6 rounded-[2rem] border border-white/5 bg-zinc-950 space-y-6 relative overflow-hidden hover:border-white/20 hover:bg-white/[0.02] transition-all cursor-pointer shadow-lg"
+                className="group p-6 rounded-[2rem] border border-zinc-200 bg-white space-y-6 relative overflow-hidden hover:border-white/20 hover:bg-white/[0.02] transition-all cursor-pointer shadow-lg"
               >
                 <div className="flex justify-between items-start gap-4">
                   <div>
                     <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-1 truncate max-w-[180px]">
                       {item.niche || "Gaming"} • {new Date(item.created_at).toLocaleDateString()}
                     </div>
-                    <h3 className="font-bold text-lg leading-tight line-clamp-2 group-hover:text-white text-zinc-200 transition-colors">
+                    <h3 className="font-bold text-lg leading-tight line-clamp-2 group-hover:text-black text-zinc-700 transition-colors">
                       {item.title}
                     </h3>
                   </div>
@@ -125,7 +125,7 @@ export default function HistoryPage() {
                 <div className="flex justify-between items-end">
                   <div>
                     <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-1">Score</div>
-                    <div className="text-3xl font-display font-bold text-white">
+                    <div className="text-3xl font-display font-bold text-black">
                       {item.score || "75"}
                     </div>
                   </div>
@@ -134,13 +134,13 @@ export default function HistoryPage() {
                     item.tier === "S" ? "text-amber-400 bg-amber-500/10 border-amber-500/20" :
                     item.tier === "A" ? "text-indigo-400 bg-indigo-500/10 border-indigo-500/20" :
                     item.tier === "B" ? "text-sky-400 bg-sky-500/10 border-sky-500/20" :
-                    "text-zinc-400 bg-zinc-500/10 border-zinc-500/20"
+                    "text-zinc-500 bg-zinc-500/10 border-zinc-500/20"
                   )}>
                     {item.tier || "B"}-Tier
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-white/5">
+                <div className="pt-4 border-t border-zinc-200">
                   <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 flex items-center gap-2 group-hover:text-emerald-400 transition-colors">
                     Click to load <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                   </span>

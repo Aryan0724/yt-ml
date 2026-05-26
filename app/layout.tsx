@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
-  title: "AlgoPilot | Creator Decision Platform",
+  title: "preYT | Creator Decision Platform",
   description: "Analyze thumbnails, titles, and performance signals before you publish.",
 };
 
@@ -20,8 +20,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
-      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-background text-foreground`} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-[#FAF9F6] text-zinc-900`} suppressHydrationWarning>
+        <div className="fixed inset-0 pointer-events-none z-50 bg-noise opacity-[0.015] mix-blend-overlay" />
         {/* Google Analytics (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-XBGTFZ9358"
@@ -37,7 +38,7 @@ export default function RootLayout({
         </Script>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >

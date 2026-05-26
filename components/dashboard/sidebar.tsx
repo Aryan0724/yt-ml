@@ -14,16 +14,13 @@ export function Sidebar() {
   ]
 
   return (
-    <aside className="w-64 border-r border-white/5 flex flex-col p-6 glass bg-black/40 h-screen sticky top-0">
-      <Link href="/" className="flex items-center gap-2 mb-12 group">
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 transition-transform group-hover:scale-105">
-          <path d="M50 12 L15 85 L35 85 L50 50 L65 85 L85 85 Z" fill="currentColor" />
-          <path d="M25 85 L50 65 L60 65 L35 85 Z" fill="hsl(var(--primary))" />
-        </svg>
-        <span className="font-display font-bold tracking-tight text-xl">
-          <span className="text-foreground">Algo</span>
-          <span className="text-primary">Pilot</span>
-        </span>
+    <aside className="w-64 border-r border-zinc-200 flex flex-col p-6  bg-[#FAF9F6] h-screen sticky top-0">
+      <Link href="/" className="flex items-center mb-12 group">
+        <img
+          src="/logo-1.png"
+          alt="preYT"
+          className="h-[32px] w-auto object-contain transition-opacity group-hover:opacity-80"
+        />
       </Link>
 
       <nav className="flex-1 space-y-2">
@@ -34,8 +31,8 @@ export function Sidebar() {
             className={cn(
               "w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all",
               pathname === item.href 
-              ? "bg-white/10 text-white" 
-              : "text-zinc-500 hover:text-white hover:bg-white/5"
+              ? "bg-black text-white shadow-sm" 
+              : "text-zinc-500 hover:text-black hover:bg-black/5"
             )}
           >
             <item.icon className="w-4 h-4" />
@@ -44,8 +41,8 @@ export function Sidebar() {
         ))}
       </nav>
 
-      <div className="pt-6 border-t border-white/5 space-y-4">
-        <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-zinc-500 hover:text-white transition-all">
+      <div className="pt-6 border-t border-zinc-200 space-y-4">
+        <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-zinc-500 hover:text-black transition-all">
           <User className="w-4 h-4" />
           Beta Profile
         </button>

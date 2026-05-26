@@ -13,6 +13,6 @@ export default function robots(): MetadataRoute.Robots {
         "/static/"
       ]
     },
-    sitemap: "https://algopilot.integralgroups.in/sitemap.xml"
+    sitemap: "https://preyt.integralgroups.in/sitemap.xml",
   }
 }

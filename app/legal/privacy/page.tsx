@@ -13,7 +13,7 @@ export default function PrivacyPage() {
             <section className="space-y-6">
                 <h2 className="text-white text-2xl font-bold">1. Introduction</h2>
                 <p>
-                    At AlgoPilot, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your data when you use our creator intelligence platform.
+                    At preYT, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your data when you use our creator intelligence platform.
                 </p>
             </section>
             <section className="space-y-6">

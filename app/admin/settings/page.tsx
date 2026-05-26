@@ -256,13 +256,13 @@ export default function AdminSettingsDesk() {
               <div className="space-y-1.5">
                 <span className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider block">Greeting Template Preview</span>
                 <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 text-[10px] text-zinc-400 leading-relaxed space-y-3 max-h-48 overflow-y-auto italic">
-                  <div className="font-bold text-white not-italic">Subject: Welcome to AlgoPilot Closed Beta</div>
+                  <div className="font-bold text-white not-italic">Subject: Welcome to preYT Closed Beta</div>
                   <div>Hello {"{full_name}"},</div>
-                  <div>Your waitlist application for the Algopilot creator decision beta has been approved by our editorial team!</div>
+                  <div>Your waitlist application for the preYT creator decision beta has been approved by our editorial team!</div>
                   <div>You can access your analytics dashboard immediately here:</div>
-                  <div className="text-blue-400 font-mono not-italic">https://algopilot.integralgroups.in/dashboard?token={"{access_token}"}</div>
+                  <div className="text-blue-400 font-mono not-italic">https://preyt.integralgroups.in/dashboard?token={"{"}access_token{"}"}</div>
                   <div>Sincerely,</div>
-                  <div className="not-italic">The AlgoPilot Infrastructure Team</div>
+                  <div className="not-italic">The preYT Infrastructure Team</div>
                 </div>
               </div>
             </div>

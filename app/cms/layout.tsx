@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "AlgoPilot Editorial Infrastructure",
+  title: "preYT Editorial Infrastructure",
   description: "Enterprise Content & SEO Operating System",
   robots: {
     index: false,

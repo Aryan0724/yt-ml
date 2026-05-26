@@ -13,7 +13,7 @@ export default function TermsPage() {
             <section className="space-y-6">
                 <h2 className="text-white text-2xl font-bold">1. Service Usage</h2>
                 <p>
-                    By using AlgoPilot, you agree to these terms. Our service is currently in Closed Beta and is provided "as is" for engineering and testing purposes.
+                    By using preYT, you agree to these terms. Our service is currently in Closed Beta and is provided "as is" for engineering and testing purposes.
                 </p>
             </section>
             <section className="space-y-6">

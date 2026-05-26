@@ -222,7 +222,7 @@ export default function FeedbackTriageDesk() {
 
                 {/* Rating scale */}
                 <div className="p-4 rounded-xl bg-white/[0.01] border border-white/5 flex justify-between items-center text-xs">
-                  <span className="font-semibold text-zinc-400">Algopilot Usefulness Score:</span>
+                  <span className="font-semibold text-zinc-400">preYT Usefulness Score:</span>
                   <span className="font-mono font-bold text-white">{selectedTicket.rating} / 5</span>
                 </div>
 

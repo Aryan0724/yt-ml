@@ -12,7 +12,7 @@ export default function IntelligencePage() {
           <div className="max-w-3xl">
             <h1 className="text-5xl md:text-7xl font-bold mb-8">The Engine of <br /><span className="text-gradient">Certainty.</span></h1>
             <p className="text-zinc-400 text-xl leading-relaxed">
-              AlgoPilot isn't a recommendation tool. It's a psychological forensic engine that dissects performance signals across visual and linguistic dimensions.
+              preYT isn't a recommendation tool. It's a psychological forensic engine that dissects performance signals across visual and linguistic dimensions.
             </p>
           </div>
         </section>

@@ -101,11 +101,11 @@ export async function POST(req: Request) {
     if (subCount >= 1000000) formattedSubs = `${(subCount / 1000000).toFixed(1)}M`
     else if (subCount >= 1000) formattedSubs = `${(subCount / 1000).toFixed(0)}K`
 
-    const adminUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://algopilot.integralgroups.in"}/admin/waitlist`
+    const adminUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://preyt.integralgroups.in"}/admin/waitlist`
 
     const emailContent = `
       <span class="badge">New Beta Application</span>
-      <h1 class="h1">A creator wants to join AlgoPilot.</h1>
+      <h1 class="h1">A creator wants to join preYT.</h1>
       <p class="paragraph">
         A new beta registration has been received for the closed-beta program.
         ${consent ? '<strong style="color: #10b981;">✅ Creator consented to public portfolio showcase (+1 credit granted).</strong>' : ""}
@@ -154,7 +154,7 @@ export async function POST(req: Request) {
       const adminInbox = process.env.ADMIN_EMAIL || "aryantiwari@integralgroups.in"
       await sendEmail({
         to: adminInbox,
-        subject: `🎯 New AlgoPilot Beta Application — ${formattedSubs} ${niche} Creator from ${country || "Unknown"}`,
+        subject: `🎯 New preYT Beta Application — ${formattedSubs} ${niche} Creator from ${country || "Unknown"}`,
         html: getEmailTemplate(emailContent),
       })
     } catch (emailErr) {

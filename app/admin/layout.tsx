@@ -21,7 +21,8 @@ const NAV_ITEMS = [
   { label: "Creator Feedback", href: "/admin/feedback", icon: MessageSquare },
   { label: "System Health", href: "/admin/system-health", icon: HeartPulse },
   { label: "Beta Auth Debug", href: "/admin/debug-auth", icon: KeyRound },
-  { label: "Settings Desk", href: "/admin/settings", icon: Settings }
+  { label: "Settings Desk", href: "/admin/settings", icon: Settings },
+  { label: "Team Management", href: "/admin/team", icon: Users }
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -78,7 +79,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               
               <div className="text-center space-y-2">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[9px] font-bold text-zinc-500 uppercase tracking-widest">
-                  AlgoPilot Core Command
+                  preYT Core Command
                 </span>
                 <h2 className="text-3xl font-display font-bold tracking-tight text-white">Security Clearance</h2>
                 <p className="text-xs text-zinc-500 leading-relaxed">
@@ -142,7 +143,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               {/* Brand Branding */}
               <div className="flex items-center justify-between">
                 <Link href="/" className="font-display font-extrabold tracking-tight text-white text-lg flex items-center gap-2">
-                  ⚡ AlgoPilot <span className="text-[8px] font-bold uppercase text-zinc-500 px-1.5 py-0.5 rounded border border-white/10 bg-white/5">ADMIN</span>
+                  ⚡ preYT <span className="text-[8px] font-bold uppercase text-zinc-500 px-1.5 py-0.5 rounded border border-white/10 bg-white/5">ADMIN</span>
                 </Link>
               </div>
 
@@ -190,7 +191,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           {/* Mobile Navigation Header */}
           <header className="lg:hidden fixed top-0 left-0 w-full h-16 bg-[#050505]/80 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-6 z-40">
             <span className="font-display font-extrabold text-white text-sm flex items-center gap-2">
-              ⚡ AlgoPilot <span className="text-[7px] font-bold uppercase text-zinc-500 px-1 py-0.5 rounded border border-white/10 bg-white/5">ADMIN</span>
+              ⚡ preYT <span className="text-[7px] font-bold uppercase text-zinc-500 px-1 py-0.5 rounded border border-white/10 bg-white/5">ADMIN</span>
             </span>
 
             <button

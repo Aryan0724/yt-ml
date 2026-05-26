@@ -24,7 +24,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                         <div className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest mb-1">Email Support</div>
-                        <div className="text-lg font-bold">hello@algopilot.ai</div>
+                        <div className="text-lg font-bold">contact@integralgroups.in</div>
                     </div>
                 </div>
                 <div className="flex items-center gap-6 group cursor-pointer">
@@ -33,7 +33,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                         <div className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest mb-1">Direct Message</div>
-                        <div className="text-lg font-bold">@AlgoPilotAI</div>
+                        <div className="text-lg font-bold">@preYTAI</div>
                     </div>
                 </div>
             </div>

@@ -120,7 +120,7 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-[#030303]">
+    <div className="flex min-h-screen bg-[#FAF9F6]">
       <AnimatePresence mode="wait">
         {/* State 1: Loader */}
         {authState === "loading" && (
@@ -128,9 +128,9 @@ export default function DashboardLayout({
             key="loading"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-[#030303] z-50 flex flex-col items-center justify-center space-y-4"
+            className="fixed inset-0 bg-[#FAF9F6] z-50 flex flex-col items-center justify-center space-y-4"
           >
-            <div className="w-10 h-10 border-2 border-white/10 border-t-white rounded-full animate-spin" />
+            <div className="w-10 h-10 border-2 border-zinc-200 border-t-black rounded-full animate-spin" />
             <span className="text-xs font-bold text-zinc-600 uppercase tracking-widest">Validating Beta Pass...</span>
           </motion.div>
         )}
@@ -144,16 +144,16 @@ export default function DashboardLayout({
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/80 backdrop-blur-md z-40 flex items-center justify-center p-6"
           >
-            <div className="max-w-md w-full glass-card p-10 border-white/10 space-y-8 relative overflow-hidden">
+            <div className="max-w-md w-full bg-white shadow-2xl rounded-2xl border border-zinc-200 p-10 border-zinc-200 space-y-8 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500" />
               
               <div className="text-center space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto">
-                  <Lock className="w-5 h-5 text-zinc-400" />
+                <div className="w-12 h-12 rounded-2xl bg-black/5 border border-zinc-200 flex items-center justify-center mx-auto">
+                  <Lock className="w-5 h-5 text-zinc-500" />
                 </div>
                 <h2 className="text-2xl font-bold">Closed Beta Access</h2>
                 <p className="text-xs text-zinc-500 leading-relaxed">
-                  AlgoPilot is currently in restricted beta. Please enter your email and beta pass token to unlock the Creator Hub.
+                  preYT is currently in restricted beta. Please enter your email and beta pass token to unlock the Creator Hub.
                 </p>
               </div>
 
@@ -166,7 +166,7 @@ export default function DashboardLayout({
                     value={emailInput}
                     onChange={(e) => setEmailInput(e.target.value)}
                     placeholder="creator@email.com"
-                    className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-white/20 transition-all text-white placeholder-zinc-700"
+                    className="w-full bg-white/[0.02] border border-zinc-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-white/20 transition-all text-black placeholder-zinc-700"
                   />
                 </div>
                 
@@ -181,7 +181,7 @@ export default function DashboardLayout({
                     value={tokenInput}
                     onChange={(e) => setTokenInput(e.target.value)}
                     placeholder="bw_xxxxxxxxxxxx"
-                    className="w-full bg-white/[0.02] border border-white/5 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-white/20 transition-all text-white font-mono placeholder-zinc-700"
+                    className="w-full bg-white/[0.02] border border-zinc-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-white/20 transition-all text-black font-mono placeholder-zinc-700"
                   />
                 </div>
 
@@ -200,7 +200,7 @@ export default function DashboardLayout({
                 </button>
               </form>
 
-              <div className="text-center pt-4 border-t border-white/5">
+              <div className="text-center pt-4 border-t border-zinc-200">
                 <span className="text-xs text-zinc-500">Don't have a pass? </span>
                 <Link href="/waitlist" className="text-xs text-blue-400 hover:underline">
                   Submit Waitlist Application
@@ -217,22 +217,22 @@ export default function DashboardLayout({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-[#030303] z-40 flex items-center justify-center p-6"
+            className="fixed inset-0 bg-[#FAF9F6] z-40 flex items-center justify-center p-6"
           >
-            <div className="max-w-md w-full glass-card p-12 text-center border-amber-500/20 bg-amber-500/5 space-y-8 relative overflow-hidden">
+            <div className="max-w-md w-full bg-white shadow-2xl rounded-2xl border border-zinc-200 p-12 text-center border-amber-500/20 bg-amber-500/5 space-y-8 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-amber-500/30" />
               <div className="w-16 h-16 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center mx-auto">
                 <Compass className="w-8 h-8 animate-pulse" />
               </div>
-              <h3 className="text-2xl font-bold text-white">Application Under Review</h3>
-              <p className="text-zinc-400 leading-relaxed text-xs">
+              <h3 className="text-2xl font-bold text-black">Application Under Review</h3>
+              <p className="text-zinc-500 leading-relaxed text-xs">
                 Your beta application is currently in our verification queue. Our engineering team at Integral Groups Studio calibrates ensemble weights manually to align onboarding creators.
               </p>
               
-              <div className="pt-4 border-t border-white/5 flex gap-4">
+              <div className="pt-4 border-t border-zinc-200 flex gap-4">
                 <button
                   onClick={handleLogout}
-                  className="w-full py-3 rounded-xl border border-white/10 hover:bg-white/5 text-xs text-white transition-all uppercase tracking-wider font-bold"
+                  className="w-full py-3 rounded-xl border border-zinc-200 hover:bg-black/5 text-xs text-black transition-all uppercase tracking-wider font-bold"
                 >
                   Log out
                 </button>
@@ -248,21 +248,21 @@ export default function DashboardLayout({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-[#030303] z-40 flex items-center justify-center p-6"
+            className="fixed inset-0 bg-[#FAF9F6] z-40 flex items-center justify-center p-6"
           >
-            <div className="max-w-md w-full glass-card p-12 text-center border-red-500/20 bg-red-500/5 space-y-8 relative overflow-hidden">
+            <div className="max-w-md w-full bg-white shadow-2xl rounded-2xl border border-zinc-200 p-12 text-center border-red-500/20 bg-red-500/5 space-y-8 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-red-500/30" />
               <div className="w-16 h-16 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center mx-auto">
                 <ShieldAlert className="w-8 h-8" />
               </div>
-              <h3 className="text-2xl font-bold text-white">Beta Pass Suspended</h3>
-              <p className="text-zinc-400 leading-relaxed text-xs">
-                This beta onboarding credential code is suspended or has expired. Please contact support Hello@algopilot.ai to renew active cohorts.
+              <h3 className="text-2xl font-bold text-black">Beta Pass Suspended</h3>
+              <p className="text-zinc-500 leading-relaxed text-xs">
+                This beta onboarding credential code is suspended or has expired. Please contact support contact@integralgroups.in to renew active cohorts.
               </p>
               
               <button
                 onClick={handleLogout}
-                className="w-full py-3 rounded-xl border border-white/10 hover:bg-white/5 text-xs text-white transition-all uppercase tracking-wider font-bold"
+                className="w-full py-3 rounded-xl border border-zinc-200 hover:bg-black/5 text-xs text-black transition-all uppercase tracking-wider font-bold"
               >
                 Return to Login Gate
               </button>
@@ -276,16 +276,16 @@ export default function DashboardLayout({
             key="authorized"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="flex w-full min-h-screen bg-[#030303]"
+            className="flex w-full min-h-screen bg-[#FAF9F6]"
           >
             <Sidebar />
             <main className="flex-1 flex flex-col overflow-hidden">
-              <header className="h-16 border-b border-white/5 flex items-center justify-between px-8 bg-black/20 backdrop-blur-md">
+              <header className="h-16 border-b border-zinc-200 flex items-center justify-between px-8 bg-zinc-50 backdrop-blur-md">
                 <div className="flex items-center gap-4 text-sm font-medium text-zinc-500">
                   <span>Workspaces</span>
                   <span className="text-zinc-800">/</span>
-                  <span className="text-white flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Active Beta Pilot
+                  <span className="text-black flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Active preYT Beta
                   </span>
                 </div>
                 
@@ -295,7 +295,7 @@ export default function DashboardLayout({
                   </div>
                   <button 
                     onClick={handleLogout}
-                    className="px-3 py-1 rounded border border-white/10 text-[9px] font-bold uppercase text-zinc-500 hover:text-white transition-all"
+                    className="px-3 py-1 rounded border border-zinc-200 text-[9px] font-bold uppercase text-zinc-500 hover:text-black transition-all"
                   >
                     Disconnect Pass
                   </button>
