@@ -16,7 +16,8 @@
     "total_analyses": 25,
     "approved_at": "2026-05-18T09:28:53.044Z",
     "last_login": "2026-05-20T06:00:46.365Z",
-    "last_analysis_at": "2026-05-18T17:46:11.387Z"
+    "last_analysis_at": "2026-05-18T17:46:11.387Z",
+    "consent_public_showcase": true
   },
   {
     "id": "bw_kb2mpq3unnt",
@@ -33,7 +34,8 @@
     "notes": "",
     "total_logins": 0,
     "total_analyses": 0,
-    "approved_at": "2026-05-20T14:10:25.870Z"
+    "approved_at": "2026-05-20T14:10:25.870Z",
+    "consent_public_showcase": true
   },
   {
     "id": "bw_06yfwdkym8vm",
@@ -70,6 +72,7 @@
     "total_analyses": 12,
     "approved_at": "2026-05-22T03:14:00.000Z",
     "last_login": "2026-05-26T16:57:55.354Z",
-    "last_analysis_at": "2026-05-23T16:48:28.009Z"
+    "last_analysis_at": "2026-05-23T16:48:28.009Z",
+    "consent_public_showcase": true
   }
 ]

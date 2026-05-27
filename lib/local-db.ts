@@ -36,6 +36,8 @@ export interface LocalApplicant {
   total_analyses: number
   beta_access_token: string
   notes: string
+  consent_public_showcase?: boolean
+  is_featured_in_portfolio?: boolean
 }
 
 export function getLocalApplicants(): LocalApplicant[] {
