@@ -33,39 +33,39 @@ export function FooterLight() {
           <div>
             <h4 className="font-mono font-bold text-zinc-800 mb-4 uppercase tracking-widest text-[9.5px]">[ Product ]</h4>
             <ul className="space-y-3 text-zinc-500 text-xs font-semibold uppercase font-mono tracking-wider">
-              <li><NextLink href="#" className="hover:text-black transition-colors">Features</NextLink></li>
-              <li><NextLink href="#" className="hover:text-black transition-colors">Integrations</NextLink></li>
-              <li><NextLink href="#" className="hover:text-black transition-colors">Updates</NextLink></li>
-              <li><NextLink href="#" className="hover:text-black transition-colors">Roadmap</NextLink></li>
+              <li><NextLink href="/features" className="hover:text-black transition-colors">Features</NextLink></li>
+              <li><NextLink href="/integrations" className="hover:text-black transition-colors">Integrations</NextLink></li>
+              <li><NextLink href="/changelog" className="hover:text-black transition-colors">Updates</NextLink></li>
+              <li><NextLink href="/roadmap" className="hover:text-black transition-colors">Roadmap</NextLink></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-mono font-bold text-zinc-800 mb-4 uppercase tracking-widest text-[9.5px]">[ Solutions ]</h4>
             <ul className="space-y-3 text-zinc-500 text-xs font-semibold uppercase font-mono tracking-wider">
-              <li><NextLink href="#" className="hover:text-black transition-colors">Creators</NextLink></li>
-              <li><NextLink href="#" className="hover:text-black transition-colors">Brands</NextLink></li>
-              <li><NextLink href="#" className="hover:text-black transition-colors">Agencies</NextLink></li>
+              <li><NextLink href="/creators" className="hover:text-black transition-colors">Creators</NextLink></li>
+              <li><NextLink href="/brands" className="hover:text-black transition-colors">Brands</NextLink></li>
+              <li><NextLink href="/agencies" className="hover:text-black transition-colors">Agencies</NextLink></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-mono font-bold text-zinc-800 mb-4 uppercase tracking-widest text-[9.5px]">[ Resources ]</h4>
             <ul className="space-y-3 text-zinc-500 text-xs font-semibold uppercase font-mono tracking-wider">
-              <li><NextLink href="#" className="hover:text-black transition-colors">Blog</NextLink></li>
-              <li><NextLink href="#" className="hover:text-black transition-colors">Guides</NextLink></li>
-              <li><NextLink href="#" className="hover:text-black transition-colors">Help Center</NextLink></li>
-              <li><NextLink href="#" className="hover:text-black transition-colors">Templates</NextLink></li>
+              <li><NextLink href="/blog" className="hover:text-black transition-colors">Blog</NextLink></li>
+              <li><NextLink href="/guides" className="hover:text-black transition-colors">Guides</NextLink></li>
+              <li><NextLink href="/help-center" className="hover:text-black transition-colors">Help Center</NextLink></li>
+              <li><NextLink href="/templates" className="hover:text-black transition-colors">Templates</NextLink></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-mono font-bold text-zinc-800 mb-4 uppercase tracking-widest text-[9.5px]">[ Company ]</h4>
             <ul className="space-y-3 text-zinc-500 text-xs font-semibold uppercase font-mono tracking-wider">
-              <li><NextLink href="#" className="hover:text-black transition-colors">About Us</NextLink></li>
-              <li><NextLink href="#" className="hover:text-black transition-colors">Careers</NextLink></li>
-              <li><NextLink href="#" className="hover:text-black transition-colors">Contact</NextLink></li>
-              <li><NextLink href="#" className="hover:text-black transition-colors">Partners</NextLink></li>
+              <li><NextLink href="/about" className="hover:text-black transition-colors">About Us</NextLink></li>
+              <li><NextLink href="/careers" className="hover:text-black transition-colors">Careers</NextLink></li>
+              <li><NextLink href="/contact" className="hover:text-black transition-colors">Contact</NextLink></li>
+              <li><NextLink href="/partners" className="hover:text-black transition-colors">Partners</NextLink></li>
             </ul>
           </div>
 
@@ -89,9 +89,9 @@ export function FooterLight() {
         <div className="pt-8 border-t border-zinc-200 flex flex-col md:flex-row justify-between items-center gap-4 text-[9.5px] font-mono text-zinc-450 uppercase tracking-widest">
           <p>&copy; 2026 preYT. All rights reserved.</p>
           <div className="flex items-center gap-6">
-             <NextLink href="#" className="hover:text-black transition-colors">Privacy</NextLink>
-             <NextLink href="#" className="hover:text-black transition-colors">Terms</NextLink>
-             <NextLink href="#" className="hover:text-black transition-colors">Cookies</NextLink>
+             <NextLink href="/legal/privacy" className="hover:text-black transition-colors">Privacy</NextLink>
+             <NextLink href="/legal/terms" className="hover:text-black transition-colors">Terms</NextLink>
+             <NextLink href="/legal/cookies" className="hover:text-black transition-colors">Cookies</NextLink>
           </div>
         </div>
       </div>

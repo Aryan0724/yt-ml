@@ -211,7 +211,7 @@ export function HeroLight() {
           className="inline-flex items-center gap-2 px-3 py-1 rounded border border-red-500/10 bg-red-500/5 text-[9px] font-mono font-bold text-[#FF0000] mb-8 tracking-widest uppercase"
         >
           <Sparkles className="w-3 h-3 text-[#FF0000] animate-pulse" />
-          [ PROTOCOL v2.1 // PRE-UPLOAD INTEL ]
+          [ AN INTEGRAL GROUPS STUDIO PRODUCT ]
         </motion.div>
 
         {/* Center Headline */}

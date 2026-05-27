@@ -1,22 +1,28 @@
-import { Navbar } from "@/components/global/navbar";
-import { Footer } from "@/components/global/footer";
+import { NavbarLight } from "@/components/landing/navbar-light";
+import { FooterLight } from "@/components/landing/footer-light";
 import { PageTransition } from "@/components/global/page-transition";
 
 export default function CookiesPage() {
   return (
     <PageTransition>
-      <Navbar />
-      <main className="pt-44 pb-32 px-6">
-        <article className="max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-6xl font-bold mb-16">Cookie Policy</h1>
-          <div className="prose prose-invert prose-zinc max-w-none space-y-12 text-zinc-500 text-lg leading-relaxed">
+      <NavbarLight />
+      <main className="pt-44 pb-32 px-6 min-h-screen bg-[#FAF9F6] relative overflow-hidden">
+        {/* Subtle background grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000003_1px,transparent_1px),linear-gradient(to_bottom,#00000003_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
+        
+        <article className="max-w-3xl mx-auto relative z-10">
+          <div className="inline-block px-3 py-1 text-[9px] font-mono font-bold tracking-widest text-[#FF0000] uppercase mb-4 border border-red-500/10 bg-red-500/5 rounded">
+            [ LEGAL // COOKIES ]
+          </div>
+          <h1 className="text-4xl md:text-6xl font-display font-bold mb-16 text-zinc-900 tracking-tight">Cookie Policy</h1>
+          <div className="prose prose-zinc max-w-none space-y-12 text-zinc-600 text-lg leading-relaxed font-medium">
             <p>
-                We use cookies to enhance your intelligence experience and remember your workspace settings.
+                We use cookies to enhance your intelligence experience and remember your workspace settings. By continuing to use the platform, you agree to our use of these session cookies.
             </p>
           </div>
         </article>
       </main>
-      <Footer />
+      <FooterLight />
     </PageTransition>
   )
 }
