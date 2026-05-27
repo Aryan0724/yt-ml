@@ -24,7 +24,7 @@ export default function DashboardSettingsPage() {
       .then(data => {
         if (data.success && data.profile) {
           // Default to false if not set
-          setAgreed(!!data.profile.agreed_to_portfolio)
+          setAgreed(!!data.profile.consent_public_showcase)
         }
       })
       .catch(console.error)

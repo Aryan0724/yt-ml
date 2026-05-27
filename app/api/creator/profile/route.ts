@@ -35,7 +35,7 @@ export async function POST(req: Request) {
         subscriber_count: user.subscriber_count,
         upload_frequency: user.upload_frequency,
         status: user.status,
-        agreed_to_portfolio: user.agreed_to_portfolio,
+        consent_public_showcase: user.consent_public_showcase,
       }
     } else {
       const localApps = getLocalApplicants()

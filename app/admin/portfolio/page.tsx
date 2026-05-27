@@ -9,7 +9,7 @@ interface PortfolioCreator {
   email: string
   youtube_channel: string
   niche: string
-  agreed_to_portfolio: boolean
+  consent_public_showcase: boolean
   is_featured_in_portfolio: boolean
 }
 

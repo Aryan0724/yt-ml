@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     // Update Supabase
     const { error: updateError } = await supabaseServer
       .from("beta_waitlist")
-      .update({ agreed_to_portfolio: agreed })
+      .update({ consent_public_showcase: agreed })
       .eq("email", emailLower)
 
     if (updateError) {
