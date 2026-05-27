@@ -14,6 +14,7 @@ const NAV_ITEMS = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { label: "Creator Waitlist", href: "/admin/waitlist", icon: Clock },
   { label: "User Accounts", href: "/admin/users", icon: Users },
+  { label: "Portfolio", href: "/admin/portfolio", icon: ShieldCheck },
   { label: "Advanced Analytics", href: "/admin/analytics", icon: BarChart3 },
   { label: "SEO command", href: "/admin/seo", icon: Search },
   { label: "Blogs & CMS", href: "/admin/blogs", icon: BookOpen },

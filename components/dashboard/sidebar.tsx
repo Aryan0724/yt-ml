@@ -1,6 +1,6 @@
 "use client"
 
-import { Zap, BarChart3, Layout, History, LogOut, User, Bell } from "lucide-react"
+import { Zap, BarChart3, Layout, History, LogOut, User, Bell, Settings } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -11,6 +11,7 @@ export function Sidebar() {
   const items = [
     { id: "analyze", icon: BarChart3, label: "Single Analysis", href: "/dashboard" },
     { id: "history", icon: History, label: "History", href: "/dashboard/history" },
+    { id: "settings", icon: Settings, label: "Settings", href: "/dashboard/settings" },
   ]
 
   return (
