@@ -140,16 +140,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <>
           {/* Desktop Sidebar */}
           <aside className="hidden lg:flex w-64 border-r border-white/5 bg-[#050505] flex-col justify-between p-6 fixed inset-y-0 left-0 z-30">
-            <div className="space-y-8">
+            <div className="flex flex-col gap-8 flex-1 min-h-0">
               {/* Brand Branding */}
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between flex-shrink-0">
                 <Link href="/" className="font-display font-extrabold tracking-tight text-white text-lg flex items-center gap-2">
                   ⚡ preYT <span className="text-[8px] font-bold uppercase text-zinc-500 px-1.5 py-0.5 rounded border border-white/10 bg-white/5">ADMIN</span>
                 </Link>
               </div>
 
               {/* Verified Badge */}
-              <div className="p-4 rounded-xl bg-white/[0.01] border border-white/5 space-y-1">
+              <div className="p-4 rounded-xl bg-white/[0.01] border border-white/5 space-y-1 flex-shrink-0">
                 <div className="flex items-center gap-1.5 text-xs text-white font-bold">
                   <ShieldCheck className="w-4 h-4 text-emerald-500" />
                   <span>Super Admin</span>
@@ -158,7 +158,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               </div>
 
               {/* Navigation Items */}
-              <nav className="space-y-1">
+              <nav className="space-y-1 overflow-y-auto flex-1 pr-2 pb-2 custom-scrollbar">
                 {NAV_ITEMS.map((item) => {
                   const isActive = pathname === item.href
                   return (
@@ -213,8 +213,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 transition={{ type: "tween", duration: 0.3 }}
                 className="lg:hidden fixed inset-y-0 left-0 w-64 bg-[#050505] border-r border-white/5 p-6 flex flex-col justify-between z-45 pt-20"
               >
-                <div className="space-y-6">
-                  <div className="p-4 rounded-xl bg-white/[0.01] border border-white/5 space-y-1">
+                <div className="flex flex-col gap-6 flex-1 min-h-0">
+                  <div className="p-4 rounded-xl bg-white/[0.01] border border-white/5 space-y-1 flex-shrink-0">
                     <div className="flex items-center gap-1.5 text-xs text-white font-bold">
                       <ShieldCheck className="w-4 h-4 text-emerald-500" />
                       <span>Super Admin</span>
@@ -222,7 +222,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     <div className="text-[10px] text-zinc-500 truncate">{adminEmail}</div>
                   </div>
 
-                  <nav className="space-y-1">
+                  <nav className="space-y-1 overflow-y-auto flex-1 pr-2 pb-2 custom-scrollbar">
                     {NAV_ITEMS.map((item) => {
                       const isActive = pathname === item.href
                       return (
