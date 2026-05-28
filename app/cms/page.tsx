@@ -549,7 +549,6 @@ export default function CMSDashboard() {
                 <div className="space-y-1.5">
                   <label className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest flex justify-between">
                     <span>Credentials Passcode</span>
-                    <span className="text-[8px] text-zinc-600 lowercase font-mono">hint: ap_seo_2026</span>
                   </label>
                   <input
                     required

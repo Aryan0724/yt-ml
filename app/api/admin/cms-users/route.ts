@@ -78,3 +78,38 @@ export async function POST(request: Request) {
     )
   }
 }
+
+/**
+ * DELETE: Revokes CMS Access for an operator by deleting their record
+ */
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get("id")
+
+    if (!id) {
+      return NextResponse.json(
+        { status: "error", message: "Operator ID is required." },
+        { status: 400 }
+      )
+    }
+
+    const { error } = await supabaseServer
+      .from("cms_users")
+      .delete()
+      .eq("id", id)
+
+    if (error) throw error
+
+    return NextResponse.json({
+      status: "success",
+      message: "CMS Operator access revoked successfully."
+    })
+  } catch (err: any) {
+    console.error("Error revoking CMS operator access:", err)
+    return NextResponse.json(
+      { status: "error", message: err.message || "Failed to revoke CMS access." },
+      { status: 500 }
+    )
+  }
+}

@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     }
 
     // 1. Verify Passcode
-    if (passcode !== "ap_seo_2026") {
+    if (passcode !== "cmhere@preyt") {
       return NextResponse.json(
         { status: "error", message: "Invalid enterprise passcode token." },
         { status: 401 }

@@ -18,6 +18,7 @@ const NAV_ITEMS = [
   { label: "Advanced Analytics", href: "/admin/analytics", icon: BarChart3 },
   { label: "SEO command", href: "/admin/seo", icon: Search },
   { label: "Blogs & CMS", href: "/admin/blogs", icon: BookOpen },
+  { label: "CMS Managers", href: "/admin/cms-users", icon: Users },
   { label: "Live Activity", href: "/admin/activity", icon: Activity },
   { label: "Creator Feedback", href: "/admin/feedback", icon: MessageSquare },
   { label: "System Health", href: "/admin/system-health", icon: HeartPulse },
@@ -49,7 +50,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     e.preventDefault()
     setLoginError(null)
 
-    if (passcode === "ap_admin_2026") {
+    if (passcode === "adminhere@preyt") {
       setIsAuthenticated(true)
       localStorage.setItem("ap_admin_token", "ap_admin_authorized")
       localStorage.setItem("ap_admin_email", adminEmail || "aryantiwari@integralgroups.in")
@@ -104,7 +105,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <div className="space-y-1.5">
                   <label className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest flex justify-between">
                     <span>Credentials Passcode</span>
-                    <span className="text-[8px] text-zinc-600 font-mono">hint: ap_admin_2026</span>
                   </label>
                   <input
                     required
