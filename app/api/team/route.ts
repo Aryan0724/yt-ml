@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
 import { getLocalTeam } from "@/lib/local-db-team"
 
+export const dynamic = "force-dynamic"
+
 export async function GET() {
   try {
     const team = getLocalTeam()
