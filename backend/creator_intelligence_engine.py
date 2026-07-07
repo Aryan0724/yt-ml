@@ -1,7 +1,11 @@
 import os
+import sys
 import json
 import pandas as pd
 import numpy as np
+
+# Add current directory to path for absolute imports to work from outside
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from v30_ranking_engine import RankingEngineV30
 from v40_heuristic_analyzer import HeuristicAnalyzer
 from v40_confidence_system import ConfidenceSystem

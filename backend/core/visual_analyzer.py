@@ -48,11 +48,14 @@ def analyze_image(img: np.ndarray) -> dict:
         palette_desc = "Neutral/Balanced Color Profile"
         
     # Face detection using Haar Cascade
-    cascade_path = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
-    face_cascade = cv2.CascadeClassifier(cascade_path)
     faces = []
-    if not face_cascade.empty():
-        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=4, minSize=(30, 30))
+    try:
+        cascade_path = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
+        face_cascade = cv2.CascadeClassifier(cascade_path)
+        if not face_cascade.empty():
+            faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=4, minSize=(30, 30))
+    except Exception as e:
+        print(f"Face detection unavailable (CascadeClassifier missing): {e}")
     
     face_count = len(faces)
     face_boxes = []
