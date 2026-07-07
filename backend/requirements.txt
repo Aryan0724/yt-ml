@@ -11,3 +11,5 @@ xgboost
 scikit-learn
 opencv-python-headless
 Pillow
+google-generativeai
+python-dotenv

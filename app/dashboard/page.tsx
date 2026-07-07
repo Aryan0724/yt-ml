@@ -9,7 +9,7 @@ import {
   Smartphone, BookOpen, Sliders, ChevronDown, ChevronUp, Globe, Lock, ShieldCheck, X, Trash2, Trophy, Plus, ScanEye
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { saveAnalysisHistory, getAnalysisHistory, deleteAnalysisHistory } from "@/lib/supabase"
+import { saveAnalysisHistory, getAnalysisHistory, deleteAnalysisHistory, saveAnalysisFeedback } from "@/lib/supabase"
 
 // --- Extended Creator Niche Database ---
 const NICHES = [
@@ -568,6 +568,76 @@ interface ReferenceItem {
   url: string
   views: number
   upload_age: string
+}
+
+function AnalysisFeedbackWidget({ analysisId }: { analysisId?: string }) {
+  const [rating, setRating] = useState<number | null>(null)
+  const [comment, setComment] = useState("")
+  const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSubmit = async () => {
+    if (!rating) return
+    setIsSubmitting(true)
+    await saveAnalysisFeedback({ rating, comment, analysis_id: analysisId })
+    setSubmitted(true)
+    setIsSubmitting(false)
+  }
+
+  if (submitted) {
+    return (
+      <div className="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 text-center animate-fade-in space-y-2">
+        <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto" />
+        <h4 className="text-sm font-bold text-emerald-500">Thank you for your feedback!</h4>
+        <p className="text-xs text-zinc-500">Your insights help us improve the preYT AI models.</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="p-6 rounded-2xl bg-white/[0.02] border border-zinc-200 text-left space-y-4 shadow-sm">
+      <div className="flex items-center justify-between">
+        <div>
+          <h4 className="text-sm font-bold text-black flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-amber-500" />
+            How helpful was this analysis?
+          </h4>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Rate the accuracy and usefulness of the predictions.</p>
+        </div>
+        <div className="flex gap-1">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button 
+              key={star} 
+              onClick={() => setRating(star)}
+              className={cn("p-1 transition-colors", rating && rating >= star ? "text-amber-500" : "text-zinc-300 hover:text-amber-400")}
+            >
+              <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+              </svg>
+            </button>
+          ))}
+        </div>
+      </div>
+      
+      {rating && (
+        <div className="space-y-3 animate-fade-in pt-2 border-t border-zinc-100">
+          <textarea 
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            placeholder="Tell us what you liked or what we missed (optional)..."
+            className="w-full bg-white/[0.02] border border-zinc-200 rounded-xl px-3 py-2 text-xs text-black focus:outline-none focus:border-amber-500 transition-colors h-20 resize-none"
+          />
+          <button 
+            disabled={isSubmitting}
+            onClick={handleSubmit}
+            className="w-full py-2.5 rounded-xl bg-black text-white font-bold text-[10px] uppercase tracking-widest hover:bg-zinc-800 transition-colors disabled:opacity-50"
+          >
+            {isSubmitting ? "Submitting..." : "Submit Feedback"}
+          </button>
+        </div>
+      )}
+    </div>
+  )
 }
 
 function CreatorIntelligenceReport({ 
@@ -2411,6 +2481,11 @@ function CreatorIntelligenceReport({
               ))
             )}
           </div>
+        </div>
+
+        {/* ANALYSIS FEEDBACK WIDGET */}
+        <div className="pt-8 mt-8 border-t border-zinc-200">
+          <AnalysisFeedbackWidget analysisId={result?.id || title} />
         </div>
       </div>
     </div>

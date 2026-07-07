@@ -8,6 +8,7 @@ from v40_confidence_system import ConfidenceSystem
 from v40_accuracy_optimizer import EnsembleAccuracyOptimizer
 from core.channel_dna_engine import ChannelDNAEngine
 from core.competitor_engine import CompetitorEngine
+from core.llm_report_generator import LLMReportGenerator
 
 class CreatorIntelligenceEngine:
     def __init__(self, model_dir=None):
@@ -20,6 +21,7 @@ class CreatorIntelligenceEngine:
         self.version = "2.0-ULTIMATE-INTELLIGENCE"
         self.channel_dna_engine = ChannelDNAEngine()
         self.competitor_engine = CompetitorEngine()
+        self.llm_generator = LLMReportGenerator()
         self.last_input = None
         self.last_output = None
 
@@ -110,9 +112,17 @@ class CreatorIntelligenceEngine:
         # Create a copy of the improvements for later validation comparison
         self.last_output = {"improvements": h_results["improvements"]}
 
+        # NEW: Enhance improvements with LLM & generate executive summary
+        enhanced_improvements = self.llm_generator.generate_intelligent_improvements(raw_input, h_results['improvements'])
+        executive_summary = self.llm_generator.generate_executive_summary(
+            raw_input, blended, tier, None, h_results['strengths'], h_results['weaknesses']
+        )
+        h_results['improvements'] = enhanced_improvements
+
         # 8. Build Final Structure
         output = {
             "engine_version": self.version,
+            "executive_summary": executive_summary,
             "score": int(blended),
             "tier": tier,
             "confidence": conf['confidence'],

@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import {
   LayoutDashboard, Users, Clock, BarChart3, Search, 
   BookOpen, Activity, MessageSquare, ShieldCheck, HeartPulse,
-  Settings, LogOut, KeyRound, AlertCircle, Menu, X, ArrowLeft
+  Settings, LogOut, KeyRound, AlertCircle, Menu, X, ArrowLeft, Star
 } from "lucide-react"
 
 const NAV_ITEMS = [
@@ -21,6 +21,7 @@ const NAV_ITEMS = [
   { label: "CMS Managers", href: "/admin/cms-users", icon: Users },
   { label: "Live Activity", href: "/admin/activity", icon: Activity },
   { label: "Creator Feedback", href: "/admin/feedback", icon: MessageSquare },
+  { label: "Testimonials", href: "/admin/testimonials", icon: Star },
   { label: "System Health", href: "/admin/system-health", icon: HeartPulse },
   { label: "Beta Auth Debug", href: "/admin/debug-auth", icon: KeyRound },
   { label: "Settings Desk", href: "/admin/settings", icon: Settings },
