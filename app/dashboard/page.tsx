@@ -1650,6 +1650,11 @@ function CreatorIntelligenceReport({
           )}
         </AnimatePresence>
       </div>
+
+      {/* ANALYSIS FEEDBACK WIDGET */}
+      <div className="pt-8 mt-8 border-t border-zinc-200">
+        <AnalysisFeedbackWidget analysisId={result?.id || title} />
+      </div>
     </div>
   )
 }function ChannelReportPanel({ profile, dna, ytChannel, ytVideos, ytLoading, inline = false }: { profile: any, dna?: any, ytChannel?: YTChannel | null, ytVideos?: YTVideo[] | null, ytLoading?: boolean, inline?: boolean }) {
@@ -2481,11 +2486,6 @@ function CreatorIntelligenceReport({
               ))
             )}
           </div>
-        </div>
-
-        {/* ANALYSIS FEEDBACK WIDGET */}
-        <div className="pt-8 mt-8 border-t border-zinc-200">
-          <AnalysisFeedbackWidget analysisId={result?.id || title} />
         </div>
       </div>
     </div>
