@@ -48,20 +48,36 @@ class CreatorIntelligenceEngine:
             ml_score, mq_score, breakout_prob, processed.get('authority_score', 1.0)
         )
         
-        # 4. Tier Assignment
-        if blended >= 90: tier = "S"
-        elif blended >= 80: tier = "A"
-        elif blended >= 70: tier = "B"
-        elif blended >= 60: tier = "C"
-        else: tier = "D"
-
-        # 5. Creator DNA & Competitor Layer
+        # 4. Creator DNA & Competitor Layer
         channel_title = raw_input.get("channel_title", "Unknown")
         category = raw_input.get("category", "Entertainment")
         title = raw_input.get("title", "")
         
         dna_profile = self.channel_dna_engine.analyze_channel(channel_title, raw_input)
         competitor_profile = self.competitor_engine.analyze_competitors(channel_title, title, category, raw_input)
+        
+        # --- NEW: Dynamic Niche-Aware Score Adjustment ---
+        style_match = dna_profile.get("style_match_percentage", 50)
+        
+        # If the thumbnail aligns heavily with the channel's historical DNA, we boost the raw ML score
+        # so it doesn't just blindly rate based on brightness/contrast!
+        if style_match >= 90:
+            blended = blended * 1.45  # Massive boost for perfect niche match
+        elif style_match >= 80:
+            blended = blended * 1.25
+        elif style_match >= 65:
+            blended = blended * 1.10
+        elif style_match < 40:
+            blended = blended * 0.85  # Penalty for deviating from what works in their niche
+            
+        blended = min(99.0, blended)
+
+        # 5. Tier Assignment
+        if blended >= 85: tier = "S"
+        elif blended >= 75: tier = "A"
+        elif blended >= 65: tier = "B"
+        elif blended >= 55: tier = "C"
+        else: tier = "D"
         
         # 6. Safe vs Breakout Scores
         category_consistency = dna_profile.get("performance_baselines", {}).get("category_consistency", 0.85)

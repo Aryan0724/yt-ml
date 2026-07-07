@@ -994,27 +994,27 @@ function CreatorIntelligenceReport({
       </div>
 
       {/* 1. PREDICTED TIER HERO (FIRST SECTION) */}
-      <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-zinc-900 to-black border border-zinc-200 shadow-2xl relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-zinc-900 to-black border border-zinc-800 shadow-2xl relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.05),transparent_50%)] pointer-events-none" />
-        <div className="space-y-2">
+        <div className="space-y-2 relative z-10">
           <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-black uppercase tracking-widest block w-fit">
             Neural Ensemble Prediction
           </span>
-          <h2 className="text-3xl md:text-4xl font-black tracking-tight text-black leading-tight">
+          <h2 className="text-3xl md:text-4xl font-black tracking-tight text-white leading-tight">
             Expected Feed Rating
           </h2>
-          <p className="text-zinc-500 text-xs max-w-xl leading-relaxed">
+          <p className="text-zinc-400 text-xs max-w-xl leading-relaxed">
             Your draft was evaluated by our CatBoost model against category parameters. Restoring historical averages suggests the following performance tier:
           </p>
         </div>
-        <div className="flex items-center gap-6 shrink-0 bg-white/[0.02] border border-zinc-200 p-6 rounded-3xl w-full md:w-auto justify-between md:justify-start">
+        <div className="flex items-center gap-6 shrink-0 bg-white/[0.05] border border-white/10 p-6 rounded-3xl w-full md:w-auto justify-between md:justify-start relative z-10">
           <div className="text-center">
-            <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block mb-0.5">Ensemble Score</span>
-            <div className="text-4xl md:text-5xl font-black text-black tracking-tight">{result.score}</div>
+            <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest block mb-0.5">Ensemble Score</span>
+            <div className="text-4xl md:text-5xl font-black text-white tracking-tight">{result.score}</div>
           </div>
-          <div className="w-[1px] h-12 bg-black/5" />
+          <div className="w-[1px] h-12 bg-white/10" />
           <div className="text-center">
-            <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block mb-0.5 font-sans">Predicted Tier</span>
+            <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest block mb-0.5 font-sans">Predicted Tier</span>
             <div className={cn(
                 "px-4 py-2 rounded-xl border text-base md:text-lg font-black uppercase tracking-widest",
                 result.tier === 'S' ? "bg-amber-500/20 text-amber-400 border-amber-500/30" :

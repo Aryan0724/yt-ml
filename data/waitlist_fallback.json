@@ -74,5 +74,39 @@
     "last_login": "2026-05-28T15:09:28.536Z",
     "last_analysis_at": "2026-05-23T16:48:28.009Z",
     "consent_public_showcase": true
+  },
+  {
+    "id": "bw_0xlwvbkd00v",
+    "full_name": "",
+    "email": "mitrashubrato@gmail.com",
+    "youtube_channel": "",
+    "niche": "Other",
+    "subscriber_count": 0,
+    "upload_frequency": "Weekly",
+    "reason_for_joining": "",
+    "status": "pending",
+    "applied_at": "2026-07-07T10:10:27.289Z",
+    "beta_access_token": "bw_hu42ikn6ydsatex4w2saxp",
+    "notes": "",
+    "total_logins": 1,
+    "total_analyses": 1,
+    "last_login": "2026-07-07T10:10:32.349Z",
+    "last_analysis_at": "2026-07-07T10:12:20.662Z"
+  },
+  {
+    "id": "bw_denvb6w3ak",
+    "full_name": "",
+    "email": "rabindraojha3002@gmail.com",
+    "youtube_channel": "",
+    "niche": "Other",
+    "subscriber_count": 0,
+    "upload_frequency": "Weekly",
+    "reason_for_joining": "",
+    "status": "pending",
+    "applied_at": "2026-07-07T10:16:17.627Z",
+    "beta_access_token": "bw_mex1uzna03nsk2iq3b9b2",
+    "notes": "",
+    "total_logins": 0,
+    "total_analyses": 1
   }
 ]

@@ -131,9 +131,9 @@ class RankingEngineV30:
         mq_vis   = (min(1, p.get('face_count', 0)) * 15) + (min(1, p.get('brightness', 128)/180) * 15)
         mq       = min(100, mq_hook + mq_curio + mq_vis)
 
-        # Final Boring Cap: If it's a boring title, it CANNOT be A-Tier (mq cap 45)
+        # Soft Penalty: If it's a boring title, we apply a gentle penalty (mq - 10)
         if any(re.search(rf'\b{w}\b', str(raw.get('title','')).lower()) for w in self.BORING_KEYWORDS):
-            mq = min(40, mq)
+            mq = max(10, mq - 10)
 
         # --- V4.2 AGGRESSIVE AUTHORITY BLENDING ---
         # For massive channels (high authority), we trust the ML Truth almost entirely.
@@ -156,10 +156,10 @@ class RankingEngineV30:
         # print(f"DEBUG | Title: {raw.get('title','')} | MQ: {mq} | ML: {ml_rank:.1f} | Auth: {authority:.1f} | ML_W: {ml_weight:.2f} | Blended: {blended}")
 
         # --- V4.4 THE HARD CEILING (THE ULTIMATE FIX) ---
-        # If it's a boring title, we hard-cap the final score.
-        # Even if a giant channel posts it, it's not a 'Viral' piece of content.
+        # If it's a boring title, we apply a gentle penalty instead of a hard cap.
+        # Channel DNA will override this if it actually works for their niche.
         if any(re.search(rf'\b{w}\b', str(raw.get('title','')).lower()) for w in self.BORING_KEYWORDS):
-            blended = min(44.9, blended)
+            blended = max(10.0, blended - 15.0)
         
         return blended, round(ml_rank, 1), round(breakout_prob, 3), round(mq, 1)
 
