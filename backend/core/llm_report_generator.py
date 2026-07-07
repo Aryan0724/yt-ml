@@ -69,6 +69,7 @@ Respond ONLY with a valid JSON array of objects. Do not include markdown formatt
         try:
             response = self.model.generate_content(
                 prompt,
+                request_options={"timeout": 8},
                 generation_config=genai.GenerationConfig(
                     response_mime_type="application/json"
                 )
@@ -110,7 +111,7 @@ Context:
 Be direct, strategic, and professional. Do not use generic phrases. Tell them what the fundamental opportunity or risk is, taking their audience preferences into account if provided.
 """
         try:
-            response = self.model.generate_content(prompt)
+            response = self.model.generate_content(prompt, request_options={"timeout": 8})
             return response.text.strip()
         except Exception as e:
             return ""
@@ -136,7 +137,42 @@ If it's low (<50%), warn them that they might alienate core viewers unless it's 
 Make it sound intelligent, strategic, and direct. Do not say "Based on the data".
 """
         try:
-            response = self.model.generate_content(prompt)
+            response = self.model.generate_content(prompt, request_options={"timeout": 8})
             return response.text.strip()
         except Exception as e:
             return ""
+
+    def generate_action_plan(self, raw_input, tier, strengths, weaknesses):
+        """Generates 3 highly specific, actionable steps the user must take right now."""
+        if not self.enabled:
+            return []
+            
+        title = raw_input.get("title", "Unknown Title")
+        category = raw_input.get("category", "Unknown Category")
+        
+        prompt = f"""You are the Diamond Intelligence AI.
+The user is preparing to publish a YouTube video.
+- Title: "{title}"
+- Category: {category}
+- Predicted Tier: {tier}
+- Top Strength: {strengths[0] if strengths else 'None'}
+- Top Weakness: {weaknesses[0] if weaknesses else 'None'}
+
+Your job is to tell the user EXACTLY what to do and how to do it before publishing.
+Return EXACTLY 3 actionable bullet points. Do not use generic advice. Give them hard instructions (e.g., "Change the text color to neon green", "Remove the word 'Tutorial' from the title").
+Return ONLY a valid JSON array of 3 strings. Example: ["Step 1", "Step 2", "Step 3"]. Do not include markdown formatting.
+"""
+        try:
+            response = self.model.generate_content(
+                prompt,
+                request_options={"timeout": 8},
+                generation_config=genai.GenerationConfig(
+                    response_mime_type="application/json"
+                )
+            )
+            action_plan = json.loads(response.text)
+            if isinstance(action_plan, list):
+                return action_plan[:3]
+        except Exception as e:
+            pass
+        return []

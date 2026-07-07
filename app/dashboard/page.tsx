@@ -3204,7 +3204,7 @@ export default function DashboardPage() {
 
                               {/* Exact Duration Sliders */}
                               {videoDurationType !== "short" && (
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className={cn("grid gap-4", videoDurationType === "long" ? "grid-cols-2" : "grid-cols-1")}>
                                   {videoDurationType === "long" && (
                                     <div className="space-y-2">
                                       <div className="flex justify-between text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
@@ -3217,11 +3217,11 @@ export default function DashboardPage() {
                                         max="5"
                                         value={durationHours}
                                         onChange={(e) => setDurationHours(Number(e.target.value))}
-                                        className="w-full h-1 bg-black/5 rounded-lg appearance-none cursor-pointer accent-white"
+                                        className="w-full h-1 bg-black/5 rounded-lg appearance-none cursor-pointer accent-black"
                                       />
                                     </div>
                                   )}
-                                  <div className="space-y-2 col-span-2 sm:col-span-1">
+                                  <div className="space-y-2">
                                     <div className="flex justify-between text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
                                       <span>Minutes</span>
                                       <span className="text-black">{durationMinutes} min</span>
@@ -3232,7 +3232,7 @@ export default function DashboardPage() {
                                       max="59"
                                       value={durationMinutes}
                                       onChange={(e) => setDurationMinutes(Number(e.target.value))}
-                                      className="w-full h-1 bg-black/5 rounded-lg appearance-none cursor-pointer accent-white"
+                                      className="w-full h-1 bg-black/5 rounded-lg appearance-none cursor-pointer accent-black"
                                     />
                                   </div>
                                 </div>
@@ -3426,7 +3426,7 @@ export default function DashboardPage() {
                                 >
                                   <div className="flex items-center gap-3">
                                     {isFinished ? (
-                                      <span className="text-emerald-400 text-xs font-bold shrink-0">✅</span>
+                                      <CheckCircle2 className="text-emerald-400 w-4 h-4 shrink-0" />
                                     ) : isCurrent ? (
                                       <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping shrink-0" />
                                     ) : (

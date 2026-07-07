@@ -106,7 +106,9 @@
     "applied_at": "2026-07-07T10:16:17.627Z",
     "beta_access_token": "bw_mex1uzna03nsk2iq3b9b2",
     "notes": "",
-    "total_logins": 0,
-    "total_analyses": 1
+    "total_logins": 1,
+    "total_analyses": 1,
+    "last_login": "2026-07-07T14:44:41.481Z",
+    "last_analysis_at": "2026-07-07T14:47:09.102Z"
   }
 ]

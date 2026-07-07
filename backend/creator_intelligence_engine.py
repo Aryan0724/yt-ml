@@ -6,7 +6,7 @@ import numpy as np
 
 # Add current directory to path for absolute imports to work from outside
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from v30_ranking_engine import RankingEngineV30
+from v40_ranking_engine import RankingEngineV40
 from v40_heuristic_analyzer import HeuristicAnalyzer
 from v40_confidence_system import ConfidenceSystem
 from v40_accuracy_optimizer import EnsembleAccuracyOptimizer
@@ -18,9 +18,9 @@ class CreatorIntelligenceEngine:
     def __init__(self, model_dir=None):
         if model_dir is None:
             model_dir = os.path.dirname(os.path.abspath(__file__))
-        self.base_engine = RankingEngineV30(model_dir)
+        self.base_engine = RankingEngineV40(model_dir)
         self.optimizer = EnsembleAccuracyOptimizer(model_dir)
-        self.heuristics = HeuristicAnalyzer(self.base_engine.cat_stats)
+        self.heuristics = HeuristicAnalyzer({}) # V40 doesn't use cat_stats here
         self.confidence_system = ConfidenceSystem()
         self.version = "2.0-ULTIMATE-INTELLIGENCE"
         self.channel_dna_engine = ChannelDNAEngine()
@@ -34,7 +34,7 @@ class CreatorIntelligenceEngine:
         Full structured analysis for a single thumbnail/title.
         """
         # 1. Base Scores & Ensemble Optimization
-        processed = self.base_engine._relativize(raw_input)
+        processed = raw_input.copy()
         blended, behav_report = self.optimizer.optimize_prediction(raw_input)
         
         # Get raw components for risk analysis
@@ -138,6 +138,7 @@ class CreatorIntelligenceEngine:
             raw_input, blended, tier, None, h_results['strengths'], h_results['weaknesses'], dna_profile=dna_profile
         )
         dna_alignment_analysis = self.llm_generator.generate_dna_alignment_insight(raw_input, dna_profile, tier)
+        action_plan = self.llm_generator.generate_action_plan(raw_input, tier, h_results['strengths'], h_results['weaknesses'])
         h_results['improvements'] = enhanced_improvements
 
         # 8. Build Final Structure
@@ -145,6 +146,7 @@ class CreatorIntelligenceEngine:
             "engine_version": self.version,
             "executive_summary": executive_summary,
             "dna_alignment_analysis": dna_alignment_analysis,
+            "action_plan": action_plan,
             "score": int(blended),
             "tier": tier,
             "confidence": conf['confidence'],

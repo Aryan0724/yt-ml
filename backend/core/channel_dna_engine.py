@@ -169,87 +169,8 @@ class ChannelDNAEngine:
             patterns = ["split-screen character reactions", "warm saturated outlines", "high-stakes curiosity quotes"]
 
         # Generate titles using the stable seed and category
-        cat_lower = category.lower()
-        if "shemaroo" in cleaned_id.lower() or "movie" in cleaned_id.lower() or "comedy" in cat_lower or "entertainment" in cat_lower:
-            video_titles = [
-                f"{cleaned_id} Classic Comedy Collection",
-                "Hilarious Blockbuster Scenes Compilation",
-                "Retro Hits & Laughs Special",
-                "Superhit Comedy Scene Vol 4",
-                "Best Comic Moments Compilation"
-            ]
-        elif "game" in cleaned_id.lower() or "play" in cleaned_id.lower() or "gaming" in cat_lower:
-            video_titles = [
-                "I Survived 100 Days in a Hardcore Desert World!",
-                "Speedrunner vs 3 Professional Hunters",
-                "This Hardcore Challenge Almost Broke Me...",
-                "Ultimate Minecraft Speedrun Competition",
-                "24 Hours In The Most Dangerous Realm"
-            ]
-        elif "tech" in cleaned_id.lower() or "mkbhd" in cleaned_id.lower() or "tech" in cat_lower:
-            video_titles = [
-                "The Smartphone of the Future (Review)",
-                "I Built the Ultimate Smart Desk Setup",
-                "Why You Shouldn't Buy the New AI Laptop",
-                "Is This the Ultimate Gaming Tablet?",
-                "My Desk Setup Tour (2026 Edition)"
-            ]
-        else:
-            video_titles = [
-                f"How I Mastered {category} in 30 Days",
-                "The Real Secret of My Growth...",
-                "Testing the Absolute Limit of My Setup",
-                "Why Most Creators Fail at This",
-                "I Spent 24 Hours in a Tiny Room"
-            ]
-
-        # Populate recent videos with matched structures
+        # REMOVED: Do not generate hardcoded or fake titles for the platform.
         recent_videos = []
-        for i, v_title in enumerate(video_titles):
-            views_factor = rng.uniform(0.5, 2.3)
-            views = int(avg_views * views_factor)
-            
-            dur_min = int(rng.uniform(5, 25))
-            dur_sec = int(rng.uniform(0, 59))
-            duration = f"{dur_min:02d}:{dur_sec:02d}"
-            
-            if views_factor > 1.3:
-                status = "OUTPERFORMED"
-                status_color = "text-emerald-400 bg-emerald-500/10 border-emerald-500/20"
-                ctr = f"{rng.uniform(9.0, 15.5):.1f}%"
-                if curr_face_count > 0:
-                    worked = "Vibrant facial framing and high-intensity shock expression engaged viewers early."
-                else:
-                    worked = "High-contrast object isolation and minimal typographic layout drove strong feed prominence."
-                notWorked = "Minor audience retention dip during the long sponsorships mid-roll."
-            elif views_factor < 0.7:
-                status = "UNDERPERFORMING"
-                status_color = "text-rose-400 bg-rose-500/10 border-rose-500/20"
-                ctr = f"{rng.uniform(2.5, 5.0):.1f}%"
-                worked = "Solid title search term density."
-                if curr_brightness < 90:
-                    notWorked = "Dark background layout reduced visibility in dark-mode recommendation feeds."
-                elif curr_clutter > 6.0:
-                    notWorked = "High background visual clutter created visual noise, raising mobile skip rates."
-                else:
-                    notWorked = "Low typography scale made details hard to read on mobile screens."
-            else:
-                status = "STABLE"
-                status_color = "text-blue-400 bg-blue-500/10 border-blue-500/20"
-                ctr = f"{rng.uniform(5.5, 8.8):.1f}%"
-                worked = "Familiar niche theme color palettes and standard baseline composition."
-                notWorked = "Standard visual layout lacked the high curiosity hooks needed for breakout reach."
-                
-            recent_videos.append({
-                "title": v_title,
-                "views": views,
-                "duration": duration,
-                "ctr": ctr,
-                "status": status,
-                "statusColor": status_color,
-                "worked": worked,
-                "notWorked": notWorked
-            })
 
         return {
             "channel_title": cleaned_id,

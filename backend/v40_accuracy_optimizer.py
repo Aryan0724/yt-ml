@@ -2,31 +2,23 @@ import numpy as np
 import pandas as pd
 import json
 import os
-from v30_ranking_engine import RankingEngineV30
+from v40_ranking_engine import RankingEngineV40
 from behavioral_api_server import ViralPrescriber
 
 class EnsembleAccuracyOptimizer:
     def __init__(self, data_dir=None):
         if data_dir is None:
             data_dir = os.path.dirname(os.path.abspath(__file__))
-        self.ranker = RankingEngineV30(data_dir)
+        self.ranker = RankingEngineV40(data_dir)
         self.behavioral = ViralPrescriber() # Behavioral engine logic
-        self.cat_stats = self.ranker.cat_stats
+        # For V40, cat_stats are not strictly maintained in the same way, but let's mock it for the prescriber if needed
+        self.cat_stats = self.ranker.channel_stats # or simply ignore
         
     def calibrate_score(self, score, category):
         """
-        Niche-specific calibration. 
-        Some categories (like Gaming) have high variance and need 'sharper' predictions.
-        Others (like Education) are more linear.
+        Niche-specific calibration.
+        Removed the 0.9 competition penalty to avoid trapping scores in D-Tier.
         """
-        cat_data = self.cat_stats.get(category, {})
-        # If the category is highly competitive, we penalize average scores more heavily
-        competition = cat_data.get('count', 100)
-        if competition > 500:
-            # High competition = hard to stand out, push lower scores down
-            if score < 60:
-                score *= 0.9
-        
         # Sigmoid-like sharpening for "Viral" candidates
         if score > 80:
             # Gentle boost for very high scores
@@ -44,7 +36,7 @@ class EnsembleAccuracyOptimizer:
         # 1. Base ML Ranking
         blended, ml_rank, breakout_prob, mq = self.ranker._score(raw_input)
         
-        # 2. Behavioral Behavioral Alignment
+        # 2. Behavioral Alignment
         # The prescriber gives us 'predicted_behavior' and 'behavioral_scores'
         behav_report = self.behavioral.generate_prescription(
             raw_input['title'], 
@@ -53,14 +45,9 @@ class EnsembleAccuracyOptimizer:
             raw_input
         )
         
-        # Behavioral adjustment factor
-        # If hook_strength and curiosity_gap are BOTH high, we boost the ML score
-        behav_proxies = behav_report['behavioral_scores']
-        behav_boost = (behav_proxies['hook_strength'] + behav_proxies['curiosity_gap']) / 2.0
-        
         # 3. Ensemble Synthesis
-        # We give the behavioral boost a 20% weight (down from 30%) for stability
-        ensemble_score = (blended * 0.8) + (behav_boost * 100 * 0.2)
+        # In V4.0 Native NLP, we fully trust the ML model and remove the 20% drag.
+        ensemble_score = blended
         
         # 4. Final Calibration Pass
         final_score = self.calibrate_score(ensemble_score, raw_input['category'])
@@ -70,8 +57,8 @@ class EnsembleAccuracyOptimizer:
 if __name__ == "__main__":
     optimizer = EnsembleAccuracyOptimizer()
     sample = {
-        "title": "I spent 100 Hours in a Secret Underground City!",
-        "category": "Gaming",
+        "title": "I Built a $10,000 Trading Bot from Scratch!",
+        "category": "Tech",
         "face_count": 1,
         "brightness": 190
     }
