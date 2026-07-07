@@ -117,16 +117,18 @@ class CreatorIntelligenceEngine:
         self.last_output = {"improvements": h_results["improvements"]}
 
         # NEW: Enhance improvements with LLM & generate executive summary
-        enhanced_improvements = self.llm_generator.generate_intelligent_improvements(raw_input, h_results['improvements'])
+        enhanced_improvements = self.llm_generator.generate_intelligent_improvements(raw_input, h_results['improvements'], dna_profile=dna_profile)
         executive_summary = self.llm_generator.generate_executive_summary(
-            raw_input, blended, tier, None, h_results['strengths'], h_results['weaknesses']
+            raw_input, blended, tier, None, h_results['strengths'], h_results['weaknesses'], dna_profile=dna_profile
         )
+        dna_alignment_analysis = self.llm_generator.generate_dna_alignment_insight(raw_input, dna_profile, tier)
         h_results['improvements'] = enhanced_improvements
 
         # 8. Build Final Structure
         output = {
             "engine_version": self.version,
             "executive_summary": executive_summary,
+            "dna_alignment_analysis": dna_alignment_analysis,
             "score": int(blended),
             "tier": tier,
             "confidence": conf['confidence'],

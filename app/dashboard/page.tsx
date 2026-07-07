@@ -6,7 +6,7 @@ import {
   Upload, Sparkles, CheckCircle2, AlertCircle, 
   TrendingUp, GitCompare, History, Search, Zap, 
   Tv, FileText, Image as ImageIcon, Clock, Calendar, CheckSquare, ArrowRight, ArrowLeft, RefreshCw,
-  Smartphone, BookOpen, Sliders, ChevronDown, ChevronUp, Globe, Lock, ShieldCheck, X, Trash2, Trophy, Plus, ScanEye
+  Smartphone, BookOpen, Sliders, ChevronDown, ChevronUp, Globe, Lock, ShieldCheck, X, Trash2, Trophy, Plus, ScanEye, Target
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { saveAnalysisHistory, getAnalysisHistory, deleteAnalysisHistory, saveAnalysisFeedback } from "@/lib/supabase"
@@ -925,6 +925,43 @@ function CreatorIntelligenceReport({
 
   return (
     <div className="space-y-8 animate-fade-in w-full text-left font-sans">
+      {/* AI Strategy Analysis (Injected from Backend DNA) */}
+      {(result?.executive_summary || result?.dna_alignment_analysis) && (
+        <div className="bg-zinc-900 border border-zinc-800 rounded-[2rem] p-6 lg:p-8 shadow-2xl relative overflow-hidden flex flex-col md:flex-row gap-6 items-start">
+          <div className="absolute top-0 right-0 p-6 opacity-5 pointer-events-none">
+            <Sparkles className="w-48 h-48 text-purple-400" />
+          </div>
+          
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/20 to-blue-500/10 flex items-center justify-center border border-purple-500/30 shrink-0 relative z-10">
+            <Sparkles className="w-8 h-8 text-purple-400" />
+          </div>
+          
+          <div className="relative z-10 flex-1 space-y-4">
+            <div className="flex items-center gap-3">
+              <h3 className="text-sm font-bold text-white uppercase tracking-widest">AI Strategy Analysis</h3>
+              <span className="bg-purple-500/20 text-purple-300 text-[9px] px-2.5 py-0.5 rounded-full border border-purple-500/30 font-bold uppercase tracking-wider">
+                Powered by Channel DNA
+              </span>
+            </div>
+            
+            {result?.executive_summary && (
+              <p className="text-lg text-zinc-300 font-medium leading-relaxed">
+                {result.executive_summary}
+              </p>
+            )}
+            
+            {result?.dna_alignment_analysis && (
+              <div className="pt-4 border-t border-zinc-800/60 mt-4">
+                <p className="text-sm text-zinc-400 leading-relaxed">
+                  <strong className="text-purple-400 uppercase tracking-widest text-[10px] block mb-1">DNA Alignment Insight</strong>
+                  {result.dna_alignment_analysis}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Dynamic Immersive Header */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 border-b border-zinc-200 pb-8">
         <div>
@@ -1658,835 +1695,120 @@ function CreatorIntelligenceReport({
     </div>
   )
 }function ChannelReportPanel({ profile, dna, ytChannel, ytVideos, ytLoading, inline = false }: { profile: any, dna?: any, ytChannel?: YTChannel | null, ytVideos?: YTVideo[] | null, ytLoading?: boolean, inline?: boolean }) {
-  if (!profile) return null
+  if (!profile) return null;
+  const [activeTab, setActiveTab] = useState<"overview" | "visuals" | "titles">("overview");
 
-  // Accordion expanded sections
-  const [expandedSections, setExpandedSections] = useState<Record<number, boolean>>({ 0: true })
-  const toggleSection = (idx: number) => {
-    setExpandedSections(prev => ({ ...prev, [idx]: !prev[idx] }))
-  }
-
-  const expandAll = () => {
-    const allExpanded: Record<number, boolean> = {}
-    for (let i = 0; i < 9; i++) {
-      allExpanded[i] = true
-    }
-    setExpandedSections(allExpanded)
-  }
-
-  const collapseAll = () => {
-    setExpandedSections({})
-  }
-
-  // Prioritize live backend channel DNA baselines if available
-  const cleanNiche = dna?.niche || profile.niche || "Tech"
-  const subscriberCount = ytChannel?.subscriberCount ?? dna?.subscriber_base ?? profile.subscriber_count ?? null
-  const uploadFrequency = dna?.upload_frequency || profile.upload_frequency || "Weekly"
-  const optimalTime = dna?.optimal_upload_window || "Wednesdays @ 4:00 PM & Saturdays @ 11:00 AM"
-  const dominantStyle = dna?.style_profile || "High Contrast, Neon Subject Outlines, Reactive Face"
-  const audit = generateChannelAudit(profile.youtube_channel, cleanNiche)
-  const hasRealVideos = ytVideos && ytVideos.length > 0
-
-  // Calculate live statistics
-  let avgTitleLength = 52
-  let hookPct = 40
-  let textDensityWord = "Medium (Balanced Hybrid)"
-  let topPerformedTitles: string[] = []
-  let underPerformedTitles: string[] = []
-
-  if (hasRealVideos && ytVideos) {
-    const lengths = ytVideos.map(v => v.title.length)
-    avgTitleLength = Math.round(lengths.reduce((a, b) => a + b, 0) / ytVideos.length)
-    if (avgTitleLength < 45) textDensityWord = "Low (Highly Punchy)"
-    else if (avgTitleLength <= 65) textDensityWord = "Medium (Balanced Hybrid)"
-    else textDensityWord = "High (Detailed & Keyword-heavy)"
-
-    const triggerWords = ["why", "how", "secret", "never", "everyone", "wrong", "trap", "insane", "rules", "million", "vs", "stop", "should"]
-    let hooks = 0
-    ytVideos.forEach(v => {
-      const lower = v.title.toLowerCase()
-      const hasDigit = /\b\d+\b/.test(lower)
-      const hasPunct = lower.includes("?") || lower.includes("!") || lower.includes("...") || lower.includes("(") || lower.includes("[")
-      const hasTrigger = triggerWords.some(w => lower.includes(w))
-      if (hasDigit || hasPunct || hasTrigger) {
-        hooks++
-      }
-    })
-    hookPct = Math.round((hooks / ytVideos.length) * 100)
-
-    const sorted = [...ytVideos].sort((a, b) => b.viewCount - a.viewCount)
-    topPerformedTitles = sorted.slice(0, 2).map(v => v.title)
-    const under = [...ytVideos].filter(v => v.status === "UNDERPERFORMING")
-    underPerformedTitles = under.slice(0, 2).map(v => v.title)
-    if (underPerformedTitles.length === 0) {
-      underPerformedTitles = sorted.slice(-2).map(v => v.title)
-    }
-  }
-
-  const synced = !!ytChannel && hasRealVideos
-  let viewVelocityStr = "12.5K / video"
-  let engagementRateStr = "4.2%"
-  let indexedVideosCountStr = "Niche Baseline"
-
-  if (synced && ytVideos) {
-    const totalViewsRecent = ytVideos.reduce((sum, v) => sum + v.viewCount, 0)
-    const avgViewsRecent = Math.round(totalViewsRecent / ytVideos.length)
-    viewVelocityStr = avgViewsRecent >= 1_000_000 
-      ? `${(avgViewsRecent / 1_000_000).toFixed(1)}M / video`
-      : avgViewsRecent >= 1_000
-      ? `${(avgViewsRecent / 1_000).toFixed(1)}K / video`
-      : `${avgViewsRecent} / video`
-
-    const totalLikes = ytVideos.reduce((sum, v) => sum + v.likeCount, 0)
-    const totalViews = ytVideos.reduce((sum, v) => sum + v.viewCount, 0)
-    const engagementPct = totalViews > 0 ? (totalLikes / totalViews) * 100 : 0
-    engagementRateStr = `${engagementPct.toFixed(2)}%`
-
-    indexedVideosCountStr = `${ytChannel?.videoCount ?? ytVideos.length} synced`
-  } else {
-    // Fallback niche benchmarks
-    if (cleanNiche === "Education") {
-      viewVelocityStr = "15.0K / video"
-      engagementRateStr = "5.1%"
-      indexedVideosCountStr = "50+ (target)"
-    } else if (cleanNiche === "Tech") {
-      viewVelocityStr = "18.5K / video"
-      engagementRateStr = "4.8%"
-      indexedVideosCountStr = "40+ (target)"
-    } else if (cleanNiche === "Gaming") {
-      viewVelocityStr = "25.0K / video"
-      engagementRateStr = "6.5%"
-      indexedVideosCountStr = "100+ (target)"
-    } else {
-      viewVelocityStr = "10.0K / video"
-      engagementRateStr = "4.0%"
-      indexedVideosCountStr = "30+ (target)"
-    }
-  }
-
-  // Seeded hash for Format Fatigue Level based on handle
-  const channelHandle = ytChannel?.handle || profile?.youtube_channel || "creator"
-  let handleHash = 0
-  for (let i = 0; i < channelHandle.length; i++) {
-    handleHash += channelHandle.charCodeAt(i)
-  }
-  const fatiguePct = 15 + (handleHash % 71) // maps value to [15, 85]
+  const subscriberCount = ytChannel?.subscriberCount ?? dna?.subscriber_base ?? profile.subscriber_count ?? null;
+  const channelName = ytChannel?.title || profile.full_name || "Creator Pro";
+  const handle = profile.youtube_channel || "handle";
   
-  let fatigueLabel = "Low (Healthy Variety)"
-  let fatigueColorClass = "bg-emerald-500"
-  let fatigueTextClass = "text-emerald-400"
-  let fatigueDesc = "Your title structures and vocabulary are healthy. Avoid posting identical framework or concept formats back-to-back; introduce a case study every 3rd upload."
-
-  if (fatiguePct > 60) {
-    fatigueLabel = "High (Critical Saturation)"
-    fatigueColorClass = "bg-rose-500"
-    fatigueTextClass = "text-rose-400"
-    fatigueDesc = "Warning: Visual and title elements are repetitive. Your audience is experiencing format fatigue. Pivot the framing of your next 2 videos to fresh templates."
-  } else if (fatiguePct > 35) {
-    fatigueLabel = "Medium (Moderate Repetition)"
-    fatigueColorClass = "bg-amber-500"
-    fatigueTextClass = "text-amber-400"
-    fatigueDesc = "Audience is responding to templates, but click decay is starting. Sprinkle in visual layout shifts or change standard trigger nouns in the title."
-  }
-
-  // Define the 9 AI Strategist Sections
-  const sections = [
-    {
-      title: "Content Identity DNA",
-      icon: BookOpen,
-      glowColor: "from-emerald-500/20 to-teal-500/10 border-emerald-500/20",
-      iconColor: "text-emerald-400",
-      badge: "Structure & Psychology",
-      summary: "Analyzes title text density, casing patterns, and cognitive hooks.",
-      content: (
-        <div className="space-y-4 pt-2 text-xs">
-          <div className="grid grid-cols-2 gap-2">
-            <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200">
-              <span className="text-[9px] text-zinc-500 uppercase tracking-wider block mb-0.5">Average Title Length</span>
-              <strong className="text-black text-xs">{avgTitleLength} chars</strong>
-              <span className="text-[9px] text-zinc-500 block mt-0.5">{textDensityWord}</span>
-            </div>
-            <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200">
-              <span className="text-[9px] text-zinc-500 uppercase tracking-wider block mb-0.5">Title Hook Frequency</span>
-              <strong className="text-black text-xs">{hookPct}% of videos</strong>
-              <span className="text-[9px] text-zinc-500 block mt-0.5">Leverages curiosity markers</span>
-            </div>
-          </div>
-
-          {/* Visual Gauges */}
-          <div className="p-3 rounded-xl bg-white/[0.01] border border-zinc-200 space-y-3">
-            {/* Title Length Optimum Track */}
-            <div className="space-y-1.5">
-              <div className="flex justify-between text-[9px] text-zinc-500">
-                <span>Short (30)</span>
-                <span className="text-emerald-400 font-bold">Optimal (45-60)</span>
-                <span>Long (90)</span>
-              </div>
-              <div className="relative h-1.5 bg-zinc-800/80 rounded-full overflow-hidden border border-zinc-200">
-                {/* Highlight optimal range */}
-                <div className="absolute left-[25%] top-0 h-full w-[25%] bg-emerald-500/25 border-x border-emerald-400/10" />
-                {/* Indicator needle */}
-                {(() => {
-                  const clampedVal = Math.max(30, Math.min(90, avgTitleLength))
-                  const pct = ((clampedVal - 30) / 60) * 100
-                  return (
-                    <div 
-                      className="absolute top-0 bottom-0 w-1.5 -ml-0.75 bg-white border border-zinc-950 rounded-full shadow-[0_0_6px_rgba(255,255,255,0.8)] transition-all duration-500" 
-                      style={{ left: `${pct}%` }} 
-                    />
-                  )
-                })()}
-              </div>
-              <div className="flex justify-between items-center text-[8.5px]">
-                <span className="text-zinc-500">Your average: <strong className="text-zinc-600">{avgTitleLength} chars</strong></span>
-                <span className="text-zinc-500 font-medium">{textDensityWord}</span>
-              </div>
-            </div>
-
-            {/* Hook Frequency progress track */}
-            <div className="space-y-1.5">
-              <div className="flex justify-between text-[9px] text-zinc-500">
-                <span>Curiosity Hook Penetration</span>
-                <strong className="text-emerald-400">{hookPct}%</strong>
-              </div>
-              <div className="h-1.5 bg-zinc-800/80 rounded-full overflow-hidden border border-zinc-200 relative">
-                <div 
-                  className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500 shadow-[0_0_6px_rgba(16,185,129,0.3)]" 
-                  style={{ width: `${hookPct}%` }} 
-                />
-              </div>
-              <p className="text-[8.5px] text-zinc-500 leading-normal">
-                {hookPct >= 70 
-                  ? "Exceptional use of cognitive pattern interrupts (numbers, questions, triggers)." 
-                  : hookPct >= 40 
-                  ? "Moderate hook usage. Introduce more curiosity tension into titles." 
-                  : "Low hook penetration. Most titles are structured around generic descriptive concepts."}
-              </p>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <div>
-              <span className="text-[9px] text-zinc-500 uppercase tracking-wider block mb-0.5">Audience Psychology Profile</span>
-              <p className="text-zinc-600 leading-relaxed text-[11px]">
-                {cleanNiche === "Education" 
-                  ? "Concept-first validation. The titles trigger cognitive tension by addressing hidden gaps in existing knowledge or offering immediate structural clarity."
-                  : cleanNiche === "Tech"
-                  ? "Authority-driven urgency. The titles trigger a high-stakes FOMO or caution, prompting developers to validate their toolchain decisions."
-                  : cleanNiche === "Gaming"
-                  ? "Narrative stakes projection. The titles frame the player as a challenger, creating immediate curiosity about whether they will succeed or fail."
-                  : "High curiosity draw. Focuses on relatable human stakes, suspenseful questions, and high-impact emotional hooks."
-                }
-              </p>
-            </div>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Title Fixes & Inspiration",
-      icon: Sparkles,
-      glowColor: "from-amber-500/20 to-orange-500/10 border-amber-500/20",
-      iconColor: "text-amber-400",
-      badge: "Actionable Advice",
-      summary: "Specific ways to fix your title and examples of what works in your niche.",
-      content: (
-        <div className="space-y-4 pt-2 text-xs">
-          <div className="p-4 rounded-xl bg-amber-500/[0.02] border border-amber-500/10 space-y-2">
-            <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest block flex items-center gap-1">
-              <CheckCircle2 className="w-3 h-3" /> What makes a good title here?
-            </span>
-            <p className="text-zinc-600 leading-relaxed">
-              {cleanNiche === "Education" 
-                ? "In Education, titles must promise a specific outcome or clarify a complex topic instantly. Avoid vague words; use clear, strong action verbs."
-                : cleanNiche === "Gaming" 
-                ? "Gaming titles need high stakes and emotional contrast. Focus on the hardest challenge, the most OP build, or a massive failure/success."
-                : cleanNiche === "Tech" 
-                ? "Tech titles thrive on speed, money, or warnings. 'Do NOT buy X' or 'I built X in 10 minutes' work incredibly well."
-                : "A good title must immediately create a curiosity gap—give them half the story and make them click to find out the rest."}
-            </p>
-          </div>
-
-          <div className="p-4 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-3">
-            <span className="text-[10px] font-bold text-black uppercase tracking-widest block flex items-center gap-1">
-              <AlertCircle className="w-3 h-3 text-zinc-500" /> Ways to Fix Your Title
-            </span>
-            <ul className="space-y-2 text-zinc-500 list-disc pl-4 marker:text-zinc-600">
-              <li><strong>Cut the fluff:</strong> Remove the first 2-3 words if they don't add immediate value or curiosity.</li>
-              <li><strong>Increase the stakes:</strong> Ask yourself: "What happens if they don't click?" Add words that imply missing out.</li>
-              <li><strong>Front-load the hook:</strong> Put the most exciting or emotional word in the first 20 characters so it doesn't get cut off on mobile.</li>
-            </ul>
-          </div>
-
-          <div className="p-4 rounded-xl bg-emerald-500/[0.02] border border-emerald-500/10 space-y-3">
-            <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block flex items-center gap-1">
-              <Trophy className="w-3 h-3" /> Top Performing Inspirations
-            </span>
-            <div className="space-y-2">
-              {topPerformedTitles.length >= 3 ? (
-                topPerformedTitles.slice(0, 3).map((t, i) => (
-                  <div key={i} className="p-2 bg-emerald-500/5 rounded border border-emerald-500/10 text-zinc-700 italic">
-                    "{t}"
-                  </div>
-                ))
-              ) : (
-                <>
-                  <div className="p-2 bg-emerald-500/5 rounded border border-emerald-500/10 text-zinc-700 italic">
-                    {cleanNiche === "Gaming" ? `"I Survived 100 Days in Hardcore..."` : `"The Truth About [Trending Topic]"`}
-                  </div>
-                  <div className="p-2 bg-emerald-500/5 rounded border border-emerald-500/10 text-zinc-700 italic">
-                    {cleanNiche === "Tech" ? `"Why I Stopped Using [Popular Tool]"` : `"I Tried [X] So You Don't Have To"`}
-                  </div>
-                  <div className="p-2 bg-emerald-500/5 rounded border border-emerald-500/10 text-zinc-700 italic">
-                    {`"How To [Desirable Outcome] In 2024"`}
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Performance Pattern Engine",
-      icon: TrendingUp,
-      glowColor: "from-blue-500/20 to-indigo-500/10 border-blue-500/20",
-      iconColor: "text-blue-400",
-      badge: "Upload Diagnostics",
-      summary: "Evaluates title-view correlations and identifies outlier characteristics.",
-      content: (
-        <div className="space-y-3 pt-2 text-xs">
-          {hasRealVideos ? (
-            <div className="space-y-2.5">
-              {topPerformedTitles.length > 0 && (
-                <div className="p-3 rounded-xl bg-emerald-500/[0.02] border border-emerald-500/10 space-y-1">
-                  <span className="text-[9px] text-emerald-400 uppercase tracking-wider font-bold block">Winning Format Trigger</span>
-                  <div className="text-zinc-700 font-semibold italic text-[11px]">"{topPerformedTitles[0]}"</div>
-                  <p className="text-[10px] text-zinc-500 leading-normal pt-1">
-                    This high-performer utilizes clear concept visualization. Titles structured with active problem-framing outperform your baseline views by average.
-                  </p>
-                </div>
-              )}
-              {underPerformedTitles.length > 0 && (
-                <div className="p-3 rounded-xl bg-rose-500/[0.02] border border-rose-500/10 space-y-1">
-                  <span className="text-[9px] text-rose-400 uppercase tracking-wider font-bold block">Friction Point Trap</span>
-                  <div className="text-zinc-700 font-semibold italic text-[11px]">"{underPerformedTitles[0]}"</div>
-                  <p className="text-[10px] text-zinc-500 leading-normal pt-1">
-                    Underperforming layouts often suffer from higher character length and lack of clear emotional stake in the first 40 characters.
-                  </p>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="space-y-2.5">
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
-                <span className="text-[9px] text-blue-400 uppercase tracking-wider font-bold block">Typical Niche Outperformers</span>
-                <p className="text-zinc-600 leading-normal text-[11px]">
-                  {cleanNiche === "Education"
-                    ? "Explainers answering 'Why X is ruined' or 'How X actually works' see +38% higher view velocity than standard tutorials."
-                    : cleanNiche === "Tech"
-                    ? "Trend-forecasting or architectural reviews with strong negatives ('Avoid this framework') generate +45% higher CTR."
-                    : "Narrative survival logs or challenge runs draw the highest home feed browse audience."
-                  }
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
-      )
-    },
-    {
-      title: "Niche Positioning Engine",
-      icon: Sliders,
-      glowColor: "from-purple-500/20 to-pink-500/10 border-purple-500/20",
-      iconColor: "text-purple-400",
-      badge: "Market Differentiators",
-      summary: "Tracks content archetype, positioning value, and channel competitive edge.",
-      content: (
-        <div className="space-y-2.5 pt-2 text-xs">
-          <div className="grid grid-cols-2 gap-2">
-            <div className="p-2.5 rounded-xl bg-white/[0.02] border border-zinc-200">
-              <span className="text-[9px] text-zinc-500 block mb-0.5 uppercase tracking-wider">Content Archetype</span>
-              <strong className="text-zinc-700 block font-bold">
-                {cleanNiche === "Education" ? "The Concept Architect"
-                 : cleanNiche === "Tech" ? "The Tech Explainer"
-                 : cleanNiche === "Gaming" ? "The Stakes Storyteller"
-                 : "The Trend Curator"}
-              </strong>
-            </div>
-            <div className="p-2.5 rounded-xl bg-white/[0.02] border border-zinc-200">
-              <span className="text-[9px] text-zinc-500 block mb-0.5 uppercase tracking-wider">Niche Authority</span>
-              <strong className="text-zinc-700 block font-bold">Top 8% Authority</strong>
-            </div>
-          </div>
-          <div>
-            <span className="text-[9px] text-zinc-500 uppercase tracking-wider block mb-0.5">Competitive Advantage</span>
-            <p className="text-zinc-600 leading-normal text-[11px]">
-              {cleanNiche === "Education" 
-                ? "Translating dense academic concept schemas into highly structured visual animations. The zero-fluff approach creates high credibility."
-                : cleanNiche === "Tech"
-                ? "Immediate practical proof. Showing real code execution and architecture builds absolute developer authority."
-                : "Dynamic pacing paired with structured storyline rules makes standard gameplay footages feel cinematic."
-              }
-            </p>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Competitor Domination",
-      icon: Trophy,
-      glowColor: "from-amber-500/20 to-orange-500/10 border-amber-500/20",
-      iconColor: "text-amber-400",
-      badge: "Feed Placement Gaps",
-      summary: "Compares title strategies and thumbnail visual design with key competitors.",
-      content: (
-        <div className="space-y-2.5 pt-2 text-xs">
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
-            <span className="text-[9px] text-zinc-500 uppercase tracking-wider block font-bold">The Competitor Gap</span>
-            <p className="text-zinc-600 leading-normal text-[11px]">
-              {cleanNiche === "Education"
-                ? "Competitors are making standard textbook explainers. Your gap is the 'historical case study' angle: explaining the math/science through real world disasters."
-                : cleanNiche === "Tech"
-                ? "Most coding channels upload superficial syntax lists. Your gap is high-level design patterns: 'How top tech companies scale X'."
-                : "Generic gameplay dumps are overcrowded. Leverage deep challenge storyboards with specific rule boundaries."
-              }
-            </p>
-          </div>
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
-            <span className="text-[9px] text-zinc-500 uppercase tracking-wider block font-bold">Thumbnail Style Gap</span>
-            <p className="text-zinc-600 leading-normal text-[11px]">
-              {cleanNiche === "Education" || cleanNiche === "Tech"
-                ? "Niche is saturated with bright, messy text overlays and default brand logos. A sleek, minimal layout featuring a glowing graphic vector on solid dark background has 2.4x higher feed standout."
-                : "Feed is crowded with standard faces. A split composition showing clear, high-contrast action outcomes triggers immediate clicks."
-              }
-            </p>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Audience Retention Psychology",
-      icon: Zap,
-      glowColor: "from-red-500/20 to-orange-500/10 border-red-500/20",
-      iconColor: "text-red-400",
-      badge: "Behavioral Retention",
-      summary: "Examines click intent vs return viewer rate and conceptual hook pacing.",
-      content: (
-        <div className="space-y-3 pt-2 text-xs">
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
-            <span className="text-[9px] text-zinc-500 uppercase tracking-wider block font-bold">Click vs. Return Rates</span>
-            <p className="text-zinc-600 leading-normal text-[11px]">
-              {cleanNiche === "Education" || cleanNiche === "Tech"
-                ? "Your search-traffic videos convert high intent clicks but fail to build return subscriber browse loops. Solve this by framing the end of the video as a teaser for your next concept."
-                : "Your browse viewers are highly loyal, but click conversion (CTR) fluctuates. Streamline thumbnail visual elements to reduce mental load."
-              }
-            </p>
-          </div>
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
-            <span className="text-[9px] text-zinc-500 uppercase tracking-wider block font-bold">Curiosity Optimization</span>
-            <p className="text-zinc-600 leading-normal text-[11px]">
-              Keep the thumbnail completely clear (single focal symbol) so the viewer understands the subject in 0.1s. Use the title to inject the tension or paradox (why the default option fails).
-            </p>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Visual Evolution Engine",
-      icon: Tv,
-      glowColor: "from-cyan-500/20 to-blue-500/10 border-cyan-500/20",
-      iconColor: "text-cyan-400",
-      badge: "Format Fatigue Detector",
-      summary: "Monitors repetition decay and ensures visual branding consistency.",
-      content: (
-        <div className="space-y-3 pt-2 text-xs">
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1.5">
-            <span className="text-[9px] text-zinc-500 uppercase tracking-wider block font-bold">Format Fatigue Level</span>
-            <div className="flex items-center gap-2">
-              <div className="flex-1 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
-                <div className={cn("h-full rounded-full transition-all duration-500", fatigueColorClass)} style={{ width: `${fatiguePct}%` }} />
-              </div>
-              <span className={cn("text-[10px] font-bold", fatigueTextClass)}>{fatigueLabel} ({fatiguePct}%)</span>
-            </div>
-            <p className="text-[10px] text-zinc-500 leading-normal pt-1">
-              {fatigueDesc}
-            </p>
-          </div>
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
-            <span className="text-[9px] text-zinc-500 uppercase tracking-wider block font-bold">Visual Branding Strength</span>
-            <p className="text-zinc-600 leading-normal text-[11px]">
-              Consistent typography and dark backdrops build recognizable presence. Enhance branding by locking in 2 accent colors (e.g. Electric Cyan and Neon Orange) for your glowing elements.
-            </p>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Channel Growth Bottlenecks",
-      icon: AlertCircle,
-      glowColor: "from-rose-500/20 to-red-500/10 border-rose-500/20",
-      iconColor: "text-rose-400",
-      badge: "Core Friction Areas",
-      summary: "Identifies the top obstacles preventing organic algorithm seed expansion.",
-      content: (
-        <div className="space-y-2.5 pt-2 text-xs">
-          <div className="p-3 rounded-xl bg-rose-500/[0.01] border border-rose-500/10 space-y-1">
-            <span className="text-[9px] text-rose-400 uppercase tracking-wider font-bold block">1. Intro Value Lag</span>
-            <p className="text-zinc-600 leading-relaxed text-[11px]">
-              Your video intro retention curve drops significantly in the first 15 seconds. Cut out the pleasantries, general channel definitions, and greetings. Jump straight into visual proof of the title's claim.
-            </p>
-          </div>
-          <div className="p-3 rounded-xl bg-rose-500/[0.01] border border-rose-500/10 space-y-1">
-            <span className="text-[9px] text-rose-400 uppercase tracking-wider font-bold block">2. Framework Over-Siloing</span>
-            <p className="text-zinc-600 leading-relaxed text-[11px]">
-              Focusing too heavily on a single technical tool or mathematical sub-topic limits the size of the seeded viewer pool. Frame titles around broad developer/student issues.
-            </p>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Blue Ocean Opportunity",
-      icon: Globe,
-      glowColor: "from-emerald-500/20 to-emerald-500/10 border-emerald-500/20",
-      iconColor: "text-emerald-400",
-      badge: "Untapped Styles",
-      summary: "Identifies high-value, low-competition content concepts and styles.",
-      content: (
-        <div className="space-y-2.5 pt-2 text-xs">
-          <div className="p-3 rounded-xl bg-emerald-500/[0.01] border border-emerald-500/10 space-y-1">
-            <span className="text-[9px] text-emerald-400 uppercase tracking-wider font-bold block">High-Stakes Explainer Series</span>
-            <p className="text-zinc-600 leading-relaxed text-[11px]">
-              {cleanNiche === "Education"
-                ? "Format: 'The Math Mistake that Cost $X Million'. Analyze historic software and structural bugs with deep visual equations."
-                : cleanNiche === "Tech"
-                ? "Format: 'How I built a live SaaS in 60 Minutes'. Highly fast-paced, authority-building software sprints."
-                : "Format: 'I beat X with only 1 HP'. Hardcore game constraint runs framed with emotional narrative arcs."
-              }
-            </p>
-          </div>
-          <div className="p-3 rounded-xl bg-emerald-500/[0.01] border border-emerald-500/10 space-y-1">
-            <span className="text-[9px] text-emerald-400 uppercase tracking-wider font-bold block">Stylistic Leverage</span>
-            <p className="text-zinc-600 leading-relaxed text-[11px]">
-              Utilize vector diagrams, high-resolution static models, and dark, high-contrast layouts. This projects premium value and commands higher CPMs.
-            </p>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Channel Evolution Roadmap",
-      icon: Calendar,
-      glowColor: "from-indigo-500/20 to-purple-500/10 border-indigo-500/20",
-      iconColor: "text-indigo-400",
-      badge: "Strategic Action Timeline",
-      summary: "A concrete schedule of immediate fixes, medium-term scaling, and long-term goals.",
-      content: (
-        <div className="pt-2 text-xs relative pl-4 border-l border-zinc-200 ml-2.5 space-y-5">
-          {/* Step 1 */}
-          <div className="relative">
-            {/* Glowing Bullet */}
-            <div className="absolute -left-[21.5px] top-1 w-2.5 h-2.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.8)] border border-white/20" />
-            <div>
-              <span className="text-[8px] font-bold text-indigo-400 uppercase tracking-widest block">Phase 1: Day 1 - 30</span>
-              <strong className="text-zinc-700 block text-[11px] mt-0.5">Immediate Tuning (Next 30 Days)</strong>
-              <p className="text-zinc-500 text-[10px] leading-relaxed mt-1">
-                Optimize mobile thumbnail text and contrast. Remove intros containing lag or calls-to-action before the main concept hook. Ensure titles are under 55 characters.
-              </p>
-            </div>
-          </div>
-          {/* Step 2 */}
-          <div className="relative">
-            {/* Glowing Bullet */}
-            <div className="absolute -left-[21.5px] top-1 w-2.5 h-2.5 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)] border border-white/20" />
-            <div>
-              <span className="text-[8px] font-bold text-purple-400 uppercase tracking-widest block">Phase 2: Day 30 - 90</span>
-              <strong className="text-zinc-700 block text-[11px] mt-0.5">Format Stabilization (Next 90 Days)</strong>
-              <p className="text-zinc-500 text-[10px] leading-relaxed mt-1">
-                Establish 2 primary repeatable visual templates. Create custom playlists grouping conceptual pathways together to encourage session retention.
-              </p>
-            </div>
-          </div>
-          {/* Step 3 */}
-          <div className="relative">
-            {/* Glowing Bullet */}
-            <div className="absolute -left-[21.5px] top-1 w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] border border-white/20" />
-            <div>
-              <span className="text-[8px] font-bold text-emerald-400 uppercase tracking-widest block">Phase 3: Day 90 - 360</span>
-              <strong className="text-zinc-700 block text-[11px] mt-0.5">Category Domination (Long-term)</strong>
-              <p className="text-zinc-500 text-[10px] leading-relaxed mt-1">
-                Diversify traffic source by launching a companion newsletter/repo to capture off-platform search authority and secure premium CPM sponsorships.
-              </p>
-            </div>
-          </div>
-        </div>
-      )
-    }
-  ]
-
-  if (inline) {
-    return (
-      <div className="space-y-6 !mt-6 pt-6 border-t border-zinc-200 text-left w-full">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-1">
-          <div className="flex items-center gap-2.5 flex-wrap">
-            <h4 className="text-xs md:text-sm font-black text-black uppercase tracking-widest flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-emerald-400 animate-pulse" />
-              Channel DNA Strategic Intelligence
-            </h4>
-            {ytLoading ? (
-              <span className="px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[8px] font-bold uppercase tracking-wider animate-pulse shrink-0">
-                Syncing YT telemetry...
-              </span>
-            ) : ytChannel ? (
-              <span className="px-2.5 py-0.5 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-[8px] font-bold uppercase tracking-wider flex items-center gap-1 shrink-0 shadow-[0_0_12px_rgba(239,68,68,0.1)]">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping" />
-                Live YT Data Active
-              </span>
-            ) : (
-              <span className="px-2 py-0.5 rounded-full bg-zinc-500/10 border border-zinc-500/20 text-zinc-500 text-[8px] font-bold uppercase tracking-wider shrink-0">
-                Niche Benchmarks
-              </span>
-            )}
-          </div>
-          <div className="flex items-center gap-2 self-start sm:self-auto">
-            <button 
-              onClick={expandAll} 
-              className="text-[9px] font-bold text-zinc-500 hover:text-black uppercase tracking-wider transition-all px-2.5 py-1 bg-black/5 hover:bg-black/5 rounded-lg border border-zinc-200 active:scale-95"
-            >
-              Expand All
-            </button>
-            <button 
-              onClick={collapseAll} 
-              className="text-[9px] font-bold text-zinc-500 hover:text-black uppercase tracking-wider transition-all px-2.5 py-1 bg-black/5 hover:bg-black/5 rounded-lg border border-zinc-200 active:scale-95"
-            >
-              Collapse All
-            </button>
-          </div>
-        </div>
-
-        {/* Live Telemetry Stats Summary Grid */}
-        <div className="grid grid-cols-3 gap-3">
-          {/* Card 1 */}
-          <div className="p-3 rounded-2xl bg-white/[0.02] border border-zinc-200 relative overflow-hidden group hover:border-emerald-500/20 transition-all duration-300">
-            <div className="absolute top-0 right-0 w-16 h-16 bg-emerald-500/5 rounded-full blur-xl group-hover:bg-emerald-500/10 transition-all" />
-            <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block mb-1">View Velocity</span>
-            <span className="text-[11px] sm:text-xs md:text-sm font-black text-black block tracking-tight truncate">{viewVelocityStr}</span>
-            <span className="text-[8px] text-zinc-500 block mt-1 font-medium">Recent average</span>
-          </div>
-          {/* Card 2 */}
-          <div className="p-3 rounded-2xl bg-white/[0.02] border border-zinc-200 relative overflow-hidden group hover:border-blue-500/20 transition-all duration-300">
-            <div className="absolute top-0 right-0 w-16 h-16 bg-blue-500/5 rounded-full blur-xl group-hover:bg-blue-500/10 transition-all" />
-            <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block mb-1">Engagement Rate</span>
-            <span className="text-[11px] sm:text-xs md:text-sm font-black text-black block tracking-tight truncate">{engagementRateStr}</span>
-            <span className="text-[8px] text-zinc-500 block mt-1 font-medium">Likes-to-views ratio</span>
-          </div>
-          {/* Card 3 */}
-          <div className="p-3 rounded-2xl bg-white/[0.02] border border-zinc-200 relative overflow-hidden group hover:border-purple-500/20 transition-all duration-300">
-            <div className="absolute top-0 right-0 w-16 h-16 bg-purple-500/5 rounded-full blur-xl group-hover:bg-purple-500/10 transition-all" />
-            <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block mb-1">Video Catalog</span>
-            <span className="text-[11px] sm:text-xs md:text-sm font-black text-black block tracking-tight truncate">{indexedVideosCountStr}</span>
-            <span className="text-[8px] text-zinc-500 block mt-1 font-medium">Telemetry coverage</span>
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-4">
-          {sections.map((sec, idx) => {
-            const Icon = sec.icon
-            const isExpanded = true
-            return (
-              <div 
-                key={idx} 
-                className={cn(
-                  "rounded-2xl border transition-all duration-300 overflow-hidden",
-                  isExpanded 
-                    ? `bg-gradient-to-br ${sec.glowColor} border-t-black/10 shadow-lg shadow-black/20` 
-                    : "border-zinc-200 hover:border-zinc-200 bg-white/[0.01] hover:bg-white/[0.02]",
-                  idx === 8 && "md:col-span-2"
-                )}
-              >
-                <div className="w-full p-4 flex items-center justify-between text-left gap-3 animate-fade-in">
-                  <div className="flex items-center gap-3 min-w-0">
-                    <div className={cn("p-2 rounded-xl bg-black/5 shrink-0", sec.iconColor)}>
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <span className="text-[9px] text-zinc-500 font-medium block uppercase tracking-wider">{sec.badge}</span>
-                      <h5 className="text-xs font-bold text-black truncate">{sec.title}</h5>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="px-4 pb-4 border-t border-zinc-200 bg-black/10">
-                  <p className="text-[10px] text-zinc-500 leading-relaxed mb-3 pt-3">{sec.summary}</p>
-                  {sec.content}
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-    )
+  const hasRealVideos = ytVideos && ytVideos.length > 0;
+  const totalVideos = ytChannel?.videoCount ?? (hasRealVideos ? ytVideos.length : 15);
+  
+  let avgTitleLength = 52;
+  let hookPct = 40;
+  if (hasRealVideos && ytVideos) {
+    const lengths = ytVideos.map(v => v.title.length);
+    avgTitleLength = Math.round(lengths.reduce((a, b) => a + b, 0) / ytVideos.length);
+    const triggerWords = ["why", "how", "secret", "never", "everyone", "wrong", "trap", "insane", "rules"];
+    let hooks = 0;
+    ytVideos.forEach(v => {
+      const lower = v.title.toLowerCase();
+      if (triggerWords.some(w => lower.includes(w)) || /\d+/.test(lower)) hooks++;
+    });
+    hookPct = Math.round((hooks / ytVideos.length) * 100);
   }
 
   return (
-    <div className="bg-white shadow-2xl rounded-2xl border border-zinc-200 p-6 md:p-8 border-zinc-200 rounded-[2rem] h-full flex flex-col justify-between space-y-6 overflow-y-auto scrollbar-thin text-left">
-      <div className="space-y-6">
-        {/* Profile Header */}
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-blue-500 flex items-center justify-center font-bold text-black shadow-lg shadow-emerald-500/20 text-xl border border-white/15 overflow-hidden shrink-0">
-            {ytChannel?.avatarUrl ? (
-              <img src={ytChannel.avatarUrl} alt={ytChannel.title} className="w-full h-full object-cover" />
-            ) : profile.avatar ? (
-              <img src={profile.avatar} alt={profile.youtube_channel} className="w-full h-full object-cover" />
-            ) : (
-              (profile.youtube_channel?.charAt(0) || "C").toUpperCase()
-            )}
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-1.5">
-              <h3 className="text-md font-bold text-black truncate">{ytChannel?.title || profile.full_name || "Creator Pro"}</h3>
-              {ytChannel && <span className="w-3.5 h-3.5 rounded-full bg-red-500 flex items-center justify-center text-[7px] font-black text-black shrink-0" title="Live YouTube Data">▶</span>}
-            </div>
-            <p className="text-xs text-zinc-500 truncate">@{profile.youtube_channel || "handle"}</p>
-          </div>
-          <div className="text-right shrink-0">
-            <span className={`px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest ${ ytChannel ? "bg-red-500/10 border border-red-500/20 text-red-400" : "bg-emerald-500/10 border border-emerald-500/20 text-emerald-400"}`}>
-              {ytChannel ? "Live YT Data" : "DNA Swept"}
-            </span>
-          </div>
+    <div className="bg-white shadow-2xl rounded-2xl border border-zinc-200 p-6 md:p-8 flex flex-col space-y-6 h-full overflow-y-auto scrollbar-thin text-left">
+      <div className="flex items-center gap-4 pb-6 border-b border-zinc-100">
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-blue-500 flex items-center justify-center font-bold text-2xl text-black shrink-0 overflow-hidden shadow-lg shadow-emerald-500/20 border border-emerald-500/20">
+          {ytChannel?.avatarUrl ? <img src={ytChannel.avatarUrl} alt={channelName} className="w-full h-full object-cover" /> : (channelName.charAt(0).toUpperCase())}
         </div>
-
-        {/* Dynamic Audits and Badges */}
-        <div className="grid grid-cols-3 gap-2.5">
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
-            <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block">Subscribers</span>
-            <div className="text-xs font-bold text-black">
-              {ytLoading ? <span className="text-zinc-600 animate-pulse">…</span> : subscriberCount !== null ? Number(subscriberCount).toLocaleString() : "—"}
-            </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2">
+            <h3 className="text-xl font-bold text-black truncate">{channelName}</h3>
+            {ytChannel && <span className="w-3.5 h-3.5 rounded-full bg-red-500 flex items-center justify-center text-[7px] font-black text-black shrink-0" title="Live YouTube Data">▶</span>}
           </div>
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
-            <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block">Total Videos</span>
-            <div className="text-[10px] font-bold text-blue-400 truncate">
-              {ytChannel ? ytChannel.videoCount.toLocaleString() : audit.saturation.split(" ")[0]}
-            </div>
-          </div>
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1">
-            <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest block">Upload Freq.</span>
-            <div className="text-xs font-bold text-emerald-400 truncate">{uploadFrequency}</div>
-          </div>
+          <p className="text-sm text-zinc-500 truncate">@{handle}</p>
         </div>
-
-        {/* 9 Strategic Sections Accordion */}
-        <div className="space-y-3 pt-4 border-t border-zinc-200">
-          <h4 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-1.5 mb-2">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-            CHANNEL DNA STRATEGIC INTELLIGENCE
-          </h4>
-          <div className="space-y-2 max-h-[500px] overflow-y-auto pr-1 scrollbar-thin">
-            {sections.map((sec, idx) => {
-              const Icon = sec.icon
-              const isExpanded = true
-              return (
-                <div 
-                  key={idx} 
-                  className={cn(
-                    "rounded-2xl border transition-all duration-300 overflow-hidden bg-gradient-to-br bg-white/[0.01]",
-                    isExpanded ? `border-white/20 bg-white/[0.02] shadow-lg shadow-black/20` : "border-zinc-200 hover:border-zinc-200 hover:bg-white/[0.02]"
-                  )}
-                >
-                  <div className="w-full p-4 flex items-center justify-between text-left gap-3">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className={cn("p-2 rounded-xl bg-black/5 shrink-0", sec.iconColor)}>
-                        <Icon className="w-4 h-4" />
-                      </div>
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-xs font-bold text-black">{sec.title}</span>
-                          <span className="px-1.5 py-0.5 rounded-[4px] bg-black/5 text-[7px] font-bold uppercase tracking-widest text-zinc-500 border border-zinc-200">
-                            {sec.badge}
-                          </span>
-                        </div>
-                        <p className="text-[10px] text-zinc-500 truncate mt-0.5">{sec.summary}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-4 pt-0 border-t border-zinc-200 text-zinc-600">
-                    {sec.content}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
+        <div className="text-right shrink-0">
+          <div className="text-2xl font-black text-black">{ytLoading ? "..." : (subscriberCount ? Number(subscriberCount).toLocaleString() : "—")}</div>
+          <p className="text-[10px] uppercase font-bold tracking-widest text-zinc-400">Subscribers</p>
         </div>
+      </div>
 
-        {/* Recent Videos — REAL YouTube Data or labelled benchmarks */}
-        <div className="space-y-3 pt-4 border-t border-zinc-200">
-          <div className="flex items-center justify-between">
-            <h4 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-1.5">
-              <TrendingUp className="w-3.5 h-3.5 text-blue-400" />
-              {hasRealVideos ? "Recent Videos (Live from YouTube)" : "Niche Industry Benchmarks"}
-            </h4>
-            {!hasRealVideos && !ytLoading && (
-              <span className="text-[8px] text-amber-500 font-bold uppercase tracking-widest">Not Your Videos</span>
-            )}
-          </div>
+      <div className="flex gap-2 p-1.5 bg-zinc-100/80 rounded-xl">
+        <button onClick={() => setActiveTab("overview")} className={cn("flex-1 py-2.5 text-xs font-bold rounded-lg transition-all", activeTab === "overview" ? "bg-white text-black shadow-sm" : "text-zinc-500 hover:text-black")}>DNA Overview</button>
+        <button onClick={() => setActiveTab("visuals")} className={cn("flex-1 py-2.5 text-xs font-bold rounded-lg transition-all", activeTab === "visuals" ? "bg-white text-black shadow-sm" : "text-zinc-500 hover:text-black")}>Visual Signatures</button>
+        <button onClick={() => setActiveTab("titles")} className={cn("flex-1 py-2.5 text-xs font-bold rounded-lg transition-all", activeTab === "titles" ? "bg-white text-black shadow-sm" : "text-zinc-500 hover:text-black")}>Psychology & Hooks</button>
+      </div>
 
-          {!hasRealVideos && !ytLoading && (
-            <div className="p-3 rounded-xl bg-amber-500/5 border border-amber-500/10 text-[9px] text-amber-400 leading-normal">
-              ⚠️ <strong>Niche benchmarks only.</strong> These are top-performing examples from the {cleanNiche} niche — not your actual uploads.
+      <div className="flex-1">
+        <AnimatePresence mode="wait">
+        {activeTab === "overview" && (
+          <motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-10}} className="space-y-4">
+            <div className="p-5 bg-emerald-500/5 border border-emerald-500/20 rounded-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 opacity-10"><BookOpen className="w-24 h-24 text-emerald-500" /></div>
+              <h4 className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-2 relative z-10">Channel Identity</h4>
+              <p className="text-base font-semibold text-black relative z-10 mb-4 capitalize">{dna?.channel_behavior_profile?.channel_identity || "Entertainment Content"}</p>
+              
+              <h4 className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-2 relative z-10">Core Audience Preference</h4>
+              <p className="text-sm text-zinc-700 relative z-10">{dna?.channel_behavior_profile?.audience_preference || "Visual high-contrast formats."}</p>
             </div>
-          )}
-
-          {ytLoading && (
-            <div className="space-y-2">
-              {[1,2,3].map(i => <div key={i} className="h-16 rounded-xl bg-white/[0.02] animate-pulse" />)}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="p-4 bg-zinc-50 border border-zinc-200 rounded-2xl">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block mb-1">Total Videos</span>
+                <strong className="text-2xl font-black text-black">{totalVideos}</strong>
+              </div>
+              <div className="p-4 bg-zinc-50 border border-zinc-200 rounded-2xl">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block mb-1">Target Niche</span>
+                <strong className="text-lg font-bold text-black">{dna?.niche || profile.niche}</strong>
+              </div>
             </div>
-          )}
+          </motion.div>
+        )}
 
-          <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1 scrollbar-thin">
-            {hasRealVideos ? (
-              ytVideos!.map((vid) => (
-                <a key={vid.videoId} href={vid.youtubeUrl} target="_blank" rel="noopener noreferrer"
-                  className="block p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-2 hover:border-white/15 hover:bg-white/[0.04] transition-all text-xs"
-                >
-                  <div className="flex gap-3 items-start">
-                    {vid.thumbnailUrl && (
-                      <img src={vid.thumbnailUrl} alt={vid.title} className="w-20 h-12 rounded-lg object-cover shrink-0 border border-zinc-200" />
-                    )}
-                    <div className="flex-1 min-w-0 space-y-1">
-                      <div className="flex justify-between items-start gap-2">
-                        <p className="text-xs font-bold text-black line-clamp-2 leading-snug flex-1">{vid.title}</p>
-                        <span className={`px-2 py-0.5 rounded text-[8px] font-black tracking-wider shrink-0 ${vid.statusColor}`}>{vid.status}</span>
-                      </div>
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[9px] text-zinc-500">
-                        <span>👁 <strong className="text-black">{vid.viewCountFormatted} views</strong></span>
-                        <span>👍 <strong className="text-zinc-600">{vid.likeCount.toLocaleString()}</strong></span>
-                        <span className="text-zinc-600">{vid.relativeTime}</span>
-                      </div>
-                      <div className="text-[9px]">
-                        {vid.performanceRatio >= 1.5 ? <span className="text-emerald-400 font-bold">↑ {Math.round((vid.performanceRatio-1)*100)}% above channel avg</span>
-                        : vid.performanceRatio < 0.75 ? <span className="text-rose-400 font-bold">↓ {Math.round((1-vid.performanceRatio)*100)}% below channel avg</span>
-                        : <span className="text-zinc-500">≈ Near channel average</span>}
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              ))
-            ) : (
-              !ytLoading && audit.videos.map((vid: any, i: number) => (
-                <div key={i} className="p-3 rounded-xl bg-white/[0.02] border border-zinc-200 space-y-1.5 text-xs opacity-70">
-                  <div className="flex justify-between items-start gap-2">
-                    <p className="text-xs font-bold text-zinc-600 line-clamp-2 flex-1">{vid.title}</p>
-                    <span className={`px-2 py-0.5 rounded text-[8px] font-black tracking-wider shrink-0 ${vid.statusColor}`}>BENCHMARK</span>
-                  </div>
-                  <div className="text-[9px] text-zinc-600">Niche Avg CTR: <strong className="text-zinc-500">{vid.ctr}</strong></div>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
+        {activeTab === "visuals" && (
+          <motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-10}} className="space-y-4">
+             <div className="p-5 bg-blue-500/5 border border-blue-500/20 rounded-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 opacity-10"><ImageIcon className="w-24 h-24 text-blue-500" /></div>
+              <h4 className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-2 relative z-10">Dominant Visual Style</h4>
+              <p className="text-base font-semibold text-black relative z-10 capitalize">{dna?.channel_behavior_profile?.dominant_thumbnail_style || "Variable Elements"}</p>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="p-4 bg-zinc-50 border border-zinc-200 rounded-2xl">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block mb-1">Avg Brightness</span>
+                <strong className="text-xl font-black text-black">{dna?.visual_style_profile?.average_brightness || 120} <span className="text-sm font-normal text-zinc-400">/ 255</span></strong>
+              </div>
+              <div className="p-4 bg-zinc-50 border border-zinc-200 rounded-2xl">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block mb-1">Subject Framing</span>
+                <strong className="text-sm font-bold text-black truncate block">{dna?.visual_style_profile?.subject_framing_size || "Medium Profile"}</strong>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {activeTab === "titles" && (
+          <motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-10}} className="space-y-4">
+             <div className="p-5 bg-purple-500/5 border border-purple-500/20 rounded-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 opacity-10"><Target className="w-24 h-24 text-purple-500" /></div>
+              <h4 className="text-xs font-bold text-purple-600 uppercase tracking-wider mb-2 relative z-10">Title Framing Pattern</h4>
+              <p className="text-base font-semibold text-black relative z-10 capitalize">{dna?.channel_behavior_profile?.title_pattern || "Standard Discovery"}</p>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="p-4 bg-zinc-50 border border-zinc-200 rounded-2xl">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block mb-1">Average Length</span>
+                <strong className="text-xl font-black text-black">{avgTitleLength} <span className="text-sm font-normal text-zinc-400">chars</span></strong>
+              </div>
+              <div className="p-4 bg-zinc-50 border border-zinc-200 rounded-2xl">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 block mb-1">Curiosity Triggers</span>
+                <strong className="text-xl font-black text-black">{hookPct}% <span className="text-sm font-normal text-zinc-400">usage</span></strong>
+              </div>
+            </div>
+          </motion.div>
+        )}
+        </AnimatePresence>
       </div>
     </div>
   )
