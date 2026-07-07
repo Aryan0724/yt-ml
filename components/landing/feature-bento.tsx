@@ -19,9 +19,9 @@ export function FeatureBento() {
     },
     {
       icon: Users,
-      title: "Sponsorship Matchmaker",
-      description: "Get connected with real brands looking for creators exactly like you, without the middleman.",
-      benefits: ["Direct brand access", "Secure payments", "No agency fees"]
+      title: "Channel DNA Audit",
+      description: "Discover your channel's unique strengths and weaknesses with an AI-driven breakdown of your past performance.",
+      benefits: ["Engagement tracking", "Optimal upload times", "Format stabilization patterns"]
     },
     {
       icon: Bot,
