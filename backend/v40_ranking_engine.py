@@ -40,6 +40,11 @@ class RankingEngineV40:
         row['upload_hour'] = raw.get('upload_hour', 12)
         row['is_weekend'] = raw.get('is_weekend', 0)
         
+        # Determine if it is a Short
+        tl = row['title'].lower()
+        is_short = 1 if row['video_length'] < 65 or '#shorts' in tl or '#tiktok' in tl or '#reels' in tl else 0
+        row['is_short'] = raw.get('is_short', is_short)
+        
         # Authority & Channel DNA
         chan = str(raw.get('channel_title', 'Unknown'))
         row['channel_title'] = chan
@@ -78,6 +83,18 @@ class RankingEngineV40:
         # --- STABILITY CALIBRATION ---
         # 1. Output Calibration: Smooth extreme probabilities
         if breakout_prob > 0.95: breakout_prob = 0.95 + (breakout_prob - 0.95) * 0.1
+        
+        # 2. Boost ML Rank using Classifier
+        # The regressor tends to predict ~50 for everything due to percentile ranking.
+        # If the classifier detects a high breakout probability, we override the safe rank.
+        if breakout_prob > 0.65:
+            # Boost linearly up to S-tier
+            ml_rank = max(ml_rank, 75 + (breakout_prob - 0.65) * 70)
+        elif breakout_prob > 0.45:
+            # Assure at least B-tier if it has moderate breakout traits
+            ml_rank = max(ml_rank, 65)
+            
+        ml_rank = min(ml_rank, 100.0)
         
         # Tiers
         if   ml_rank >= 85: tier = "S-Tier (Viral Breakout)"

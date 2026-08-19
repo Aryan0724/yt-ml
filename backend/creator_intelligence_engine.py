@@ -13,6 +13,10 @@ from v40_accuracy_optimizer import EnsembleAccuracyOptimizer
 from core.channel_dna_engine import ChannelDNAEngine
 from core.competitor_engine import CompetitorEngine
 from core.llm_report_generator import LLMReportGenerator
+from core.retention_predictor import RetentionPredictor
+from core.competitor_clash_engine import CompetitorClashEngine
+from core.ui_clash_engine import UIClashEngine
+from core.mobile_simulator import MobileSimulator
 
 class CreatorIntelligenceEngine:
     def __init__(self, model_dir=None):
@@ -22,10 +26,17 @@ class CreatorIntelligenceEngine:
         self.optimizer = EnsembleAccuracyOptimizer(model_dir)
         self.heuristics = HeuristicAnalyzer({}) # V40 doesn't use cat_stats here
         self.confidence_system = ConfidenceSystem()
-        self.version = "2.0-ULTIMATE-INTELLIGENCE"
+        self.version = "4.0-DEEP-LOGIC-AMPLIFIED"
         self.channel_dna_engine = ChannelDNAEngine()
         self.competitor_engine = CompetitorEngine()
         self.llm_generator = LLMReportGenerator()
+        
+        # New Deep Logic Layers
+        self.retention_predictor = RetentionPredictor()
+        self.clash_engine = CompetitorClashEngine()
+        self.ui_clash_engine = UIClashEngine()
+        self.mobile_simulator = MobileSimulator()
+        
         self.last_input = None
         self.last_output = None
 
@@ -70,7 +81,43 @@ class CreatorIntelligenceEngine:
         elif style_match < 40:
             blended = blended * 0.85  # Penalty for deviating from what works in their niche
             
-        blended = min(99.0, blended)
+        # --- NEW: Deep Logic Penalty Check ---
+        retention_data = self.retention_predictor.analyze_retention_risk(title, raw_input)
+        if retention_data["score_penalty"] > 0:
+            blended -= retention_data["score_penalty"]
+            h_results['weaknesses'].append(retention_data["retention_warning"])
+            
+        palette_desc = raw_input.get("palette_desc", "Neutral")
+        saturation_score = raw_input.get("saturation_score", 50.0)
+        
+        clash_data = self.clash_engine.analyze_feed_clash(category, palette_desc, saturation_score)
+        if clash_data["feed_clash_risk"]:
+            blended -= clash_data["feed_clash_penalty"]
+            h_results['weaknesses'].append(clash_data["feed_recommendation"])
+        else:
+            h_results['strengths'].append(clash_data["feed_recommendation"])
+            
+        # Part 2 Features: UI Clash & Mobile Simulator
+        ui_clash_data = self.ui_clash_engine.analyze_ui_clash(
+            raw_input.get("face_boxes", []), 
+            raw_input.get("text_boxes", []) # Assuming we pass this from OCR
+        )
+        if ui_clash_data["ui_clash_risk"]:
+            blended -= ui_clash_data["ui_clash_penalty"]
+            for w in ui_clash_data["ui_warnings"]:
+                h_results['weaknesses'].append(w)
+                
+        mobile_data = self.mobile_simulator.simulate_dim_screen(
+            float(raw_input.get("brightness", 128.0)),
+            float(raw_input.get("contrast_score", 50.0)),
+            int(raw_input.get("text_density", 0))
+        )
+        if mobile_data["mobile_stress_failure"]:
+            blended -= mobile_data["mobile_stress_penalty"]
+            for w in mobile_data["mobile_warnings"]:
+                h_results['weaknesses'].append(w)
+            
+        blended = min(99.0, max(1.0, blended))
 
         # 5. Tier Assignment
         if blended >= 85: tier = "S"
@@ -132,21 +179,15 @@ class CreatorIntelligenceEngine:
         # Create a copy of the improvements for later validation comparison
         self.last_output = {"improvements": h_results["improvements"]}
 
-        # NEW: Enhance improvements with LLM & generate executive summary
-        enhanced_improvements = self.llm_generator.generate_intelligent_improvements(raw_input, h_results['improvements'], dna_profile=dna_profile)
-        executive_summary = self.llm_generator.generate_executive_summary(
-            raw_input, blended, tier, None, h_results['strengths'], h_results['weaknesses'], dna_profile=dna_profile
+        # NEW: Generate Unified Master Report
+        master_report = self.llm_generator.generate_master_report(
+            raw_input, blended, tier, h_results['strengths'], h_results['weaknesses'], dna_profile=dna_profile
         )
-        dna_alignment_analysis = self.llm_generator.generate_dna_alignment_insight(raw_input, dna_profile, tier)
-        action_plan = self.llm_generator.generate_action_plan(raw_input, tier, h_results['strengths'], h_results['weaknesses'])
-        h_results['improvements'] = enhanced_improvements
 
         # 8. Build Final Structure
         output = {
             "engine_version": self.version,
-            "executive_summary": executive_summary,
-            "dna_alignment_analysis": dna_alignment_analysis,
-            "action_plan": action_plan,
+            "master_report": master_report,
             "score": int(blended),
             "tier": tier,
             "confidence": conf['confidence'],
@@ -157,7 +198,7 @@ class CreatorIntelligenceEngine:
             "factors": h_results['factors'],
             "strengths": h_results['strengths'],
             "weaknesses": h_results['weaknesses'],
-            "improvements": h_results['improvements'],
+            "improvements": h_results['improvements'], # Keep heuristic improvements for UI metrics if needed
             "channel_dna": dna_profile,
             "competitor_analysis": competitor_profile,
             "safe_vs_breakout": {

@@ -62,6 +62,13 @@ for row in all_samples:
     if 'sub_count' in row:
         inp['sub_count'] = row['sub_count']
         
+    if 'video_length' in row and str(row['video_length']).strip() != '':
+        inp['video_length'] = float(row['video_length'])
+    else:
+        # If it's from the external samples and missing video_length, 
+        # let's assume standard length UNLESS it has short keywords
+        pass
+        
     # Derive actual tier for external samples from view_count
     if 'view_count' in row and not row.get('success_tier'):
         vc = int(float(row.get('view_count', 0)))

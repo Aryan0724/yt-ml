@@ -15,7 +15,7 @@ def train_models():
         'title', 'category', 'channel_title', 'face_count', 'brightness', 
         'video_length', 'title_length', 'is_question', 
         'has_bracket', 'upload_hour', 'is_weekend',
-        'est_sub_count', 'authority_score'
+        'est_sub_count', 'authority_score', 'is_short'
     ]
     
     text_features = ['title']
@@ -36,6 +36,9 @@ def train_models():
     else:
         df['est_sub_count'] = 1000
         df['authority_score'] = 1.0
+        
+    # Derive is_short feature
+    df['is_short'] = ((df['video_length'] < 65) | (df['title'].str.lower().str.contains('#shorts|#tiktok|#reels'))).astype(int)
         
     # Ensure all features exist and fill NaNs
     for f in features:
@@ -65,7 +68,7 @@ def train_models():
         
     print("Training CatBoostRegressor (V4.0 Native NLP)...")
     regressor = CatBoostRegressor(
-        iterations=300, 
+        iterations=600, 
         learning_rate=0.1, 
         depth=6, 
         text_features=text_features, 
@@ -79,9 +82,10 @@ def train_models():
     
     print("Training CatBoostClassifier (V4.0 Breakout Detector)...")
     classifier = CatBoostClassifier(
-        iterations=200,
+        iterations=400,
         learning_rate=0.1,
         depth=6,
+        auto_class_weights='Balanced',
         text_features=text_features,
         cat_features=cat_features,
         verbose=50
