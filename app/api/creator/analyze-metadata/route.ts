@@ -31,9 +31,10 @@ export async function POST(req: Request) {
     } catch (localErr: any) {
       console.warn("Local python connection failed:", localErr.message)
       
-      // Try remote railway backend next (essential for Vercel production deployments)
+      // Try remote backend next (essential for Vercel production deployments)
       try {
-        const response = await fetch("https://yt-ml-production-870b.up.railway.app/analyze-metadata", {
+        const remoteUrl = process.env.PYTHON_BACKEND_URL || "https://yt-ml-production-870b.up.railway.app/analyze-metadata";
+        const response = await fetch(remoteUrl, {
           method: "POST",
           body: formData,
           headers: {

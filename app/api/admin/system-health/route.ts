@@ -95,7 +95,8 @@ export async function GET() {
   let remoteBackendPing = 0
   try {
     const rStart = Date.now()
-    const res = await fetch("https://yt-ml-production-870b.up.railway.app/", { signal: AbortSignal.timeout(1500) })
+    const remoteUrl = process.env.PYTHON_BACKEND_URL || "https://yt-ml-production-870b.up.railway.app";
+    const res = await fetch(remoteUrl, { signal: AbortSignal.timeout(1500) })
     if (res.ok) {
       remoteBackendStatus = "Online"
       remoteBackendPing = Date.now() - rStart
