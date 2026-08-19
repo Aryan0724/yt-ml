@@ -12,4 +12,5 @@ scikit-learn
 opencv-python-headless
 Pillow
 google-genai
-python-dotenv
+textblob
+google-api-python-client
