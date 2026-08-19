@@ -1,5 +1,4 @@
 import { MetadataRoute } from "next"
-import { supabaseServer } from "@/lib/supabase-server"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://preyt.integralgroups.in"
@@ -32,26 +31,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   })
 
-  // 2. Dynamic Blog Posts from Supabase
-  try {
-    const { data: posts, error } = await supabaseServer
-      .from("blogs")
-      .select("slug, updated_at")
-      .eq("status", "Published")
-
-    if (!error && posts && posts.length > 0) {
-      const dynamicBlogRoutes = posts.map((post) => ({
-        url: `${baseUrl}/blog/${post.slug}`,
-        lastModified: post.updated_at ? new Date(post.updated_at) : new Date(),
-        changeFrequency: "weekly" as const,
-        priority: 0.7
-      }))
-
-      return [...staticRoutes, ...dynamicBlogRoutes]
-    }
-  } catch (err) {
-    console.error("Sitemap dynamic parsing failed, using static fallback:", err)
-  }
-
+  // 2. Return all active routes (blog posts will be handled by VPS later)
   return staticRoutes
 }
