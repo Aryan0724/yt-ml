@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import Script from "next/script";
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { PostHogProvider } from "./posthog-provider";
 import PostHogPageView from "./posthog-pageview";
 
@@ -23,19 +23,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-[#FAF9F6] text-zinc-900`} suppressHydrationWarning>
         <div className="fixed inset-0 pointer-events-none z-50 bg-noise opacity-[0.015] mix-blend-overlay" />
-        {/* Google Analytics (gtag.js) */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-XBGTFZ9358"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-XBGTFZ9358');
-          `}
-        </Script>
+        {/* Google Analytics & Google Tag via Official Next.js Integration */}
+        <GoogleAnalytics gaId="G-XBGTFZ9358" />
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
