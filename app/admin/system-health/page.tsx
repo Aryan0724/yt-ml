@@ -12,7 +12,7 @@ export default function SystemHealthDesk() {
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
   const [data, setData] = useState<any>(null)
-  const [activeTab, setActiveTab] = useState<"infra" | "telemetry" | "payload">("infra")
+  const [activeTab, setActiveTab] = useState<"telemetry" | "payload">("telemetry")
 
   const fetchHealth = async () => {
     try {
@@ -82,29 +82,7 @@ export default function SystemHealthDesk() {
       </section>
 
       {/* 2. Key Telemetry Grid */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {/* Supabase connection status */}
-        <div className="p-6 rounded-[1.5rem] glass-card border-white/5 hover:border-white/10 transition-all space-y-4">
-          <div className="flex justify-between items-center">
-            <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Supabase Engine</span>
-            <Database className="w-4 h-4 text-purple-400" />
-          </div>
-          <div>
-            <div className="text-2xl font-bold text-white tracking-tight flex items-baseline gap-1.5">
-              {data?.supabase?.status === "Connected" ? (
-                <>
-                  <span>Connected</span>
-                  <span className="text-xs font-mono text-zinc-500">{data?.supabase?.latencyMs}ms</span>
-                </>
-              ) : (
-                <span className="text-rose-500">Offline</span>
-              )}
-            </div>
-            <p className="text-[10px] text-zinc-500 mt-1 truncate">
-              {data?.supabase?.error ? `Err: ${data.supabase.error}` : "All Postgres ledgers online"}
-            </p>
-          </div>
-        </div>
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
         {/* API Pipeline Latency */}
         <div className="p-6 rounded-[1.5rem] glass-card border-white/5 hover:border-white/10 transition-all space-y-4">
@@ -168,12 +146,6 @@ export default function SystemHealthDesk() {
       {/* Tab Navigation */}
       <section className="flex border-b border-white/5 gap-6 text-xs font-bold uppercase tracking-wider">
         <button
-          onClick={() => setActiveTab("infra")}
-          className={`pb-3 transition-all ${activeTab === "infra" ? "text-white border-b-2 border-white" : "text-zinc-500 hover:text-zinc-300"}`}
-        >
-          Postgres Schema & Tables
-        </button>
-        <button
           onClick={() => setActiveTab("telemetry")}
           className={`pb-3 transition-all ${activeTab === "telemetry" ? "text-white border-b-2 border-white" : "text-zinc-500 hover:text-zinc-300"}`}
         >
@@ -196,67 +168,7 @@ export default function SystemHealthDesk() {
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.2 }}
         >
-          {/* TAB 1: INFRASTRUCTURE & TABLES */}
-          {activeTab === "infra" && (
-            <div className="p-8 rounded-[2rem] glass-card border-white/5 space-y-6">
-              <div>
-                <h3 className="text-lg font-display font-bold text-white flex items-center gap-2">
-                  <Database className="w-4 h-4 text-blue-500" /> Database Schema Integrity Audit
-                </h3>
-                <p className="text-xs text-zinc-500 mt-0.5">Verification of schema bindings, table structures, and record counts across Supabase.</p>
-              </div>
-
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="border-b border-white/10 text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
-                      <th className="pb-4">Table Name</th>
-                      <th className="pb-4">Status</th>
-                      <th className="pb-4">Active Rows</th>
-                      <th className="pb-4">Integrity State / Error Detail</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-white/5 text-xs">
-                    {data?.tablesAudit && Object.keys(data.tablesAudit).map((table) => {
-                      const tData = data.tablesAudit[table]
-                      return (
-                        <tr key={table} className="hover:bg-white/[0.01] transition-all">
-                          <td className="py-4 font-mono font-bold text-zinc-300">{table}</td>
-                          <td className="py-4">
-                            {tData.status === "Active" ? (
-                              <span className="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-widest text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                                <CheckCircle className="w-3 h-3" /> Active
-                              </span>
-                            ) : tData.status === "Missing" ? (
-                              <span className="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-widest text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-                                <AlertCircle className="w-3 h-3" /> Decommissioned
-                              </span>
-                            ) : (
-                              <span className="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-widest text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">
-                                <XCircle className="w-3 h-3" /> Error
-                              </span>
-                            )}
-                          </td>
-                          <td className="py-4 font-mono text-zinc-400">{tData.rowCount !== null ? tData.rowCount : "—"}</td>
-                          <td className="py-4 text-zinc-500 font-mono text-[10px] max-w-xs truncate">
-                            {tData.error ? (
-                              <span className="text-rose-400/80">{tData.error}</span>
-                            ) : tData.status === "Missing" ? (
-                              <span className="text-zinc-500">Unused in Current Schema</span>
-                            ) : (
-                              <span className="text-emerald-400/80">Table binding OK</span>
-                            )}
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          {/* TAB 2: PIPELINE LOGS */}
+          {/* TAB 1: PIPELINE LOGS */}
           {activeTab === "telemetry" && (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Failed Requests log */}
