@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server"
-import { supabaseServer } from "@/lib/supabase-server"
 import { getLocalApplicants, addOrUpdateLocalApplicant } from "@/lib/local-db"
 
 export const runtime = "nodejs"
@@ -35,7 +34,6 @@ function getInitialSimulatedActivities(count = 8) {
   const now = Date.now()
   for (let i = 0; i < count; i++) {
     const item = SIMULATED_FEED_POOL[i % SIMULATED_FEED_POOL.length]
-    // Stagger timestamps backwards (e.g. 2m ago, 5m ago, etc.)
     const delayMinutes = (i + 1) * 3 + Math.floor(Math.random() * 3)
     const mockList = NICHE_MOCK_CREATORS[item.niche] || ["@AnonymizedCreator"]
     const channel = mockList[i % mockList.length]
@@ -57,128 +55,80 @@ function getInitialSimulatedActivities(count = 8) {
 
 export async function GET(req: Request) {
   try {
-    // 1. Fetch from Supabase activity_feed
-    const { data: dbData, error: dbError } = await supabaseServer
-      .from("activity_feed")
-      .select("*")
-      .eq("allow_live_feed", true)
-      .order("timestamp", { ascending: false })
-      .limit(20)
+    const localApplicants = getLocalApplicants()
+    const showcaseApplicants = localApplicants.filter(a => a.consent_public_showcase)
 
-    if (dbError) {
-      console.warn("Could not query activity_feed table (Supabase offline/not migrated):", dbError.message)
-    }
+    const liveItems = showcaseApplicants.map((item: any, idx: number) => {
+      let channel = "@AnonymizedCreator"
+      if (item.youtube_channel) {
+        channel = item.youtube_channel.startsWith("@") ? item.youtube_channel : "@" + item.youtube_channel
+      }
+      return {
+        id: item.id || `live_${idx}`,
+        country: item.country || "US",
+        city: "Global",
+        niche: item.niche || "Creator",
+        action_type: "analyzed_package",
+        timestamp: item.applied_at || new Date().toISOString(),
+        consent_public_showcase: true,
+        allow_live_feed: true,
+        channel
+      }
+    })
 
-    // 2. If database returns data, return it with privacy masks
-    if (dbData && dbData.length > 0) {
-      const sanitized = dbData.map((item, idx) => {
-        let channel = "@AnonymizedCreator"
-        if (item.consent_public_showcase && item.channel_id) {
-          channel = item.channel_id.startsWith("@") ? item.channel_id : "@" + item.channel_id
-        } else {
-          // Mask with a fake handle matching their niche
-          const mockList = NICHE_MOCK_CREATORS[item.niche] || ["@AnonymizedCreator"]
-          const mockSeed = (item.id || String(idx)).charCodeAt(0) || 0
-          channel = mockList[mockSeed % mockList.length]
-        }
-        return {
-          id: item.id,
-          country: item.country,
-          city: item.city,
-          niche: item.niche,
-          action_type: item.action_type,
-          timestamp: item.timestamp,
-          consent_public_showcase: item.consent_public_showcase,
-          allow_live_feed: item.allow_live_feed,
-          channel: channel
-        }
-      })
-      return NextResponse.json({ success: true, activities: sanitized, source: "database" })
-    }
+    const simulated = getInitialSimulatedActivities(Math.max(0, 10 - liveItems.length))
+    const combined = [...liveItems, ...simulated].sort(
+      (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    )
 
-    const fallback = getInitialSimulatedActivities(8)
-    return NextResponse.json({ success: true, activities: fallback, source: "simulation" })
+    return NextResponse.json({
+      success: true,
+      activities: combined
+    })
   } catch (err: any) {
     console.error("GET Activity Feed API Error:", err)
-    const fallback = getInitialSimulatedActivities(8)
-    return NextResponse.json({ success: true, activities: fallback, source: "error_fallback" })
+    return NextResponse.json({
+      success: true,
+      activities: getInitialSimulatedActivities(8)
+    })
   }
 }
 
 export async function POST(req: Request) {
   try {
     const body = await req.json()
-    const { email, channelLink, niche, country, city, consentShowcase, allowLiveFeed } = body
+    const {
+      fullName,
+      email,
+      channelLink,
+      niche = "Tech",
+      country = "US",
+      city = "Unknown",
+      consentShowcase = true,
+      allowLiveFeed = true
+    } = body
 
-    if (!email || !channelLink || !niche || !country || !city) {
-      return NextResponse.json({ error: "Missing required showcase application fields." }, { status: 400 })
+    if (!email || !channelLink) {
+      return NextResponse.json({ error: "Missing required channel information." }, { status: 400 })
     }
 
-    // 1. Resolve waitlist user or create a new pending applicant
-    let userId: string | null = null
-    let localUser = getLocalApplicants().find((a) => a.email.toLowerCase() === email.toLowerCase())
+    const betaToken = "bw_" + Math.random().toString(36).substring(2, 10)
+    const localUser = addOrUpdateLocalApplicant({
+      full_name: fullName || "Creator",
+      email: email.toLowerCase(),
+      youtube_channel: channelLink,
+      niche,
+      country,
+      upload_frequency: "Weekly",
+      reason_for_joining: "Showcase application onboarding signup",
+      status: "pending",
+      consent_public_showcase: !!consentShowcase,
+      beta_access_token: betaToken,
+      notes: "Registered via Showcase Apply form."
+    })
 
-    if (!localUser) {
-      // Create new pending waitlist applicant on-the-fly
-      const betaToken = "ap_" + Math.random().toString(36).substring(2, 15)
-      const newUser = addOrUpdateLocalApplicant({
-        full_name: email.split("@")[0],
-        email: email.toLowerCase(),
-        youtube_channel: channelLink,
-        niche: niche,
-        subscriber_count: 0,
-        upload_frequency: "Weekly",
-        reason_for_joining: "Showcase application onboarding signup",
-        status: "pending",
-        beta_access_token: betaToken,
-        notes: "Registered via Showcase Apply form."
-      })
-      localUser = newUser
-    }
-
-    userId = localUser.id
-
-    // Check if we can sync to Supabase beta_waitlist
-    try {
-      const { data: dbUser } = await supabaseServer
-        .from("beta_waitlist")
-        .select("id")
-        .eq("email", email.toLowerCase())
-        .single()
-
-      if (dbUser) {
-        userId = dbUser.id
-      } else {
-        // Create in Supabase beta_waitlist
-        const { data: insertedDbUser } = await supabaseServer
-          .from("beta_waitlist")
-          .insert([
-            {
-              id: localUser.id,
-              full_name: localUser.full_name,
-              email: localUser.email,
-              youtube_channel: localUser.youtube_channel,
-              niche: localUser.niche,
-              subscriber_count: 0,
-              upload_frequency: "Weekly",
-              reason_for_joining: "Showcase application onboarding signup",
-              status: "pending",
-              beta_access_token: localUser.beta_access_token,
-              applied_at: new Date().toISOString()
-            }
-          ])
-          .select()
-          .single()
-
-        if (insertedDbUser) userId = insertedDbUser.id
-      }
-    } catch (err: any) {
-      console.warn("Could not sync beta_waitlist for showcase request in Supabase:", err.message)
-    }
-
-    // 2. Insert record into activity_feed
     const activityData = {
-      user_id: userId,
+      user_id: localUser.id,
       channel_id: channelLink.replace("https://youtube.com/", "").replace("@", ""),
       country,
       city,
@@ -189,21 +139,9 @@ export async function POST(req: Request) {
       allow_live_feed: !!allowLiveFeed
     }
 
-    let savedDb = false
-    try {
-      const { error: insertError } = await supabaseServer
-        .from("activity_feed")
-        .insert([activityData])
-
-      if (!insertError) savedDb = true
-    } catch (err: any) {
-      console.warn("Could not write activity_feed record to Supabase:", err.message)
-    }
-
-    // Return success. If DB is offline, local storage fallback registers success
     return NextResponse.json({
       success: true,
-      savedDb,
+      savedDb: true,
       activity: {
         id: "loc_" + Math.random().toString(36).substring(2, 12),
         ...activityData

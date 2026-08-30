@@ -1,6 +1,7 @@
 import { NavbarLight } from "@/components/landing/navbar-light"
 import { HeroLight } from "@/components/landing/hero-light"
 import { TrustedBrands } from "@/components/landing/trusted-brands"
+import { RadarPreview } from "@/components/landing/radar-preview"
 import { FeatureBento } from "@/components/landing/feature-bento"
 import { BenefitsSection } from "@/components/landing/benefits-section"
 import { HowItWorks } from "@/components/landing/how-it-works"
@@ -24,8 +25,13 @@ export default function LandingPage() {
             <TrustedBrands />
           </div>
 
+          <div className="relative w-full border-t border-zinc-200 bg-zinc-50/50">
+            <div className="absolute top-0 left-[8%] lg:left-[15%] xl:left-[20%] -translate-y-1/2 bg-[#FAF9F6] px-3 text-[8px] font-mono text-amber-600 font-bold tracking-wider">[ 02 / CREATOR_RADAR ]</div>
+            <RadarPreview />
+          </div>
+
           <div className="relative w-full border-t border-zinc-200">
-            <div className="absolute top-0 left-[8%] lg:left-[15%] xl:left-[20%] -translate-y-1/2 bg-[#FAF9F6] px-3 text-[8px] font-mono text-zinc-450 font-bold tracking-wider">[ 02 / SYSTEM_DIAGNOSTICS ]</div>
+            <div className="absolute top-0 left-[8%] lg:left-[15%] xl:left-[20%] -translate-y-1/2 bg-[#FAF9F6] px-3 text-[8px] font-mono text-zinc-450 font-bold tracking-wider">[ 03 / SYSTEM_DIAGNOSTICS ]</div>
             <FeatureBento />
           </div>
 

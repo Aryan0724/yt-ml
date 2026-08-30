@@ -12,10 +12,10 @@
     "applied_at": "2026-05-18T09:28:16.750Z",
     "beta_access_token": "bw_tthi5r5xa5my6ysc",
     "notes": "",
-    "total_logins": 30,
+    "total_logins": 40,
     "total_analyses": 25,
     "approved_at": "2026-05-18T09:28:53.044Z",
-    "last_login": "2026-05-20T06:00:46.365Z",
+    "last_login": "2026-08-29T16:32:07.030Z",
     "last_analysis_at": "2026-05-18T17:46:11.387Z",
     "consent_public_showcase": true
   },
@@ -90,8 +90,8 @@
     "notes": "",
     "total_logins": 1,
     "total_analyses": 1,
-    "last_login": "2026-07-07T10:10:32.349Z",
-    "last_analysis_at": "2026-07-07T10:12:20.662Z"
+    "last_login": "2026-07-09T12:10:46.562Z",
+    "last_analysis_at": "2026-07-09T06:01:12.829Z"
   },
   {
     "id": "bw_denvb6w3ak",
@@ -108,7 +108,40 @@
     "notes": "",
     "total_logins": 1,
     "total_analyses": 1,
-    "last_login": "2026-07-07T14:44:41.481Z",
+    "last_login": "2026-07-15T13:41:57.696Z",
     "last_analysis_at": "2026-07-07T14:47:09.102Z"
+  },
+  {
+    "id": "bw_mz5jarbay7h",
+    "full_name": "New Tester",
+    "email": "newtester@gmail.com",
+    "youtube_channel": "https://youtube.com/@newtester",
+    "niche": "Tech",
+    "subscriber_count": 15000,
+    "upload_frequency": "Weekly",
+    "reason_for_joining": "Testing new request visibility",
+    "status": "pending",
+    "applied_at": "2026-08-30T14:14:22.948Z",
+    "beta_access_token": "bw_7dzo38r2j6q4lh70",
+    "notes": "",
+    "total_logins": 0,
+    "total_analyses": 0
+  },
+  {
+    "id": "bw_fuwiowks9wb",
+    "full_name": "Tech Explorer Reviewer",
+    "email": "techexplorer@vpscloud.com",
+    "youtube_channel": "https://youtube.com/@TechExplorerReviews",
+    "niche": "Tech & Gadgets",
+    "subscriber_count": 18500,
+    "upload_frequency": "Weekly",
+    "reason_for_joining": "Testing local ledger pipeline without Supabase",
+    "status": "approved",
+    "applied_at": "2026-08-30T18:34:47.004Z",
+    "beta_access_token": "bw_xoqkyr1tfwhrjcbm",
+    "notes": "",
+    "total_logins": 0,
+    "total_analyses": 0,
+    "approved_at": "2026-08-30T18:35:36.127Z"
   }
 ]

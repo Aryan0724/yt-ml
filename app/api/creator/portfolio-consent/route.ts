@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { supabaseServer } from "@/lib/supabase-server"
+import { addOrUpdateLocalApplicant } from "@/lib/local-db"
 import { resolveBetaAuth, normalizeAuthEmail, normalizeAuthToken } from "@/lib/beta-auth"
 
 export const runtime = "nodejs"
@@ -21,16 +21,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Authentication failed." }, { status: 401 })
     }
 
-    // Update Supabase
-    const { error: updateError } = await supabaseServer
-      .from("beta_waitlist")
-      .update({ consent_public_showcase: agreed })
-      .eq("email", emailLower)
-
-    if (updateError) {
-      console.error("[portfolio-consent] error", updateError)
-      return NextResponse.json({ error: "Failed to update preference." }, { status: 500 })
-    }
+    addOrUpdateLocalApplicant({ email: emailLower, consent_public_showcase: agreed })
 
     return NextResponse.json({ success: true, agreed })
   } catch (err: any) {

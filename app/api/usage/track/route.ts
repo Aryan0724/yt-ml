@@ -1,63 +1,45 @@
 import { NextResponse } from "next/server"
-import { supabaseServer } from "@/lib/supabase-server"
+import { getLocalApplicants, saveLocalApplicants } from "@/lib/local-db"
 
 export const runtime = "nodejs"
 
 export async function POST(req: Request) {
   try {
-    const { userId, scanType = "thumbnail_analysis" } = await req.json()
+    const { userId } = await req.json()
     if (!userId) return NextResponse.json({ error: "Missing userId." }, { status: 400 })
 
-    // Fetch current usage
-    const { data: user, error: fetchError } = await supabaseServer
-      .from("beta_waitlist")
-      .select("usage_remaining, daily_usage_limit, total_scans_used, niche, country, status")
-      .eq("id", userId)
-      .single()
+    const localApps = getLocalApplicants()
+    const idx = localApps.findIndex((a) => a.id === userId || a.email.toLowerCase() === String(userId).toLowerCase())
 
-    if (fetchError || !user) {
+    if (idx === -1) {
       return NextResponse.json({ error: "User not found." }, { status: 404 })
     }
+
+    const user = localApps[idx]
 
     if (user.status !== "approved") {
       return NextResponse.json({ error: "User is not an approved beta member." }, { status: 403 })
     }
 
-    if (user.usage_remaining <= 0) {
+    const remaining = user.usage_remaining ?? user.daily_usage_limit ?? 3
+    if (remaining <= 0) {
       return NextResponse.json(
         { error: "Daily scan limit reached. Resets at midnight UTC.", remaining: 0 },
         { status: 429 }
       )
     }
 
-    // Decrement usage_remaining and increment total_scans_used atomically
-    const { data: updated, error: updateError } = await supabaseServer
-      .from("beta_waitlist")
-      .update({
-        usage_remaining: user.usage_remaining - 1,
-        total_scans_used: user.total_scans_used + 1,
-      })
-      .eq("id", userId)
-      .select("usage_remaining, daily_usage_limit, total_scans_used")
-      .single()
-
-    if (updateError) throw updateError
-
-    // Log the scan usage
-    await supabaseServer.from("scan_usage_logs").insert([
-      {
-        user_id: userId,
-        scan_type: scanType,
-        niche: user.niche,
-        country: user.country,
-      },
-    ])
+    user.usage_remaining = remaining - 1
+    user.total_analyses = (user.total_analyses || 0) + 1
+    user.last_analysis_at = new Date().toISOString()
+    localApps[idx] = user
+    saveLocalApplicants(localApps)
 
     return NextResponse.json({
       success: true,
-      remaining: updated?.usage_remaining ?? 0,
-      limit: updated?.daily_usage_limit ?? user.daily_usage_limit,
-      totalScans: updated?.total_scans_used ?? user.total_scans_used + 1,
+      remaining: user.usage_remaining,
+      limit: user.daily_usage_limit || 3,
+      totalScans: user.total_analyses,
     })
   } catch (err: any) {
     console.error("Usage Track Error:", err)

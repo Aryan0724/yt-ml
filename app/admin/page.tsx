@@ -19,8 +19,6 @@ const SPARKLINES = {
 
 export default function AdminMainDashboard() {
   const [loading, setLoading] = useState(true)
-  const [supabaseHealthLoading, setSupabaseHealthLoading] = useState(true)
-  const [supabaseHealth, setSupabaseHealth] = useState<any>(null)
   const [stats, setStats] = useState({
     totalApplications: 0,
     approvedCreators: 0,
@@ -51,40 +49,10 @@ export default function AdminMainDashboard() {
     }
   }
 
-  const loadSupabaseHealth = async () => {
-    try {
-      setSupabaseHealthLoading(true)
-      const [envRes, testRes] = await Promise.all([
-        fetch("/api/debug/env"),
-        fetch("/api/test-supabase"),
-      ])
-      const [envData, testData] = await Promise.all([
-        envRes.json(),
-        testRes.json(),
-      ])
-
-      setSupabaseHealth({
-        envResOk: envRes.ok,
-        testResOk: testRes.ok,
-        envData,
-        testData,
-      })
-    } catch (err: any) {
-      setSupabaseHealth({
-        error: err.message || "Supabase health probe failed.",
-      })
-    } finally {
-      setSupabaseHealthLoading(false)
-    }
-  }
-
   useEffect(() => {
     loadData()
   }, [])
 
-  useEffect(() => {
-    loadSupabaseHealth()
-  }, [])
 
   return (
     <div className="space-y-10">

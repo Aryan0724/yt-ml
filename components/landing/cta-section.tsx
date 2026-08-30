@@ -40,7 +40,7 @@ export function CtaSection() {
               href="/waitlist"
               className="w-full sm:w-auto px-8 py-4 rounded-[4px] bg-[#FF0000] text-white font-mono font-bold text-xs uppercase tracking-widest flex items-center justify-center hover:bg-red-600 transition-all shadow-lg"
             >
-              Apply for Beta
+              Join Waitlist
               <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
             

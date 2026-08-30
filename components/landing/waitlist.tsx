@@ -20,7 +20,7 @@ export function Waitlist() {
                     href="/waitlist" 
                     className="px-10 py-5 rounded-2xl bg-white text-black font-bold text-lg hover:bg-zinc-200 transition-all inline-flex items-center gap-3"
                 >
-                    Apply for Beta Access
+                    Join Waitlist
                     <ArrowRight className="w-5 h-5" />
                 </Link>
             </div>

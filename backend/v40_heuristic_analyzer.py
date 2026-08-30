@@ -1,4 +1,4 @@
-import re
+﻿import re
 import numpy as np
 
 class HeuristicAnalyzer:
@@ -47,8 +47,8 @@ class HeuristicAnalyzer:
                 "current": f"Average brightness is low ({int(brightness)}/255).",
                 "recommended": "Raise brightness levels by 15-20% in the edit/color-grade panel.",
                 "why": "Bright thumbnails draw the eye first in dark mode apps and mobile recommendation scrolls.",
-                "tier": "⚠️ IMPORTANT OPTIMIZATION",
-                "improvement": "+8% to +12% CTR potential"
+                "tier": "âš ï¸ IMPORTANT OPTIMIZATION",
+                "priority": "High"
             })
         elif brightness > 210:
             weaknesses.append("Over-exposed highlights wash out visual details")
@@ -57,8 +57,8 @@ class HeuristicAnalyzer:
                 "current": f"Exposure is overly bright ({int(brightness)}/255).",
                 "recommended": "Lower highlight exposures to recover washed out facial/subject details.",
                 "why": "Blown-out highlights look amateurish and reduce details readability in mobile feeds.",
-                "tier": "ℹ️ POLISH IMPROVEMENT",
-                "improvement": "+3% to +6% CTR potential"
+                "tier": "â„¹ï¸ POLISH IMPROVEMENT",
+                "priority": "High"
             })
         else:
             strengths.append("Luminance contrast fits the optimal thumbnail exposure baseline")
@@ -71,8 +71,8 @@ class HeuristicAnalyzer:
                 "current": f"Luminance contrast is low ({int(contrast_score)}/100).",
                 "recommended": "Apply neon/saturated highlight borders around key focal elements.",
                 "why": "High edge contrast separates foreground subjects from background and speeds up visual processing.",
-                "tier": "🚨 CRITICAL ISSUE",
-                "improvement": "+10% to +18% CTR potential"
+                "tier": "ðŸš¨ CRITICAL ISSUE",
+                "priority": "High"
             })
         else:
             strengths.append("High contrast outlines ensure clear foreground isolation")
@@ -85,8 +85,8 @@ class HeuristicAnalyzer:
                 "current": f"Visual clutter level is high (rating {clutter_level_rating:.1f}/10.0).",
                 "recommended": "Limit composition to 2-3 main focal elements and blur background elements.",
                 "why": "Clean compositions with unified visual focus decrease cognitive load, allowing instant recognition.",
-                "tier": "🚨 CRITICAL ISSUE",
-                "improvement": "+12% to +20% CTR potential"
+                "tier": "ðŸš¨ CRITICAL ISSUE",
+                "priority": "High"
             })
         else:
             strengths.append("Balanced visual clutter allows solid focal points concentration")
@@ -99,8 +99,8 @@ class HeuristicAnalyzer:
                 "current": f"Mobile readability is low ({int(mobile_readability)}%) with text density of {int(text_density)}%.",
                 "recommended": "Restrict thumbnail text to 2-4 words maximum, using bold thicker fonts (e.g. Impact or Outfit).",
                 "why": "Tiny or crowded fonts are illegible on mobile device screens, forcing viewers to skip reading.",
-                "tier": "🚨 CRITICAL ISSUE",
-                "improvement": "+9% to +15% CTR potential"
+                "tier": "ðŸš¨ CRITICAL ISSUE",
+                "priority": "High"
             })
         else:
             strengths.append("Minimal, legible typography ensures strong mobile readability")
@@ -114,16 +114,16 @@ class HeuristicAnalyzer:
                 "current": "No human faces detected to create an emotional connection.",
                 "recommended": "Add custom arrows, question-mark badges, or mystery shadows to tell a visual story.",
                 "why": "In non-face thumbnails, an unresolved mystery element creates curiosity and forces a click.",
-                "tier": "⚠️ IMPORTANT OPTIMIZATION",
-                "improvement": "+8% to +14% CTR potential"
+                "tier": "âš ï¸ IMPORTANT OPTIMIZATION",
+                "priority": "High"
             })
             improvements.append({
                 "title": "Isolate Focal Objects",
                 "current": "Focal subjects blend slightly with background details.",
                 "recommended": "Use radial dark vignettes or color isolation to make the central object POP.",
                 "why": "Without a human anchor, the viewer's eye must land on the main object within 0.3 seconds.",
-                "tier": "ℹ️ POLISH IMPROVEMENT",
-                "improvement": "+5% to +10% CTR potential"
+                "tier": "â„¹ï¸ POLISH IMPROVEMENT",
+                "priority": "High"
             })
         else:
             strengths.append("Human emotional connection established via face detection")
@@ -135,8 +135,8 @@ class HeuristicAnalyzer:
                     "current": f"Faces occupy only {average_face_area_pct:.1f}% of the canvas frame.",
                     "recommended": "Increase character crop scale so faces occupy 18-25% of the thumbnail.",
                     "why": "On tiny phone screens, facial emotions are invisible unless cropped tightly and magnified.",
-                    "tier": "🚨 CRITICAL ISSUE",
-                    "improvement": "+10% to +20% CTR potential"
+                    "tier": "ðŸš¨ CRITICAL ISSUE",
+                    "priority": "High"
                 })
             
             if emotional_visibility_score < 60.0:
@@ -146,8 +146,8 @@ class HeuristicAnalyzer:
                     "current": f"Emotional visibility score is low ({int(emotional_visibility_score)}/100).",
                     "recommended": "Use high-intensity shock, laughter, anger, or curiosity reaction expressions.",
                     "why": "Exaggerated facial expressions trigger mirror neurons in viewers, driving high curiosity clicks.",
-                    "tier": "⚠️ IMPORTANT OPTIMIZATION",
-                    "improvement": "+8% to +16% CTR potential"
+                    "tier": "âš ï¸ IMPORTANT OPTIMIZATION",
+                    "priority": "High"
                 })
 
         # 6. Title Tension & Hook
@@ -161,8 +161,8 @@ class HeuristicAnalyzer:
                 "current": f"Title is only {title_length} characters.",
                 "recommended": "Write a compelling, complete thought (30-60 chars) that sparks curiosity.",
                 "why": "Extremely short or nonsense titles confuse the algorithm and kill CTR.",
-                "tier": "🚨 CRITICAL ISSUE",
-                "improvement": "+15% to +25% CTR potential"
+                "tier": "ðŸš¨ CRITICAL ISSUE",
+                "priority": "High"
             })
         elif hook_score < 0.4:
             weaknesses.append("Title lacks click motivation hook")
@@ -171,8 +171,8 @@ class HeuristicAnalyzer:
                 "current": "Video title is informative but lacks tension or conflict.",
                 "recommended": "Incorporate contradiction, power words ('Secret', 'Mistake'), or extreme stakes.",
                 "why": "Titles that pose an open question or highlight a risk trigger loss aversion, raising CTR.",
-                "tier": "⚠️ IMPORTANT OPTIMIZATION",
-                "improvement": "+7% to +12% CTR potential"
+                "tier": "âš ï¸ IMPORTANT OPTIMIZATION",
+                "priority": "High"
             })
         else:
             strengths.append("Title possesses a strong emotional or curiosity hook")
@@ -189,8 +189,8 @@ class HeuristicAnalyzer:
                     "current": "Thumbnail colors/contrast mimic gaming or entertainment.",
                     "recommended": "Lower saturation and use realistic grading to maintain credibility.",
                     "why": "News audiences associate over-saturation with clickbait or misinformation.",
-                    "tier": "🚨 CRITICAL ISSUE",
-                    "improvement": "+8% to +15% CTR potential"
+                    "tier": "ðŸš¨ CRITICAL ISSUE",
+                    "priority": "High"
                 })
 
         # Fallback safeguard: make sure we always return at least 1-2 improvements
@@ -200,8 +200,8 @@ class HeuristicAnalyzer:
                 "current": "Vibrant colors fall in the standard baseline range.",
                 "recommended": "Increase saturation by 10% in main subject layers.",
                 "why": "Slightly elevated color saturation offsets display dimming on mobile screens.",
-                "tier": "ℹ️ POLISH IMPROVEMENT",
-                "improvement": "+4% to +8% CTR potential"
+                "tier": "â„¹ï¸ POLISH IMPROVEMENT",
+                "priority": "High"
             })
 
         # Return factors, strengths, weaknesses, and structured list of improvements
@@ -211,3 +211,4 @@ class HeuristicAnalyzer:
             "weaknesses": list(set(weaknesses)),
             "improvements": improvements
         }
+

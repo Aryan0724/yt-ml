@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server"
-import { supabaseServer } from "@/lib/supabase-server"
 import { sendEmail, getEmailTemplate } from "@/lib/mailer"
 import { addOrUpdateLocalApplicant } from "@/lib/local-db"
 
@@ -36,65 +35,25 @@ export async function POST(req: Request) {
     const betaToken = "bw_" + Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10)
     const applicantId = "bw_" + Math.random().toString(36).substring(2, 14)
 
-    // Insert into Supabase beta_waitlist (service role bypasses RLS) with local fallback
-    let insertedData: any = null
-    let usingLocal = false
+    // Save directly to self-hosted VPS / local ledger
+    const insertedData = addOrUpdateLocalApplicant({
+      id: applicantId,
+      full_name: fullName.trim(),
+      email: emailLower,
+      youtube_channel: youtubeChannel.trim(),
+      niche: niche || "Other",
+      country: country?.trim() || "Unknown",
+      subscriber_count: subCount,
+      upload_frequency: "Weekly",
+      reason_for_joining: whyJoin.trim(),
+      status: "pending",
+      consent_public_showcase: consent,
+      daily_usage_limit: dailyLimit,
+      usage_remaining: dailyLimit,
+      beta_access_token: betaToken,
+      notes: "",
+    })
 
-    try {
-      const { data, error } = await supabaseServer
-        .from("beta_waitlist")
-        .upsert(
-          [
-            {
-              id: applicantId,
-              full_name: fullName.trim(),
-              email: emailLower,
-              youtube_channel: youtubeChannel.trim(),
-              niche: niche || "Other",
-              country: country?.trim() || "Unknown",
-              subscriber_count: subCount,
-              why_join: whyJoin.trim(),
-              consent_public_showcase: consent,
-              status: "pending",
-              daily_usage_limit: dailyLimit,
-              usage_remaining: dailyLimit,
-              beta_access_token: betaToken,
-              notes: "",
-              total_scans_used: 0,
-            },
-          ],
-          { onConflict: "email" }
-        )
-        .select()
-        .single()
-
-      if (error) throw error
-      insertedData = data
-    } catch (err: any) {
-      console.warn("[waitlist/apply] Supabase insert failed, falling back to local database:", err.message)
-      usingLocal = true
-      try {
-        insertedData = addOrUpdateLocalApplicant({
-          id: applicantId,
-          full_name: fullName.trim(),
-          email: emailLower,
-          youtube_channel: youtubeChannel.trim(),
-          niche: niche || "Other",
-          subscriber_count: subCount,
-          upload_frequency: "Weekly",
-          reason_for_joining: whyJoin.trim(),
-          status: "pending",
-          beta_access_token: betaToken,
-          notes: "",
-        })
-      } catch (localErr: any) {
-        console.error("[waitlist/apply] Local database fallback insert failed:", localErr.message)
-        return NextResponse.json(
-          { error: `Database insert failed: ${err.message || err} (Local fallback also failed: ${localErr.message})` },
-          { status: 500 }
-        )
-      }
-    }
 
     // Format subscriber count for email
     let formattedSubs = `${subCount}`

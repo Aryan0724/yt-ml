@@ -2,18 +2,12 @@
 
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { createClient } from "@supabase/supabase-js"
 import {
   Users, CheckCircle, Clock, Search, ChevronRight, Play,
   FileText, MessageSquare, ShieldAlert, Award, Ban, AlertCircle,
   Sparkles, KeyRound, Mail, Globe, Zap, TrendingUp, Star,
   RefreshCw, ExternalLink, Plus, BarChart3, Flag
 } from "lucide-react"
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-// Supabase client for realtime (uses anon key — safe for browser)
-const supabase = supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null
 
 
 interface Applicant {
@@ -155,32 +149,15 @@ export default function WaitlistDashboard() {
     }
   }
 
-  // Realtime subscription
+  // Live Auto-Ingestion: Polls for newly submitted creator requests every 5 seconds
   useEffect(() => {
-    const realtimeClient = supabase
-    if (!realtimeClient) return
+    loadData()
+    const interval = setInterval(() => {
+      loadData()
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [statusTab, nicheFilter, countryFilter, sortBy])
 
-    realtimeRef.current = realtimeClient
-      .channel("beta_waitlist_changes")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "beta_waitlist" },
-        (payload) => {
-          if (payload.eventType === "INSERT") {
-            setNewEntry(true)
-            setTimeout(() => setNewEntry(false), 5000)
-          }
-          loadData()
-        }
-      )
-      .subscribe()
-
-    return () => {
-      realtimeRef.current?.unsubscribe()
-    }
-  }, [])
-
-  useEffect(() => { loadData() }, [statusTab, nicheFilter, countryFilter, sortBy])
   useEffect(() => {
     setNotesText(selected?.notes || "")
     setSuccessMsg(null)

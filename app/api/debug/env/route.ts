@@ -1,31 +1,25 @@
 import { NextResponse } from "next/server"
-import { supabaseServer } from "@/lib/supabase-server"
-import { getSupabaseRuntimeSnapshot } from "@/lib/supabase-diagnostics"
+import { getLocalApplicants } from "@/lib/local-db"
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
 
 export async function GET() {
-  const snapshot = getSupabaseRuntimeSnapshot()
+  const applicants = getLocalApplicants()
 
-  let dbTest: any = null
-  try {
-    const { data, error } = await supabaseServer
-      .from("beta_waitlist")
-      .select("id")
-      .limit(1)
-
-    dbTest = error
-      ? { ok: false, error: error.message, code: error.code }
-      : { ok: true, rowsFetched: data?.length ?? 0 }
-  } catch (err: any) {
-    dbTest = {
-      ok: false,
-      error: err.message,
-      stack: err.stack,
-      type: "fetch_failed",
+  return NextResponse.json({
+    environment: {
+      runtime: process.env.NEXT_RUNTIME || "nodejs",
+      nodeVersion: process.version,
+      platform: "PreYT Self-Hosted VPS Engine",
+      database: "Local JSON Ledger / VPS Storage",
+      supabaseDecommissioned: true,
+    },
+    ledgerStatus: {
+      ok: true,
+      totalApplicants: applicants.length,
+      approvedCount: applicants.filter(a => a.status === "approved").length,
+      pendingCount: applicants.filter(a => a.status === "pending").length,
     }
-  }
-
-  return NextResponse.json({ snapshot, dbTest })
+  })
 }

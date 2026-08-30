@@ -104,7 +104,7 @@ export default function WaitlistPage() {
               </h1>
               <p className="text-xs font-mono text-zinc-500 leading-relaxed max-w-lg">
                 Access to preYT is reserved for active creators during our early infrastructure phase.
-                Applications are reviewed manually by the Integral Groups Studio engineering team.
+                Waitlist requests are reviewed manually by the Integral Groups Studio engineering team.
               </p>
             </div>
 

@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: preyt-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-preyt}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-preyt_dev_password}
+      POSTGRES_DB: ${POSTGRES_DB:-preyt}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - preyt-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-preyt} -d ${POSTGRES_DB:-preyt}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: preyt-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - preyt-redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: preyt-api
+    restart: unless-stopped
+    env_file:
+      - .env.local
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-preyt}:${POSTGRES_PASSWORD:-preyt_dev_password}@postgres:5432/${POSTGRES_DB:-preyt}
+      REDIS_URL: redis://redis:6379/0
+      PORT: 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - preyt-storage:/var/preyt/storage
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  preyt-pgdata:
+  preyt-redisdata:
+  preyt-storage:

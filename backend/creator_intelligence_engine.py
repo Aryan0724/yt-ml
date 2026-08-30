@@ -40,7 +40,7 @@ class CreatorIntelligenceEngine:
         self.last_input = None
         self.last_output = None
 
-    def analyze_single(self, raw_input: dict) -> dict:
+    def analyze_single(self, raw_input: dict, analysis_id: str = None) -> dict:
         """
         Full structured analysis for a single thumbnail/title.
         """
@@ -100,7 +100,9 @@ class CreatorIntelligenceEngine:
         # Part 2 Features: UI Clash & Mobile Simulator
         ui_clash_data = self.ui_clash_engine.analyze_ui_clash(
             raw_input.get("face_boxes", []), 
-            raw_input.get("text_boxes", []) # Assuming we pass this from OCR
+            raw_input.get("text_boxes", []),
+            raw_input.get("img_width", 1280),
+            raw_input.get("img_height", 720)
         )
         if ui_clash_data["ui_clash_risk"]:
             blended -= ui_clash_data["ui_clash_penalty"]
@@ -179,9 +181,9 @@ class CreatorIntelligenceEngine:
         # Create a copy of the improvements for later validation comparison
         self.last_output = {"improvements": h_results["improvements"]}
 
-        # NEW: Generate Unified Master Report
-        master_report = self.llm_generator.generate_master_report(
-            raw_input, blended, tier, h_results['strengths'], h_results['weaknesses'], dna_profile=dna_profile
+        # NEW: Generate Unified Master Report with isolated AI tracking
+        master_report, ai_result = self.llm_generator.generate_master_report(
+            raw_input, blended, tier, h_results['strengths'], h_results['weaknesses'], analysis_id=analysis_id, dna_profile=dna_profile
         )
 
         # 8. Build Final Structure
@@ -207,6 +209,7 @@ class CreatorIntelligenceEngine:
                 "breakout_score": breakout_score,
                 "breakout_explanation": breakout_explanation
             },
+            "ai": ai_result,
             "raw_metrics": {
                 "ml_score": ml_score,
                 "heuristic_score": mq_score,

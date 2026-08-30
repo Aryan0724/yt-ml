@@ -247,7 +247,7 @@ class RankingEngineV30:
                     'score_after': s,
                     'rank_lift': delta,
                     'impact_level': 'High',
-                    'why': 'Human faces create instant emotional connection. Thumbnails with faces get 38% higher CTR on average.'
+                    'why': 'Human faces create instant emotional connection and stronger stopping power in scroll-based recommendation feeds.'
                 })
                 current['face_count'] = 1
 

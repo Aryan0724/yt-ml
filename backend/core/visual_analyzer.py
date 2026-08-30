@@ -119,6 +119,8 @@ def analyze_image(img: np.ndarray) -> dict:
     mobile_readability = max(10, min(100, int(100 - text_density * 2.5 - clutter_level_rating * 4.0)))
     
     return {
+        "img_width": w,
+        "img_height": h,
         "brightness": brightness,
         "contrast": contrast_str,
         "contrast_score": contrast_score,

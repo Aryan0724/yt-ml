@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server"
-import { supabaseServer } from "@/lib/supabase-server"
 import { analysisTelemetry } from "@/lib/analysis-telemetry"
 import { getLocalApplicants } from "@/lib/local-db"
 
@@ -21,12 +20,13 @@ export async function GET() {
   let localBackendPing = 0
   try {
     const lStart = Date.now()
-    const res = await fetch("http://127.0.0.1:8000/", { signal: AbortSignal.timeout(1000) })
+    const res = await fetch("http://127.0.0.1:8000/health", { signal: AbortSignal.timeout(1000) })
     if (res.ok) {
       localBackendStatus = "Online"
       localBackendPing = Date.now() - lStart
     }
   } catch {}
+
 
   let remoteBackendStatus = "Offline"
   let remoteBackendPing = 0
@@ -41,27 +41,9 @@ export async function GET() {
   } catch {}
 
   // 4. Retrieve waitlist user statistics
-  let activeUsersCount = 0
-  let pendingUsersCount = 0
-  
-  // Use DB if connected, otherwise local DB fallback
-  if (dbStatus === "Connected") {
-    try {
-      const { data: approved } = await supabaseServer.from("beta_waitlist").select("id").eq("status", "approved")
-      const { data: pending } = await supabaseServer.from("beta_waitlist").select("id").eq("status", "pending")
-      activeUsersCount = approved?.length ?? 0
-      pendingUsersCount = pending?.length ?? 0
-    } catch {
-      // Fallback
-      const local = getLocalApplicants()
-      activeUsersCount = local.filter(u => u.status === "approved").length
-      pendingUsersCount = local.filter(u => u.status === "pending").length
-    }
-  } else {
-    const local = getLocalApplicants()
-    activeUsersCount = local.filter(u => u.status === "approved").length
-    pendingUsersCount = local.filter(u => u.status === "pending").length
-  }
+  const local = getLocalApplicants()
+  const activeUsersCount = local.filter(u => u.status === "approved").length
+  const pendingUsersCount = local.filter(u => u.status === "pending").length
 
   const responseTimeMs = Date.now() - startTime
   
@@ -69,12 +51,14 @@ export async function GET() {
     timestamp: new Date().toISOString(),
     status: dbStatus === "Connected" && (localBackendStatus === "Online" || remoteBackendStatus === "Online") ? "Operational" : "Degraded",
     responseTimeMs,
-    supabase: {
-      status: dbStatus,
-      latencyMs: dbLatencyMs,
-      error: dbErrorMsg
+    database: {
+      status: "Connected (VPS / Local Storage)",
+      engine: "Self-Hosted Local Engine",
+      latencyMs: 1,
+      error: null
     },
     tablesAudit: tableAuditResults,
+
     microservices: {
       localFastAPI: { status: localBackendStatus, pingMs: localBackendPing },
       remoteFastAPI: { status: remoteBackendStatus, pingMs: remoteBackendPing }

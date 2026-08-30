@@ -43,7 +43,7 @@ export default function AboutPage() {
                     We don't build tools for everyone. We build for the serious creator who treats their channel like a high-performance system.
                 </p>
                 <a href="/waitlist" className="inline-flex items-center gap-2 px-6 py-3 rounded-[4px] bg-white text-black font-mono font-bold text-[10px] uppercase tracking-widest hover:bg-zinc-100 transition-all shadow-[3px_3px_0px_rgba(255,255,255,0.15)] hover:shadow-none">
-                  Apply for Beta Access →
+                  Join Waitlist →
                 </a>
             </div>
         </section>

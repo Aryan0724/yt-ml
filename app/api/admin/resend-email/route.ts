@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server"
-import { supabaseServer } from "@/lib/supabase-server"
 import { sendEmail, getEmailTemplate } from "@/lib/mailer"
 import { getLocalApplicants } from "@/lib/local-db"
 
@@ -13,26 +12,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing required applicant ID." }, { status: 400 })
     }
 
-    // Retrieve applicant info from local or Supabase
-    let applicant: any = null
+    // Retrieve applicant info from local / VPS ledger
     const localApps = getLocalApplicants()
-    const foundLocal = localApps.find((a) => a.id === id)
+    const applicant = localApps.find((a) => a.id === id)
 
-    if (foundLocal) {
-      applicant = foundLocal
-    } else {
-      try {
-        const { data, error: fetchError } = await supabaseServer
-          .from("beta_waitlist")
-          .select("*")
-          .eq("id", id)
-          .single()
-        
-        if (data) applicant = data
-      } catch (err: any) {
-        console.warn("Supabase fetch failed during email resend, searching local registry:", err.message)
-      }
-    }
 
     if (!applicant) {
       return NextResponse.json({ error: "Applicant not found." }, { status: 404 })

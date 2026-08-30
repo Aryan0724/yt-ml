@@ -59,7 +59,7 @@ export function Navbar() {
             href="/waitlist"
             className="px-5 py-2 rounded-full bg-white text-black text-sm font-semibold hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.1)]"
           >
-            Apply for Beta
+            Join Waitlist
           </Link>
         </div>
 
@@ -93,7 +93,7 @@ export function Navbar() {
               ))}
               <div className="pt-4 flex flex-col gap-4">
                 <Link href="/dashboard" className="text-zinc-400">Sign In</Link>
-                <Link href="/waitlist" className="w-full py-3 text-center rounded-xl bg-white text-black font-bold">Apply for Beta</Link>
+                <Link href="/waitlist" className="w-full py-3 text-center rounded-xl bg-white text-black font-bold">Join Waitlist</Link>
               </div>
             </div>
           </motion.div>

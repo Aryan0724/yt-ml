@@ -27,12 +27,13 @@ export async function GET(req: Request) {
     }
 
     // Reset each user's usage_remaining to their daily_usage_limit
-    const updates = users.map((user) =>
+    const updates = (users || []).map((user: any) =>
       supabaseServer
         .from("beta_waitlist")
         .update({ usage_remaining: user.daily_usage_limit })
         .eq("id", user.id)
     )
+
 
     await Promise.all(updates)
 

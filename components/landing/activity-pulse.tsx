@@ -903,7 +903,7 @@ export function ActivityPulse() {
         <div className="flex w-[200%] animate-marquee whitespace-nowrap gap-12 text-xs font-semibold tracking-wider text-zinc-400 uppercase">
           {[...Array(2)].map((_, idx) => (
             <div key={idx} className="flex shrink-0 justify-around w-1/2 items-center gap-12">
-              <span>Entertainment creators in India optimized search velocity by +42% using emotional contrast</span>
+              <span>Entertainment creators in India improved thumbnail contrast scoring using the PreYT engine</span>
               <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
               <span>Gaming channels in the US optimized 342 thumbnails today</span>
               <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />

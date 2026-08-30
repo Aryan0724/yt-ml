@@ -1,15 +1,11 @@
-import { createClient } from "@supabase/supabase-js"
-import { normalizeEnvValue } from "@/lib/supabase-diagnostics"
+/**
+ * lib/supabase.ts
+ * Supabase has been decommissioned in favor of VPS / self-hosted storage.
+ * Storage utilities safely persist to local storage / local backend.
+ */
+export const isSupabaseConfigured = false
+export const supabase: any = null
 
-const supabaseUrl = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_URL)
-const supabaseAnonKey = normalizeEnvValue(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) || "eyJhbGciOiJIUzI1NiIsInR5cCI6ImFub24iLCJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im91Y3dsbmhiZnlkYXVna21rcHp5IiwiaWF0IjoxNzc4OTk5ODQ2LCJleHAiOjIwOTQ1NzU4NDZ9.QMmneQ9hTlPLjTla254lujL1HwZ-5N-bxzUvwZ803EU"
-
-// Initialize Supabase if keys are present
-export const isSupabaseConfigured = !!(supabaseUrl && supabaseAnonKey)
-
-export const supabase = isSupabaseConfigured
-  ? createClient(supabaseUrl, supabaseAnonKey)
-  : null
 
 /**
  * Robust database utility to store waitlist submissions.

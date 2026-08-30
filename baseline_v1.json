@@ -1,0 +1,3584 @@
+{
+  "metrics": {
+    "total_samples": 100,
+    "engine_latency_ms_avg": 1325.9713172912598,
+    "gemini_success_count": 100,
+    "gemini_valid_json_count": 100,
+    "gemini_latency_ms_avg": 1186.0228085517883
+  },
+  "samples": [
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "The primary issue is a fundamental failure to establish an immediate, clear, and emotionally compelling hook, especially for mobile users, due to a weak title and ineffective facial presentation.",
+          "severity": "Critical",
+          "evidence": "Detected faces are cropped too small for mobile recognition, Title is too short or gibberish to form a valid hook, Passive or neutral facial expression dilutes urgency.",
+          "expected_consequence": "This will result in a significantly low Click-Through Rate (CTR) as viewers, particularly on mobile, will struggle to quickly understand the video's content, emotional tone, or creator identity, leading to them scrolling past."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Enlarge the creator's face in the thumbnail so it is clearly recognizable and occupies a prominent portion (e.g., 30-40% vertical space) of the image, while also ensuring the facial expression is exaggerated and directly conveys the video's core emotion or intensity.",
+            "rationale": "In the gaming niche, creators' reactions and personalities are often central to viewer engagement. A large, expressive face creates an immediate human connection, signals the video's emotional stakes, and ensures quick recognition on small mobile screens, boosting immediate viewer interest."
+          },
+          {
+            "priority": 2,
+            "action": "Revise the title to be descriptive, incorporating relevant gaming keywords, and integrate a strong, curiosity-driving hook (e.g., a question, a bold claim, or a clear problem/solution) that immediately communicates the video's unique value or primary conflict.",
+            "rationale": "A clear and compelling title is crucial for setting viewer expectations and providing context for the thumbnail. For gaming content, a good title helps viewers quickly identify if the video aligns with their interests, directly addresses the 'gibberish' flaw, and significantly improves CTR by clearly articulating the content's appeal."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 8271.437168121338,
+        "gemini_ms": 8116.9586181640625
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "The video's initial impression (thumbnail and title) fails to create immediate emotional connection or clear intrigue, significantly hindering click-through potential, especially on mobile.",
+          "severity": "Critical",
+          "evidence": "Detected faces are cropped too small for mobile recognition; Title is too short or gibberish to form a valid hook; Passive or neutral facial expression dilutes urgency.",
+          "expected_consequence": "Low immediate click-through rates (CTR) due to a lack of a compelling visual hook and a clear, engaging title, leading to the video being overlooked in crowded feeds and preventing it from capitalizing on its 'S' tier potential."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Revise the thumbnail to feature a larger, more prominent face displaying a strong, emotive reaction relevant to the gaming content (e.g., shock, excitement, frustration), ensuring it's clearly recognizable on mobile screens.",
+            "rationale": "In the Gaming niche, strong emotional reactions are highly relatable and instantly convey the video's tone and potential entertainment value. A prominent, expressive face acts as an immediate human connection and curiosity trigger, especially vital for catching attention on small mobile devices."
+          },
+          {
+            "priority": 2,
+            "action": "Craft a new title that is specific, intriguing, and contains a clear hook, such as a strong verb, a promise of a solution, or a question, directly related to the gaming content, moving beyond 'Unknown'.",
+            "rationale": "A compelling title directly communicates the video's value or intrigue, prompting a click. In gaming, titles that promise epic moments, highlight challenges, or offer unique perspectives (e.g., 'I BROKE This Game!', 'The Secret OP Build!', 'NEVER Do This in Warzone!') are highly effective at driving curiosity and engagement."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 8923.908233642578,
+        "gemini_ms": 7513.12518119812
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "The video's critical initial impression elements (title and thumbnail facial engagement) are fundamentally flawed, failing to establish a clear, compelling, and emotionally resonant hook, especially for the predominant mobile audience.",
+          "severity": "Critical",
+          "evidence": [
+            "Detected faces are cropped too small for mobile recognition",
+            "Title is too short or gibberish to form a valid hook",
+            "Passive or neutral facial expression dilutes urgency"
+          ],
+          "expected_consequence": "This will lead to an extremely low Click-Through Rate (CTR) because viewers, particularly on mobile devices, cannot quickly understand the video's topic or emotional core from the thumbnail, and the absence of a valid title provides no textual incentive to click."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Develop a compelling, keyword-rich, and benefit-driven title (e.g., 'I BROKE [Game X] With THIS Strategy!', 'The SECRET Weapon Pro Gamers NEVER Tell You About', 'My Most INSANE [Game Y] Comeback EVER!') that clearly communicates the video's value or excitement.",
+            "rationale": "In the Gaming niche, titles must quickly convey the content's excitement, challenge, unique insight, or dramatic moment. A strong title is crucial for capturing attention in a competitive feed and informing algorithmic distribution."
+          },
+          {
+            "priority": 1,
+            "action": "Significantly enlarge the detected face in the thumbnail to dominate a prominent section, ensuring it is clearly recognizable and impactful even on the smallest mobile screens, allowing for immediate human connection.",
+            "rationale": "Gaming content often thrives on the creator's persona and reactions. A large, clear face on the thumbnail allows for instant emotional transfer and relatability, critical for drawing in viewers on mobile where details are often missed."
+          },
+          {
+            "priority": 2,
+            "action": "Replace the passive or neutral facial expression with a highly emotive one (e.g., exaggerated shock, intense focus, triumphant grin, or genuine frustration) that directly aligns with the video's most dramatic or engaging moment.",
+            "rationale": "Gamers are drawn to authentic and strong emotions that reflect their own experiences in games. An expressive face creates an immediate emotional hook, conveying the video's tone and intensity, and stands out against more subdued thumbnails."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 8605.334520339966,
+        "gemini_ms": 9271.923303604126
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "The video's critical initial engagement elements (title and thumbnail's human presence) are underdeveloped, failing to establish an immediate, compelling hook and clear emotional connection required for effective discovery and click-through.",
+          "severity": "High",
+          "evidence": "Detected faces are cropped too small for mobile recognition, Title is too short or gibberish to form a valid hook, Passive or neutral facial expression dilutes urgency.",
+          "expected_consequence": "Despite strong internal content or visual style, these flaws will lead to a significantly lower Click-Through Rate (CTR) and reduced discoverability, as viewers will lack a clear reason to click, especially on mobile devices."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Revise the video title to be descriptive, benefit-driven, and include a strong emotional hook relevant to gaming, while simultaneously re-framing the thumbnail to feature a larger, clearly visible, and highly expressive face conveying a strong, active emotion (e.g., excitement, shock, frustration) to enhance mobile recognition and urgency.",
+            "rationale": "In the gaming niche, an emotionally charged title combined with an expressive, prominent face on the thumbnail is paramount for quickly communicating the video's content, tone, and the creator's personality. This creates an immediate psychological draw, cutting through the competition and prompting clicks by signaling direct emotional stakes or entertainment."
+          },
+          {
+            "priority": 2,
+            "action": "Conduct A/B testing or gather feedback on multiple thumbnail variations, specifically focusing on how well the enlarged, expressive face and revised title perform on mobile screens, ensuring both elements are instantly recognizable and intriguing even at small sizes.",
+            "rationale": "Given that a significant portion of YouTube viewership, particularly in gaming, occurs on mobile devices, validating the thumbnail's clarity and impact at small scales is critical. Iterative testing allows for data-driven optimization, ensuring the most effective visual and textual hooks are deployed to maximize mobile CTR."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 326.80320739746094,
+        "gemini_ms": 6626.335859298706
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "The video fails to establish an immediate, compelling emotional and informational hook, undermining its ability to capture viewer attention and communicate value at a glance.",
+          "severity": "Critical",
+          "evidence": "Detected faces are cropped too small for mobile recognition; Title is too short or gibberish to form a valid hook; Passive or neutral facial expression dilutes urgency.",
+          "expected_consequence": "Significantly reduced Click-Through Rate (CTR) as potential viewers lack a clear reason or emotional impetus to engage with the video on a competitive platform, especially on mobile devices."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Redesign the thumbnail to prominently feature a larger, expressive face conveying a strong, relevant emotion (e.g., excitement, shock, frustration) and revise the title to be descriptive, curiosity-driven, or benefit-oriented.",
+            "rationale": "In the fast-paced Gaming niche, a powerful title combined with a highly visible and emotive facial expression on the thumbnail creates an instant, compelling hook, communicating the video's stakes or entertainment value and driving immediate clicks, particularly on mobile."
+          },
+          {
+            "priority": 2,
+            "action": "Incorporate a concise, high-impact text overlay on the thumbnail that either reinforces the title's hook or adds an additional layer of intrigue/context, ensuring legibility against the background.",
+            "rationale": "While the channel's visual style is unique, strategic use of text can bridge the informational gap left by the 'gibberish title' and reinforce the emotional connection established by the face, ensuring viewers quickly grasp the video's appeal and urgency within the competitive gaming content landscape."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 10333.640098571777,
+        "gemini_ms": 8065.548658370972
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "The fundamental issue is a critical failure in conveying an immediate, compelling narrative and emotional hook through the primary engagement elements: the title and the human presence in the thumbnail, leading to a disconnect between the high-potential content and its initial presentation.",
+          "severity": "Critical",
+          "evidence": "Detected faces are cropped too small for mobile recognition, Title is too short or gibberish to form a valid hook, Passive or neutral facial expression dilutes urgency",
+          "expected_consequence": "Significantly low Click-Through Rate (CTR), especially on mobile, preventing the high-quality content from reaching its potential audience and leading to poor algorithmic performance despite the video's inherent strength."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Develop a concise, descriptive, and emotionally charged title that clearly communicates the video's core value or exciting moment, leveraging gaming-specific power words or curiosity-inducing phrases (e.g., 'BROKEN Build!', 'IMPOSSIBLE Clutch!', 'They NEVER Saw THIS Coming!').",
+            "rationale": "A compelling title is the primary textual hook in the gaming niche, instantly signaling relevance and generating curiosity. It sets expectations and is crucial for drawing viewers from a cluttered feed, especially when the visual style is already strong."
+          },
+          {
+            "priority": 2,
+            "action": "Re-design the thumbnail to feature a significantly larger and highly expressive face (e.g., shock, intense focus, rage, excitement) that occupies a prominent section of the image (e.g., 30-40% of the frame). Ensure the expression is clear and legible even on mobile screens.",
+            "rationale": "In gaming content, exaggerated facial reactions resonate strongly with the audience, conveying the intensity and emotion of gameplay. A clear, large, and expressive face creates an instant emotional connection and acts as a powerful visual anchor, improving mobile recognition and engagement, and reinforcing the video's unique style."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 16772.035837173462,
+        "gemini_ms": 10940.690040588379
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "The video's initial impression elements\u2014title, facial presence, and emotional expression\u2014fail to immediately capture attention and convey the video's compelling nature, hindering rapid viewer engagement.",
+          "severity": "High",
+          "evidence": "Detected faces are cropped too small for mobile recognition, Title is too short or gibberish to form a valid hook, Passive or neutral facial expression dilutes urgency.",
+          "expected_consequence": "This will result in a significantly lower Click-Through Rate (CTR) as viewers, especially on mobile, will struggle to recognize key emotional cues and understand the video's premise, leading them to scroll past despite the potentially strong content."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Develop a compelling, clear, and concise title (under 60 characters) that utilizes power words, emotional triggers, or a direct question to instantly communicate the video's core appeal and create curiosity.",
+            "rationale": "A strong title is the primary textual hook in the gaming niche, needing to immediately convey the 'what' and 'why' of the video, often hinting at epic plays, challenges, or unique experiences to compel a click."
+          },
+          {
+            "priority": 2,
+            "action": "Redesign the thumbnail to feature a larger, clearly visible human face (if applicable) that displays an exaggerated, high-energy emotion directly correlating to the video's peak moment or central conflict, ensuring mobile legibility.",
+            "rationale": "In gaming, emotional reactions (shock, excitement, frustration) from creators or players are highly relatable and engaging. A prominent, expressive face acts as a powerful visual hook, conveying the intensity and fun of the video even on small screens."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 7803.796052932739,
+        "gemini_ms": 8062.046766281128
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "The video lacks immediate clarity and a strong emotional hook due to a non-existent title and underutilized human elements in the thumbnail, significantly hindering its ability to capture attention on mobile.",
+          "severity": "Critical",
+          "evidence": "Detected faces are cropped too small for mobile recognition, Title is too short or gibberish to form a valid hook, Passive or neutral facial expression dilutes urgency",
+          "expected_consequence": "This will result in a significantly lower Click-Through Rate (CTR) as viewers, especially on mobile, will fail to understand the video's content or feel an emotional pull to click, despite strong underlying visual quality."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Replace the 'Unknown' title with a clear, concise, and compelling hook that highlights the video's main appeal, challenge, or unique outcome using keywords relevant to the gaming content.",
+            "rationale": "A strong, keyword-rich title acts as the primary textual hook, vital for clarifying the video's purpose and generating curiosity in a competitive gaming niche, directly influencing click intent."
+          },
+          {
+            "priority": 2,
+            "action": "Enlarge and re-position the detected face(s) in the thumbnail to be more prominent and easily discernible on mobile screens, ensuring the facial expression vividly conveys a high-energy emotion (e.g., shock, excitement, frustration) relevant to the gaming experience.",
+            "rationale": "Gaming content heavily relies on relatable emotional reactions. A larger, highly expressive face creates an instant human connection and signals the video's tone, which is a proven CTR booster, particularly on small mobile displays."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 14629.820108413696,
+        "gemini_ms": 8928.93123626709
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "The video's initial impression fails to immediately capture attention or convey compelling value due to unclear communication both visually and textually.",
+          "severity": "High",
+          "evidence": "Detected faces are cropped too small for mobile recognition; Title is too short or gibberish to form a valid hook; Passive or neutral facial expression dilutes urgency.",
+          "expected_consequence": "This will lead to a significantly lower Click-Through Rate (CTR) because potential viewers will lack a clear reason or emotional hook to click, particularly on mobile, diminishing the video's reach despite its high predicted quality."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Revise the title to be concise, highly descriptive, and curiosity-inducing, clearly stating the video's core conflict, achievement, or question, and redesign the thumbnail to feature a larger, well-placed, and highly expressive face that conveys a specific, strong emotion or reaction.",
+            "rationale": "In the 'Gaming' niche, a clear, intriguing title combined with a strong, emotive facial reaction on the thumbnail is paramount for quickly grabbing attention, communicating the video's 'payoff' (e.g., epic play, funny fail, intense moment), and standing out in a crowded feed, especially when viewed on smaller mobile screens."
+          },
+          {
+            "priority": 2,
+            "action": "Ensure the selected facial expression on the thumbnail is not passive or neutral, but instead exaggerated and directly indicative of the video's most impactful or emotionally charged moment (e.g., shock, triumph, rage, intense focus).",
+            "rationale": "Gamers strongly resonate with authentic and high-stakes emotional reactions. An expressive face acts as an instant emotional hook, generating curiosity and a desire to understand the context behind that strong emotion, thereby compelling a click to see the unfolding drama or success within the 'Gaming' content."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 9128.015756607056,
+        "gemini_ms": 7288.7890338897705
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "The video's initial discovery elements (thumbnail and title) fail to create an immediate, compelling hook and emotional connection, severely hindering mobile user engagement and clear communication of value.",
+          "severity": "Critical",
+          "evidence": "Detected faces are cropped too small for mobile recognition, Title is too short or gibberish to form a valid hook, Passive or neutral facial expression dilutes urgency.",
+          "expected_consequence": "This will lead to a significantly low Click-Through Rate (CTR) as viewers, particularly on mobile devices, cannot quickly identify the video's content, emotional stakes, or unique selling proposition, causing them to scroll past."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Develop a concise (50-70 characters), benefit-driven title that instantly communicates the video's core value, a strong emotional promise, or a clear challenge, incorporating relevant gaming keywords to attract target viewers.",
+            "rationale": "In the highly saturated gaming niche, a strong, clear, and keyword-optimized title is paramount. It must differentiate the video from competitors, establish clear viewer expectations, and leverage search intent, complementing the channel's already distinctive visual style."
+          },
+          {
+            "priority": 2,
+            "action": "Redesign the thumbnail to feature a large, prominent, and emotionally exaggerated human face (e.g., shock, joy, frustration, intense focus) that vividly conveys the video's emotional tone or narrative, ensuring it is instantly recognizable and impactful on small mobile screens.",
+            "rationale": "Gaming content heavily relies on creator personality and viewer empathy with in-game experiences. A clear, emotionally expressive face on the thumbnail creates instant relatability, curiosity, and hints at the dramatic or entertaining moments within the game, which is crucial for grabbing attention and increasing CTR on mobile feeds."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 9176.333665847778,
+        "gemini_ms": 8842.392683029175
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "The video's initial presentation fails to establish immediate emotional relevance or a clear value proposition, hindering a potential viewer's decision to click.",
+          "severity": "High",
+          "evidence": [
+            "Detected faces are cropped too small for mobile recognition",
+            "Title is too short or gibberish to form a valid hook",
+            "Passive or neutral facial expression dilutes urgency"
+          ],
+          "expected_consequence": "This will lead to a significantly lower Click-Through Rate (CTR) as viewers on mobile devices will struggle to recognize the human element and understand the video's purpose or emotional core, despite strong underlying content potential."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Recompose the thumbnail to feature a larger, more prominent face with an exaggerated, relevant emotional expression (e.g., shock, excitement, frustration) that occupies a significant portion of the visual frame.",
+            "rationale": "In the 'Gaming' niche, creators effectively use expressive faces to instantly convey the video's emotional tone or a dramatic moment, creating an immediate connection and signaling the content's intensity or entertainment value, especially crucial for mobile recognition."
+          },
+          {
+            "priority": 2,
+            "action": "Craft a compelling, concise title (1-3 keywords + a hook) that clearly communicates the video's core content, creates curiosity, or highlights a unique challenge/victory within the gaming context.",
+            "rationale": "A strong, keyword-rich title acts as the primary textual hook in the 'Gaming' niche, immediately informing viewers what the video is about and why it's worth watching, directly countering the 'gibberish to form a valid hook' flaw and attracting the target audience."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 15250.521183013916,
+        "gemini_ms": 5789.949417114258
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "The initial presentation (thumbnail and title) fundamentally fails to leverage human connection and urgency, leading to an immediate communication breakdown with the target audience.",
+          "severity": "Critical",
+          "evidence": "Detected faces are cropped too small for mobile recognition, Title is too short or gibberish to form a valid hook, Passive or neutral facial expression dilutes urgency",
+          "expected_consequence": "This will significantly depress Click-Through Rate (CTR) as viewers cannot quickly grasp the video's appeal or emotional stakes, regardless of the underlying \"S\" tier content quality, leading to lower overall views."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Rewrite the video title to be clear, descriptive, and emotionally evocative, clearly hinting at the video's unique gaming experience or challenge. Simultaneously, enlarge and reposition any human faces in the thumbnail to be more prominent (occupying at least 30% of the thumbnail height on mobile) and ensure their expressions are highly exaggerated to convey a strong, relevant emotion like excitement, shock, or determination.",
+            "rationale": "In the competitive gaming niche, a compelling title is essential for setting context and generating initial interest, while a large, expressive face creates an instant human connection and emotional hook. These elements are paramount for standing out and communicating value quickly, especially on small mobile screens where first impressions are everything."
+          },
+          {
+            "priority": 2,
+            "action": "Conduct A/B tests with multiple thumbnail variations, specifically focusing on different levels of emotional intensity in facial expressions, ensuring the chosen expression directly amplifies the core emotion of the video's most impactful moment and stands out from the 'passive' baseline.",
+            "rationale": "Gaming viewers are highly engaged by authentic and strong emotional responses. Experimenting with expression allows for fine-tuning the emotional resonance of the thumbnail, increasing curiosity and relatability, which are key drivers for both CTR and viewer engagement in the gaming category, further leveraging the identified visual style contrast."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 672.9192733764648,
+        "gemini_ms": 9354.893922805786
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 630.4326057434082,
+        "gemini_ms": 236.72151565551758
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 254.88042831420898,
+        "gemini_ms": 229.36248779296875
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 255.33699989318848,
+        "gemini_ms": 230.08155822753906
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 234.53545570373535,
+        "gemini_ms": 256.64520263671875
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 263.51475715637207,
+        "gemini_ms": 250.33974647521973
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 241.0452365875244,
+        "gemini_ms": 253.2510757446289
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 285.69769859313965,
+        "gemini_ms": 231.25243186950684
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 256.5593719482422,
+        "gemini_ms": 225.24690628051758
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 253.19242477416992,
+        "gemini_ms": 215.98124504089355
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 234.2371940612793,
+        "gemini_ms": 233.88099670410156
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 231.04190826416016,
+        "gemini_ms": 232.03134536743164
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 256.88886642456055,
+        "gemini_ms": 213.7908935546875
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 255.6135654449463,
+        "gemini_ms": 275.30431747436523
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 256.7000389099121,
+        "gemini_ms": 227.05674171447754
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 261.40570640563965,
+        "gemini_ms": 235.21685600280762
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 264.7550106048584,
+        "gemini_ms": 254.913330078125
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 262.6206874847412,
+        "gemini_ms": 228.12652587890625
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 248.1825351715088,
+        "gemini_ms": 242.19059944152832
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 262.7711296081543,
+        "gemini_ms": 229.11453247070312
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 243.67237091064453,
+        "gemini_ms": 212.50057220458984
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 273.9732265472412,
+        "gemini_ms": 222.66316413879395
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 253.88407707214355,
+        "gemini_ms": 215.3487205505371
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 225.57401657104492,
+        "gemini_ms": 233.3824634552002
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 258.4102153778076,
+        "gemini_ms": 241.56689643859863
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 272.7699279785156,
+        "gemini_ms": 217.98944473266602
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 226.27925872802734,
+        "gemini_ms": 241.5754795074463
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 229.3088436126709,
+        "gemini_ms": 229.76040840148926
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 259.83238220214844,
+        "gemini_ms": 215.50941467285156
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 245.85962295532227,
+        "gemini_ms": 211.31372451782227
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 231.25338554382324,
+        "gemini_ms": 250.6115436553955
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 248.2452392578125,
+        "gemini_ms": 219.5737361907959
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 243.70956420898438,
+        "gemini_ms": 187.41846084594727
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 226.91035270690918,
+        "gemini_ms": 257.4326992034912
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 251.24430656433105,
+        "gemini_ms": 208.67538452148438
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 234.9557876586914,
+        "gemini_ms": 222.01848030090332
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 267.6663398742676,
+        "gemini_ms": 227.93817520141602
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 269.0844535827637,
+        "gemini_ms": 213.3312225341797
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 247.40982055664062,
+        "gemini_ms": 197.53694534301758
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 258.8541507720947,
+        "gemini_ms": 199.63860511779785
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 335.5591297149658,
+        "gemini_ms": 225.59547424316406
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 235.94188690185547,
+        "gemini_ms": 262.39919662475586
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 271.37041091918945,
+        "gemini_ms": 234.696626663208
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 248.46291542053223,
+        "gemini_ms": 225.10099411010742
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 221.05002403259277,
+        "gemini_ms": 230.90028762817383
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 234.12084579467773,
+        "gemini_ms": 206.54916763305664
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 248.94404411315918,
+        "gemini_ms": 217.38624572753906
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 230.7455539703369,
+        "gemini_ms": 238.62218856811523
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 213.86075019836426,
+        "gemini_ms": 203.76229286193848
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 242.92993545532227,
+        "gemini_ms": 265.8088207244873
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 222.96905517578125,
+        "gemini_ms": 217.37360954284668
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 269.2892551422119,
+        "gemini_ms": 243.6373233795166
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 241.15824699401855,
+        "gemini_ms": 224.79534149169922
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 263.0159854888916,
+        "gemini_ms": 204.55408096313477
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 244.7836399078369,
+        "gemini_ms": 202.0089626312256
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 241.6219711303711,
+        "gemini_ms": 208.85181427001953
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 275.8047580718994,
+        "gemini_ms": 227.91147232055664
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 224.9925136566162,
+        "gemini_ms": 213.76800537109375
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 245.92971801757812,
+        "gemini_ms": 239.0439510345459
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 249.70412254333496,
+        "gemini_ms": 212.85247802734375
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 233.91246795654297,
+        "gemini_ms": 203.21345329284668
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 240.90123176574707,
+        "gemini_ms": 212.1255397796631
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 223.80566596984863,
+        "gemini_ms": 228.75738143920898
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 237.61892318725586,
+        "gemini_ms": 223.6025333404541
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 241.51086807250977,
+        "gemini_ms": 205.01422882080078
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 219.51031684875488,
+        "gemini_ms": 247.38287925720215
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 228.6815643310547,
+        "gemini_ms": 217.70215034484863
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 281.89802169799805,
+        "gemini_ms": 266.02697372436523
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 224.81632232666016,
+        "gemini_ms": 242.2201633453369
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 254.2436122894287,
+        "gemini_ms": 223.99568557739258
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 242.03109741210938,
+        "gemini_ms": 215.90375900268555
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 225.30817985534668,
+        "gemini_ms": 211.47394180297852
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 883.251428604126,
+        "gemini_ms": 208.71806144714355
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 244.79937553405762,
+        "gemini_ms": 194.03076171875
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 251.633882522583,
+        "gemini_ms": 219.3136215209961
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 247.76482582092285,
+        "gemini_ms": 215.651273727417
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 250.64373016357422,
+        "gemini_ms": 209.75637435913086
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 232.38801956176758,
+        "gemini_ms": 216.99023246765137
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 212.968111038208,
+        "gemini_ms": 254.20141220092773
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 245.67794799804688,
+        "gemini_ms": 209.92493629455566
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 220.13545036315918,
+        "gemini_ms": 224.04718399047852
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 205.8701515197754,
+        "gemini_ms": 210.75963973999023
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 234.5278263092041,
+        "gemini_ms": 210.10303497314453
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 264.85753059387207,
+        "gemini_ms": 217.4685001373291
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 258.61501693725586,
+        "gemini_ms": 222.41997718811035
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 228.23381423950195,
+        "gemini_ms": 200.98042488098145
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 269.9413299560547,
+        "gemini_ms": 228.72114181518555
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 223.91748428344727,
+        "gemini_ms": 207.66282081604004
+      }
+    },
+    {
+      "input": {
+        "title": "Unknown",
+        "category": "Gaming",
+        "channel_title": "Unknown",
+        "face_count": 1,
+        "brightness": 120,
+        "video_length": 600,
+        "upload_hour": 15,
+        "is_weekend": 0
+      },
+      "engine_result": {
+        "score": 99,
+        "tier": "S"
+      },
+      "gemini_result": {
+        "diagnosis": {
+          "root_cause": "We couldn't connect to the AI to find the main issue.",
+          "severity": "Medium",
+          "evidence": "The connection to the deep logic engine timed out.",
+          "expected_consequence": "Cannot project engagement without data."
+        },
+        "optimization_plan": [
+          {
+            "priority": 1,
+            "action": "Check your title length",
+            "rationale": "Shorter titles often perform better."
+          }
+        ]
+      },
+      "latency": {
+        "engine_ms": 232.53870010375977,
+        "gemini_ms": 220.61586380004883
+      }
+    }
+  ]
+}

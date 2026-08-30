@@ -5,6 +5,8 @@ pandas
 numpy
 catboost
 pydantic
+pydantic-settings
+email-validator
 python-dotenv
 joblib
 xgboost
@@ -14,3 +16,12 @@ Pillow
 google-genai
 textblob
 google-api-python-client
+ultralytics
+easyocr
+sqlalchemy>=2.0.0
+alembic
+asyncpg
+psycopg2-binary
+redis>=5.0.0
+bcrypt
+pyjwt

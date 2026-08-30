@@ -1,0 +1,92 @@
+{
+  "users": [
+    {
+      "id": "01f85320-2c46-47b8-990a-0f6326a25684",
+      "email": "aryantiwari@integralgroups.in",
+      "hashed_password": "$2b$12$.Bv.3PFoSYVzHkUGyMS8G.XdB7rXEVxgoNwIrBZTA7MavPxu8UXXC",
+      "full_name": "Aryan Tiwari",
+      "is_active": true,
+      "is_verified": true
+    },
+    {
+      "id": "6f0272f3-7bd8-4395-bc43-11aa64a320af",
+      "email": "admin@integralgroups.in",
+      "hashed_password": "$2b$12$UrHQEey4fiZkkyvGwJop0umO0.VJzlKGDRQ.B3SBw3MjLQYTgdZHe",
+      "full_name": "PreYT Administrator",
+      "is_active": true,
+      "is_verified": true
+    },
+    {
+      "id": "a5d5b39b-c2d9-4b90-a380-e954f25185a8",
+      "email": "creator@channel.com",
+      "hashed_password": "$2b$12$7XSrrPJYoSsGT76MJgoENeLih0f3Yjj1OeYQ4XsO9ik8rxZSfHOLi",
+      "full_name": "Demo Creator",
+      "is_active": true,
+      "is_verified": true
+    },
+    {
+      "id": "f5715172-461b-4e47-ac0f-3b7949829d7b",
+      "email": "test@example.com",
+      "hashed_password": "$2b$12$A8/cjd4KqlaPfC5R9.KYy.vtnMOy5pgAKH90bJpxWsPx491I7gAl6",
+      "full_name": "Beta Tester",
+      "is_active": true,
+      "is_verified": true
+    }
+  ],
+  "workspaces": [
+    {
+      "id": "a4cad738-34a6-4045-a595-baa2c68c6111",
+      "name": "Aryan Tiwari's Workspace",
+      "slug": "aryan-tiwaris-workspace-9a22bc",
+      "owner_id": "01f85320-2c46-47b8-990a-0f6326a25684",
+      "plan_tier": "pro"
+    },
+    {
+      "id": "45c402fe-5bd4-452a-b8cf-060a23db4f87",
+      "name": "PreYT Administrator's Workspace",
+      "slug": "preyt-administrators-workspace-005fe3",
+      "owner_id": "6f0272f3-7bd8-4395-bc43-11aa64a320af",
+      "plan_tier": "pro"
+    },
+    {
+      "id": "4132e350-9dc0-47e4-b50f-0a7889784ef4",
+      "name": "Demo Creator's Workspace",
+      "slug": "demo-creators-workspace-b907ab",
+      "owner_id": "a5d5b39b-c2d9-4b90-a380-e954f25185a8",
+      "plan_tier": "free"
+    },
+    {
+      "id": "c02f7cd3-deb7-4602-993e-93b39057d098",
+      "name": "Beta Tester's Workspace",
+      "slug": "beta-testers-workspace-27cb57",
+      "owner_id": "f5715172-461b-4e47-ac0f-3b7949829d7b",
+      "plan_tier": "free"
+    }
+  ],
+  "members": [
+    {
+      "id": "a9fc8651-16ed-4257-8b13-97f78e4b1d40",
+      "workspace_id": "a4cad738-34a6-4045-a595-baa2c68c6111",
+      "user_id": "01f85320-2c46-47b8-990a-0f6326a25684",
+      "role": "owner"
+    },
+    {
+      "id": "58d57775-475c-42df-8a7f-bad4da9ff526",
+      "workspace_id": "45c402fe-5bd4-452a-b8cf-060a23db4f87",
+      "user_id": "6f0272f3-7bd8-4395-bc43-11aa64a320af",
+      "role": "owner"
+    },
+    {
+      "id": "0f734b53-98e1-4f7a-b411-45c72feb34fb",
+      "workspace_id": "4132e350-9dc0-47e4-b50f-0a7889784ef4",
+      "user_id": "a5d5b39b-c2d9-4b90-a380-e954f25185a8",
+      "role": "owner"
+    },
+    {
+      "id": "6185da32-4c21-4806-a816-89b3a94396b2",
+      "workspace_id": "c02f7cd3-deb7-4602-993e-93b39057d098",
+      "user_id": "f5715172-461b-4e47-ac0f-3b7949829d7b",
+      "role": "owner"
+    }
+  ]
+}

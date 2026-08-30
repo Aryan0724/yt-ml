@@ -1,127 +1,130 @@
+"""
+llm_report_generator.py
+
+Bridges the legacy engine output to the unified AIService.
+Extracts the full packaging evidence (thumbnail, title, topic, channel)
+and produces a consolidated diagnosis, bottleneck analysis, and action plan.
+"""
 import os
-import json
-from google import genai
-from google.genai import types
+import uuid
+import logging
 from dotenv import load_dotenv
 
-# Try loading .env.local
-load_dotenv(os.path.join(os.path.dirname(__file__), '..', '..', '.env.local'))
+from services.ai.gemini import GeminiProvider
+from services.ai.service import AIService
+from services.ai.prompts import generate_unified_evidence_prompt
 
-# Setup Gemini API key. Ensure GEMINI_API_KEY is in environment or .env.local
-api_key = os.environ.get("GEMINI_API_KEY")
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '..', '.env.local'))
+logger = logging.getLogger(__name__)
+
 
 class LLMReportGenerator:
     def __init__(self):
-        self.model_name = "gemini-2.5-flash"
         self.enabled = bool(os.environ.get("GEMINI_API_KEY"))
         if self.enabled:
-            # We enforce JSON output structure to guarantee clean integration.
-            self.client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
-    def generate_master_report(self, raw_input, score, tier, strengths, weaknesses, dna_profile=None):
+            provider = GeminiProvider()
+            self.ai_service = AIService(provider)
+
+    def generate_master_report(
+        self,
+        raw_input: dict,
+        score: int,
+        tier: str,
+        strengths: list,
+        weaknesses: list,
+        analysis_id: str = None,
+        dna_profile: dict = None
+    ):
         """
-        Generates a unified, dead-simple master report containing exactly what went wrong, 
-        competitor strategies, exact steps to fix, and a simple DNA summary.
+        Builds the unified evidence package and executes one consolidated Gemini call.
+        Returns: (master_report_dict, ai_result_dict)
         """
+        ui_fallback = {
+            "summary": "AI enhancement was unavailable or fell back to deterministic rules.",
+            "primary_bottleneck": "Analysis based strictly on deterministic visual and metadata heuristics.",
+            "packaging_verdict": {
+                "topic_status": "Unknown",
+                "title_status": "Moderate",
+                "thumbnail_status": "Strong" if score >= 75 else "Moderate",
+                "overall_packaging": "Moderate"
+            },
+            "diagnosis": {
+                "root_cause": "Deterministic engine analyzed image contrast, faces, and title heuristics.",
+                "severity": "Medium",
+                "evidence": "Heuristic and ML scoring completed; AI interpretation offline.",
+                "expected_consequence": "Follow the heuristic visual severity checklist below."
+            },
+            "optimization_plan": [
+                {
+                    "priority": 1,
+                    "action": "Follow the prioritized visual severity fixes in the checklist below",
+                    "rationale": "Directly resolves the top detected visual and formatting bottlenecks."
+                }
+            ],
+            "recommended_angles": [],
+            "warnings": ["AI enhancement offline — displaying deterministic metrics only."]
+        }
+
         if not self.enabled:
-            return {
-                "diagnosis": {
-                    "root_cause": "The AI could not analyze the image right now.",
-                    "severity": "Medium",
-                    "evidence": "We couldn't connect to the AI.",
-                    "expected_consequence": "Cannot project engagement without data."
-                },
-                "optimization_plan": [
-                    {
-                        "priority": 1,
-                        "action": "Increase brightness",
-                        "rationale": "Competitors are using brighter colors."
-                    }
-                ]
+            return ui_fallback, {
+                "status": "fallback",
+                "reason": "api_key_missing",
+                "model": "none",
+                "prompt_version": "none"
             }
-            
-        title = raw_input.get("title", "Unknown Title")
-        category = raw_input.get("category", "Unknown Category")
-        
-        dna_context = ""
-        historical_errors = "None"
-        audience_distribution = "Unknown"
-        
+
+        title = raw_input.get("title", "Untitled Concept")
+        category = raw_input.get("category", "General")
+
+        # 1. Thumbnail Vision Evidence
+        thumbnail_evidence = {
+            "brightness": raw_input.get("brightness", 128),
+            "contrast": raw_input.get("contrast", 50.0),
+            "saturation": raw_input.get("saturation", 50.0),
+            "face_count": raw_input.get("face_count", 0),
+            "mobile_readability": raw_input.get("mobile_readability", 75.0),
+            "clutter_rating": raw_input.get("clutter_level_rating", 5.0)
+        }
+
+        # 2. Title Forensics Evidence
+        title_evidence = {
+            "title_length": len(title),
+            "curiosity_score": raw_input.get("curiosity_score", 50),
+            "category": category
+        }
+
+        # 3. Topic Evidence (from Topic Intelligence)
+        topic_evidence = raw_input.get("topic_data")
+
+        # 4. Channel DNA Evidence
+        channel_dna_evidence = None
         if dna_profile:
-            dna_context = f"- Channel Identity: {dna_profile.get('channel_behavior_profile', {}).get('channel_identity', 'Standard')}"
-            historical_errors = dna_profile.get('historical_errors', 'None')
-            audience_distribution = dna_profile.get('audience_distribution', 'Unknown')
-
-        strengths_str = "\n".join([f" - {s}" for s in strengths]) if strengths else " - None"
-        weaknesses_str = "\n".join([f" - {w}" for w in weaknesses]) if weaknesses else " - None"
-
-        prompt = f"""You are an elite YouTube Strategist serving as a 'Diagnosis Engine'. 
-Your job is to look at a video idea's algorithmic breakdown and generate a structured diagnosis and optimization plan.
-
-Video Context:
-- Title: "{title}"
-- Niche/Category: {category}
-- AI Predicted Tier: {tier} (Score: {score}/100)
-{dna_context}
-
-Historical Channel Data:
-- Known Past Mistakes: {historical_errors}
-- Audience Demographics: {audience_distribution}
-
-System Detected Strengths:
-{strengths_str}
-
-System Detected Flaws & Behavioral Risks:
-{weaknesses_str}
-
-Return EXACTLY a JSON object with the following schema:
-{{
-  "diagnosis": {{
-    "root_cause": "<Identify the fundamental psychological or visual issue, not just a symptom. 1 sentence.>",
-    "severity": "<Critical | High | Medium | Low>",
-    "evidence": "<Explicitly state the exact System Detected Flaws that prove this root cause.>",
-    "expected_consequence": "<Explain how this will impact CTR or retention.>"
-  }},
-  "optimization_plan": [
-    {{
-      "priority": 1,
-      "action": "<A highly specific step the creator must take to fix the root cause.>",
-      "rationale": "<Why this works in the '{category}' niche.>"
-    }},
-    {{
-      "priority": 2,
-      "action": "<Another specific step.>",
-      "rationale": "<Reasoning.>"
-    }}
-  ]
-}}
-
-Return ONLY a valid JSON object. Do not include markdown formatting like ```json.
-"""
-        try:
-            response = self.client.models.generate_content(
-                model=self.model_name,
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                )
-            )
-            
-            master_report = json.loads(response.text)
-            return master_report
-        except Exception as e:
-            print(f"Master Report LLM Generation Failed: {e}")
-            return {
-                "diagnosis": {
-                    "root_cause": "We couldn't connect to the AI to find the main issue.",
-                    "severity": "Medium",
-                    "evidence": "The connection to the deep logic engine timed out.",
-                    "expected_consequence": "Cannot project engagement without data."
-                },
-                "optimization_plan": [
-                    {
-                        "priority": 1,
-                        "action": "Check your title length",
-                        "rationale": "Shorter titles often perform better."
-                    }
-                ]
+            channel_dna_evidence = {
+                "channel_title": dna_profile.get("channel_title"),
+                "behavior_profile": dna_profile.get("channel_behavior_profile"),
+                "style_match_pct": dna_profile.get("style_match_percentage")
             }
+
+        prompt = generate_unified_evidence_prompt(
+            title=title,
+            category=category,
+            tier=tier,
+            score=score,
+            thumbnail_evidence=thumbnail_evidence,
+            title_evidence=title_evidence,
+            topic_evidence=topic_evidence,
+            channel_dna_evidence=channel_dna_evidence,
+            strengths=strengths,
+            weaknesses=weaknesses
+        )
+
+        if not analysis_id:
+            analysis_id = str(uuid.uuid4())
+
+        ai_result = self.ai_service.enhance_analysis(analysis_id, prompt)
+
+        if ai_result.status == "success" and ai_result.enhancement:
+            report_dict = ai_result.enhancement.model_dump()
+            return report_dict, ai_result.model_dump()
+        else:
+            return ui_fallback, ai_result.model_dump()

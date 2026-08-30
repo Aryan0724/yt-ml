@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server"
-import { supabaseServer } from "@/lib/supabase-server"
 import { getLocalApplicants, addOrUpdateLocalApplicant } from "@/lib/local-db"
 
 export const runtime = "nodejs"
@@ -11,39 +10,9 @@ export async function GET(req: Request) {
     const nicheFilter = searchParams.get("niche")
     const sortBy = searchParams.get("sortBy") // subscribers_desc, subscribers_asc, applied_at_desc
     
-    let dbApplicants: any[] = []
-    try {
-      // Set a 3-second timeout to prevent Vercel gateway timeouts on paused databases
-      const queryPromise = supabaseServer.from("beta_waitlist").select("*")
-      const timeoutPromise = new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error("Database query timed out")), 3000)
-      )
-      const { data, error } = await Promise.race([queryPromise, timeoutPromise]) as any
-      if (error) throw error
-      dbApplicants = data || []
-    } catch (err: any) {
-      console.warn("Supabase fetch failed, using local JSON database only:", err.message)
-    }
+    // Load local applicants from VPS database ledger
+    let merged = getLocalApplicants()
 
-    // Load local fallback applicants
-    const localApps = getLocalApplicants()
-
-    // Merge by email (case-insensitive) to prevent duplicates, prioritizing Supabase DB records
-    const mergedMap = new Map<string, any>()
-
-    for (const app of localApps) {
-      if (app && app.email) {
-        mergedMap.set(app.email.toLowerCase().trim(), app)
-      }
-    }
-
-    for (const app of dbApplicants) {
-      if (app && app.email) {
-        mergedMap.set(app.email.toLowerCase().trim(), app)
-      }
-    }
-
-    let merged = Array.from(mergedMap.values())
 
     // Apply filters in-memory on the merged dataset
     if (statusFilter) {
@@ -83,26 +52,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing applicant ID parameter." }, { status: 400 })
     }
 
-    // 1. Update in local fallback JSON DB
-    const updatedLocal = addOrUpdateLocalApplicant({ id, notes: notes || "" })
-    let result = updatedLocal
-
-    // 2. Attempt updating in Supabase waitlist_users table
-    try {
-      const { data, error } = await supabaseServer
-        .from("beta_waitlist")
-        .update({ notes: notes || "" })
-        .eq("id", id)
-        .select()
-        .single()
-
-      if (error) throw error
-      if (data) result = data
-    } catch (err: any) {
-      console.warn("Supabase notes update failed, using local DB update:", err.message)
-    }
+    // 1. Update in local VPS JSON ledger
+    const result = addOrUpdateLocalApplicant({ id, notes: notes || "" })
 
     return NextResponse.json({ success: true, data: result })
+
   } catch (err: any) {
     console.error("Admin Update Notes Error:", err)
     return NextResponse.json({ error: err.message || "Failed to update review notes." }, { status: 500 })

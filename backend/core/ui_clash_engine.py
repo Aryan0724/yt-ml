@@ -23,13 +23,23 @@ class UIClashEngine:
             return True
         return False
 
-    def analyze_ui_clash(self, face_boxes: list, text_boxes: list) -> dict:
+    def analyze_ui_clash(self, face_boxes: list, text_boxes: list, img_w: int, img_h: int) -> dict:
         clash_risk = False
         penalty = 0.0
         warnings = []
         
+        def to_relative(box_dict):
+            # box_dict is {"x": x, "y": y, "w": w, "h": h}
+            return [
+                box_dict["x"] / img_w,
+                box_dict["y"] / img_h,
+                (box_dict["x"] + box_dict["w"]) / img_w,
+                (box_dict["y"] + box_dict["h"]) / img_h
+            ]
+        
         # Check text boxes
-        for t_box in text_boxes:
+        for t_box_dict in text_boxes:
+            t_box = to_relative(t_box_dict)
             for zone_name, zone_coords in self.danger_zones.items():
                 if self.check_overlap(t_box, zone_coords):
                     clash_risk = True
@@ -37,7 +47,8 @@ class UIClashEngine:
                     warnings.append(f"UI Clash Risk: Some of your text is placed in the {zone_name} danger zone. It will be completely blocked by YouTube's interface on mobile devices.")
                     
         # Check face boxes
-        for f_box in face_boxes:
+        for f_box_dict in face_boxes:
+            f_box = to_relative(f_box_dict)
             for zone_name, zone_coords in self.danger_zones.items():
                 if self.check_overlap(f_box, zone_coords):
                     clash_risk = True

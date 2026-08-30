@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server"
-import { supabaseServer } from "@/lib/supabase-server"
 import { getLocalApplicants, saveLocalApplicants } from "@/lib/local-db"
 
 export const runtime = "nodejs"
@@ -15,42 +14,22 @@ export async function POST(req: Request) {
     const newStatus =
       action === "reject" ? "rejected" : action === "suspend" ? "suspended" : "pending"
 
-    let updated: any = null
-    let usingLocal = false
+    const localApps = getLocalApplicants()
+    const idx = localApps.findIndex((a) => a.id === id)
 
-    try {
-      const { data, error } = await supabaseServer
-        .from("beta_waitlist")
-        .update({ status: newStatus })
-        .eq("id", id)
-        .select()
-        .single()
-
-      if (error) throw error
-      updated = data
-    } catch (err: any) {
-      console.warn("Supabase update failed during reject, trying local fallback:", err.message)
-      usingLocal = true
-    }
-
-    if (usingLocal) {
-      const localApps = getLocalApplicants()
-      const idx = localApps.findIndex((a) => a.id === id)
-      if (idx >= 0) {
-        localApps[idx] = { ...localApps[idx], status: newStatus } as any
-        saveLocalApplicants(localApps)
-        updated = {
-          ...localApps[idx],
-          country: localApps[idx].country || "Unknown",
-          daily_usage_limit: 3,
-          usage_remaining: 3,
-          created_at: localApps[idx].applied_at || new Date().toISOString(),
-        }
-      }
-    }
-
-    if (!updated) {
+    if (idx === -1) {
       return NextResponse.json({ error: "Applicant not found." }, { status: 404 })
+    }
+
+    localApps[idx] = { ...localApps[idx], status: newStatus } as any
+    saveLocalApplicants(localApps)
+
+    const updated = {
+      ...localApps[idx],
+      country: localApps[idx].country || "Unknown",
+      daily_usage_limit: 3,
+      usage_remaining: 3,
+      created_at: localApps[idx].applied_at || new Date().toISOString(),
     }
 
     return NextResponse.json({ success: true, data: updated })

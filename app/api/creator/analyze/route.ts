@@ -3,63 +3,48 @@ import { recordAnalysisSuccess, recordAnalysisFailure } from "@/lib/analysis-tel
 
 export const runtime = "nodejs"
 
+function getBackendUrls(): string[] {
+  const custom = process.env.PYTHON_BACKEND_URL
+  const urls: string[] = []
+  if (custom) urls.push(custom)
+  urls.push("http://127.0.0.1:8000")
+  urls.push("http://localhost:8000")
+  urls.push("http://62.72.13.149:8000")
+  return [...new Set(urls)]
+}
+
 export async function POST(req: Request) {
   const startTime = Date.now()
   try {
     const formData = await req.formData()
-    
-    // Check if thumbnail file is provided and is a valid file
-    const thumbnailFile = formData.get("thumbnail");
+
+    const thumbnailFile = formData.get("thumbnail")
     if (!thumbnailFile || (thumbnailFile instanceof File && thumbnailFile.size === 0)) {
       recordAnalysisFailure("Missing thumbnail data or file is empty")
       return NextResponse.json(
-        { error: "Analysis confidence too low due to insufficient thumbnail data." },
+        { error: "Please upload a valid thumbnail image." },
         { status: 400 }
       )
     }
 
-    // Try local python backend
-    try {
-      const response = await fetch("http://127.0.0.1:8000/analyze", {
-        method: "POST",
-        body: formData,
-        headers: {
-          "Accept": "application/json",
-        },
-      })
+    const candidateUrls = getBackendUrls()
+    let lastError: any = null
 
-      if (response.ok) {
-        const payload = await response.json()
-        if (payload.status === "success") {
-          const latency = Date.now() - startTime
-          recordAnalysisSuccess(latency, payload)
-          return NextResponse.json(payload)
-        } else {
-          return NextResponse.json(payload, { status: 400 })
-        }
-      } else {
-        // Forward the actual error from the backend
-        let errData;
-        try {
-          errData = await response.json()
-        } catch(e) {
-          errData = { detail: `Backend returned status ${response.status} without JSON` }
-        }
-        recordAnalysisFailure(`Local backend error: ${response.status}`, errData)
-        return NextResponse.json(errData, { status: response.status })
-      }
-    } catch (localErr: any) {
-      console.warn("Local python connection failed:", localErr.message)
-      
-      // Try remote railway backend next (essential for Vercel production deployments)
+    // Forward multi-tenancy and idempotency headers
+    const forwardHeaders: Record<string, string> = { Accept: "application/json" }
+    const idemp = req.headers.get("idempotency-key")
+    if (idemp) forwardHeaders["Idempotency-Key"] = idemp
+    const auth = req.headers.get("authorization")
+    if (auth) forwardHeaders["Authorization"] = auth
+    const ws = req.headers.get("x-workspace-id")
+    if (ws) forwardHeaders["X-Workspace-Id"] = ws
+
+    for (const baseUrl of candidateUrls) {
       try {
-        const remoteUrl = process.env.PYTHON_BACKEND_URL ? `${process.env.PYTHON_BACKEND_URL}/analyze` : "https://yt-ml-production-870b.up.railway.app/analyze";
-        const response = await fetch(remoteUrl, {
+        const response = await fetch(`${baseUrl}/analyze`, {
           method: "POST",
           body: formData,
-          headers: {
-            "Accept": "application/json",
-          },
+          headers: forwardHeaders
         })
 
         if (response.ok) {
@@ -72,25 +57,27 @@ export async function POST(req: Request) {
             return NextResponse.json(payload, { status: 400 })
           }
         } else {
-          // Forward actual error from remote backend
-          let errData;
+          let errData
           try {
             errData = await response.json()
-          } catch(e) {
-            errData = { detail: `Remote backend returned status ${response.status} without JSON` }
+          } catch (_) {
+            errData = { detail: `Backend at ${baseUrl} returned status ${response.status}` }
           }
-          recordAnalysisFailure(`Remote backend error: ${response.status}`, errData)
-          return NextResponse.json(errData, { status: response.status })
+          lastError = errData
         }
-      } catch (remoteErr: any) {
-        console.error("Remote python connection failed:", remoteErr.message)
-        recordAnalysisFailure("Both local and remote Python engines unreachable", remoteErr.message)
-        return NextResponse.json(
-          { error: "Analysis backend is unreachable. Ensure the Python engine is running.", detail: remoteErr.message },
-          { status: 503 }
-        )
+      } catch (err: any) {
+        lastError = err
       }
     }
+
+    recordAnalysisFailure("All backend candidate URLs unreachable", lastError?.message || lastError)
+    return NextResponse.json(
+      {
+        error: "Analysis backend is unreachable. Please ensure the backend server is running.",
+        detail: lastError?.detail || lastError?.message || String(lastError)
+      },
+      { status: 503 }
+    )
   } catch (err: any) {
     console.error("Server API route analyze error:", err)
     recordAnalysisFailure("Exception caught in route handler", err.message)

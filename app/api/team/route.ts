@@ -13,7 +13,7 @@ export async function GET() {
 
     if (error) throw error
 
-    const formattedTeam = team.map(m => ({
+    const formattedTeam = (team || []).map((m: any) => ({
       id: m.id,
       name: m.name,
       role: m.role,
@@ -21,6 +21,7 @@ export async function GET() {
       imageUrl: m.image_url,
       isActive: m.is_active
     }))
+
 
     return NextResponse.json({ success: true, team: formattedTeam })
   } catch (error) {

@@ -2,7 +2,7 @@
 
 import { useRef, useCallback } from "react"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
-import { ArrowRight, Sparkles } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 
 export function HeroLight() {
@@ -38,34 +38,33 @@ export function HeroLight() {
       onMouseLeave={handleMouseLeave}
       className="relative pt-36 pb-32 px-6 overflow-hidden bg-[#FAF9F6] border-b border-zinc-200 flex flex-col items-center justify-center min-h-[600px]"
     >
-      {/* ─── 1. SIMPLE GRID BACKGROUND ─── */}
-      <div className="absolute inset-0 pointer-events-none z-0">
+      {/* ─── 1. DYNAMIC GRID & MESH BACKGROUND ─── */}
+      <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center">
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+        
         {/* Ambient mesh glows */}
         <motion.div 
-          animate={{ x: [-10, 10, -10], y: [-15, 15, -15] }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[-5%] left-[20%] w-[500px] h-[500px] bg-[#FF0000]/[0.02] rounded-full blur-[100px]" 
+          animate={{ x: [-15, 15, -15], y: [-20, 20, -20] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[-5%] left-[10%] w-[500px] h-[500px] bg-rose-500/[0.04] rounded-full blur-[100px]" 
         />
         <motion.div 
-          animate={{ x: [15, -15, 15], y: [10, -10, 10] }}
-          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[5%] right-[18%] w-[550px] h-[550px] bg-amber-500/[0.015] rounded-full blur-[110px]" 
+          animate={{ x: [20, -20, 20], y: [15, -15, 15] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-[-5%] right-[10%] w-[600px] h-[600px] bg-amber-500/[0.04] rounded-full blur-[120px]" 
+        />
+        <motion.div 
+          animate={{ x: [-10, 10, -10], y: [10, -10, 10] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[20%] left-[45%] w-[400px] h-[400px] bg-indigo-500/[0.03] rounded-full blur-[100px]" 
         />
       </div>
 
       {/* ─── 2. CONTENT AREA ─── */}
       <div className="max-w-[1200px] w-full mx-auto relative z-10 flex flex-col items-center justify-center text-center px-4 md:px-12 mt-12">
         
-        {/* status pill in Fragment Mono */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded border border-red-500/10 bg-red-500/5 text-[9px] font-mono font-bold text-[#FF0000] mb-8 tracking-widest uppercase"
-        >
-          <Sparkles className="w-3 h-3 text-[#FF0000] animate-pulse" />
-          [ THE EASIEST WAY TO GROW ]
-        </motion.div>
+
 
         {/* Center Headline */}
         <motion.h1
@@ -99,7 +98,7 @@ export function HeroLight() {
             href="/waitlist"
             className="px-6 py-3 rounded-[4px] bg-black text-white hover:bg-zinc-800 border border-black text-[10px] font-mono font-bold uppercase tracking-widest transition-all shadow-md flex items-center gap-2"
           >
-            Apply for Beta
+            Join Waitlist
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
           <Link
