@@ -2,7 +2,8 @@
 
 import React from "react"
 import { MasterReport } from "@/lib/types/analysis"
-import { AlertCircle, ArrowRight, Zap, Target } from "lucide-react"
+import { Zap, Target } from "lucide-react"
+import { Card } from "@/components/ui/card"
 
 export interface PrimaryBottleneckProps {
   masterReport?: MasterReport
@@ -16,12 +17,9 @@ export function PrimaryBottleneck({ masterReport }: PrimaryBottleneckProps) {
   const topAction = masterReport.optimization_plan?.[0]
 
   return (
-    <div className="w-full bg-zinc-950 text-white border border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-md relative overflow-hidden text-left space-y-6">
-      {/* Subtle background highlight */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-rose-500/10 blur-3xl rounded-full pointer-events-none" />
-
+    <Card className="p-6 sm:p-8 space-y-6 relative overflow-hidden bg-destructive/5 border-destructive/20">
       {/* Header Tag */}
-      <div className="flex items-center gap-2 text-rose-400">
+      <div className="flex items-center gap-2 text-destructive">
         <Target className="w-4 h-4" />
         <span className="text-xs font-black uppercase tracking-widest">
           #1 Primary Bottleneck
@@ -30,25 +28,25 @@ export function PrimaryBottleneck({ masterReport }: PrimaryBottleneckProps) {
 
       {/* Main Bottleneck Title */}
       <div>
-        <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+        <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
           {bottleneck || diagnosis?.root_cause || "Visual focus and contrast optimization required"}
         </h3>
         {diagnosis?.expected_consequence && (
-          <p className="text-xs sm:text-sm text-zinc-400 mt-1.5 leading-relaxed">
+          <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
             {diagnosis.expected_consequence}
           </p>
         )}
       </div>
 
       {/* Root Cause & Top Recommended Change */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-zinc-800/80">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-destructive/10">
         {/* Diagnosis Proof */}
         {diagnosis?.evidence && (
-          <div className="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800/60 space-y-1">
-            <span className="text-[10px] uppercase font-bold text-zinc-400 block tracking-wider">
+          <div className="p-4 rounded-xl bg-background border space-y-2">
+            <span className="text-[10px] uppercase font-bold text-muted-foreground block tracking-wider">
               Detected Proof
             </span>
-            <p className="text-xs text-zinc-300 leading-relaxed">
+            <p className="text-xs font-medium text-foreground leading-relaxed">
               {diagnosis.evidence}
             </p>
           </div>
@@ -56,21 +54,21 @@ export function PrimaryBottleneck({ masterReport }: PrimaryBottleneckProps) {
 
         {/* Top Immediate Action */}
         {topAction && (
-          <div className="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-800/40 space-y-1">
-            <span className="text-[10px] uppercase font-bold text-indigo-300 block tracking-wider flex items-center gap-1">
-              <Zap className="w-3 h-3 text-indigo-400" /> Immediate Fix
+          <div className="p-4 rounded-xl bg-primary/5 border border-primary/20 space-y-2">
+            <span className="text-[10px] uppercase font-bold text-primary block tracking-wider flex items-center gap-1">
+              <Zap className="w-3 h-3" /> Immediate Fix
             </span>
-            <p className="text-xs font-semibold text-indigo-100 leading-relaxed">
+            <p className="text-xs font-semibold text-foreground leading-relaxed">
               {topAction.action}
             </p>
             {topAction.rationale && (
-              <p className="text-[11px] text-indigo-300/80 mt-1">
+              <p className="text-[11px] text-muted-foreground mt-1">
                 {topAction.rationale}
               </p>
             )}
           </div>
         )}
       </div>
-    </div>
+    </Card>
   )
 }

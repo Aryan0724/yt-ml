@@ -52,7 +52,7 @@ export function FooterLight() {
           <div>
             <h4 className="font-mono font-bold text-zinc-800 mb-4 uppercase tracking-widest text-[9.5px]">[ Resources ]</h4>
             <ul className="space-y-3 text-zinc-500 text-xs font-semibold uppercase font-mono tracking-wider">
-              <li><NextLink href="/blog" className="hover:text-black transition-colors">Blog</NextLink></li>
+
               <li><NextLink href="/guides" className="hover:text-black transition-colors">Guides</NextLink></li>
               <li><NextLink href="/help-center" className="hover:text-black transition-colors">Help Center</NextLink></li>
               <li><NextLink href="/templates" className="hover:text-black transition-colors">Templates</NextLink></li>

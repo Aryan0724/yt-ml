@@ -1,29 +1,72 @@
 "use client"
 
-import React from "react"
-import { Loader2, Sparkles, Layers } from "lucide-react"
+import React, { useState, useEffect } from "react"
+import { Loader2, Server, Scan, Activity } from "lucide-react"
+import { Card } from "@/components/ui/card"
+
+const steps = [
+  "Initializing analysis engine...",
+  "Processing image heuristics...",
+  "Extracting visual subjects...",
+  "Scanning text overlay legibility...",
+  "Calculating click-through probability...",
+  "Benchmarking against category baselines...",
+  "Finalizing optimization report..."
+]
 
 export function AnalysisLoading() {
+  const [currentStep, setCurrentStep] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev))
+    }, 1500)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
-    <div className="w-full max-w-xl mx-auto py-16 px-6 text-center space-y-6 animate-fade-in">
-      <div className="relative w-16 h-16 mx-auto flex items-center justify-center">
-        <div className="absolute inset-0 rounded-2xl bg-zinc-900/5 dark:bg-white/5 animate-pulse" />
-        <Loader2 className="w-8 h-8 text-zinc-900 dark:text-white animate-spin" />
-      </div>
+    <Card className="w-full max-w-xl mx-auto py-12 px-8">
+      <div className="space-y-8">
+        <div className="flex flex-col items-center text-center space-y-4">
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full bg-primary/10 animate-ping" />
+            <div className="w-16 h-16 rounded-full bg-muted border flex items-center justify-center relative z-10">
+              <Scan className="w-8 h-8 text-primary animate-pulse" />
+            </div>
+          </div>
+          
+          <div className="space-y-1">
+            <h3 className="text-xl font-bold text-foreground tracking-tight">
+              Evaluating Package
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              Running deterministic checks on thumbnail and title
+            </p>
+          </div>
+        </div>
 
-      <div className="space-y-2">
-        <h3 className="text-xl font-bold text-zinc-900 dark:text-white tracking-tight">
-          Evaluating Video Package
-        </h3>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto leading-relaxed">
-          Decoding visual stopping power, calculating curiosity triggers, and searching topic momentum...
-        </p>
+        <div className="bg-muted/30 rounded-xl border p-4 space-y-3 font-mono text-sm">
+          {steps.map((step, idx) => (
+            <div 
+              key={idx} 
+              className={`flex items-center gap-3 transition-opacity duration-300 ${
+                idx === currentStep 
+                  ? "opacity-100 text-primary font-medium" 
+                  : idx < currentStep 
+                  ? "opacity-50 text-muted-foreground" 
+                  : "hidden"
+              }`}
+            >
+              {idx === currentStep ? (
+                <Loader2 className="w-4 h-4 animate-spin shrink-0" />
+              ) : (
+                <Activity className="w-4 h-4 shrink-0" />
+              )}
+              <span className="truncate">{step}</span>
+            </div>
+          ))}
+        </div>
       </div>
-
-      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-900 text-xs font-medium text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800">
-        <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
-        <span>One unified decision model</span>
-      </div>
-    </div>
+    </Card>
   )
 }

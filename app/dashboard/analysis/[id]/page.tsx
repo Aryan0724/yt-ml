@@ -11,7 +11,8 @@ import { ActionAngles } from "@/components/dashboard/action-angles"
 import { SeverityChecklist } from "@/components/dashboard/severity-checklist"
 import { TopicIntelligenceView } from "@/components/dashboard/topic-intelligence-view"
 import { ExpandableEvidence } from "@/components/dashboard/expandable-evidence"
-import { ArrowLeft, RefreshCw, AlertCircle } from "lucide-react"
+import { ArrowLeft, Loader2, AlertCircle } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 export default function SavedAnalysisPage() {
   const params = useParams()
@@ -33,8 +34,8 @@ export default function SavedAnalysisPage() {
   if (loading) {
     return (
       <div className="w-full max-w-4xl mx-auto py-20 text-center space-y-4">
-        <div className="w-8 h-8 border-2 border-zinc-300 border-t-zinc-900 dark:border-zinc-700 dark:border-t-white rounded-full animate-spin mx-auto" />
-        <p className="text-xs font-semibold text-zinc-500 uppercase tracking-widest">
+        <Loader2 className="w-8 h-8 animate-spin mx-auto text-primary" />
+        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">
           Loading Saved Decision...
         </p>
       </div>
@@ -44,23 +45,22 @@ export default function SavedAnalysisPage() {
   if (!result) {
     return (
       <div className="w-full max-w-xl mx-auto py-20 px-6 text-center space-y-4">
-        <div className="w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center mx-auto text-zinc-400">
+        <div className="w-12 h-12 rounded-full bg-destructive/10 flex items-center justify-center mx-auto text-destructive">
           <AlertCircle className="w-6 h-6" />
         </div>
-        <h2 className="text-xl font-bold text-zinc-900 dark:text-white">
-          Analysis Not Found in Active Session
+        <h2 className="text-xl font-bold text-foreground">
+          Analysis Not Found
         </h2>
-        <p className="text-xs text-zinc-500 max-w-sm mx-auto leading-relaxed">
+        <p className="text-sm text-muted-foreground max-w-sm mx-auto leading-relaxed">
           This analysis session may have expired or was opened in a different browser session.
         </p>
-        <div className="pt-2">
-          <Link
-            href="/dashboard"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 text-xs font-bold"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Package Analyzer</span>
-          </Link>
+        <div className="pt-4">
+          <Button asChild className="rounded-xl">
+            <Link href="/dashboard/analyze">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Analyzer
+            </Link>
+          </Button>
         </div>
       </div>
     )
@@ -69,17 +69,16 @@ export default function SavedAnalysisPage() {
   const data = result.data
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6 text-left pb-16 animate-fade-in">
+    <div className="w-full max-w-4xl mx-auto space-y-6 pb-16 animate-in fade-in duration-500">
       {/* Navigation Topbar */}
       <div className="flex items-center justify-between">
-        <Link
-          href="/dashboard"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-all"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>New Analysis</span>
-        </Link>
-        <span className="text-[10px] text-zinc-400 font-mono">
+        <Button variant="ghost" asChild className="-ml-4 text-muted-foreground hover:text-foreground">
+          <Link href="/dashboard/analyze">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            New Analysis
+          </Link>
+        </Button>
+        <span className="text-xs text-muted-foreground font-mono">
           ID: {result.metadata.analysis_id.slice(0, 8)}...
         </span>
       </div>

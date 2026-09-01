@@ -3,27 +3,26 @@
 import React, { useState, useEffect, useCallback } from "react"
 import {
   RadarConfig,
-  RadarSummary,
   RadarTopicItem,
   fetchRadarConfig,
-  fetchRadarSummary,
   fetchRadarTopics
 } from "@/lib/api/radar"
 import { RadarHeader } from "./radar-header"
-import { RadarSummaryStrip } from "./radar-summary-strip"
-import { OpportunityCard } from "./opportunity-card"
-import { AlertCircle, Sparkles, Loader2 } from "lucide-react"
+import { BreakingHeroCard } from "./breaking-hero-card"
+import { RisingTopicList } from "./rising-topic-list"
+import { UnderservedList } from "./underserved-list"
+import { NextMoveCard } from "./next-move-card"
+import { RadarEmptyState } from "./radar-empty-state"
+import { Loader2 } from "lucide-react"
 
 export function RadarFeed() {
   const [config, setConfig] = useState<RadarConfig | null>(null)
   const [selectedRegion, setSelectedRegion] = useState<string>("IN")
   const [selectedCategory, setSelectedCategory] = useState<string>("All")
-  const [selectedClassification, setSelectedClassification] = useState<string>("ALL")
   
-  const [summary, setSummary] = useState<RadarSummary | null>(null)
   const [topics, setTopics] = useState<RadarTopicItem[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [error, setError] = useState<string | null>(null)
+  const [isConfigured, setIsConfigured] = useState<boolean>(true)
 
   // 1. Initial Load of Config
   useEffect(() => {
@@ -38,43 +37,58 @@ export function RadarFeed() {
       })
   }, [])
 
-  // 2. Load Summary & Topics when Region / Category / Classification changes
+  // 2. Load Topics
   const loadFeedData = useCallback(async () => {
     setIsLoading(true)
-    setError(null)
     try {
-      const [sumData, topicsData] = await Promise.all([
-        fetchRadarSummary(selectedRegion),
-        fetchRadarTopics({
-          region: selectedRegion,
-          category: selectedCategory,
-          classification: selectedClassification,
-          limit: 30
-        })
-      ])
-      setSummary(sumData)
+      const topicsData = await fetchRadarTopics({
+        region: selectedRegion,
+        category: selectedCategory,
+        classification: "ALL",
+        limit: 50
+      })
+      
       setTopics(topicsData.topics || [])
+      setIsConfigured(topicsData.data_available !== false)
     } catch (err: any) {
       console.error("Failed to load radar data:", err)
-      setError("Unable to connect to Creator Radar service. Please check backend connection.")
+      // On backend error we might assume it's unconfigured or down
+      setIsConfigured(false)
     } finally {
       setIsLoading(false)
     }
-  }, [selectedRegion, selectedCategory, selectedClassification])
+  }, [selectedRegion, selectedCategory])
 
   useEffect(() => {
     loadFeedData()
   }, [loadFeedData])
 
+  if (!isConfigured && !isLoading) {
+    return <RadarEmptyState />
+  }
+
+  // Derive buckets
+  // Breaking: Top momentum / Breaking topic
+  const breakingTopic = topics.find(t => t.classification === "BREAKING") || 
+                        [...topics].sort((a, b) => b.metrics.momentum - a.metrics.momentum)[0]
+                        
+  // Rising
+  const risingTopics = topics.filter(t => t.classification === "RISING" || t.classification === "TRENDING").slice(0, 5)
+
+  // Underserved (Opportunity or low saturation)
+  const underservedTopics = topics.filter(t => t.classification === "OPPORTUNITY" || (t.classification !== "BREAKING" && t.metrics.saturation < 40 && t.metrics.demand > 50)).slice(0, 5)
+
+  // Next Move: Highest opportunity score
+  const nextMoveTopic = [...topics].sort((a, b) => b.opportunity.score - a.opportunity.score)[0]
+
   return (
-    <div className="space-y-6 max-w-5xl mx-auto">
-      {/* Configuration-driven Header */}
+    <div className="max-w-3xl mx-auto pb-24">
       <RadarHeader
         regions={
           config?.regions || [
             { code: "IN", name: "India", flag: "🇮🇳", default: true },
             { code: "US", name: "United States", flag: "🇺🇸", default: false },
-            { code: "GLOBAL", name: "Worldwide", flag: "🌎", default: false }
+            { code: "GLOBAL", name: "Global", flag: "🌎", default: false }
           ]
         }
         selectedRegion={selectedRegion}
@@ -92,60 +106,33 @@ export function RadarFeed() {
         }
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
-        onRefresh={loadFeedData}
-        isLoading={isLoading}
+        lastMeasured={topics.length > 0 ? topics[0].captured_at : undefined}
       />
 
-      {/* Summary Filter Strip */}
-      <RadarSummaryStrip
-        summary={summary}
-        activeClassification={selectedClassification}
-        onSelectClassification={setSelectedClassification}
-      />
-
-      {/* Error state */}
-      {error && (
-        <div className="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-3">
-          <AlertCircle className="w-5 h-5 shrink-0" />
-          <span>{error}</span>
-        </div>
-      )}
-
-      {/* Loading state */}
       {isLoading ? (
-        <div className="py-20 flex flex-col items-center justify-center gap-3 text-zinc-400">
-          <Loader2 className="w-6 h-6 animate-spin text-zinc-600 dark:text-zinc-300" />
-          <p className="text-xs font-medium">Measuring search momentum & demand across {selectedRegion}...</p>
+        <div className="py-20 flex justify-center">
+          <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
         </div>
       ) : topics.length === 0 ? (
-        /* Empty state */
-        <div className="py-16 text-center bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 space-y-3">
-          <Sparkles className="w-8 h-8 text-zinc-400 mx-auto opacity-60" />
-          <h3 className="text-base font-bold text-zinc-900 dark:text-white">
-            No topics matching criteria
-          </h3>
-          <p className="text-xs text-zinc-500 max-w-md mx-auto">
-            No candidate topics met the threshold for {selectedClassification} in {selectedCategory} for {selectedRegion}.
-            Try switching to &quot;All Topics&quot; or selecting a broader category.
-          </p>
-          <button
-            onClick={() => {
-              setSelectedCategory("All")
-              setSelectedClassification("ALL")
-            }}
-            className="px-4 py-2 bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 text-xs font-semibold rounded-xl hover:opacity-90 transition"
-          >
-            Reset Filters
-          </button>
+        <div className="py-20 text-center text-muted-foreground">
+          No topics found for this criteria.
         </div>
       ) : (
-        /* Topic Cards Grid */
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {topics.map((item) => (
-            <OpportunityCard key={item.id} item={item} />
-          ))}
+        <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+          {breakingTopic && <BreakingHeroCard topic={breakingTopic} />}
+          
+          <div className="w-full h-px bg-border/50 mb-12" />
+          
+          <RisingTopicList topics={risingTopics} />
+          
+          <div className="w-full h-px bg-border/50 mb-12" />
+          
+          <UnderservedList topics={underservedTopics} />
+          
+          {nextMoveTopic && <NextMoveCard topic={nextMoveTopic} />}
         </div>
       )}
     </div>
   )
 }
+

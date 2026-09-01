@@ -3,6 +3,8 @@
 import React from "react"
 import { TopicIntelligence } from "@/lib/types/analysis"
 import { TrendingUp, TrendingDown, Minus, Sparkles, AlertCircle, Globe } from "lucide-react"
+import { Card } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 
 export interface TopicIntelligenceViewProps {
   topicData?: TopicIntelligence
@@ -17,11 +19,11 @@ export function TopicIntelligenceView({ topicData }: TopicIntelligenceViewProps)
   const getMomentumIcon = (label?: string) => {
     switch (label?.toLowerCase()) {
       case "rising":
-        return <TrendingUp className="w-4 h-4 text-emerald-500" />
+        return <TrendingUp className="w-4 h-4 text-emerald-600" />
       case "falling":
-        return <TrendingDown className="w-4 h-4 text-rose-500" />
+        return <TrendingDown className="w-4 h-4 text-destructive" />
       default:
-        return <Minus className="w-4 h-4 text-zinc-400" />
+        return <Minus className="w-4 h-4 text-muted-foreground" />
     }
   }
 
@@ -49,7 +51,7 @@ export function TopicIntelligenceView({ topicData }: TopicIntelligenceViewProps)
     },${height - padding} Z`
 
     return (
-      <div className="w-full overflow-hidden pt-2">
+      <div className="w-full overflow-hidden pt-4">
         <svg
           viewBox={`0 0 ${width} ${height}`}
           className="w-full h-24 sm:h-28 overflow-visible"
@@ -58,7 +60,7 @@ export function TopicIntelligenceView({ topicData }: TopicIntelligenceViewProps)
           <path
             d={areaData}
             fill="currentColor"
-            className="text-indigo-500/10 dark:text-indigo-400/10"
+            className="text-primary/5"
           />
           {/* Line stroke */}
           <path
@@ -68,7 +70,7 @@ export function TopicIntelligenceView({ topicData }: TopicIntelligenceViewProps)
             strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-indigo-600 dark:text-indigo-400"
+            className="text-primary/70"
           />
         </svg>
       </div>
@@ -76,10 +78,10 @@ export function TopicIntelligenceView({ topicData }: TopicIntelligenceViewProps)
   }
 
   return (
-    <div className="w-full bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-5 text-left">
+    <Card className="p-6 sm:p-8 space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2 text-zinc-900 dark:text-white">
-          <Sparkles className="w-4 h-4 text-indigo-500" />
+        <div className="flex items-center gap-2 text-foreground">
+          <Sparkles className="w-4 h-4 text-primary" />
           <h4 className="text-xs font-bold uppercase tracking-wider">
             Topic Search Momentum
           </h4>
@@ -87,12 +89,12 @@ export function TopicIntelligenceView({ topicData }: TopicIntelligenceViewProps)
 
         <div className="flex items-center gap-2">
           {topicData.region && (
-            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider px-2.5 py-0.5 rounded-lg bg-zinc-100 dark:bg-zinc-900">
+            <Badge variant="secondary" className="gap-1 uppercase tracking-wider text-[10px]">
               <Globe className="w-3 h-3" /> {topicData.region}
-            </span>
+            </Badge>
           )}
           {topicData.data_source && (
-            <span className="text-[10px] text-zinc-400 font-medium">
+            <span className="text-[10px] text-muted-foreground font-medium">
               Source: Google Trends
             </span>
           )}
@@ -104,17 +106,17 @@ export function TopicIntelligenceView({ topicData }: TopicIntelligenceViewProps)
           {/* Topic Title & Momentum Header */}
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <span className="text-[10px] uppercase font-bold text-zinc-400 tracking-wider">
+              <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
                 Target Topic
               </span>
-              <h3 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white">
+              <h3 className="text-lg sm:text-xl font-bold text-foreground">
                 &ldquo;{topicData.topic}&rdquo;
               </h3>
             </div>
 
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs font-bold">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-muted/30 border text-xs font-bold">
               {getMomentumIcon(metrics.momentum_label)}
-              <span>{metrics.momentum_label} Trend</span>
+              <span className="capitalize">{metrics.momentum_label} Trend</span>
             </div>
           </div>
 
@@ -122,39 +124,39 @@ export function TopicIntelligenceView({ topicData }: TopicIntelligenceViewProps)
           {renderSparkline()}
 
           {/* Metric Badges Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t border-zinc-100 dark:border-zinc-900">
-            <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/40 text-center sm:text-left">
-              <span className="text-[10px] uppercase font-bold text-zinc-400 block">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-border">
+            <div className="p-3 rounded-xl bg-muted/30 text-center sm:text-left border border-transparent">
+              <span className="text-[10px] uppercase font-bold text-muted-foreground block">
                 Growth Shift
               </span>
-              <span className="text-sm font-bold text-zinc-900 dark:text-white">
+              <span className="text-sm font-bold text-foreground">
                 {metrics.growth_rate > 0 ? `+${Math.round(metrics.growth_rate * 100)}%` : `${Math.round(metrics.growth_rate * 100)}%`}
               </span>
             </div>
 
-            <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/40 text-center sm:text-left">
-              <span className="text-[10px] uppercase font-bold text-zinc-400 block">
+            <div className="p-3 rounded-xl bg-muted/30 text-center sm:text-left border border-transparent">
+              <span className="text-[10px] uppercase font-bold text-muted-foreground block">
                 Search Demand
               </span>
-              <span className="text-sm font-bold text-zinc-900 dark:text-white">
+              <span className="text-sm font-bold text-foreground">
                 {metrics.demand_level || "Moderate"}
               </span>
             </div>
 
-            <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/40 text-center sm:text-left">
-              <span className="text-[10px] uppercase font-bold text-zinc-400 block">
+            <div className="p-3 rounded-xl bg-muted/30 text-center sm:text-left border border-transparent">
+              <span className="text-[10px] uppercase font-bold text-muted-foreground block">
                 Volatility
               </span>
-              <span className="text-sm font-bold text-zinc-900 dark:text-white">
+              <span className="text-sm font-bold text-foreground">
                 {metrics.volatility_label || "Low"}
               </span>
             </div>
 
-            <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-900/40 text-center sm:text-left">
-              <span className="text-[10px] uppercase font-bold text-zinc-400 block">
+            <div className="p-3 rounded-xl bg-muted/30 text-center sm:text-left border border-transparent">
+              <span className="text-[10px] uppercase font-bold text-muted-foreground block">
                 Signal Confidence
               </span>
-              <span className="text-sm font-bold text-zinc-900 dark:text-white">
+              <span className="text-sm font-bold text-foreground capitalize">
                 {metrics.confidence}
               </span>
             </div>
@@ -162,22 +164,22 @@ export function TopicIntelligenceView({ topicData }: TopicIntelligenceViewProps)
         </div>
       ) : (
         /* Honest unconfigured / unavailable empty state */
-        <div className="py-6 px-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/30 border border-dashed border-zinc-200 dark:border-zinc-800 text-center space-y-2">
-          <div className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mx-auto text-zinc-400">
+        <div className="py-6 px-4 rounded-xl bg-muted/10 border-2 border-dashed border-border text-center space-y-2">
+          <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center mx-auto text-muted-foreground">
             <AlertCircle className="w-4 h-4" />
           </div>
-          <p className="text-xs font-semibold text-zinc-700 dark:text-zinc-300">
+          <p className="text-xs font-semibold text-foreground">
             {topicData.reason === "provider_not_configured"
               ? "Topic intelligence isn't connected"
               : "Topic Intelligence Data Unavailable"}
           </p>
-          <p className="text-[11px] text-zinc-400 max-w-sm mx-auto leading-relaxed">
+          <p className="text-[11px] text-muted-foreground max-w-sm mx-auto leading-relaxed">
             {topicData.reason === "provider_not_configured"
               ? "PreYT can still analyze your thumbnail and title. Connect a trend-data provider to unlock topic momentum."
               : "Insufficient search volume recorded for this specific topic over the last 12 months."}
           </p>
         </div>
       )}
-    </div>
+    </Card>
   )
 }

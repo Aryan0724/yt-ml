@@ -27,9 +27,6 @@ class PostgresRepository(AnalysisRepositoryABC):
         url = sync_db_url or settings.DATABASE_SYNC_URL
         self.engine = None
         self.session_factory = None
-        self._mock_analyses: Dict[str, Dict[str, Any]] = {}
-        self._mock_usage: List[Dict[str, Any]] = []
-
         if url:
             try:
                 self.engine = create_engine(
@@ -41,9 +38,11 @@ class PostgresRepository(AnalysisRepositoryABC):
                 self.session_factory = sessionmaker(bind=self.engine, expire_on_commit=False)
                 logger.info("PostgresRepository initialized with sync engine.")
             except Exception as e:
-                logger.warning(f"Could not connect to PostgreSQL: {e}. Running in memory-safe fallback.")
+                logger.error(f"Could not connect to PostgreSQL: {e}")
+                raise
         else:
-            logger.info("No DATABASE_URL configured. Running in memory-safe fallback mode.")
+            logger.error("No DATABASE_URL configured. Cannot initialize PostgresRepository.")
+            raise ValueError("DATABASE_URL is required for production.")
 
     def save_analysis(
         self,
@@ -56,14 +55,8 @@ class PostgresRepository(AnalysisRepositoryABC):
         ws_id = workspace_id or payload.get("workspace_id")
 
         if not self.session_factory or not ws_id:
-            # Fallback memory store
-            self._mock_analyses[analysis_id] = {
-                **payload,
-                "workspace_id": ws_id,
-                "project_id": project_id
-            }
-            logger.debug(f"Saved analysis {analysis_id} in memory fallback.")
-            return True
+            logger.error("Cannot save analysis: missing DB connection or workspace_id")
+            return False
 
         try:
             with self.session_factory() as session:
@@ -91,13 +84,8 @@ class PostgresRepository(AnalysisRepositoryABC):
                 session.commit()
                 return True
         except Exception as e:
-            logger.warning(f"PostgresRepository DB unreachable: {e}. Storing in memory fallback.")
-            self._mock_analyses[analysis_id] = {
-                **payload,
-                "workspace_id": ws_id,
-                "project_id": project_id
-            }
-            return True
+            logger.error(f"PostgresRepository DB unreachable: {e}")
+            return False
 
     def get_analysis(
         self,
@@ -106,9 +94,6 @@ class PostgresRepository(AnalysisRepositoryABC):
     ) -> Optional[Dict[str, Any]]:
         """Retrieves a single analysis by UUID within a workspace."""
         if not self.session_factory:
-            cached = self._mock_analyses.get(analysis_id)
-            if cached and cached.get("workspace_id") == workspace_id:
-                return cached
             return None
 
         try:
@@ -135,10 +120,7 @@ class PostgresRepository(AnalysisRepositoryABC):
                     "created_at": record.created_at.isoformat()
                 }
         except Exception as e:
-            logger.warning(f"PostgresRepository DB unreachable on get: {e}. Checking memory fallback.")
-            cached = self._mock_analyses.get(analysis_id)
-            if cached and cached.get("workspace_id") == workspace_id:
-                return cached
+            logger.error(f"PostgresRepository DB unreachable on get: {e}")
             return None
 
     def list_analyses(
@@ -150,11 +132,7 @@ class PostgresRepository(AnalysisRepositoryABC):
     ) -> List[Dict[str, Any]]:
         """Lists analyses within a workspace."""
         if not self.session_factory:
-            matches = [
-                a for a in self._mock_analyses.values()
-                if a.get("workspace_id") == workspace_id
-            ]
-            return matches[offset : offset + limit]
+            return []
 
         try:
             with self.session_factory() as session:
@@ -192,8 +170,7 @@ class PostgresRepository(AnalysisRepositoryABC):
         """Records an event into the authoritative usage_events table."""
         ws_id = event.get("workspace_id")
         if not self.session_factory or not ws_id:
-            self._mock_usage.append(event)
-            return True
+            return False
 
         try:
             with self.session_factory() as session:

@@ -1,10 +1,13 @@
 "use client"
 
 import React, { useState } from "react"
-import { Sparkles, Globe, Search, ArrowRight, TrendingUp, TrendingDown, Minus, AlertCircle } from "lucide-react"
+import { Search } from "lucide-react"
 import { fetchTopicIntelligence } from "@/lib/api/analysis"
 import { TopicIntelligence } from "@/lib/types/analysis"
 import { TopicIntelligenceView } from "@/components/dashboard/topic-intelligence-view"
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 const REGIONS = [
   { code: "IN", label: "India (IN)" },
@@ -41,28 +44,28 @@ export default function TopicExplorerPage() {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-8 text-left pb-16">
+    <div className="w-full max-w-4xl mx-auto space-y-8 pb-16">
       {/* Header */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-white tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
           Topic Intelligence Explorer
         </h1>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Explore real YouTube search demand velocity, momentum, and seasonality before scripting your next video.
         </p>
       </div>
 
       {/* Search Input Card */}
-      <form onSubmit={handleSearch} className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-4">
-        <div className="flex flex-col sm:flex-row gap-3">
+      <Card className="p-6 sm:p-8 space-y-4">
+        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-zinc-400 absolute left-4 top-1/2 -translate-y-1/2" />
-            <input
+            <Search className="w-4 h-4 text-muted-foreground absolute left-4 top-1/2 -translate-y-1/2" />
+            <Input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Enter a topic or niche (e.g. AI Agents, GTA 6, Personal Finance)"
-              className="w-full pl-11 pr-4 py-3.5 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white"
+              className="pl-11 h-12 bg-muted/30 border-border text-sm"
             />
           </div>
 
@@ -70,7 +73,7 @@ export default function TopicExplorerPage() {
             <select
               value={region}
               onChange={(e) => setRegion(e.target.value)}
-              className="px-4 py-3.5 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-xs font-semibold text-zinc-900 dark:text-white focus:outline-none cursor-pointer"
+              className="px-4 h-12 bg-muted/30 border border-border rounded-xl text-xs font-semibold text-foreground focus:outline-none cursor-pointer"
             >
               {REGIONS.map((r) => (
                 <option key={r.code} value={r.code}>
@@ -79,26 +82,26 @@ export default function TopicExplorerPage() {
               ))}
             </select>
 
-            <button
+            <Button
               type="submit"
               disabled={isLoading || !query.trim()}
-              className="min-h-[48px] px-6 rounded-2xl bg-zinc-900 hover:bg-black dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all disabled:opacity-50 cursor-pointer shrink-0"
+              className="h-12 px-6 rounded-xl font-bold text-xs uppercase tracking-wider min-w-[100px]"
             >
               {isLoading ? "Searching..." : "Explore"}
-            </button>
+            </Button>
           </div>
-        </div>
+        </form>
 
         {error && (
-          <div className="p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 rounded-xl text-xs text-rose-700 dark:text-rose-300">
+          <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-xl text-xs text-destructive">
             {error}
           </div>
         )}
-      </form>
+      </Card>
 
       {/* Topic Result View */}
       {topicResult && (
-        <div className="animate-fade-in">
+        <div className="animate-in fade-in duration-300">
           <TopicIntelligenceView topicData={topicResult} />
         </div>
       )}

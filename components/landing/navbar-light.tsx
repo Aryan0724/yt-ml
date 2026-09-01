@@ -38,7 +38,7 @@ export function NavbarLight() {
         >
           {[
             { label: "Features", index: "01", href: "/features" },
-            { label: "Blog", index: "02", href: "/blog" },
+
             { label: "Changelog", index: "03", href: "/changelog" },
             { label: "Waitlist", index: "04", href: "/waitlist" }
           ].map((item) => (

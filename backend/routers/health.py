@@ -18,17 +18,29 @@ async def health_check():
 async def readiness_check():
     """
     Readiness probe: confirms the application is capable of serving traffic.
-    In production, if Supabase is missing, fail loudly.
     """
-    env = os.environ.get("ENVIRONMENT", "development").lower()
-    if env == "production":
-        supabase_url = os.environ.get("NEXT_PUBLIC_SUPABASE_URL")
-        supabase_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
-        if not supabase_url or not supabase_key:
-            raise HTTPException(status_code=503, detail="Service Unavailable: Missing required production Supabase credentials.")
-            
+    # Basic dependency checks
+    db_ok = False
+    try:
+        from db.session import engine
+        async with engine.connect() as conn:
+            db_ok = True
+    except Exception as e:
+        logger.error(f"Database health check failed: {e}")
+
+    redis_ok = False
+    try:
+        from core.cache import redis_client
+        if redis_client:
+            redis_ok = await redis_client.ping()
+    except Exception as e:
+        logger.error(f"Redis health check failed: {e}")
+
     return {
-        "status": "ready",
-        "engine": "V4.0-DEEP-LOGIC-AMPLIFIED",
-        "timestamp": time.time()
+        "status": "healthy" if (db_ok and redis_ok) else "degraded",
+        "version": "1.0.0",
+        "dependencies": {
+            "postgres": "up" if db_ok else "down",
+            "redis": "up" if redis_ok else "down"
+        }
     }

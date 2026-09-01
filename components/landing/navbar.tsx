@@ -1,47 +1,36 @@
-"use client"
-
-import * as React from "react"
 import Link from "next/link"
-import { Zap } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Menu } from "lucide-react"
 
 export function Navbar() {
-  const [scrolled, setScrolled] = React.useState(false)
-
-  React.useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
   return (
-    <nav className={cn(
-      "fixed top-0 w-full z-50 transition-all duration-300 border-b",
-      scrolled ? "bg-background/80 backdrop-blur-xl border-white/10 py-3" : "bg-transparent border-transparent py-5"
-    )}>
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 group">
-          <img src="/logo-1.png" alt="preYT" className="h-8 logo-dark-mode transition-transform group-hover:scale-105" />
-        </Link>
-        
-        <div className="hidden md:flex items-center gap-8">
-          <Link href="#features" className="text-sm text-zinc-400 hover:text-white transition-colors">Features</Link>
-          <Link href="#preview" className="text-sm text-zinc-400 hover:text-white transition-colors">Intelligence</Link>
-          <Link href="#waitlist" className="text-sm text-zinc-400 hover:text-white transition-colors">Waitlist</Link>
+    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
+      <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-10">
+          <Link href="/" className="flex items-center gap-2" aria-label="PreYT Home">
+            <span className="text-xl font-bold tracking-tight">PREYT<span className="text-primary ml-[2px]" aria-hidden="true">↗</span></span>
+          </Link>
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground" aria-label="Main Navigation">
+            <Link href="/product" className="hover:text-foreground transition-colors">Product</Link>
+            <Link href="/dashboard/radar" className="hover:text-foreground transition-colors">Radar</Link>
+            <Link href="/dashboard/ideas" className="hover:text-foreground transition-colors">Ideas</Link>
+            <Link href="/dashboard/analyze" className="hover:text-foreground transition-colors">Analyze</Link>
+            <Link href="/resources" className="hover:text-foreground transition-colors">Resources</Link>
+            <Link href="/pricing" className="hover:text-foreground transition-colors">Pricing</Link>
+          </nav>
         </div>
-
         <div className="flex items-center gap-4">
-          <Link href="/dashboard" className="text-sm text-zinc-400 hover:text-white transition-colors">
-            Beta Login
+          <Link href="/login" className="hidden sm:inline-block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            Log in
           </Link>
-          <Link 
-            href="#waitlist"
-            className="px-5 py-2 rounded-full bg-white text-black text-sm font-semibold hover:bg-zinc-200 transition-colors"
-          >
-            Join Closed Beta
-          </Link>
+          <Button asChild className="rounded-full px-6 hidden sm:inline-flex">
+            <Link href="/signup">Get started free →</Link>
+          </Button>
+          <Button variant="ghost" size="icon" className="md:hidden" aria-label="Open mobile menu">
+            <Menu className="h-5 w-5" />
+          </Button>
         </div>
       </div>
-    </nav>
+    </header>
   )
 }

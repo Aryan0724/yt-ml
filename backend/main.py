@@ -23,6 +23,8 @@ from routers.projects import router as projects_router
 from routers.analyze import router as analyze_router
 from routers.health import router as health_router
 from routers.radar import router as radar_router
+from routers.waitlist import router as waitlist_router
+from routers.ideas import router as ideas_router
 
 
 @asynccontextmanager
@@ -60,6 +62,8 @@ app.include_router(workspaces_router)
 app.include_router(projects_router)
 app.include_router(analyze_router)
 app.include_router(radar_router)
+app.include_router(waitlist_router)
+app.include_router(ideas_router)
 
 @app.get("/")
 async def root():

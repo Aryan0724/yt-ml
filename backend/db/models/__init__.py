@@ -15,6 +15,8 @@ from db.models.analysis import Analysis
 from db.models.usage_event import UsageEvent
 from db.models.subscription import Subscription
 from db.models.topic import Topic, TopicSnapshot
+from db.models.waitlist import WaitlistEntry
+from db.models.idea import IdeaRecord
 
 __all__ = [
     "Base",
@@ -28,5 +30,7 @@ __all__ = [
     "UsageEvent",
     "Subscription",
     "Topic",
-    "TopicSnapshot"
+    "TopicSnapshot",
+    "WaitlistEntry",
+    "IdeaRecord"
 ]

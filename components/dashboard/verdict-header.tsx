@@ -1,8 +1,10 @@
 "use client"
 
 import React from "react"
-import { MasterReport, PackagingVerdict } from "@/lib/types/analysis"
-import { CheckCircle2, AlertCircle, AlertTriangle, Sparkles } from "lucide-react"
+import { MasterReport } from "@/lib/types/analysis"
+import { CheckCircle2, AlertCircle, AlertTriangle } from "lucide-react"
+import { Card } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 
 export interface VerdictHeaderProps {
   score: number
@@ -18,21 +20,21 @@ export function VerdictHeader({ score, tier, masterReport, aiStatus }: VerdictHe
     if (s >= 75) {
       return {
         label: "Good to Go",
-        color: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800",
-        icon: <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+        color: "bg-emerald-50 text-emerald-700 border-emerald-200",
+        icon: <CheckCircle2 className="w-4 h-4 text-emerald-600" />
       }
     }
     if (s >= 60) {
       return {
         label: "Needs Optimization",
-        color: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800",
-        icon: <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+        color: "bg-amber-50 text-amber-700 border-amber-200",
+        icon: <AlertTriangle className="w-4 h-4 text-amber-600" />
       }
     }
     return {
       label: "High Scroll Risk",
-      color: "bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-800",
-      icon: <AlertCircle className="w-4 h-4 text-rose-600 dark:text-rose-400" />
+      color: "bg-destructive/10 text-destructive border-destructive/20",
+      icon: <AlertCircle className="w-4 h-4 text-destructive" />
     }
   }
 
@@ -41,33 +43,33 @@ export function VerdictHeader({ score, tier, masterReport, aiStatus }: VerdictHe
   const getPillarBadge = (status?: string) => {
     switch (status?.toLowerCase()) {
       case "strong":
-        return "bg-emerald-100/70 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800"
+        return "bg-emerald-100 text-emerald-800 border-emerald-200"
       case "moderate":
-        return "bg-amber-100/70 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border-amber-200 dark:border-amber-800"
+        return "bg-amber-100 text-amber-800 border-amber-200"
       case "weak":
-        return "bg-rose-100/70 text-rose-800 dark:bg-rose-950 dark:text-rose-300 border-rose-200 dark:border-rose-800"
+        return "bg-destructive/10 text-destructive border-destructive/20"
       default:
-        return "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 border-zinc-200 dark:border-zinc-700"
+        return "bg-muted text-muted-foreground border-border"
     }
   }
 
   return (
-    <div className="w-full bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6 text-left">
+    <Card className="p-6 sm:p-8 space-y-6">
       
       {/* Top Row: Score + Verdict */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-zinc-100 dark:border-zinc-900">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border">
         <div>
-          <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
             Package Potential Score
           </span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-4xl sm:text-5xl font-black text-zinc-900 dark:text-white tracking-tight">
+            <span className="text-4xl sm:text-5xl font-black text-foreground tracking-tight">
               {score}
             </span>
-            <span className="text-xl sm:text-2xl font-bold text-zinc-400">/ 100</span>
-            <span className="text-xs font-semibold text-zinc-500 uppercase tracking-widest ml-2">
-              (Tier {tier})
-            </span>
+            <span className="text-xl sm:text-2xl font-bold text-muted-foreground">/ 100</span>
+            <Badge variant="outline" className="ml-2 uppercase text-[10px]">
+              Tier {tier}
+            </Badge>
           </div>
         </div>
 
@@ -79,13 +81,13 @@ export function VerdictHeader({ score, tier, masterReport, aiStatus }: VerdictHe
 
       {/* AI Fallback Notice if applicable */}
       {aiStatus === "fallback" && (
-        <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 flex items-start gap-3">
-          <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+        <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 flex items-start gap-3">
+          <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
           <div className="space-y-0.5">
-            <h5 className="text-xs font-bold text-amber-900 dark:text-amber-200">
+            <h5 className="text-xs font-bold text-amber-900">
               AI interpretation unavailable
             </h5>
-            <p className="text-xs text-amber-700 dark:text-amber-300">
+            <p className="text-xs text-amber-700">
               Your core thumbnail and title analysis is still complete. We couldn't generate the additional AI interpretation right now.
             </p>
           </div>
@@ -94,11 +96,11 @@ export function VerdictHeader({ score, tier, masterReport, aiStatus }: VerdictHe
 
       {/* Summary / Why Statement */}
       {masterReport?.summary && (
-        <div className="space-y-1">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">
+        <div className="space-y-2">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
             Executive Summary
           </span>
-          <p className="text-sm sm:text-base font-medium text-zinc-800 dark:text-zinc-200 leading-relaxed">
+          <p className="text-sm sm:text-base font-medium text-foreground leading-relaxed">
             {masterReport.summary}
           </p>
         </div>
@@ -106,18 +108,18 @@ export function VerdictHeader({ score, tier, masterReport, aiStatus }: VerdictHe
 
       {/* Packaging Triad Breakdown */}
       {verdict && (
-        <div className="pt-2">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 block mb-3">
+        <div className="pt-4">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground block mb-3">
             Packaging Triad Status
           </span>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-4">
             {/* Topic Pillar */}
-            <div className="p-3.5 rounded-2xl bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-100 dark:border-zinc-800/80 space-y-1 text-center sm:text-left">
-              <span className="text-[10px] uppercase font-bold text-zinc-400 block">
+            <div className="p-4 rounded-xl bg-muted/30 border border-border space-y-2 text-center sm:text-left">
+              <span className="text-[10px] uppercase font-bold text-muted-foreground block">
                 Topic Demand
               </span>
               <span
-                className={`inline-block px-2 py-0.5 rounded-lg text-[10px] font-bold border uppercase tracking-wider ${getPillarBadge(
+                className={`inline-block px-2.5 py-1 rounded-md text-[10px] font-bold border uppercase tracking-wider ${getPillarBadge(
                   verdict.topic_status
                 )}`}
               >
@@ -126,12 +128,12 @@ export function VerdictHeader({ score, tier, masterReport, aiStatus }: VerdictHe
             </div>
 
             {/* Title Pillar */}
-            <div className="p-3.5 rounded-2xl bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-100 dark:border-zinc-800/80 space-y-1 text-center sm:text-left">
-              <span className="text-[10px] uppercase font-bold text-zinc-400 block">
+            <div className="p-4 rounded-xl bg-muted/30 border border-border space-y-2 text-center sm:text-left">
+              <span className="text-[10px] uppercase font-bold text-muted-foreground block">
                 Title Framing
               </span>
               <span
-                className={`inline-block px-2 py-0.5 rounded-lg text-[10px] font-bold border uppercase tracking-wider ${getPillarBadge(
+                className={`inline-block px-2.5 py-1 rounded-md text-[10px] font-bold border uppercase tracking-wider ${getPillarBadge(
                   verdict.title_status
                 )}`}
               >
@@ -140,12 +142,12 @@ export function VerdictHeader({ score, tier, masterReport, aiStatus }: VerdictHe
             </div>
 
             {/* Thumbnail Pillar */}
-            <div className="p-3.5 rounded-2xl bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-100 dark:border-zinc-800/80 space-y-1 text-center sm:text-left">
-              <span className="text-[10px] uppercase font-bold text-zinc-400 block">
+            <div className="p-4 rounded-xl bg-muted/30 border border-border space-y-2 text-center sm:text-left">
+              <span className="text-[10px] uppercase font-bold text-muted-foreground block">
                 Thumbnail Stop
               </span>
               <span
-                className={`inline-block px-2 py-0.5 rounded-lg text-[10px] font-bold border uppercase tracking-wider ${getPillarBadge(
+                className={`inline-block px-2.5 py-1 rounded-md text-[10px] font-bold border uppercase tracking-wider ${getPillarBadge(
                   verdict.thumbnail_status
                 )}`}
               >
@@ -155,6 +157,6 @@ export function VerdictHeader({ score, tier, masterReport, aiStatus }: VerdictHe
           </div>
         </div>
       )}
-    </div>
+    </Card>
   )
 }

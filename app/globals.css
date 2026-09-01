@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesque:wght@400;500;600;700&family=Fragment+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -26,16 +26,12 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
 
-  --font-sans: 'Plus Jakarta Sans', var(--font-inter), sans-serif;
-  --font-display: 'Space Grotesque', var(--font-outfit), sans-serif;
-  --font-mono: 'Fragment Mono', monospace;
+  --font-sans: var(--font-inter), 'Inter', sans-serif;
+  --font-display: var(--font-inter), 'Inter', sans-serif;
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
-  --animate-glow-pulse: glow-pulse 8s ease-in-out infinite;
-  --animate-float: float 6s ease-in-out infinite;
-  --animate-float-delayed: float 6s ease-in-out infinite 3s;
-  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-fade-in: fade-in 0.3s ease-out;
 
   @keyframes accordion-down {
     from { height: 0; }
@@ -45,74 +41,66 @@
     from { height: var(--radix-accordion-content-height); }
     to { height: 0; }
   }
-  @keyframes glow-pulse {
-    0%, 100% { opacity: 0.1; transform: scale(1); }
-    50% { opacity: 0.2; transform: scale(1.1); }
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-  @keyframes shimmer {
-    from { background-position: 200% 0; }
-    to { background-position: -200% 0; }
-  }
-  @keyframes aurora {
-    0% { background-position: 50% 50%, 50% 50%; }
-    50% { background-position: 100% 50%, 0% 50%; }
-    100% { background-position: 50% 50%, 50% 50%; }
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }
 
 @layer base {
   :root {
-    --background: 38 12% 98%; /* warm paper off-white */
-    --foreground: 0 0% 7%; /* deeply dark charcoal, almost black */
+    /* Refined Light-first SaaS Palette */
+    --background: 0 0% 100%; /* Pure white or #FAFAFA, using pure white for extreme cleanliness */
+    --foreground: 0 0% 9%; /* Charcoal */
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 7%;
+    --card-foreground: 0 0% 9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 7%;
+    --popover-foreground: 0 0% 9%;
     
-    /* YouTube Red */
-    --primary: 0 100% 50%;
+    /* PreYT Green Accent (e.g. #10B981 Emerald 500 equivalent, tweaked for SaaS) */
+    --primary: 158 80% 35%; /* Restrained strong green */
     --primary-foreground: 0 0% 100%;
     
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
+    --secondary: 240 5% 96%; /* Neutral gray */
+    --secondary-foreground: 240 5% 10%;
+    
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;
+    
+    --accent: 240 5% 96%;
+    --accent-foreground: 240 5% 10%;
+    
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
     
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 100% 50%;
-    --radius: 1rem; /* rounded but not pill */
+    --border: 240 6% 90%; /* Extremely subtle borders */
+    --input: 240 6% 90%;
+    --ring: 158 80% 35%; /* Focus ring matches primary */
+    
+    --radius: 0.75rem; /* Restrained radius (12px) */
   }
 
   .dark {
-    /* Kept for fallback, though we are enforcing light */
-    --background: 0 0% 4%;
+    /* While the focus is light-mode, keeping a sensible dark mode just in case */
+    --background: 240 10% 4%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 6%;
+    --card: 240 10% 6%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 6%;
+    --popover: 240 10% 6%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 100% 50%;
+    --primary: 158 80% 45%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 15%;
+    --secondary: 240 5% 15%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
-    --accent: 0 0% 15%;
+    --muted: 240 5% 15%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 240 5% 15%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 0 100% 50%;
+    --border: 240 5% 15%;
+    --input: 240 5% 15%;
+    --ring: 158 80% 45%;
   }
 }
 
@@ -124,95 +112,24 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans), sans-serif;
-    font-feature-settings: "cv02", "cv05", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
-    letter-spacing: -0.03em; /* tight saas tracking */
-    font-weight: 700;
+    letter-spacing: -0.02em; /* Clean, modern tracking */
+    font-weight: 600;
   }
 }
 
-/* Custom premium utilities */
+/* Custom premium utilities - RESTRAINED */
 @utility premium-shadow {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 
-              0 10px 15px -3px rgba(0, 0, 0, 0.04), 
-              0 20px 40px -5px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 
+              0 4px 12px -4px rgba(0, 0, 0, 0.02);
 }
 
-@utility red-glow-shadow {
-  box-shadow: 0 0 40px -10px rgba(255, 0, 0, 0.2), 
-              0 20px 30px -10px rgba(255, 0, 0, 0.1);
+@utility dotted-bg {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-@utility glass-light {
-  backdrop-filter: blur(24px);
-  background-color: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(0, 0, 0, 0.04);
-}
-
-@utility text-gradient-light {
-  background-clip: text;
-  color: transparent;
-  background-image: linear-gradient(to right, #111, #555);
-}
-
-@utility animate-aurora {
-  animation: aurora 20s ease infinite;
-}
-
-@utility glass-card {
-  backdrop-filter: blur(20px) saturate(120%);
-  background-color: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 1rem;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15),
-              inset 0 1px 1px rgba(255, 255, 255, 0.05);
-}
-
-@utility glass-card-hover {
-  backdrop-filter: blur(20px) saturate(120%);
-  background-color: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(255, 0, 0, 0.15);
-  box-shadow: 0 20px 40px -15px rgba(255, 0, 0, 0.06),
-              0 1px 2px rgba(0, 0, 0, 0.01),
-              inset 0 1px 1.5px rgba(255, 255, 255, 1);
-}
-
-@utility tech-grid-overlay {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
-@utility border-glow-red {
-  transition: all 0.3s ease;
-  border-color: rgba(255, 0, 0, 0.08);
-}
-
-@utility border-glow-red-hover {
-  border-color: rgba(255, 0, 0, 0.25);
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.05);
-}
-
-/* Base dotted background for that network look in the hero */
-.dotted-bg {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.08) 1.5px, transparent 1.5px);
-  background-size: 30px 30px;
-}
-
-@utility bg-noise {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-@utility glow-mesh {
-  background-image: 
-    radial-gradient(circle at 15% 50%, rgba(255, 0, 0, 0.025) 0%, transparent 50%),
-    radial-gradient(circle at 85% 20%, rgba(99, 102, 241, 0.02) 0%, transparent 45%);
-}
-
-@utility glass {
-  backdrop-filter: blur(16px);
-  background-color: rgba(0, 0, 0, 0.3);
-}

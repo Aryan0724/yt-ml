@@ -126,6 +126,19 @@ class RadarService:
         
         items: List[RadarTopicItem] = []
         captured_str = datetime.now(timezone.utc).isoformat()
+        
+        if not provider_configured:
+            response = RadarFeedResponse(
+                region=eff_region,
+                category=eff_cat,
+                classification=eff_cls,
+                topics=[],
+                total=0,
+                next_cursor=None,
+                data_available=False,
+                reason="provider_not_configured"
+            )
+            return response
 
         for c in candidates:
             # Measure candidate trend via TopicService

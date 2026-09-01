@@ -1,45 +1,72 @@
-# Diamond Intelligence | Deployment Guide (Free Tier)
+# Diamond Intelligence | Deployment Guide (VPS)
 
-This platform is architected to run entirely on free-tier infrastructure. Follow these steps to deploy your production system without costs.
+This platform is architected to run entirely on a self-hosted Virtual Private Server (VPS) alongside Vercel for the frontend, ensuring full data ownership and avoiding BaaS lock-in.
+
+## Architecture Overview
+
+```text
+                    INTERNET
+                       │
+                       ▼
+                Cloudflare / HTTPS
+                       │
+                       ▼
+                 ┌───────────┐
+                 │  Next.js  │
+                 │ Frontend  │ (Vercel)
+                 └─────┬─────┘
+                       │
+                       ▼
+                 ┌───────────┐
+                 │  FastAPI  │
+                 │   API     │ (VPS Docker)
+                 └─────┬─────┘
+                       │
+          ┌────────────┼────────────┐
+          ▼            ▼            ▼
+     PostgreSQL      Redis       File Storage
+      Database       Cache        / Thumbnails
+```
 
 ## 1. Frontend: Next.js (Vercel)
-Vercel is the recommended platform for Next.js.
 - **Provider:** [Vercel](https://vercel.com/)
-- **Cost:** $0 (Hobby Tier)
 - **Steps:**
-  1. Connect your GitHub repository (`yt-ml`).
-  2. Vercel will automatically detect the Next.js app.
+  1. Connect your GitHub repository.
+  2. Configure environment variables (e.g. `NEXT_PUBLIC_APP_URL`, `BACKEND_INTERNAL_URL`).
   3. Add your custom domain in the project settings. Vercel provides free SSL certificates.
 
-## 2. Backend: Python API (Render)
-Render offers a reliable free tier for web services.
-- **Provider:** [Render](https://render.com/)
-- **Cost:** $0 (Free Tier)
-- **Steps:**
-  1. Create a "New Web Service" on Render.
-  2. Connect the same GitHub repo.
-  3. Set the **Root Directory** to `backend/`.
-  4. Render will automatically detect the **Dockerfile**.
-  5. Select the "Free" instance type.
-  - *Note: Docker-based deployment is more stable and ensures all your ML dependencies (CatBoost, etc.) are installed correctly.*
-  - *Note: Free tier instances spin down after 15 mins of inactivity. Use a free cron service like [Cron-job.org](https://cron-job.org/) to ping your API every 10 mins if you want it "always on."*
+## 2. Backend: FastAPI + Postgres + Redis (VPS)
+We use a Docker Compose architecture to run the intelligence pipeline.
 
-## 3. Database: Performance Vault (Supabase)
-If you scale beyond the CSV-based vault, use Supabase for Postgres.
-- **Provider:** [Supabase](https://supabase.com/)
-- **Cost:** $0 (Free Tier)
-- **Steps:**
-  1. Create a new project.
-  2. Use the provided Connection String in your `config.py`.
+### Prerequisites
+- A VPS running Ubuntu 22.04+
+- Docker and Docker Compose installed
 
-## 4. Custom Domain
-- **Steps:**
-  1. Point your A/CNAME records to Vercel for the frontend.
-  2. (Optional) Create a subdomain `api.yourdomain.com` and point it to Render.
+### Steps:
+1. Clone the repository to your VPS.
+2. Navigate to the `backend/` directory.
+3. Create a `.env.local` file with your credentials (JWT Secrets, Database Passwords, Gemini API Keys, DataForSEO keys).
+4. Build and start the services:
+```bash
+docker-compose up -d --build
+```
+5. Apply database migrations:
+```bash
+docker-compose exec api alembic upgrade head
+```
 
-## Summary of Tech Stack (Zero Cost)
-- **Code:** GitHub
-- **Hosting (Web):** Vercel
-- **Hosting (API):** Render
-- **SSL:** Included (Free)
-- **CI/CD:** Automated via GitHub push
+### Services Deployed
+- **api**: FastAPI running on port `8000`.
+- **postgres**: PostgreSQL 16 database for user auth, waitlist, workspaces, and analytics.
+- **redis**: Redis 7 cache for rate limiting, session caching, and background queues.
+
+## 3. Custom Domain & Reverse Proxy
+- Use Cloudflare to point a subdomain (e.g., `api.preyt.com`) to your VPS IP.
+- Configure Nginx or Caddy on your VPS to reverse proxy traffic from port 80/443 to the FastAPI container on port 8000.
+
+## Summary of Tech Stack
+- **Frontend Code:** Next.js (Vercel)
+- **Backend API:** FastAPI (Docker)
+- **Database:** PostgreSQL (Docker)
+- **Cache:** Redis (Docker)
+- **AI/ML:** Gemini + OpenCV (Python Backend)

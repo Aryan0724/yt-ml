@@ -51,7 +51,7 @@ export interface RadarTopicItem {
   canonical_name: string
   category: string
   region: string
-  classification: "BREAKING" | "RISING" | "TRENDING" | "OPPORTUNITY" | "SATURATING" | "COOLING" | "STABLE"
+  classification: "BREAKING" | "RISING" | "HOT" | "TRENDING" | "OPPORTUNITY" | "SATURATING" | "COOLING" | "STABLE"
   metrics: RadarTopicMetrics
   opportunity: RadarOpportunity
   confidence: "HIGH" | "MEDIUM" | "LOW"
