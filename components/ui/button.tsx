@@ -37,16 +37,7 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
-    // If we don't have @radix-ui/react-slot installed, we just use a standard button for now
-    // In a real shadcn setup it would use Slot.
-    const Comp = asChild ? (props as any).children.type || "button" : "button"
-    if (asChild) {
-      return React.cloneElement((props as any).children, {
-        className: cn(buttonVariants({ variant, size, className })),
-        ref,
-        ...props,
-      })
-    }
+    const Comp = asChild ? Slot : "button"
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}

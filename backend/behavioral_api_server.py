@@ -11,7 +11,11 @@ class ViralPrescriber:
     def __init__(self):
         self.extractor = PsychologicalProxyExtractor()
         if os.path.exists(MODEL_FILE):
-            self.model = joblib.load(MODEL_FILE)
+            try:
+                self.model = joblib.load(MODEL_FILE)
+            except Exception as e:
+                self.model = None
+                print(f"Warning: Behavioral Model could not be loaded ({e}). Insights will be heuristic only.")
         else:
             self.model = None
             print("Warning: Behavioral Model not found. Insights will be heuristic only.")

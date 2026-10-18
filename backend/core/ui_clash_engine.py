@@ -28,18 +28,33 @@ class UIClashEngine:
         penalty = 0.0
         warnings = []
         
-        def to_relative(box_dict):
-            # box_dict is {"x": x, "y": y, "w": w, "h": h}
-            return [
-                box_dict["x"] / img_w,
-                box_dict["y"] / img_h,
-                (box_dict["x"] + box_dict["w"]) / img_w,
-                (box_dict["y"] + box_dict["h"]) / img_h
-            ]
+        def to_relative(box_item):
+            if not box_item:
+                return None
+            if isinstance(box_item, dict):
+                x = float(box_item.get("x", 0))
+                y = float(box_item.get("y", 0))
+                w = float(box_item.get("w", 0))
+                h = float(box_item.get("h", 0))
+                return [
+                    x / img_w,
+                    y / img_h,
+                    (x + w) / img_w,
+                    (y + h) / img_h
+                ]
+            elif isinstance(box_item, (list, tuple)) and len(box_item) >= 4:
+                b0, b1, b2, b3 = float(box_item[0]), float(box_item[1]), float(box_item[2]), float(box_item[3])
+                # If values are > 1.0, they are absolute pixel coordinates
+                if max(b0, b1, b2, b3) > 1.0:
+                    return [b0 / img_w, b1 / img_h, b2 / img_w, b3 / img_h]
+                return [b0, b1, b2, b3]
+            return None
         
         # Check text boxes
         for t_box_dict in text_boxes:
             t_box = to_relative(t_box_dict)
+            if not t_box:
+                continue
             for zone_name, zone_coords in self.danger_zones.items():
                 if self.check_overlap(t_box, zone_coords):
                     clash_risk = True
@@ -49,6 +64,8 @@ class UIClashEngine:
         # Check face boxes
         for f_box_dict in face_boxes:
             f_box = to_relative(f_box_dict)
+            if not f_box:
+                continue
             for zone_name, zone_coords in self.danger_zones.items():
                 if self.check_overlap(f_box, zone_coords):
                     clash_risk = True

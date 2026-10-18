@@ -1,132 +1,155 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { Check } from "lucide-react"
+import Link from "next/link"
+import { Check, ArrowRight, Sparkles } from "lucide-react"
 
 const plans = [
   {
     name: "Starter",
-    price: "$999",
-    period: "/mo",
-    description: "Perfect for small teams looking to automate specific workflows.",
+    price: "$0",
+    period: "/forever",
+    description: "For independent creators evaluating packaging on upcoming videos.",
     features: [
-      "1 Custom AI Agent",
-      "Basic Workflow Automation",
-      "Standard Support",
-      "Monthly Strategy Call"
+      "3 Video Packaging Audits / month",
+      "Mobile Viewport Truncation Check",
+      "Thumbnail Dark Feed Contrast Score",
+      "Core Curiosity Gap Diagnostic",
+      "Standard Community Support",
     ],
-    buttonText: "Get Started",
+    buttonText: "Start Free",
+    href: "/signup",
     popular: false,
   },
   {
-    name: "Growth",
-    price: "$2,499",
+    name: "Pro Creator",
+    price: "$29",
     period: "/mo",
-    description: "For scaling businesses that need comprehensive AI integration.",
+    description: "For active channels publishing weekly and competing for browse traffic.",
     features: [
-      "3 Custom AI Agents",
-      "Advanced Data Pipelines",
-      "Priority Support (24hr SL)",
-      "Weekly Strategy Calls",
-      "Custom Internal Tooling"
+      "Unlimited Pre-Upload Audits",
+      "Real-Time Topic Radar & Surge Alerts",
+      "Competitor Gap Reverse-Engineering",
+      "20 Title Variant Generator & Scoring",
+      "iPhone & Android Mobile Safe Area Simulator",
+      "Priority API Processing",
     ],
-    buttonText: "Start Free Trial",
+    buttonText: "Start 14-Day Free Trial",
+    href: "/signup?plan=pro",
     popular: true,
   },
   {
-    name: "Enterprise",
-    price: "Custom",
-    period: "",
-    description: "Dedicated infrastructure and bespoke AI modeling for large orgs.",
+    name: "Media Studio",
+    price: "$79",
+    period: "/mo",
+    description: "For production companies, editing agencies, and multi-channel networks.",
     features: [
-      "Unlimited AI Agents",
-      "LLM Fine-tuning",
-      "Dedicated Slack Channel",
-      "On-premise Deployment",
-      "Custom Security Audits"
+      "Everything in Pro Creator",
+      "Multi-Channel Packaging Benchmarks",
+      "Team Collaboration & Editor Seats (Up to 5)",
+      "Thumbnail A/B Head-to-Head Compare",
+      "Exportable Client Packaging PDF Reports",
+      "Dedicated Strategist Support",
     ],
-    buttonText: "Contact Sales",
+    buttonText: "Start Studio Trial",
+    href: "/signup?plan=studio",
     popular: false,
-  }
+  },
 ]
 
 export function PricingSection() {
   return (
-    <section className="py-32 bg-white" id="pricing">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-24 bg-white border-b border-neutral-200" id="pricing">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center mb-20">
-          <span className="text-[10px] font-bold text-primary uppercase tracking-widest mb-4 block">
-            SIMPLE PRICING
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-black max-w-2xl mx-auto leading-tight">
-            Invest in AI that <br /> pays for itself.
+        {/* Section Header */}
+        <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-800 text-xs font-mono uppercase tracking-wider">
+            <span>[ TRANSPARENT PRICING ]</span>
+          </div>
+
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-neutral-950 tracking-tight leading-tight">
+            Predictable pricing that <br />
+            <span className="curved-underline">pays for itself</span> in one upload.
           </h2>
+
+          <p className="text-base sm:text-lg text-neutral-600 max-w-xl mx-auto font-normal leading-relaxed">
+            One extra high-CTR video covers an entire year of PreYT. Cancel or upgrade anytime with one click.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 items-stretch max-w-6xl mx-auto">
-          {plans.map((plan, i) => (
-            <motion.div
+        {/* Pricing Cards Grid (8-point grid, consistent padding) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch max-w-5xl mx-auto">
+          {plans.map((plan) => (
+            <div
               key={plan.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.02, y: -8 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className={`relative flex flex-col p-10 rounded-[40px] border cursor-default ${
+              className={`relative flex flex-col justify-between p-8 rounded-2xl border transition-all ${
                 plan.popular 
-                  ? "bg-black text-white border-black premium-shadow transform md:-translate-y-4 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] z-10" 
-                  : "bg-white text-black border-zinc-200 shadow-sm"
+                  ? "bg-white border-2 border-red-600 card-shadow scale-102 z-10" 
+                  : "bg-white border-neutral-200 card-shadow hover:border-neutral-300"
               }`}
             >
               {plan.popular && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1.5 bg-primary text-white text-[10px] font-bold uppercase tracking-widest rounded-full border-4 border-white">
-                  Most Popular
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3.5 py-1 bg-red-600 text-white text-[11px] font-mono font-bold uppercase tracking-wider rounded-full shadow-xs flex items-center gap-1.5">
+                  <Sparkles className="w-3 h-3" />
+                  <span>MOST POPULAR</span>
                 </div>
               )}
               
-              <div className="mb-8">
-                <h3 className={`text-xl font-bold mb-2 ${plan.popular ? 'text-white' : 'text-black'}`}>
-                  {plan.name}
-                </h3>
-                <p className={`text-sm ${plan.popular ? 'text-zinc-400' : 'text-zinc-500'} mb-6 min-h-[40px]`}>
-                  {plan.description}
-                </p>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-5xl font-bold tracking-tight">{plan.price}</span>
-                  <span className={`text-sm font-semibold ${plan.popular ? 'text-zinc-400' : 'text-zinc-500'}`}>{plan.period}</span>
+              <div>
+                <div className="mb-6 space-y-2">
+                  <h3 className="text-xl font-bold text-neutral-950">
+                    {plan.name}
+                  </h3>
+                  <p className="text-xs text-neutral-600 min-h-[36px] leading-relaxed">
+                    {plan.description}
+                  </p>
+                  <div className="pt-2 flex items-baseline gap-1">
+                    <span className="text-4xl sm:text-5xl font-black text-neutral-950 tracking-tight font-mono">
+                      {plan.price}
+                    </span>
+                    <span className="text-xs font-semibold text-neutral-500 font-mono">
+                      {plan.period}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="pt-6 border-t border-neutral-100 space-y-3">
+                  <div className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 font-bold">
+                    INCLUDED CAPABILITIES:
+                  </div>
+                  {plan.features.map((feature, idx) => (
+                    <div key={idx} className="flex items-start gap-2.5 text-xs text-neutral-700">
+                      <Check className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              <button className={`w-full py-4 rounded-full font-bold mb-10 transition-all ${
-                plan.popular 
-                  ? "bg-primary text-white hover:bg-red-600 shadow-[0_10px_20px_-10px_rgba(255,0,0,0.5)] hover:-translate-y-0.5" 
-                  : "bg-zinc-100 text-black hover:bg-zinc-200"
-              }`}>
-                {plan.buttonText}
-              </button>
-
-              <div className="flex-1">
-                <p className={`text-xs font-bold uppercase tracking-wider mb-6 ${plan.popular ? 'text-zinc-400' : 'text-zinc-400'}`}>
-                  What's included
-                </p>
-                <ul className="space-y-4">
-                  {plan.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-3">
-                      <div className={`mt-0.5 w-4 h-4 rounded-full flex items-center justify-center ${
-                        plan.popular ? "bg-white/20 text-white" : "bg-red-50 text-primary"
-                      }`}>
-                        <Check className="w-2.5 h-2.5" />
-                      </div>
-                      <span className={`text-sm font-medium ${plan.popular ? 'text-zinc-300' : 'text-zinc-600'}`}>
-                        {feature}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+              <div className="pt-8 mt-6">
+                <Link
+                  href={plan.href}
+                  className={`w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl text-sm font-bold transition-all ${
+                    plan.popular
+                      ? "bg-red-600 hover:bg-red-700 active:bg-red-800 text-white shadow-xs"
+                      : "bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-200"
+                  }`}
+                >
+                  <span>{plan.buttonText}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
-            </motion.div>
+            </div>
           ))}
+        </div>
+
+        {/* Pricing Trust Footer */}
+        <div className="mt-12 text-center text-xs text-neutral-500 font-mono">
+          <span>✓ NO HIDDEN FEES</span>
+          <span className="mx-2">•</span>
+          <span>✓ 14-DAY MONEY-BACK GUARANTEE</span>
+          <span className="mx-2">•</span>
+          <span>✓ INSTANT CANCELLATION</span>
         </div>
 
       </div>

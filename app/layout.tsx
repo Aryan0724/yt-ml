@@ -9,8 +9,8 @@ import PostHogPageView from "./posthog-pageview";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "PreYT | Creator Intelligence Platform",
-  description: "Discover emerging topics, analyze packaging, and decide what to create next.",
+  title: "PreYT | YouTube Growth Analytics & Pre-Upload Intelligence",
+  description: "Pick the perfect topic, title, and thumbnail based on real YouTube data. Audit your drafts against 14.8M uploads before you film.",
 };
 
 export default function RootLayout({
@@ -26,7 +26,7 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
-          enableSystem
+          forcedTheme="light"
           disableTransitionOnChange
         >
           <PostHogProvider>

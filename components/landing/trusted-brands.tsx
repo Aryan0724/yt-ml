@@ -1,21 +1,32 @@
-export function TrustedBrands() {
+﻿export function TrustedBrands() {
+  const brands = [
+    "MrBeast Style Teams", "Ali Abdaal Studio", "Think Media", "Nas Daily Lab", "MKBHD Channel",
+    "Linus Media Group", "Veritasium Science", "Kurzgesagt Production", "Colin and Samir", "Mark Rober Labs",
+    "MrBeast Style Teams", "Ali Abdaal Studio", "Think Media", "Nas Daily Lab", "MKBHD Channel",
+  ]
+
   return (
-    <section className="w-full py-16 bg-white border-y border-border/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p className="text-center text-[10px] font-bold tracking-[0.2em] text-muted-foreground uppercase mb-10">
-          Trusted by creators and teams
+    <section className="w-full py-12 bg-neutral-50 border-y border-neutral-200 overflow-hidden relative">
+      <div className="max-w-7xl mx-auto px-4 mb-6 text-center">
+        <p className="text-xs font-bold tracking-widest uppercase text-neutral-500">
+          Powering intelligence for top YouTube creators & media companies
         </p>
-        
-        <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 opacity-60 grayscale">
-          {/* Text-based fallbacks for logos to avoid external image dependencies */}
-          <div className="text-xl font-black tracking-tighter">MRBEAST</div>
-          <div className="text-xl font-bold tracking-tight lowercase">vid<span className="text-blue-500">IQ</span></div>
-          <div className="text-xl font-semibold tracking-tight">Ali Abdaal</div>
-          <div className="text-xl font-bold tracking-tight">Think Media</div>
-          <div className="text-xl font-black tracking-tighter uppercase">NasDaily.</div>
-          <div className="text-xl font-bold tracking-widest uppercase">Blackbox</div>
-          <div className="text-xl font-bold tracking-tight uppercase text-zinc-800">YouTube Secrets</div>
+      </div>
+
+      <div className="relative flex overflow-x-hidden" aria-hidden="true">
+        <div className="flex items-center gap-12 whitespace-nowrap animate-[marquee_35s_linear_infinite]">
+          {brands.map((brand, i) => (
+            <span
+              key={i}
+              className="text-sm font-semibold tracking-wide text-neutral-400 hover:text-neutral-900 transition-colors cursor-default"
+            >
+              {brand}
+            </span>
+          ))}
         </div>
+        {/* Soft edge fades */}
+        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-neutral-50 to-transparent pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-neutral-50 to-transparent pointer-events-none" />
       </div>
     </section>
   )

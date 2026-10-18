@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from db.session import get_db
+from db.session import get_db_session
 from db.models.waitlist import WaitlistEntry
 from schemas.waitlist import WaitlistApplyRequest, WaitlistApplyResponse
 
@@ -12,7 +12,7 @@ router = APIRouter(prefix="/waitlist", tags=["Waitlist"])
 @router.post("", response_model=WaitlistApplyResponse, status_code=status.HTTP_201_CREATED)
 async def apply_for_waitlist(
     payload: WaitlistApplyRequest, 
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db_session)
 ):
     # Check if already exists
     result = await db.execute(select(WaitlistEntry).where(WaitlistEntry.email == payload.email))

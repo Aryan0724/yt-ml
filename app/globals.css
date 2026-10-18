@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -21,115 +21,428 @@
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
-  
-  --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
 
-  --font-sans: var(--font-inter), 'Inter', sans-serif;
-  --font-display: var(--font-inter), 'Inter', sans-serif;
-
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
-  --animate-fade-in: fade-in 0.3s ease-out;
-
-  @keyframes accordion-down {
-    from { height: 0; }
-    to { height: var(--radix-accordion-content-height); }
-  }
-  @keyframes accordion-up {
-    from { height: var(--radix-accordion-content-height); }
-    to { height: 0; }
-  }
-  @keyframes fade-in {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  --font-sans: 'Plus Jakarta Sans', var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 @layer base {
   :root {
-    /* Refined Light-first SaaS Palette */
-    --background: 0 0% 100%; /* Pure white or #FAFAFA, using pure white for extreme cleanliness */
-    --foreground: 0 0% 9%; /* Charcoal */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 9%;
+    --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 9%;
-    
-    /* PreYT Green Accent (e.g. #10B981 Emerald 500 equivalent, tweaked for SaaS) */
-    --primary: 158 80% 35%; /* Restrained strong green */
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 358 90% 50%;              /* Pure YouTube Red #EE1122 */
     --primary-foreground: 0 0% 100%;
-    
-    --secondary: 240 5% 96%; /* Neutral gray */
-    --secondary-foreground: 240 5% 10%;
-    
-    --muted: 240 5% 96%;
-    --muted-foreground: 240 4% 46%;
-    
-    --accent: 240 5% 96%;
-    --accent-foreground: 240 5% 10%;
-    
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    
-    --border: 240 6% 90%; /* Extremely subtle borders */
-    --input: 240 6% 90%;
-    --ring: 158 80% 35%; /* Focus ring matches primary */
-    
-    --radius: 0.75rem; /* Restrained radius (12px) */
-  }
-
-  .dark {
-    /* While the focus is light-mode, keeping a sensible dark mode just in case */
-    --background: 240 10% 4%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 6%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 6%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 158 80% 45%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 240 5% 15%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 5% 15%;
-    --muted-foreground: 240 5% 65%;
-    --accent: 240 5% 15%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5% 15%;
-    --input: 240 5% 15%;
-    --ring: 158 80% 45%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 358 100% 97%;
+    --accent-foreground: 358 90% 50%;
+    --destructive: 358 90% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 358 90% 50%;
+    --radius: 0.75rem;
   }
 }
 
 @layer base {
-  * {
-    border-color: var(--color-border);
+  *, *::before, *::after {
+    border-color: #e4e4e7;
+    box-sizing: border-box;
+  }
+  html {
+    scroll-behavior: smooth;
+    background-color: #ffffff;
+    color: #09090b;
   }
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-    font-family: var(--font-sans), sans-serif;
+    background-color: #ffffff;
+    color: #09090b;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
-    letter-spacing: -0.02em; /* Clean, modern tracking */
-    font-weight: 600;
+    letter-spacing: -0.04em;
+    font-weight: 800;
+    color: #09090b;
+  }
+  ::selection {
+    background: #fee2e2;
+    color: #991b1b;
   }
 }
 
-/* Custom premium utilities - RESTRAINED */
-@utility premium-shadow {
-  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 
-              0 4px 12px -4px rgba(0, 0, 0, 0.02);
+/* Linear/Vercel Subtle Grid Canvas */
+.linear-grid {
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
 }
 
-@utility dotted-bg {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-  background-size: 24px 24px;
+/* Linear Radial Ambient Glow */
+.linear-glow {
+  background: radial-gradient(circle 800px at 50% -100px, rgba(238, 17, 34, 0.07), transparent 70%);
 }
 
+/* Linear Sleek Gradient Text */
+.linear-gradient-text {
+  background: linear-gradient(180deg, #09090b 0%, #3f3f46 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Stylized Curved Underline */
+.curved-underline {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+.curved-underline::after {
+  content: "";
+  position: absolute;
+  left: -2%;
+  bottom: -4px;
+  width: 104%;
+  height: 8px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14' fill='none'%3E%3Cpath d='M3 9C60 2.5 180 2.5 237 9.5' stroke='%23EE1122' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+/* ========================================================================= */
+/* TERMS.SO EXACT DESIGN SYSTEM & TOKENS (AMPLIFIED YOUTUBE EDITION)         */
+/* ========================================================================= */
+:root {
+  --ink: #161512;
+  --nav: #655c53;
+  --page-tint: #fefcfb;
+  --hero-height: 960px;
+  --hero-text-muted: rgba(255, 255, 255, 0.60);
+  --hero-text: #ffffff;
+  --hero-link: rgba(255, 255, 255, 0.90);
+  --hero-chip: rgba(255, 255, 255, 0.16);
+  --hero-chip-hover: rgba(255, 255, 255, 0.28);
+  --hero-chip-text: #ffffff;
+  --brand-red: #EE1122;
+  --brand-red-vibrant: #FF001E;
+  --brand-muted: #c9cdc1;
+  --prose-muted: #989490;
+  --hairline: #eee;
+  --landing-surface-border: #e5e5e5;
+  --landing-surface-shadow: 0 2px 4px #00000003, 0 5px 10px #00000004, 0 10px 20px #00000005, 0 20px 40px #00000006, 0 40px 80px #00000008;
+  --content-width: 1040px;
+  --page-gutter: 24px;
+  --squircle-radius: 24px;
+  --type-tracking-title: -0.04em;
+  --type-tracking-heading: -0.03em;
+  --type-tracking-small: -0.01em;
+  --shadow-card: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+
+  /* Deep YouTube Red Terms.so Gradient extending fully through hero CTA */
+  --yt-terms-gradient: linear-gradient(
+    180deg,
+    #110103 0%,
+    #170204 8%,
+    #1f0205 16%,
+    #2a0307 24%,
+    #3b040a 34%,
+    #50060e 44%,
+    #690813 54%,
+    #860a19 64%,
+    #a70d20 74%,
+    #cc1027 82%,
+    #ee1122 88%,
+    #f44351 92%,
+    #f87c88 95%,
+    #fcc2c8 97%,
+    #fee6e9 99%,
+    var(--page-tint) 100%
+  );
+}
+
+.landing-page-container {
+  background-color: var(--page-tint);
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow-x: clip;
+}
+
+/* Amplified Hero Background with Deep Gradient & Electric Radial Glow */
+.hero-background-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--hero-height, 960px);
+  background: var(--yt-terms-gradient);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Electric YouTube Red Radial Aura directly behind the headline */
+.hero-radial-glow {
+  position: absolute;
+  top: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 520px;
+  background: radial-gradient(
+    ellipse 550px 340px at 50% 45%,
+    rgba(238, 17, 34, 0.42) 0%,
+    rgba(255, 0, 30, 0.22) 45%,
+    transparent 75%
+  );
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.landing {
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 var(--page-gutter);
+  position: relative;
+  z-index: 10;
+}
+
+.landing-col {
+  width: 100%;
+  max-width: var(--content-width);
+}
+
+/* Amplified Terms.so Hero Headline */
+.landing-headline {
+  letter-spacing: -0.045em;
+  margin: 0;
+  font-size: clamp(38px, 5.6vw, 72px);
+  font-weight: 700;
+  line-height: 1.02;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
+}
+
+.landing-headline-line {
+  display: block;
+}
+
+.landing-headline-brand {
+  color: var(--hero-text-muted);
+  mix-blend-mode: plus-lighter;
+  text-shadow: 0 0 24px rgba(255, 255, 255, 0.2);
+}
+
+.landing-headline-dark {
+  color: #ffffff;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6), 0 0 40px rgba(238, 17, 34, 0.4);
+}
+
+/* Terms.so Action Buttons & Chips */
+.action-button {
+  height: auto;
+  min-height: 42px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+  border-radius: 999px;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  padding: 11px 22px;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Amplified Hero Chips */
+.action-button--hero-ghost {
+  background: transparent;
+  color: var(--hero-link);
+}
+.action-button--hero-ghost:hover {
+  background: var(--hero-chip);
+  color: #fff;
+}
+
+.action-button--hero-solid {
+  background: #ffffff;
+  color: var(--ink);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25), 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+.action-button--hero-solid:hover {
+  background: #f7f7f7;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(255, 255, 255, 0.35), 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.action-button--hero-glass {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+.action-button--hero-glass:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Amplified Floating Pill Navigation Rail */
+.pill-navigation-rail-hero {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 999px;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.action-button--primary {
+  background: var(--ink);
+  color: #fff;
+}
+.action-button--primary:hover {
+  background: #000;
+  color: #fff;
+}
+
+.action-button--secondary {
+  background: #f5f5f5;
+  color: var(--ink);
+}
+.action-button--secondary:hover {
+  background: #eaeaea;
+}
+
+/* Amplified Squircle Card */
+.squircle-card {
+  border-radius: var(--squircle-radius, 24px);
+  background: #fff;
+  border: 1px solid var(--landing-surface-border);
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.02),
+    0 8px 16px rgba(0, 0, 0, 0.03),
+    0 20px 40px -4px rgba(238, 17, 34, 0.05),
+    0 32px 64px -8px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow 0.3s ease;
+}
+.squircle-card:hover {
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.03),
+    0 12px 24px rgba(0, 0, 0, 0.04),
+    0 24px 48px -4px rgba(238, 17, 34, 0.07),
+    0 40px 80px -8px rgba(0, 0, 0, 0.09);
+}
+
+/* Terms.so 3x3 Thinking Dots */
+.home-opening-dots {
+  display: grid;
+  grid-template-columns: repeat(3, 4px);
+  gap: 3px;
+  width: max-content;
+  padding-block: 4px;
+  flex: none;
+}
+
+.home-opening-dots > span {
+  width: 4px;
+  height: 4px;
+  opacity: 0.2;
+  animation: home-opening-dot 0.72s ease-in-out var(--dot-delay) infinite;
+  background: currentColor;
+  border-radius: 50%;
+}
+
+@keyframes home-opening-dot {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  45% {
+    opacity: 1;
+  }
+}
+
+/* Terms.so Squircle Card */
+.squircle-card {
+  border-radius: var(--squircle-radius, 24px);
+  background: #fff;
+  border: 1px solid var(--landing-surface-border);
+  box-shadow: 
+    0 1.16px 1.5px rgba(0, 0, 0, 0.02),
+    0 5.25px 7px rgba(0, 0, 0, 0.03),
+    0 17.54px 23.39px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Terms.so 3x3 Thinking Dots */
+.home-opening-dots {
+  display: grid;
+  grid-template-columns: repeat(3, 4px);
+  gap: 3px;
+  width: max-content;
+  padding-block: 4px;
+  flex: none;
+}
+
+.home-opening-dots > span {
+  width: 4px;
+  height: 4px;
+  opacity: 0.2;
+  animation: home-opening-dot 0.72s ease-in-out var(--dot-delay) infinite;
+  background: currentColor;
+  border-radius: 50%;
+}
+
+@keyframes home-opening-dot {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  45% {
+    opacity: 1;
+  }
+}
+
+/* Terms.so Squircle Card */
+.squircle-card {
+  border-radius: var(--squircle-radius, 24px);
+  background: #fff;
+  border: 1px solid var(--landing-surface-border);
+  box-shadow: 
+    0 1.16px 1.5px rgba(0, 0, 0, 0.02),
+    0 5.25px 7px rgba(0, 0, 0, 0.03),
+    0 17.54px 23.39px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

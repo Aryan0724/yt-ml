@@ -49,20 +49,29 @@ class RankingEngineV40:
         chan = str(raw.get('channel_title', 'Unknown'))
         row['channel_title'] = chan
         
-        # Get defaults from channel_stats
-        chan_data = self.channel_stats.get(chan, {'authority_score': 1.0, 'est_sub_count': 1000})
+        # Get defaults from channel_stats if indexed
+        chan_data = self.channel_stats.get(chan, None)
         
-        # If the input explicitly provides a sub_count (e.g., from external testing), use it!
-        if 'sub_count' in raw:
+        # Subscriber count resolution
+        if 'sub_count' in raw and raw['sub_count'] is not None:
             try:
                 provided_subs = int(float(raw['sub_count']))
-                row['est_sub_count'] = provided_subs
-            except:
-                row['est_sub_count'] = chan_data.get('est_sub_count', 1000)
-        else:
+                row['est_sub_count'] = max(10, provided_subs)
+            except Exception:
+                row['est_sub_count'] = chan_data.get('est_sub_count', 1000) if chan_data else 1000
+        elif chan_data:
             row['est_sub_count'] = chan_data.get('est_sub_count', 1000)
+        else:
+            row['est_sub_count'] = 1000
             
-        row['authority_score'] = chan_data.get('authority_score', 1.0)
+        # Authority score calculation:
+        # Avoid the 1.0 authority collapse bug which was far below dataset minimum (2.68).
+        if chan_data and ('sub_count' not in raw or raw['sub_count'] is None):
+            row['authority_score'] = float(chan_data.get('authority_score', 4.20))
+        else:
+            # Deterministic logarithmic scaling: 100 subs -> ~4.6, 1K subs -> ~5.1, 1M subs -> ~6.7, 10M subs -> ~7.2
+            subs = float(row['est_sub_count'])
+            row['authority_score'] = float(np.clip(0.5146 * np.log10(max(10.0, subs)) + 3.5946, 3.5, 12.0))
         
         # Build DF
         df = pd.DataFrame([row])

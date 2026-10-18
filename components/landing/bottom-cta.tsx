@@ -1,58 +1,61 @@
 import Link from "next/link"
-import { ArrowRight, Calendar, StopCircle, User } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { ArrowRight, Check, ShieldCheck } from "lucide-react"
 
 export function BottomCTA() {
   return (
-    <section className="w-full py-20 bg-white">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#FAF9F0] rounded-[2rem] p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 border border-[#EBE8D8]">
-          
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight text-foreground">
-              Start making better<br />decisions today.
-            </h2>
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-center gap-6">
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <Calendar className="w-5 h-5 text-zinc-400" />
-                <div>
-                  <div className="text-xs font-bold text-zinc-900">Free plan available</div>
-                  <div className="text-[10px] text-zinc-500">No credit card required</div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <StopCircle className="w-5 h-5 text-zinc-400" />
-                <div>
-                  <div className="text-xs font-bold text-zinc-900">Cancel anytime</div>
-                  <div className="text-[10px] text-zinc-500">No commitments</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <User className="w-5 h-5 text-zinc-400" />
-                <div>
-                  <div className="text-xs font-bold text-zinc-900">Built for creators</div>
-                  <div className="text-[10px] text-zinc-500">By creators</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <Button size="lg" asChild className="rounded-full px-8 h-14 text-sm shadow-sm bg-foreground text-background hover:bg-foreground/90 shrink-0">
-            <Link href="/dashboard">
-              Get started free <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-          
+    <section className="py-24 bg-white border-b border-neutral-200 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        
+        {/* Monospace Eyebrow */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-neutral-100 text-neutral-800 text-xs font-mono tracking-wider uppercase mb-8 border border-neutral-200">
+          <ShieldCheck className="w-4 h-4 text-[#EE1122]" />
+          <span>NO-RISK CREATOR GUARANTEE</span>
         </div>
+
+        {/* Headline */}
+        <h2 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#161512] leading-[1.08] mb-6">
+          Make every video a hit. <br />
+          <span className="text-[#EE1122]">Powered by data.</span>
+        </h2>
+
+        {/* Subtitle */}
+        <p className="text-base sm:text-xl text-neutral-600 max-w-xl mx-auto leading-relaxed mb-10 font-normal">
+          Stop wondering why your videos die at 1,000 views. PreYT gives your team the exact title fixes, thumbnail contrast checks, and topic opportunities needed to break out.
+        </p>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-10">
+          <Link
+            id="bottom-cta-primary"
+            href="/signup"
+            className="action-button action-button--primary px-8 py-3.5 text-base font-semibold shadow-md hover:scale-102 transition-transform"
+          >
+            <span>Start Free Trial</span>
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Link>
+
+          <a
+            id="bottom-cta-secondary"
+            href="#draft"
+            className="action-button action-button--secondary px-7 py-3.5 text-base font-semibold border border-neutral-200 hover:scale-102 transition-transform"
+          >
+            <span>See Platform Tour</span>
+          </a>
+        </div>
+
+        {/* Guarantees */}
+        <div className="pt-6 border-t border-neutral-200 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-xs sm:text-sm text-neutral-500 font-medium">
+          <span className="inline-flex items-center gap-1.5">
+            <Check className="w-4 h-4 text-emerald-600" /> No credit card required
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Check className="w-4 h-4 text-emerald-600" /> 14-day full feature trial
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Check className="w-4 h-4 text-emerald-600" /> Cancel anytime in 1 click
+          </span>
+        </div>
+
       </div>
     </section>
   )

@@ -20,7 +20,8 @@ export async function POST(req: Request) {
 
     // Try local python backend
     try {
-      const response = await fetch("http://62.72.13.149:8000/compare", {
+      const localBackend = process.env.PYTHON_BACKEND_URL || "http://127.0.0.1:8000"
+      const response = await fetch(`${localBackend}/compare`, {
         method: "POST",
         body: formData,
         headers: {

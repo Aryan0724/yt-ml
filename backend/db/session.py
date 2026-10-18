@@ -50,3 +50,7 @@ async def get_db_session() -> AsyncGenerator[AsyncSession, None]:
                 await session.close()
             except Exception:
                 pass
+
+
+# Compatibility alias
+get_db = get_db_session

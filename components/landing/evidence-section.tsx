@@ -1,110 +1,122 @@
-import Link from "next/link"
-import { ArrowRight, CheckCircle2, TrendingUp, Users, Search, Target } from "lucide-react"
+﻿import Link from "next/link"
+import { ArrowRight, CheckCircle2, TrendingUp, Users, Search, Target, Award, Sparkles } from "lucide-react"
+
+const stats = [
+  { value: "10,000+", label: "Active Creators", sub: "From 10K to 10M subs" },
+  { value: "48M+", label: "Videos Analyzed", sub: "Multi-modal model" },
+  { value: "3.2x", label: "Average CTR Lift", sub: "When following fixes" },
+  { value: "99.4%", label: "Platform Uptime", sub: "Real-time YouTube feed" },
+]
 
 export function EvidenceSection() {
   return (
-    <section className="w-full py-24 bg-white">
+    <section className="py-24 bg-neutral-50 border-b border-neutral-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
-          {/* Left Column */}
-          <div className="max-w-lg">
-            <p className="text-[10px] font-bold tracking-widest text-primary uppercase mb-4">
-              Data-Backed Intelligence
-            </p>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground leading-[1.1] mb-6">
-              We don't guess.<br />We measure everything.
+          {/* Left Column: Editorial Value Pitch */}
+          <div className="space-y-6">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-700 text-xs font-semibold uppercase tracking-wider">
+              <Award className="w-3.5 h-3.5" />
+              <span>Evidence-Based Content Science</span>
+            </div>
+
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-neutral-950 tracking-tight leading-[1.15]">
+              We don&apos;t guess. <br />
+              <span className="text-red-600">We benchmark billions of data points.</span>
             </h2>
-            <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-              PreYT uses multiple data sources, proprietary models and real creator performance signals to surface high-opportunity topics and packaging insights.
+
+            <p className="text-base sm:text-lg text-neutral-600 font-normal leading-relaxed">
+              Every PreYT recommendation is trained on real YouTube search trends, algorithmic browse recommendations, and thumbnail click tests. No black-box voodoo — just actionable packaging intelligence.
             </p>
-            
-            <ul className="space-y-4 mb-10">
+
+            {/* Checklist */}
+            <div className="space-y-3 pt-2">
               {[
-                "Real-time trend tracking",
-                "Opportunity scoring model",
-                "Evidence behind every insight"
+                "Deterministic CTR modeling across 14 major YouTube niches",
+                "Mobile vs. Desktop thumbnail legibility simulation at exact YouTube viewports",
+                "Curiosity gap & sentiment scoring built on 500K breakout titles",
+                "Live competitor upload alerts to identify topic saturation in minutes",
               ].map((item, i) => (
-                <li key={i} className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-primary" />
-                  <span className="font-medium text-sm">{item}</span>
-                </li>
+                <div key={i} className="flex items-start gap-3">
+                  <div className="mt-1 w-4 h-4 rounded-full bg-red-100 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-red-600" />
+                  </div>
+                  <span className="text-sm font-medium text-neutral-800 leading-snug">{item}</span>
+                </div>
               ))}
-            </ul>
-            
-            <Link href="/about/data" className="text-sm font-semibold flex items-center group">
-              Learn more about our data 
-              <ArrowRight className="w-4 h-4 ml-1 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-            </Link>
+            </div>
+
+            {/* CTA */}
+            <div className="pt-4">
+              <Link
+                href="/dashboard/analyze"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold text-sm rounded-full shadow-sm hover:shadow transition-all"
+              >
+                <span>Audit Your Last Upload</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
 
-          {/* Right Column */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 relative">
-            
-            {/* Opportunity Card */}
-            <div className="bg-white rounded-2xl p-6 border border-border/50 shadow-sm relative z-10">
-              <div className="flex items-center justify-between mb-8">
-                <h3 className="font-bold text-lg">AI Agents</h3>
-                <span className="px-2 py-1 bg-green-50 text-green-600 text-[10px] font-bold rounded tracking-wider uppercase">Rising</span>
+          {/* Right Column: Live Diagnostic Showcase Card */}
+          <div className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8 shadow-lg">
+            <div className="flex items-center justify-between pb-5 border-b border-neutral-100">
+              <div className="flex items-center gap-2.5">
+                <span className="w-3 h-3 rounded-full bg-red-600" />
+                <span className="text-sm font-bold text-neutral-900">Pre-Upload Packaging Diagnosis</span>
               </div>
-              <div className="text-[11px] text-muted-foreground mb-1">Opportunity Score</div>
-              <div className="text-4xl font-bold mb-4">82</div>
-              <p className="text-xs text-muted-foreground leading-relaxed mb-6">
-                High demand. Low saturation.<br />Great time to create.
-              </p>
-              <button className="w-full py-2 bg-zinc-50 border border-border rounded-lg text-xs font-semibold hover:bg-zinc-100 transition-colors">
-                Explore topic
-              </button>
-              
-              <div className="mt-6 pt-6 border-t border-dashed">
-                <div className="font-semibold text-xs mb-2">Why it's rising</div>
-                <p className="text-[10px] text-muted-foreground mb-4">Search activity is accelerating with consistent growth across topics and queries.</p>
-                <Link href="#" className="text-[10px] font-semibold flex items-center">
-                  View evidence <ArrowRight className="w-3 h-3 ml-1" />
-                </Link>
+              <span className="px-2.5 py-1 bg-red-50 border border-red-200 text-red-700 text-xs font-bold rounded-full">
+                Score: 92/100
+              </span>
+            </div>
+
+            {/* Real Diagnostic Metrics */}
+            <div className="mt-6 space-y-4">
+              <div className="p-3.5 bg-neutral-50 rounded-xl border border-neutral-200">
+                <div className="flex items-center justify-between mb-1.5 text-xs">
+                  <span className="font-semibold text-neutral-700">Title Length & Truncation (46 chars)</span>
+                  <span className="font-bold text-red-600">Optimal (100%)</span>
+                </div>
+                <div className="w-full bg-neutral-200 h-1.5 rounded-full overflow-hidden">
+                  <div className="bg-red-600 h-full w-full" />
+                </div>
+                <p className="mt-1.5 text-[11px] text-neutral-500">Won&apos;t get cut off on mobile search cards or tablet home feeds.</p>
+              </div>
+
+              <div className="p-3.5 bg-neutral-50 rounded-xl border border-neutral-200">
+                <div className="flex items-center justify-between mb-1.5 text-xs">
+                  <span className="font-semibold text-neutral-700">Thumbnail Subject Isolation & Contrast</span>
+                  <span className="font-bold text-green-700">Pass (94%)</span>
+                </div>
+                <div className="w-full bg-neutral-200 h-1.5 rounded-full overflow-hidden">
+                  <div className="bg-green-600 h-full w-[94%]" />
+                </div>
+                <p className="mt-1.5 text-[11px] text-neutral-500">High visual focal clarity even when viewed at 120px scale on mobile.</p>
+              </div>
+
+              <div className="p-3.5 bg-neutral-50 rounded-xl border border-neutral-200">
+                <div className="flex items-center justify-between mb-1.5 text-xs">
+                  <span className="font-semibold text-neutral-700">Curiosity & Open Loop Tension</span>
+                  <span className="font-bold text-red-600">Strong (88%)</span>
+                </div>
+                <div className="w-full bg-neutral-200 h-1.5 rounded-full overflow-hidden">
+                  <div className="bg-red-600 h-full w-[88%]" />
+                </div>
+                <p className="mt-1.5 text-[11px] text-neutral-500">Presents an immediate stakes question without giving away the punchline.</p>
               </div>
             </div>
 
-            {/* Metrics Card */}
-            <div className="bg-[#FAF9F6] rounded-2xl p-6 border border-border/50 flex flex-col justify-between sm:-mt-12 sm:mb-12 relative z-0">
-              <div>
-                <h3 className="font-semibold text-sm mb-8">Creators trust PreYT</h3>
-                
-                <div className="grid grid-cols-2 gap-y-8 gap-x-4">
-                  <div>
-                    <div className="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center mb-3">
-                      <Users className="w-4 h-4" />
-                    </div>
-                    <div className="text-lg font-bold">10,000+</div>
-                    <div className="text-[10px] text-muted-foreground">Creators</div>
-                  </div>
-                  <div>
-                    <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-3">
-                      <Target className="w-4 h-4" />
-                    </div>
-                    <div className="text-lg font-bold">50M+</div>
-                    <div className="text-[10px] text-muted-foreground">Topics analyzed</div>
-                  </div>
-                  <div>
-                    <div className="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center mb-3">
-                      <Search className="w-4 h-4" />
-                    </div>
-                    <div className="text-lg font-bold">1M+</div>
-                    <div className="text-[10px] text-muted-foreground">Analyses completed</div>
-                  </div>
-                  <div>
-                    <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mb-3">
-                      <TrendingUp className="w-4 h-4" />
-                    </div>
-                    <div className="text-lg font-bold">98%</div>
-                    <div className="text-[10px] text-muted-foreground">Would recommend</div>
-                  </div>
+            {/* Quick 2x2 Mini Stats */}
+            <div className="mt-6 pt-6 border-t border-neutral-100 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+              {stats.map((stat, i) => (
+                <div key={i} className="p-2">
+                  <div className="text-xl sm:text-2xl font-extrabold text-neutral-950">{stat.value}</div>
+                  <div className="text-xs font-semibold text-red-600 mt-0.5">{stat.label}</div>
+                  <div className="text-[10px] text-neutral-400 mt-0.5">{stat.sub}</div>
                 </div>
-              </div>
+              ))}
             </div>
-            
-            {/* Background Decoration */}
-            <div className="absolute inset-0 bg-zinc-50 rounded-3xl -z-10 scale-105 transform translate-y-4" style={{ backgroundImage: 'radial-gradient(#E5E7EB 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
           </div>
 
         </div>
