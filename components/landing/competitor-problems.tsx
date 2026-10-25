@@ -159,7 +159,7 @@ export function CompetitorProblems() {
                 </div>
 
                 {/* Right: How PreYT Fixes It (6 cols) */}
-                <div className="lg:col-span-6 p-7 sm:p-9 space-y-4 bg-white flex flex-col justify-between">
+                <div className="lg:col-span-6 p-7 sm:p-9 space-y-4 bg-white flex flex-col justify-center">
                   <div className="space-y-4">
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-mono font-bold uppercase tracking-wider border border-emerald-200">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
@@ -168,15 +168,6 @@ export function CompetitorProblems() {
 
                     <p className="text-base sm:text-lg text-[#161512] font-semibold leading-relaxed">
                       {item.preytSolution}
-                    </p>
-                  </div>
-
-                  <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-200/70 text-xs text-neutral-600 space-y-1">
-                    <div className="font-mono font-bold text-neutral-900 text-[11px] uppercase">
-                      NO GUESSWORK PROMISE
-                    </div>
-                    <p className="text-neutral-600 text-xs">
-                      Every insight is verified against live YouTube browse behavior and top niche uploads—not unexplained scores.
                     </p>
                   </div>
                 </div>
