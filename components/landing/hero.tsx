@@ -105,7 +105,7 @@ export function Hero() {
           Start Free Trial
         </Link>
         <a
-          href="#draft"
+          href="#demo-video"
           className="action-button px-6 py-3.5 text-[15px] font-semibold flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white border border-white/30 backdrop-blur-md shadow-sm transition-all hover:scale-102 active:scale-98"
         >
           <div className="w-4 h-4 rounded-full bg-white/30 text-white flex items-center justify-center text-[8px] pl-0.5">

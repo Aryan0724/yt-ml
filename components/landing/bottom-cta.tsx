@@ -3,7 +3,7 @@ import { ArrowRight, Check, ShieldCheck } from "lucide-react"
 
 export function BottomCTA() {
   return (
-    <section className="py-24 bg-white border-b border-neutral-200 relative overflow-hidden">
+    <section id="contact" className="py-24 bg-white border-b border-neutral-200 relative overflow-hidden">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         
         {/* Monospace Eyebrow */}

@@ -26,28 +26,28 @@ export function Navbar() {
       <nav aria-label="Main" className="hidden md:flex items-center">
         <div className="pill-navigation-rail-hero">
           <Link
-            href="#draft"
+            href="/#why-preyt"
             className="action-button action-button--hero-ghost text-sm font-medium"
           >
-            Audit
+            Why PreYT
           </Link>
           <Link
-            href="#questions"
+            href="/#capabilities"
             className="action-button action-button--hero-ghost text-sm font-medium"
           >
-            Radar
+            Features
           </Link>
           <Link
-            href="#comments"
+            href="/blog"
             className="action-button action-button--hero-ghost text-sm font-medium"
           >
-            Collab
+            Resources
           </Link>
           <Link
-            href="#pricing"
+            href="/#contact"
             className="action-button action-button--hero-ghost text-sm font-medium"
           >
-            Pricing
+            Contact
           </Link>
           <Link
             href="/login"
@@ -79,32 +79,32 @@ export function Navbar() {
       {mobileOpen && (
         <div className="absolute top-20 left-4 right-4 z-50 bg-[#180204]/95 backdrop-blur-xl border border-white/15 rounded-2xl p-5 shadow-2xl space-y-3 md:hidden text-white">
           <Link
-            href="#draft"
+            href="/#why-preyt"
             onClick={() => setMobileOpen(false)}
             className="block px-3 py-2 text-sm font-medium text-white/80 hover:text-white rounded-lg hover:bg-white/10"
           >
-            Audit
+            Why PreYT
           </Link>
           <Link
-            href="#questions"
+            href="/#capabilities"
             onClick={() => setMobileOpen(false)}
             className="block px-3 py-2 text-sm font-medium text-white/80 hover:text-white rounded-lg hover:bg-white/10"
           >
-            Radar
+            Features
           </Link>
           <Link
-            href="#comments"
+            href="/blog"
             onClick={() => setMobileOpen(false)}
             className="block px-3 py-2 text-sm font-medium text-white/80 hover:text-white rounded-lg hover:bg-white/10"
           >
-            Collab
+            Resources & Blog
           </Link>
           <Link
-            href="#pricing"
+            href="/#contact"
             onClick={() => setMobileOpen(false)}
             className="block px-3 py-2 text-sm font-medium text-white/80 hover:text-white rounded-lg hover:bg-white/10"
           >
-            Pricing
+            Contact
           </Link>
           <div className="pt-3 border-t border-white/10 flex flex-col gap-2">
             <Link

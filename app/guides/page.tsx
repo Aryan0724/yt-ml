@@ -1,5 +1,5 @@
-import { ComingSoonLight } from "@/components/landing/coming-soon-light"
+import { redirect } from "next/navigation"
 
-export default function Page() {
-  return <ComingSoonLight title="Guides & Resources" />
+export default function GuidesPage() {
+  redirect("/blog")
 }

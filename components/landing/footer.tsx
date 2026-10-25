@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="landing-col pt-16 pb-20 border-t border-neutral-200">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
-        
+
         {/* Brand Information (Col 1-5) */}
         <div className="md:col-span-5 space-y-4 max-w-sm">
           <Link href="/" className="inline-block transition-opacity hover:opacity-90" aria-label="PreYT Home">
@@ -18,7 +18,7 @@ export function Footer() {
             />
           </Link>
           <p className="text-xs text-neutral-500 leading-relaxed font-normal">
-            PreYT is a creator intelligence tool. Video concepts, thumbnails, and titles are benchmarked against 14.8M uploads before you shoot, helping creators maximize CTR and prevent flopped uploads.
+            PreYT is the pre-upload performance copilot for YouTube creators. Audit your packaging against 14.8M uploads, understand competitor gaps, and publish videos that earn the click.
           </p>
           <div className="text-[11px] font-mono text-neutral-400">
             Official YouTube Data API Integration · Privacy First
@@ -32,18 +32,23 @@ export function Footer() {
           </h2>
           <ul className="space-y-2.5 text-sm font-medium text-[#161512]">
             <li>
-              <Link href="#draft" className="hover:text-[#EE1122] transition-colors">
-                Audit Tool
+              <Link href="/#why-preyt" className="hover:text-[#EE1122] transition-colors">
+                Why PreYT
               </Link>
             </li>
             <li>
-              <Link href="#capabilities" className="hover:text-[#EE1122] transition-colors">
+              <Link href="/#capabilities" className="hover:text-[#EE1122] transition-colors">
                 Features
               </Link>
             </li>
             <li>
-              <Link href="#pricing" className="hover:text-[#EE1122] transition-colors">
-                Pricing
+              <Link href="/#resources" className="hover:text-[#EE1122] transition-colors">
+                Resource Hub
+              </Link>
+            </li>
+            <li>
+              <Link href="/#contact" className="hover:text-[#EE1122] transition-colors">
+                Contact
               </Link>
             </li>
             <li>
@@ -85,11 +90,6 @@ export function Footer() {
                 Competitor Channel DNA
               </Link>
             </li>
-            <li>
-              <Link href="#methodology" className="hover:text-[#EE1122] transition-colors">
-                14.8M Benchmark Engine
-              </Link>
-            </li>
           </ul>
         </nav>
 
@@ -100,12 +100,17 @@ export function Footer() {
           </h2>
           <ul className="space-y-2.5 text-sm font-medium text-[#161512]">
             <li>
-              <Link href="#faq" className="hover:text-[#EE1122] transition-colors">
-                Creator FAQs
+              <Link href="/blog" className="hover:text-[#EE1122] transition-colors">
+                Resources &amp; Blog
               </Link>
             </li>
             <li>
-              <a href="mailto:support@preyt.com" className="hover:text-[#EE1122] transition-colors">
+              <Link href="/#creator-challenges" className="hover:text-[#EE1122] transition-colors">
+                Creator Challenges
+              </Link>
+            </li>
+            <li>
+              <a href="mailto:contact@integralgroups.in" className="hover:text-[#EE1122] transition-colors">
                 Support
               </a>
             </li>
