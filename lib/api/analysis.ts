@@ -13,6 +13,7 @@ export interface AnalyzePackageParams {
   category?: string
   region?: string
   includeTopic?: boolean
+  archetype?: string
 }
 
 export async function analyzePackage(params: AnalyzePackageParams): Promise<AnalysisResult> {
@@ -24,6 +25,9 @@ export async function analyzePackage(params: AnalyzePackageParams): Promise<Anal
   formData.append("include_topic", params.includeTopic !== false ? "true" : "false")
   formData.append("channel_title", "Creator")
   formData.append("video_length", "600")
+  if (params.archetype) {
+    formData.append("archetype", params.archetype)
+  }
 
   // Generate unique request idempotency key
   const idempotencyKey = typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `req_${Date.now()}`
@@ -60,54 +64,33 @@ export async function fetchTopicIntelligence(
   region: string = "IN",
   period: string = "12m"
 ): Promise<TopicIntelligence> {
-  const params = new URLSearchParams({
-    q: topic.trim(),
-    region,
-    period
+  const authHeaders = getAuthHeaders()
+  const res = await fetch(`/api/creator/topic?topic=${encodeURIComponent(topic)}&region=${region}&period=${period}`, {
+    headers: authHeaders
   })
 
-  const response = await fetch(`/api/creator/topic?${params.toString()}`)
-  if (!response.ok) {
-    throw new Error(`Failed to fetch topic intelligence (${response.status})`)
+  if (!res.ok) {
+    throw new Error("Failed to load topic intelligence")
   }
 
-  const payload = await response.json()
-  return payload.data || payload
+  return res.json()
 }
 
 export function saveAnalysisToSession(result: AnalysisResult): void {
   try {
-    if (!result?.metadata?.analysis_id) return
-    const key = `preyt_analysis_${result.metadata.analysis_id}`
-    sessionStorage.setItem(key, JSON.stringify(result))
-    
-    // Also update recent analyses list
-    const recentKey = "preyt_recent_analyses"
-    const existing = JSON.parse(sessionStorage.getItem(recentKey) || "[]")
-    const updated = [
-      {
-        id: result.metadata.analysis_id,
-        score: result.data.score,
-        tier: result.data.tier,
-        timestamp: Date.now()
-      },
-      ...existing.filter((item: any) => item.id !== result.metadata.analysis_id)
-    ].slice(0, 20)
-    sessionStorage.setItem(recentKey, JSON.stringify(updated))
+    sessionStorage.setItem(`preyt_analysis_${result.metadata.analysis_id}`, JSON.stringify(result))
+    sessionStorage.setItem("preyt_last_analysis", JSON.stringify(result))
   } catch (e) {
-    console.warn("Could not save analysis to sessionStorage", e)
+    console.warn("Could not save analysis to sessionStorage:", e)
   }
 }
 
-export function getAnalysisFromSession(id: string): AnalysisResult | null {
+export function getAnalysisFromSession(analysisId?: string): AnalysisResult | null {
   try {
-    if (typeof window === "undefined") return null
-    const key = `preyt_analysis_${id}`
+    const key = analysisId ? `preyt_analysis_${analysisId}` : "preyt_last_analysis"
     const raw = sessionStorage.getItem(key)
-    if (!raw) return null
-    return JSON.parse(raw) as AnalysisResult
+    return raw ? JSON.parse(raw) : null
   } catch (e) {
-    console.warn("Could not read analysis from sessionStorage", e)
     return null
   }
 }

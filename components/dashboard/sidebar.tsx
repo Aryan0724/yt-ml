@@ -1,6 +1,6 @@
 "use client"
 
-import { Home, Radar, Lightbulb, ActivitySquare, FlaskConical, Tv, History, Settings, HelpCircle, ChevronDown } from "lucide-react"
+import { Home, Radar, Flame, Lightbulb, ActivitySquare, FlaskConical, Tv, History, Settings, HelpCircle, ChevronDown, ShieldCheck } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
@@ -13,11 +13,13 @@ export function Sidebar({ session }: { session: AuthSession | null }) {
   const mainNav = [
     { id: "home", icon: Home, label: "Overview", href: "/dashboard" },
     { id: "radar", icon: Radar, label: "Creator Radar", href: "/dashboard/radar" },
+    { id: "niche", icon: Flame, label: "Niche Outliers", href: "/dashboard/niche" },
     { id: "ideas", icon: Lightbulb, label: "Idea Sandbox", href: "/dashboard/ideas" },
     { id: "analyze", icon: ActivitySquare, label: "Analyze Video", href: "/dashboard/analyze" },
     { id: "lab", icon: FlaskConical, label: "A/B Lab", href: "/dashboard/lab" },
     { id: "channel", icon: Tv, label: "Channel DNA", href: "/dashboard/channel" },
     { id: "history", icon: History, label: "Audit Archive", href: "/dashboard/history" },
+    { id: "admin", icon: ShieldCheck, label: "Admin & Telemetry", href: "/dashboard/admin" },
   ]
 
   const bottomNav = [
@@ -102,40 +104,19 @@ export function Sidebar({ session }: { session: AuthSession | null }) {
                 key={item.id}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 px-3.5 py-2 rounded-xl text-sm font-medium transition-colors",
+                  "flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors",
                   isActive
                     ? "bg-neutral-100 text-neutral-900 font-semibold"
                     : "text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50"
                 )}
               >
-                <Icon className="h-4 w-4 shrink-0 text-neutral-400" />
+                <Icon className="h-4 w-4 shrink-0" />
                 <span>{item.label}</span>
               </Link>
             )
           })}
         </div>
       </aside>
-
-      {/* Mobile Bottom Navigation Bar */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-neutral-200 flex items-center justify-around h-16 px-2 shadow-lg">
-        {mainNav.slice(0, 5).map((item) => {
-          const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href))
-          const Icon = item.icon
-          return (
-            <Link
-              key={item.id}
-              href={item.href}
-              className={cn(
-                "flex flex-col items-center justify-center gap-1 flex-1 h-full text-[10px] font-medium transition-colors",
-                isActive ? "text-red-600 font-semibold" : "text-neutral-500 hover:text-neutral-900"
-              )}
-            >
-              <Icon className="h-4 w-4" />
-              <span className="truncate max-w-[56px]">{item.label}</span>
-            </Link>
-          )
-        })}
-      </div>
     </>
   )
 }

@@ -49,11 +49,15 @@ class AnalysisCoordinator:
         thumbnail_storage_key: Optional[str] = None
     ) -> Dict[str, Any]:
         """
-        Coordinates a single thumbnail/metadata analysis.
+        Coordinates a single thumbnail/metadata analysis with format-native CV & originality.
         """
         # 1. Vision Analysis (if thumbnail provided)
         if image_bytes:
-            vision_metrics = self.vision.analyze(image_bytes)
+            vision_metrics = self.vision.analyze(
+                image_bytes=image_bytes,
+                archetype=raw_input.get("archetype"),
+                niche=raw_input.get("category", "General")
+            )
             raw_input.update(vision_metrics)
         else:
             if "face_count" not in raw_input:

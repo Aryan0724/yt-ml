@@ -45,6 +45,7 @@ async def analyze_endpoint(
     is_weekend: int = Form(0),
     region: Optional[str] = Form(None),
     include_topic: bool = Form(True),
+    archetype: Optional[str] = Form(None),
     thumbnail: Optional[UploadFile] = File(None),
     idempotency_key: Optional[str] = Header(None, alias="Idempotency-Key"),
     x_workspace_id: Optional[str] = Header(None, alias="X-Workspace-Id")
@@ -53,7 +54,6 @@ async def analyze_endpoint(
     Primary endpoint for full thumbnail and metadata analysis.
     Protected by idempotency and usage accounting.
     """
-    # 1. Check idempotency cache to prevent duplicate processing
     if idempotency_key:
         cached = idempotency_manager.get_cached_response(idempotency_key)
         if cached:
@@ -64,7 +64,6 @@ async def analyze_endpoint(
     workspace_id = x_workspace_id or str(uuid.uuid5(uuid.NAMESPACE_DNS, "preyt.workspace.default"))
 
     try:
-        # Validate Thumbnail
         if thumbnail is None:
             raise HTTPException(status_code=400, detail="No thumbnail file uploaded.")
 
@@ -72,11 +71,9 @@ async def analyze_endpoint(
         if not image_bytes:
             raise HTTPException(status_code=400, detail="Uploaded thumbnail file is empty.")
 
-        # 2. Persist image bytes via StorageProvider (storing key, never blobs in DB)
         storage_key = storage_provider.generate_thumbnail_key(workspace_id, extension="webp")
         storage_provider.save_file(image_bytes, storage_key)
 
-        # Construct raw HTTP payload
         raw_input = {
             "title": title,
             "category": niche,
@@ -84,10 +81,10 @@ async def analyze_endpoint(
             "video_length": video_length,
             "upload_hour": upload_hour,
             "is_weekend": is_weekend,
-            "sensitivity": sensitivity
+            "sensitivity": sensitivity,
+            "archetype": archetype
         }
 
-        # Coordinator handles Vision decoding -> Topic Intel -> Engine -> Gemini -> Telemetry
         try:
             result_data = coordinator.analyze_single(
                 raw_input=raw_input,
@@ -104,7 +101,6 @@ async def analyze_endpoint(
         processing_time = time.time() - start_time
         compute_ms = int(processing_time * 1000)
 
-        # 3. Calculate exact unit economics and record usage event
         ai_data = result_data.get("ai", {})
         topic_intel = result_data.get("topic_intelligence")
         has_trends_task = 1 if (topic_intel and topic_intel.get("status") == "success" and not topic_intel.get("cached")) else 0
@@ -130,11 +126,10 @@ async def analyze_endpoint(
             "metadata": {
                 "analysis_id": analysis_id,
                 "processing_time": round(processing_time, 3),
-                "engine_version": result_data.get("engine_version", "1.1.0")
+                "engine_version": result_data.get("engine_version", "5.0.0")
             }
         }
 
-        # 4. Cache response under Idempotency-Key
         if idempotency_key:
             idempotency_manager.store_response(idempotency_key, response_payload)
 
@@ -152,9 +147,6 @@ async def get_topic_post(
     region: Optional[str] = Form(None),
     period: str = Form("12m")
 ):
-    """
-    Explore Topic Intelligence for a search term, topic, or video title (POST).
-    """
     try:
         data = coordinator.get_topic_only(topic=topic, region=region, period=period)
         return {"status": "success", "data": data}
@@ -169,9 +161,6 @@ async def get_topic_get(
     region: Optional[str] = Query(None, description="Country code (e.g. IN, US)"),
     period: str = Query("12m", description="Lookback window (e.g. 12m, 3m, 30d)")
 ):
-    """
-    Explore Topic Intelligence for a search term, topic, or video title (GET).
-    """
     try:
         data = coordinator.get_topic_only(topic=q, region=region, period=period)
         return {"status": "success", "data": data}
@@ -188,9 +177,6 @@ async def analyze_metadata_only(
     video_length: float = Form(600.0),
     region: Optional[str] = Form(None)
 ):
-    """
-    Endpoint for testing channel DNA, competitor heuristics, and topic trends without an image.
-    """
     try:
         result_data = coordinator.analyze_metadata_only(
             title=title,
@@ -212,9 +198,6 @@ async def analyze_metadata_only(
 async def analyze_visual_only(
     file: UploadFile = File(...)
 ):
-    """
-    Endpoint for testing vision decoding alone.
-    """
     try:
         image_bytes = await file.read()
         if not image_bytes:
@@ -241,9 +224,6 @@ async def compare_variants(
     titles: List[str] = Form(...),
     files: List[UploadFile] = File(...)
 ):
-    """
-    Endpoint for A/B testing multiple variants.
-    """
     try:
         comparison_results = []
         for i, (title, file) in enumerate(zip(titles, files)):
@@ -266,7 +246,7 @@ async def compare_variants(
                     raw_input=raw_input,
                     image_bytes=image_bytes,
                     analysis_id=analysis_id,
-                    include_topic=False  # Keep comparison fast
+                    include_topic=False
                 )
             except VisionAnalyzerError:
                 continue

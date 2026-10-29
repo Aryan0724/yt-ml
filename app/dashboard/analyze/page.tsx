@@ -26,6 +26,10 @@ import { ActionAngles } from "@/components/dashboard/action-angles"
 import { SeverityChecklist } from "@/components/dashboard/severity-checklist"
 import { TopicIntelligenceView } from "@/components/dashboard/topic-intelligence-view"
 import { ExpandableEvidence } from "@/components/dashboard/expandable-evidence"
+import { FeedSimulator } from "@/components/dashboard/feed-simulator"
+import { HookStudio } from "@/components/dashboard/hook-studio"
+import { OutcomeTracker } from "@/components/dashboard/outcome-tracker"
+import { OriginalityCard } from "@/components/dashboard/originality-card"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 
@@ -44,6 +48,10 @@ function AnalyzeContent() {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
+  // Local preview state for live feed simulation
+  const [thumbnailPreviewUrl, setThumbnailPreviewUrl] = useState<string | null>(null)
+  const [analyzedTitle, setAnalyzedTitle] = useState<string>("")
+
   // Compare mode state
   const [variants, setVariants] = useState<VariantItem[]>([
     { id: "1", file: null, preview: null, title: "" },
@@ -60,9 +68,17 @@ function AnalyzeContent() {
     category: string
     region: string
     includeTopic: boolean
+    archetype?: string
   }) => {
     setStatus("ANALYZING")
     setErrorMessage(null)
+
+    // Store preview URL and title for the Feed Simulator
+    try {
+      const previewUrl = URL.createObjectURL(params.thumbnail)
+      setThumbnailPreviewUrl(previewUrl)
+      setAnalyzedTitle(params.title)
+    } catch (_) {}
 
     try {
       const result = await analyzePackage(params)
@@ -79,6 +95,8 @@ function AnalyzeContent() {
     setStatus("IDLE")
     setAnalysisResult(null)
     setErrorMessage(null)
+    setThumbnailPreviewUrl(null)
+    setAnalyzedTitle("")
   }
 
   // Variant comparison functions
@@ -96,6 +114,14 @@ function AnalyzeContent() {
       })
     }
     reader.readAsDataURL(file)
+  }
+
+  const handleVariantTitle = (idx: number, title: string) => {
+    setVariants((prev) => {
+      const updated = [...prev]
+      updated[idx] = { ...updated[idx], title }
+      return updated
+    })
   }
 
   const addVariant = () => {
@@ -117,110 +143,110 @@ function AnalyzeContent() {
 
     const validVariants = variants.filter((v) => v.file && v.title.trim())
     if (validVariants.length < 2) {
-      setCompareError("Please upload a thumbnail and title for at least 2 variants.")
+      setCompareError("Please provide at least 2 complete variants (thumbnail + title).")
       return
     }
 
     setCompareLoading(true)
     try {
       const formData = new FormData()
-      validVariants.forEach((v) => {
-        if (v.file) formData.append("files", v.file)
-        formData.append("titles", v.title.trim())
+      validVariants.forEach((v, i) => {
+        formData.append(`thumbnail_${i}`, v.file!)
+        formData.append(`title_${i}`, v.title.trim())
       })
+      formData.append("variant_count", String(validVariants.length))
 
-      const response = await fetch("/api/creator/compare", {
+      const res = await fetch("/api/creator/compare", {
         method: "POST",
         body: formData
       })
+      const data = await res.json()
 
-      if (!response.ok) {
-        throw new Error(`Comparison failed (${response.status})`)
+      if (!res.ok) {
+        throw new Error(data.detail || data.error || "Comparison failed.")
       }
 
-      const data = await response.json()
-      setCompareResult(data)
+      setCompareResult(data.data || data)
     } catch (err: any) {
-      setCompareError(err.message || "Failed to compare thumbnail variants.")
+      console.error("Comparison error:", err)
+      setCompareError(err.message || "Failed to compare variants.")
     } finally {
       setCompareLoading(false)
     }
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-8 pb-20">
-      
-      {/* Top Workflow Switcher */}
-      {status === "IDLE" && (
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 gap-4">
-          <div className="flex items-center gap-1.5 p-1 bg-muted rounded-xl border">
-            <button
-              type="button"
-              onClick={() => setActiveTab("analyze")}
-              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2 cursor-pointer ${
-                activeTab === "analyze"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              <BarChart3 className="w-4 h-4" />
-              <span>Package Analyzer</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveTab("compare")}
-              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2 cursor-pointer ${
-                activeTab === "compare"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              <GitCompare className="w-4 h-4" />
-              <span>Compare Variants</span>
-            </button>
-          </div>
-
-          <span className="text-xs text-muted-foreground font-medium hidden sm:inline">
-            PreYT Creator Decision Engine
-          </span>
+    <div className="max-w-5xl mx-auto space-y-8 pb-16">
+      {/* Navigation / Tab Switcher */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-border pb-4">
+        <div>
+          <h1 className="text-2xl font-black tracking-tight text-foreground">
+            Pre-Publish Packaging Intelligence
+          </h1>
+          <p className="text-sm text-muted-foreground mt-0.5">
+            Evaluate thumbnail, title, and topic alignment before rendering or uploading.
+          </p>
         </div>
-      )}
 
-      {/* Mode 1: Single Video Package Analysis */}
+        <div className="flex items-center gap-1.5 p-1 bg-muted/50 rounded-xl border border-border w-fit">
+          <button
+            onClick={() => {
+              setActiveTab("analyze")
+              setCompareResult(null)
+            }}
+            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              activeTab === "analyze"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <BarChart3 className="w-3.5 h-3.5" />
+            Single Audit
+          </button>
+          <button
+            onClick={() => setActiveTab("compare")}
+            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              activeTab === "compare"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <GitCompare className="w-3.5 h-3.5" />
+            A/B Split Test
+          </button>
+        </div>
+      </div>
+
+      {/* Mode A: Single Package Analysis */}
       {activeTab === "analyze" && (
-        <>
+        <div className="space-y-6">
           {status === "IDLE" && (
-            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <PackageInput
-                onAnalyze={handleAnalyze}
-                isLoading={false}
-                initialTitle={searchParams?.get("title") || searchParams?.get("topic") || ""}
-                initialRegion={searchParams?.get("region") || "IN"}
-              />
-            </div>
+            <PackageInput
+              onAnalyze={handleAnalyze}
+              isLoading={status === "ANALYZING"}
+              initialTitle={searchParams.get("q") || ""}
+              initialCategory="Entertainment"
+              initialRegion="IN"
+            />
           )}
 
-          {status === "ANALYZING" && (
-            <div className="animate-in fade-in duration-500">
-              <AnalysisLoading />
-            </div>
-          )}
+          {status === "ANALYZING" && <AnalysisLoading />}
 
           {status === "ERROR" && (
-            <div className="w-full max-w-xl mx-auto py-16 px-6 text-center space-y-4 animate-in fade-in slide-in-from-bottom-4">
-              <div className="w-12 h-12 rounded-full bg-destructive/10 flex items-center justify-center mx-auto text-destructive">
+            <div className="p-8 rounded-2xl border border-destructive/20 bg-destructive/5 text-center space-y-4">
+              <div className="w-12 h-12 rounded-full bg-destructive/10 text-destructive flex items-center justify-center mx-auto">
                 <AlertCircle className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-foreground">
-                Analysis Encountered an Issue
-              </h3>
-              <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
-                {errorMessage || "Unable to complete analysis. Please verify your connection and try again."}
-              </p>
+              <div className="space-y-1">
+                <h3 className="text-lg font-bold text-foreground">
+                  Audit Failed
+                </h3>
+                <p className="text-sm text-muted-foreground max-w-md mx-auto">
+                  {errorMessage || "An unexpected error occurred during analysis."}
+                </p>
+              </div>
               <div className="pt-2">
-                <Button onClick={handleReset} size="lg" className="rounded-xl">
-                  <RefreshCw className="w-4 h-4 mr-2" />
+                <Button onClick={handleReset} variant="outline" className="rounded-xl">
                   Try Again
                 </Button>
               </div>
@@ -228,21 +254,28 @@ function AnalyzeContent() {
           )}
 
           {status === "SUCCESS" && analysisResult && (
-            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
-              {/* Back / Reset Top Action */}
+            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
+              {/* Top Reset Action */}
               <div className="flex items-center justify-between">
                 <Button
                   variant="outline"
                   onClick={handleReset}
-                  className="rounded-xl"
+                  className="rounded-xl text-xs font-semibold"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  Analyze Another Package
+                  Audit Another Video
                 </Button>
 
-                <span className="text-xs text-muted-foreground font-mono">
-                  ID: {analysisResult.metadata.analysis_id.slice(0, 8)}
-                </span>
+                <div className="flex items-center gap-2">
+                  {analysisResult.data.archetype && (
+                    <span className="px-2.5 py-1 text-xs font-bold rounded-lg bg-red-600/10 text-red-600 border border-red-600/20">
+                      {analysisResult.data.archetype.name}
+                    </span>
+                  )}
+                  <span className="text-xs text-muted-foreground font-mono">
+                    ID: {analysisResult.metadata.analysis_id.slice(0, 8)}
+                  </span>
+                </div>
               </div>
 
               {/* 1. Score & Executive Verdict Header */}
@@ -253,32 +286,64 @@ function AnalyzeContent() {
                 aiStatus={analysisResult.data.ai?.status}
               />
 
-              {/* 2. #1 Primary Bottleneck */}
+              {/* 2. Interactive YouTube Mobile & Desktop Feed Simulator */}
+              {thumbnailPreviewUrl && (
+                <FeedSimulator
+                  thumbnailUrl={thumbnailPreviewUrl}
+                  title={analyzedTitle || analysisResult.metadata.title || "Video Packaging"}
+                  channelName={analysisResult.data.channel_dna?.channel_title || "Your Channel"}
+                  clashRisk={analysisResult.data.weaknesses?.some(w => w.toLowerCase().includes("danger zone") || w.toLowerCase().includes("timestamp"))}
+                  warnings={analysisResult.data.weaknesses}
+                />
+              )}
+
+              {/* 3. 1-Click Alternative High-Converting Title Hooks */}
+              <HookStudio
+                currentTitle={analyzedTitle || analysisResult.metadata.title || ""}
+                archetypeName={analysisResult.data.archetype?.name || "General Hybrid"}
+                suggestedAngles={analysisResult.data.master_report?.recommended_angles}
+              />
+
+              {/* 4. Thumbnail Originality & Formula Saturation Check (pHash Intelligence) */}
+              {analysisResult.data.originality && (
+                <OriginalityCard
+                  originality={analysisResult.data.originality}
+                />
+              )}
+
+              {/* 5. #1 Primary Bottleneck */}
               <PrimaryBottleneck
                 masterReport={analysisResult.data.master_report}
               />
 
-              {/* 3. Actionable Content Angles */}
+              {/* 6. Actionable Content Angles */}
               {analysisResult.data.master_report?.recommended_angles && (
                 <ActionAngles
                   angles={analysisResult.data.master_report.recommended_angles}
                 />
               )}
 
-              {/* 4. Topic Intelligence Sparkline */}
+              {/* 7. Topic Intelligence Sparkline */}
               {analysisResult.data.topic_intelligence && (
                 <TopicIntelligenceView
                   topicData={analysisResult.data.topic_intelligence}
                 />
               )}
 
-              {/* 5. Prioritized Optimization Checklist */}
+              {/* 8. Prioritized Optimization Checklist */}
               <SeverityChecklist
                 improvements={analysisResult.data.improvements}
                 optimizationPlan={analysisResult.data.master_report?.optimization_plan}
               />
 
-              {/* 6. Expandable Technical Evidence Drawer */}
+              {/* 9. Closed-Loop Feedback: Track Real YouTube Performance */}
+              <OutcomeTracker
+                analysisId={analysisResult.metadata.analysis_id}
+                predictedScore={analysisResult.data.score}
+                predictedTier={analysisResult.data.tier}
+              />
+
+              {/* 10. Technical Evidence Drawer */}
               <ExpandableEvidence
                 factors={analysisResult.data.factors}
                 strengths={analysisResult.data.strengths}
@@ -288,97 +353,113 @@ function AnalyzeContent() {
               />
             </div>
           )}
-        </>
+        </div>
       )}
 
-      {/* Mode 2: Compare Thumbnail Variants */}
+      {/* Mode B: A/B Variant Comparison */}
       {activeTab === "compare" && (
-        <form onSubmit={handleCompareSubmit} className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
+        <form onSubmit={handleCompareSubmit} className="space-y-6">
           <Card className="p-8">
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold text-foreground">
-                Compare Thumbnail Variants
-              </h2>
-              <p className="text-sm text-muted-foreground mt-1">
-                Upload up to 4 thumbnail options to predict the highest performing packaging option.
-              </p>
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="text-xl font-bold text-foreground">
+                  Pre-Publish A/B Split Test
+                </h3>
+                <p className="text-sm text-muted-foreground mt-0.5">
+                  Test up to 4 thumbnail & title variations before spending render time.
+                </p>
+              </div>
+
+              {variants.length < 4 && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={addVariant}
+                  className="rounded-xl"
+                >
+                  <Plus className="w-4 h-4 mr-1.5" />
+                  Add Variant
+                </Button>
+              )}
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {variants.map((v, idx) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {variants.map((variant, idx) => (
                 <div
-                  key={v.id}
-                  className="p-5 rounded-2xl bg-muted/20 border space-y-4 relative group"
+                  key={variant.id}
+                  className="p-5 rounded-2xl border border-border bg-muted/10 space-y-4"
                 >
-                  <div className="flex justify-between items-center">
+                  <div className="flex items-center justify-between">
                     <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                      Variant {idx + 1}
+                      Variant {String.fromCharCode(65 + idx)}
                     </span>
                     {variants.length > 2 && (
                       <button
                         type="button"
                         onClick={() => removeVariant(idx)}
-                        className="text-muted-foreground hover:text-destructive transition-colors p-1"
+                        className="text-muted-foreground hover:text-destructive transition-colors"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
                     )}
                   </div>
 
-                  {/* Thumbnail drop */}
-                  <label className="block relative w-full aspect-video rounded-xl border-2 border-dashed border-border bg-background hover:border-primary/50 overflow-hidden cursor-pointer flex items-center justify-center transition-colors">
+                  {/* Thumbnail Upload Drop Area */}
+                  <div
+                    onClick={() => {
+                      const input = document.getElementById(`file-input-${idx}`)
+                      input?.click()
+                    }}
+                    className={`relative aspect-video rounded-xl border-2 border-dashed ${
+                      variant.preview ? "border-primary/50" : "border-border hover:border-primary/40"
+                    } flex items-center justify-center cursor-pointer overflow-hidden bg-background transition-colors`}
+                  >
+                    {variant.preview ? (
+                      <img
+                        src={variant.preview}
+                        alt={`Variant ${String.fromCharCode(65 + idx)}`}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="text-center p-4">
+                        <Upload className="w-6 h-6 text-muted-foreground mx-auto mb-2" />
+                        <p className="text-xs font-medium text-foreground">
+                          Upload Thumbnail
+                        </p>
+                        <p className="text-[10px] text-muted-foreground mt-0.5">
+                          1280x720 recommended
+                        </p>
+                      </div>
+                    )}
                     <input
+                      id={`file-input-${idx}`}
                       type="file"
                       accept="image/*"
                       className="hidden"
                       onChange={(e) => {
-                        const f = e.target.files?.[0]
-                        if (f) handleVariantFile(idx, f)
+                        const file = e.target.files?.[0]
+                        if (file) handleVariantFile(idx, file)
                       }}
                     />
-                    {v.preview ? (
-                      <img
-                        src={v.preview}
-                        alt={`Variant ${idx + 1}`}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="flex flex-col items-center gap-2 text-muted-foreground p-2 text-center">
-                        <Upload className="w-5 h-5" />
-                        <span className="text-xs font-semibold">Upload 16:9 Image</span>
-                      </div>
-                    )}
-                  </label>
+                  </div>
 
-                  {/* Title input */}
-                  <input
-                    type="text"
-                    value={v.title}
-                    onChange={(e) => {
-                      const val = e.target.value
-                      setVariants((prev) => {
-                        const updated = [...prev]
-                        updated[idx] = { ...updated[idx], title: val }
-                        return updated
-                      })
-                    }}
-                    placeholder={`Title for variant ${idx + 1}`}
-                    className="w-full px-4 py-3 bg-background border rounded-xl text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
-                  />
+                  {/* Title Input */}
+                  <div>
+                    <label className="text-xs font-semibold text-foreground mb-1 block">
+                      Working Title
+                    </label>
+                    <input
+                      type="text"
+                      value={variant.title}
+                      onChange={(e) => handleVariantTitle(idx, e.target.value)}
+                      placeholder="e.g. How I Built a $10M Company in 1 Year"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    />
+                  </div>
                 </div>
               ))}
             </div>
-
-            {variants.length < 4 && (
-              <button
-                type="button"
-                onClick={addVariant}
-                className="w-full mt-6 py-4 rounded-2xl border-2 border-dashed hover:border-primary/50 text-sm font-semibold text-muted-foreground hover:text-foreground flex items-center justify-center gap-2 transition-colors"
-              >
-                <Plus className="w-4 h-4" />
-                <span>Add Another Variant (Max 4)</span>
-              </button>
-            )}
 
             {compareError && (
               <div className="mt-6 p-4 bg-destructive/10 border border-destructive/20 rounded-xl text-sm text-destructive">
@@ -466,4 +547,3 @@ export default function AnalyzePage() {
     </Suspense>
   )
 }
-

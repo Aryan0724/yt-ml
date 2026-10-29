@@ -9,6 +9,8 @@ from typing import Optional, Dict, Any, List
 
 class AnalysisResponseData(BaseModel):
     engine_version: str
+    archetype: Optional[Dict[str, Any]] = None
+    originality: Optional[Dict[str, Any]] = None
     master_report: Dict[str, Any]
     score: int
     tier: str
@@ -28,7 +30,7 @@ class AnalysisResponseData(BaseModel):
     topic_intelligence: Optional[Dict[str, Any]] = None
     raw_metrics: Dict[str, Any]
     debug: Dict[str, Any]
-    possible_static_output_bug: bool
+    possible_static_output_bug: Optional[bool] = False
 
 
 class AnalysisResponse(BaseModel):
@@ -58,15 +60,15 @@ class CompareResponseVariant(BaseModel):
     name: str
     score: int
     tier: str
-    strengths: List[str]
-    weaknesses: List[str]
-    improvements: List[Dict[str, Any]]
-    master_report: Dict[str, Any]
-    data: Dict[str, Any]
-    rank: int
+
+
+class CompareResponseData(BaseModel):
+    winner_index: int
+    winner_name: str
+    comparison_brief: str
+    all_variants: List[Dict[str, Any]]
 
 
 class CompareResponse(BaseModel):
     status: str
-    winner: Optional[CompareResponseVariant]
-    all_variants: List[CompareResponseVariant]
+    data: CompareResponseData

@@ -7,6 +7,9 @@ Coordinates modular domain routers:
 - Multi-tenant Workspaces (/workspaces)
 - Channel Projects (/projects)
 - Package Analysis (/analyze)
+- Creator Radar (/radar)
+- Idea Intelligence (/ideas)
+- Closed-Loop Admin & Model Telemetry (/admin)
 - Platform Health & Diagnostics (/health)
 """
 
@@ -25,6 +28,8 @@ from routers.health import router as health_router
 from routers.radar import router as radar_router
 from routers.waitlist import router as waitlist_router
 from routers.ideas import router as ideas_router
+from routers.admin import router as admin_router
+from routers.outlier import router as outlier_router
 
 
 @asynccontextmanager
@@ -64,10 +69,12 @@ app.include_router(analyze_router)
 app.include_router(radar_router)
 app.include_router(waitlist_router)
 app.include_router(ideas_router)
+app.include_router(admin_router)
+app.include_router(outlier_router)
 
 @app.get("/")
 async def root():
-    return {"status": "ok", "service": "PreYT ML Pipeline", "version": "1.0.0"}
+    return {"status": "ok", "service": "PreYT Creator Intelligence Engine", "version": "6.0.0"}
 
 
 if __name__ == "__main__":

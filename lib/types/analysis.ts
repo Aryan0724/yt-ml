@@ -98,15 +98,19 @@ export interface VisualImprovement {
   current: string
   recommended: string
   why: string
-  tier: string
-  priority?: "High" | "Medium" | "Low" | string
+  tier?: string
+  priority?: "High" | "Medium" | "Low"
 }
 
 export interface ChannelDna {
   channel_title?: string
-  niche?: string
-  style_profile?: string
-  channel_behavior_profile?: {
+  performance_baselines?: {
+    avg_views?: number
+    ctr_baseline?: number
+    subscriber_tier?: string
+    category_consistency?: number
+  }
+  dna_profile?: {
     channel_identity?: string
     audience_preference?: string
     dominant_thumbnail_style?: string
@@ -136,8 +140,29 @@ export interface CompetitorAnalysis {
   }
 }
 
+export interface ArchetypeInfo {
+  id: string
+  name: string
+  description: string
+  primary_driver: string
+  cv_features?: Record<string, any>
+}
+
+export interface ThumbnailOriginalityInfo {
+  originality_score: number
+  similarity_risk: string
+  detected_formula: string
+  saturation_level?: string
+  formula_description?: string
+  phash_fingerprint?: string
+  recommendation: string
+  niche_context?: string
+}
+
 export interface AnalysisData {
   engine_version: string
+  archetype?: ArchetypeInfo
+  originality?: ThumbnailOriginalityInfo
   score: number
   tier: string
   confidence: string
@@ -168,6 +193,7 @@ export interface AnalysisResult {
   data: AnalysisData
   metadata: {
     analysis_id: string
+    title?: string
     processing_time: number
     engine_version: string
   }
