@@ -1,123 +1,80 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import React from "react"
 import Link from "next/link"
-import { ArrowRight, Sparkles, CheckCircle2 } from "lucide-react"
-
-const LINES = [
-  "Get more clicks on every video",
-  "you publish."
-]
+import { ArrowRight, Sparkles, CheckCircle2, ShieldCheck, Play } from "lucide-react"
+import { LiveAuditWidget } from "@/components/landing/live-audit-widget"
 
 export function Hero() {
-  const [displayedChars, setDisplayedChars] = useState<number[]>([
-    LINES[0].length,
-    LINES[1].length
-  ])
-  const [showChips, setShowChips] = useState(true)
+  const scrollToAudit = (e: React.MouseEvent) => {
+    e.preventDefault()
+    const elem = document.getElementById("interactive-audit")
+    if (elem) {
+      elem.scrollIntoView({ behavior: "smooth" })
+    }
+  }
 
-  // Smooth typewriter reveal on load
-  useEffect(() => {
-    setDisplayedChars([0, 0])
-    setShowChips(false)
-
-    let lineIdx = 0
-    let charIdx = 0
-
-    const interval = setInterval(() => {
-      if (lineIdx < LINES.length) {
-        if (charIdx <= LINES[lineIdx].length) {
-          setDisplayedChars((prev) => {
-            const next = [...prev]
-            next[lineIdx] = charIdx
-            return next
-          })
-          charIdx++
-        } else {
-          lineIdx++
-          charIdx = 0
-        }
-      } else {
-        setShowChips(true)
-        clearInterval(interval)
-      }
-    }, 24)
-
-    return () => clearInterval(interval)
-  }, [])
+  const scrollToReport = (e: React.MouseEvent) => {
+    e.preventDefault()
+    const elem = document.getElementById("sample-report")
+    if (elem) {
+      elem.scrollIntoView({ behavior: "smooth" })
+    }
+  }
 
   return (
-    <section className="landing-col pt-12 pb-20 md:pt-16 md:pb-24 relative z-10">
-      {/* Category Eyebrow Badge */}
-      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white/90 text-xs font-mono font-bold tracking-wider uppercase mb-6 backdrop-blur-md">
-        <Sparkles className="w-3.5 h-3.5 text-red-400" />
-        <span>PRE-UPLOAD PACKAGING INTELLIGENCE</span>
-      </div>
+    <section className="pt-8 pb-16 md:pt-12 md:pb-20 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        {/* Hero Copy Box */}
+        <div className="max-w-4xl mx-auto text-center space-y-6">
+          {/* Eyebrow Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/95 text-xs font-mono font-bold tracking-wider uppercase backdrop-blur-md shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-red-400" />
+            <span>PRE-UPLOAD YOUTUBE INTELLIGENCE</span>
+          </div>
 
-      {/* Primary Keyword-Focused H1 for Search Engines & Visitors */}
-      <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.08] max-w-4xl mb-4">
-        Pre-Upload YouTube Analytics for <br className="hidden sm:inline" />
-        <span className="text-[#EE1122]">Titles, Thumbnails &amp; Video Ideas</span>
-      </h1>
+          {/* Primary Clear Headline */}
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.1] max-w-4xl mx-auto">
+            Know whether your YouTube video package works{" "}
+            <span className="text-red-400">before you spend 40 hours making it.</span>
+          </h1>
 
-      {/* Dynamic Animated Value Proposition */}
-      <div
-        className="landing-headline min-h-[60px] sm:min-h-[80px] max-w-3xl text-xl sm:text-2xl md:text-3xl text-white/90 font-bold"
-        aria-label="Get more clicks on every video you publish."
-      >
-        <span>{LINES[0].slice(0, displayedChars[0])} </span>
-        <span className="text-red-400">{LINES[1].slice(0, displayedChars[1])}</span>
-        {displayedChars[0] >= LINES[0].length && (
-          <span
-            className={`inline-block w-0.5 h-6 sm:h-8 bg-red-400 ml-1 animate-pulse align-middle transition-opacity duration-500 ${
-              showChips ? "opacity-0" : "opacity-100"
-            }`}
-          />
-        )}
-      </div>
+          {/* Direct Explanatory Subhead */}
+          <p className="text-base sm:text-lg md:text-xl text-neutral-200 max-w-2xl mx-auto font-normal leading-relaxed">
+            Analyze your topic, title, and thumbnail against real YouTube mobile feeds. Make fewer blind bets and get specific fixes before you press record.
+          </p>
 
-      {/* Direct Explanatory Subhead */}
-      <p
-        className={`mt-4 text-base sm:text-lg text-white/90 max-w-2xl font-normal leading-relaxed drop-shadow-xs transition-all duration-700 ${
-          showChips ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
-        }`}
-      >
-        Evaluate your packaging before filming. Analyze thumbnails for mobile contrast, check 54-character title cutoffs, and discover high-demand competitor content gaps.
-      </p>
+          {/* Action CTAs */}
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+            <a
+              href="#interactive-audit"
+              onClick={scrollToAudit}
+              className="px-8 py-4 rounded-xl bg-red-600 hover:bg-red-500 text-white text-sm sm:text-base font-bold shadow-lg shadow-red-600/30 hover:scale-102 active:scale-98 transition-all inline-flex items-center gap-2 cursor-pointer"
+            >
+              <span>Run Free Video Audit</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
 
-      {/* CTA Buttons */}
-      <div
-        className={`mt-8 flex flex-wrap items-center gap-4 transition-all duration-700 ${
-          showChips ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
-        }`}
-      >
-        <Link
-          href="/signup"
-          className="action-button action-button--hero-solid px-8 py-4 text-sm sm:text-base font-bold shadow-lg hover:scale-102 active:scale-98 transition-transform inline-flex items-center gap-2"
-        >
-          <span>Start Free Packaging Audit</span>
-          <ArrowRight className="w-4 h-4 ml-0.5" />
-        </Link>
-        <Link
-          href="/tools/youtube-feed-preview"
-          className="action-button action-button--hero-ghost text-sm sm:text-base font-semibold px-6 py-4 border border-white/20 hover:border-white/40 text-white"
-        >
-          <span>Try Free Mobile Simulator</span>
-        </Link>
-      </div>
+            <a
+              href="#sample-report"
+              onClick={scrollToReport}
+              className="px-6 py-4 rounded-xl bg-white/10 hover:bg-white/15 text-white text-sm sm:text-base font-semibold border border-white/20 hover:border-white/30 backdrop-blur-md transition-all inline-flex items-center gap-2 cursor-pointer"
+            >
+              <span>See Sample Report</span>
+            </a>
+          </div>
 
-      {/* Trust Line */}
-      <div
-        className={`mt-6 flex items-center gap-2.5 text-xs text-white/80 font-medium drop-shadow-xs transition-all duration-700 ${
-          showChips ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
-        }`}
-      >
-        <div className="flex -space-x-1.5">
-          <div className="w-4.5 h-4.5 rounded-full bg-red-500 border border-white/40 shadow-xs" />
-          <div className="w-4.5 h-4.5 rounded-full bg-amber-400 border border-white/40 shadow-xs" />
-          <div className="w-4.5 h-4.5 rounded-full bg-blue-500 border border-white/40 shadow-xs" />
+          {/* Trust Line */}
+          <div className="flex items-center justify-center gap-2 text-xs text-neutral-300 font-medium pt-1">
+            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+            <span>Free to start · No YouTube channel login required · Instant 60-second result</span>
+          </div>
         </div>
-        <span>Free to start · No YouTube channel login or password required</span>
+
+        {/* Live Interactive Audit Widget Above the Fold */}
+        <div className="pt-2">
+          <LiveAuditWidget />
+        </div>
       </div>
     </section>
   )

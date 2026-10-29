@@ -1,4 +1,4 @@
-﻿import Link from "next/link"
+import Link from "next/link"
 import { Radar, Lightbulb, ActivitySquare, FlaskConical, Tv, History, ArrowRight, ShieldCheck, Zap } from "lucide-react"
 
 const features = [
@@ -7,7 +7,7 @@ const features = [
     badge: "Real-Time Signals",
     title: "Topic Radar",
     description: "Scan breakout keywords, competitor anomalies, and audience search velocity before topics become saturated.",
-    href: "/dashboard/radar",
+    href: "/youtube-content-gap-finder",
     metric: "4.8M videos scanned/day",
   },
   {
@@ -15,7 +15,7 @@ const features = [
     badge: "Idea Generation",
     title: "Idea Sandbox",
     description: "Generate proven video angles scored by virality probability, search volume, and production feasibility.",
-    href: "/dashboard/ideas",
+    href: "/youtube-video-idea-generator",
     metric: "98% topic coverage",
   },
   {
@@ -23,7 +23,7 @@ const features = [
     badge: "Packaging Audit",
     title: "Video Analyzer",
     description: "Audit title length, emotional hooks, curiosity gaps, and thumbnail contrast before you publish to YouTube.",
-    href: "/dashboard/analyze",
+    href: "/youtube-title-analyzer",
     metric: "0.4s response time",
   },
   {
@@ -31,7 +31,7 @@ const features = [
     badge: "Pre-Upload Testing",
     title: "A/B Simulation Lab",
     description: "Simulate how your thumbnail looks in dark mode, mobile feeds, and alongside top competitors before publishing.",
-    href: "/dashboard/lab",
+    href: "/youtube-thumbnail-tester",
     metric: "Side-by-side CTR model",
   },
   {

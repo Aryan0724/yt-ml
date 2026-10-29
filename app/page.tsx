@@ -2,24 +2,25 @@ import type { Metadata } from "next"
 import { Navbar } from "@/components/landing/navbar"
 import { Hero } from "@/components/landing/hero"
 import { StatsBar } from "@/components/landing/stats-bar"
-import { VideoSection } from "@/components/landing/video-section"
-import { CompetitorProblems } from "@/components/landing/competitor-problems"
-import { WhyPreYT } from "@/components/landing/why-preyt"
-import { CoreCapabilities } from "@/components/landing/core-capabilities"
+import { CaseStudyProof } from "@/components/landing/case-study-proof"
+import { ThreeBenefits } from "@/components/landing/three-benefits"
+import { HowItWorks } from "@/components/landing/how-it-works"
+import { SampleReport } from "@/components/landing/sample-report"
+import { UseCases } from "@/components/landing/use-cases"
+import { PricingSection } from "@/components/landing/pricing-section"
 import { FaqSection } from "@/components/landing/faq-section"
-import { ResourcesSection } from "@/components/landing/resources-section"
-import { ContactSection } from "@/components/landing/contact-section"
+import { FinalCta } from "@/components/landing/final-cta"
 import { Footer } from "@/components/landing/footer"
 
 export const metadata: Metadata = {
   title: "PreYT — Pre-Upload YouTube Analytics for Titles, Thumbnails & Video Ideas",
-  description: "Audit your YouTube packaging before filming. Analyze thumbnails for mobile contrast, test 54-character title cutoffs, and discover high-demand competitor content gaps.",
+  description: "Know whether your YouTube video package works before you spend 40 hours making it. Analyze thumbnails for mobile contrast, test 54-character cutoffs, and discover content gaps.",
   alternates: {
     canonical: "https://preyt.integralgroups.in",
   },
   openGraph: {
     title: "PreYT — Pre-Upload YouTube Analytics for Titles, Thumbnails & Ideas",
-    description: "Audit thumbnails, test mobile cutoffs, and discover content gaps before you film.",
+    description: "Know whether your video package works before filming. Test mobile cutoffs, contrast, and content gaps.",
     url: "https://preyt.integralgroups.in",
     siteName: "PreYT",
     type: "website",
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "PreYT — Pre-Upload YouTube Analytics for Titles, Thumbnails & Ideas",
-    description: "Audit thumbnails, test mobile cutoffs, and discover content gaps before you film.",
+    description: "Know whether your video package works before filming. Test mobile cutoffs, contrast, and content gaps.",
   }
 }
 
@@ -42,7 +43,7 @@ export default function LandingPage() {
         "url": "https://preyt.integralgroups.in",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://preyt.integralgroups.in/preyt-logo-dark.png"
+          "url": "https://preyt.integralgroups.in/preyt-logo-light.png"
         },
         "description": "YouTube intelligence and pre-upload packaging audit platform for creators.",
         "sameAs": ["https://twitter.com/preYTAI"]
@@ -75,49 +76,53 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="landing-page-container">
+    <div className="landing-page-container bg-white text-neutral-900 selection:bg-red-100 selection:text-red-900">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Amplified Hero Section Container */}
-      <div className="hero-background-gradient">
-        <div className="hero-radial-glow" />
-      </div>
-
-      <div className="landing relative z-10">
+      {/* Hero Header with Dark Glassmorphic Rail and Controlled Ambient Glow */}
+      <div className="relative bg-neutral-950 overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[420px] bg-red-600/10 rounded-full blur-[140px] pointer-events-none" />
+        
         <Navbar variant="dark" />
-        <main className="w-full">
-          {/* Section 1: Hero */}
-          <Hero />
-
-          {/* Social Proof & Scale Metrics Bar */}
-          <StatsBar />
-
-          {/* Section 2: YouTube Introduction Video */}
-          <VideoSection />
-
-          {/* Section 3: The Broken Current Landscape */}
-          <CompetitorProblems />
-
-          {/* Section 4: The 4 High-Value Solution Pillars */}
-          <WhyPreYT />
-
-          {/* Section 5: Interactive Tabbed Capabilities Showcase */}
-          <CoreCapabilities />
-
-          {/* Section 6: FAQ with Schema */}
-          <FaqSection />
-
-          {/* Section 7: Curated Editorial Resources */}
-          <ResourcesSection />
-
-          {/* Section 8: Terminal Contact & Inquiry Module */}
-          <ContactSection />
-        </main>
-        <Footer />
+        
+        {/* Section 1: Hero with Live Interactive Mini-Audit Widget Above The Fold */}
+        <Hero />
       </div>
+
+      <main className="w-full">
+        {/* Section 2: Credible Metrics & Scale Strip */}
+        <StatsBar />
+
+        {/* Section 3: Real Creator Before/After Case Studies & Proof */}
+        <CaseStudyProof />
+
+        {/* Section 4: Three Core Connected Benefits */}
+        <ThreeBenefits />
+
+        {/* Section 5: The 3-Step Creator Workflow */}
+        <HowItWorks />
+
+        {/* Section 6: Interactive Sample Report Inspector */}
+        <SampleReport />
+
+        {/* Section 7: Audience Use Cases (Solo Creators, Studios, Agencies) */}
+        <UseCases />
+
+        {/* Section 8: Transparent Pricing Plans on Main Homepage */}
+        <PricingSection />
+
+        {/* Section 9: FAQ with Schema.org JSON-LD */}
+        <FaqSection />
+
+        {/* Section 10: Final High-Converting Zero-Friction CTA */}
+        <FinalCta />
+      </main>
+
+      {/* Global Footer */}
+      <Footer />
     </div>
   )
 }

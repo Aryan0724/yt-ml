@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Check, ArrowRight, Sparkles } from "lucide-react"
+import { Check, ArrowRight, Sparkles, ShieldCheck } from "lucide-react"
 
 const plans = [
   {
@@ -14,9 +14,9 @@ const plans = [
       "Mobile Viewport Truncation Check",
       "Thumbnail Dark Feed Contrast Score",
       "Core Curiosity Gap Diagnostic",
-      "Standard Community Support",
+      "Zero Credit Card Required",
     ],
-    buttonText: "Start Free",
+    buttonText: "Run Free Audits",
     href: "/signup",
     popular: false,
   },
@@ -50,7 +50,7 @@ const plans = [
       "Exportable Client Packaging PDF Reports",
       "Dedicated Model Support via Slack",
     ],
-    buttonText: "Contact for Agency Setup",
+    buttonText: "Start Studio Trial",
     href: "/signup?plan=studio",
     popular: false,
   },
@@ -72,35 +72,35 @@ export function PricingSection({ isMainHeading = false }: PricingSectionProps) {
           </div>
 
           {isMainHeading ? (
-            <h1 className="text-3xl sm:text-5xl font-extrabold text-neutral-950 tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-5xl font-black text-neutral-950 tracking-tight leading-tight">
               Predictable pricing that <br />
-              <span className="curved-underline">pays for itself</span> in one upload.
+              <span className="text-red-600">pays for itself</span> in one upload.
             </h1>
           ) : (
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-neutral-950 tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-5xl font-black text-neutral-950 tracking-tight leading-tight">
               Predictable pricing that <br />
-              <span className="curved-underline">pays for itself</span> in one upload.
+              <span className="text-red-600">pays for itself</span> in one upload.
             </h2>
           )}
 
           <p className="text-base sm:text-lg text-neutral-600 max-w-xl mx-auto font-normal leading-relaxed">
-            One extra high-CTR video covers an entire year of PreYT. Cancel or upgrade anytime with one click.
+            Start completely free. No credit card required. Upgrade when you need unlimited audits and competitor radar.
           </p>
         </div>
 
-        {/* Pricing Cards Grid (8-point grid, consistent padding) */}
+        {/* Pricing Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`relative flex flex-col justify-between p-8 rounded-2xl transition-all duration-200 ${
+              className={`relative flex flex-col justify-between p-8 rounded-3xl transition-all duration-200 ${
                 plan.popular
-                  ? "bg-white border-2 border-[#EE1122] shadow-xl md:-translate-y-2"
-                  : "bg-white border border-neutral-200 shadow-sm hover:shadow-md"
+                  ? "bg-white border-2 border-red-600 shadow-xl md:-translate-y-2"
+                  : "bg-white border border-neutral-200 shadow-xs hover:shadow-md"
               }`}
             >
               {plan.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#EE1122] text-white text-xs font-bold uppercase tracking-wider py-1 px-3.5 rounded-full shadow-sm flex items-center gap-1.5">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-red-600 text-white text-[11px] font-bold uppercase tracking-wider py-1 px-3.5 rounded-full shadow-sm flex items-center gap-1.5 font-mono">
                   <Sparkles className="w-3.5 h-3.5" />
                   Most Popular
                 </div>
@@ -131,7 +131,7 @@ export function PricingSection({ isMainHeading = false }: PricingSectionProps) {
                 <ul className="space-y-3.5 mb-8">
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-start gap-3 text-xs text-neutral-700 leading-normal font-medium">
-                      <div className="mt-0.5 rounded-full bg-red-50 text-[#EE1122] p-0.5 shrink-0">
+                      <div className="mt-0.5 rounded-full bg-red-50 text-red-600 p-0.5 shrink-0">
                         <Check className="w-3.5 h-3.5" strokeWidth={3} />
                       </div>
                       <span>{feature}</span>
@@ -143,9 +143,9 @@ export function PricingSection({ isMainHeading = false }: PricingSectionProps) {
               {/* Action Button */}
               <Link
                 href={plan.href}
-                className={`w-full py-3.5 px-4 rounded-xl font-semibold text-xs tracking-wide flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                className={`w-full py-3.5 px-4 rounded-xl font-bold text-xs tracking-wider uppercase flex items-center justify-center gap-2 transition-all cursor-pointer ${
                   plan.popular
-                    ? "bg-[#EE1122] text-white hover:bg-[#CC0E1D] shadow-md hover:shadow-lg"
+                    ? "bg-red-600 text-white hover:bg-red-700 shadow-md hover:shadow-lg"
                     : "bg-neutral-100 text-neutral-900 hover:bg-neutral-200 border border-neutral-200"
                 }`}
               >
@@ -154,6 +154,12 @@ export function PricingSection({ isMainHeading = false }: PricingSectionProps) {
               </Link>
             </div>
           ))}
+        </div>
+
+        {/* Guarantee Strip */}
+        <div className="mt-12 text-center text-xs text-neutral-500 flex items-center justify-center gap-2">
+          <ShieldCheck className="w-4 h-4 text-emerald-600" />
+          <span>30-day money-back guarantee on all paid plans · Cancel anytime with one click in your billing settings</span>
         </div>
 
       </div>
