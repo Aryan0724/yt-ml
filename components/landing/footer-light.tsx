@@ -1,4 +1,4 @@
-import NextLink from "next"
+import NextLink from "next/link"
 import { Youtube, Twitter, Linkedin, Instagram, ArrowRight } from "lucide-react"
 
 export function FooterLight() {
