@@ -349,7 +349,7 @@ export function ThumbnailAnalyzer() {
                 <div>
                   <div className="flex justify-between text-xs font-semibold text-neutral-700 mb-1">
                     <span>Focal Contrast Ratio</span>
-                    <span className="font-mono text-neutral-500">{metrics.contrastRatio}:1 (Target >= 4.5)</span>
+                    <span className="font-mono text-neutral-500">{metrics.contrastRatio}:1 (Target &gt;= 4.5)</span>
                   </div>
                   <div className="w-full h-2 rounded-full bg-neutral-200 overflow-hidden">
                     <div

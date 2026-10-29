@@ -308,7 +308,7 @@ export default function IntelligencePage() {
               <div className="text-neutral-500">[ STEP 01 ]</div>
               <div className="font-bold text-white text-sm">Forecast Emission</div>
               <p className="text-neutral-400 font-sans text-xs leading-relaxed">
-                Prior to publishing, PreYT calculates predicted CTR ($\hat{y}$) and assigns a confidence interval ($\pm 4.2\%$).
+                Prior to publishing, PreYT calculates predicted CTR (&#375;) and assigns a confidence interval (&plusmn;4.2%).
               </p>
             </div>
 
@@ -324,7 +324,7 @@ export default function IntelligencePage() {
               <div className="text-red-500 font-bold">[ STEP 03 / CALIBRATION ]</div>
               <div className="font-bold text-white text-sm">Delta Recalibration</div>
               <p className="text-neutral-400 font-sans text-xs leading-relaxed">
-                $\Delta = y - \hat{y}$ updates the channel elasticity vector, ensuring predictions become progressively more accurate.
+                &Delta; = y &minus; &#375; updates the channel elasticity vector, ensuring predictions become progressively more accurate.
               </p>
             </div>
           </div>
