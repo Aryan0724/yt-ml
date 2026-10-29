@@ -1,5 +1,31 @@
+import type { Metadata } from "next"
 import { ComingSoonLight } from "@/components/landing/coming-soon-light"
+import { BreadcrumbSchema } from "@/components/seo/json-ld"
 
-export default function Page() {
-  return <ComingSoonLight title="For Agencies" />
+export const metadata: Metadata = {
+  title: "PreYT for Production Agencies & MCNs — Multi-Channel Packaging",
+  description: "Scale pre-publish quality assurance across 20+ client channels. Standardize thumbnail review workflows and generate automated packaging audits.",
+  alternates: {
+    canonical: "/agencies",
+  },
+  openGraph: {
+    title: "PreYT for Production Agencies & MCNs",
+    description: "Standardize thumbnail review workflows and generate automated packaging audits across client channels.",
+    url: "https://preyt.integralgroups.in/agencies",
+    siteName: "PreYT",
+  }
+}
+
+export default function AgenciesPage() {
+  return (
+    <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Agencies", url: "/agencies" }
+        ]}
+      />
+      <ComingSoonLight title="For Production Studios & Agencies" />
+    </>
+  )
 }

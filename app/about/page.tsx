@@ -1,11 +1,38 @@
+import type { Metadata } from "next";
 import { NavbarLight } from "@/components/landing/navbar-light";
 import { FooterLight } from "@/components/landing/footer-light";
 import { PageTransition } from "@/components/global/page-transition";
+import { BreadcrumbSchema } from "@/components/seo/json-ld";
 import { Target, ShieldCheck, Zap } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "About PreYT — The Story of Certainty in YouTube Publishing",
+  description: "Learn why PreYT was created: Empowering YouTube creators and production teams with pre-publish packaging forecasting and algorithmic certainty.",
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "About PreYT — The Pre-Upload Creator Decision Engine",
+    description: "Accuracy over aesthetics. Signal over noise. Certainty over hype.",
+    url: "https://preyt.integralgroups.in/about",
+    siteName: "PreYT",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About PreYT — The Pre-Upload Creator Decision Engine",
+    description: "Accuracy over aesthetics. Signal over noise. Certainty over hype.",
+  }
+};
 
 export default function AboutPage() {
   return (
     <PageTransition>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "/" },
+          { name: "About", url: "/about" }
+        ]}
+      />
       <NavbarLight />
       <main className="pt-24 pb-32 px-6 bg-[#FAF9F6] min-h-screen">
         <section className="max-w-[1200px] mx-auto space-y-16 pt-12">
@@ -15,7 +42,7 @@ export default function AboutPage() {
                   The Story of <br /><span className="text-[#FF0000]">Certainty.</span>
                 </h1>
                 <p className="text-xs font-mono text-zinc-500 leading-relaxed max-w-2xl">
-                    preYT was born out of a simple observation: creators are working harder than ever, but publishing with less certainty.
+                    PreYT was born out of a simple observation: creators are working harder than ever, but publishing with less certainty. We provide statistical clarity before you hit upload.
                 </p>
             </div>
 
@@ -30,7 +57,7 @@ export default function AboutPage() {
                         <div className="w-10 h-10 rounded-[4px] bg-white border border-zinc-200 flex items-center justify-center shadow-[2px_2px_0px_rgba(0,0,0,0.04)]">
                             <item.icon className="w-4 h-4 text-zinc-500" />
                         </div>
-                        <h3 className="font-display text-lg font-bold text-zinc-900">{item.title}</h3>
+                        <h2 className="font-display text-lg font-bold text-zinc-900">{item.title}</h2>
                         <p className="text-xs font-mono text-zinc-500 leading-relaxed">{item.desc}</p>
                     </div>
                 ))}

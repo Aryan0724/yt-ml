@@ -1,10 +1,32 @@
+import type { Metadata } from "next";
 import { NavbarLight } from "@/components/landing/navbar-light";
 import { FooterLight } from "@/components/landing/footer-light";
 import { PageTransition } from "@/components/global/page-transition";
+import { BreadcrumbSchema } from "@/components/seo/json-ld";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy — PreYT Creator Intelligence",
+  description: "Learn how PreYT safeguards creator metadata, drafts, and YouTube analytics. We prioritize data sovereignty and creator privacy.",
+  alternates: {
+    canonical: "/legal/privacy",
+  },
+  openGraph: {
+    title: "Privacy Policy — PreYT Platform",
+    description: "Learn how PreYT safeguards creator metadata, drafts, and YouTube analytics.",
+    url: "https://preyt.integralgroups.in/legal/privacy",
+    siteName: "PreYT",
+  }
+};
 
 export default function PrivacyPage() {
   return (
     <PageTransition>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Privacy Policy", url: "/legal/privacy" }
+        ]}
+      />
       <NavbarLight />
       <main className="pt-44 pb-32 px-6 min-h-screen bg-[#FAF9F6] relative overflow-hidden">
         {/* Subtle background grid */}
@@ -19,23 +41,23 @@ export default function PrivacyPage() {
             <section className="space-y-6">
                 <h2 className="text-zinc-900 text-2xl font-bold font-display">1. Introduction</h2>
                 <p>
-                    At preYT, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your data when you use our creator intelligence platform.
+                    At PreYT, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your data when you use our creator intelligence platform.
                 </p>
             </section>
             <section className="space-y-6">
-                <h2 className="text-zinc-900 text-2xl font-bold font-display">2. Data Collection</h2>
+                <h2 className="text-zinc-900 text-2xl font-bold font-display">2. Data Collection &amp; Use</h2>
                 <p>
-                    We collect metadata related to your YouTube content, including titles and thumbnail variants, to provide our predictive analysis. We do not access your private account data unless explicitly authorized for feedback loops.
+                    We collect metadata related to your YouTube content, including titles, thumbnail draft images, and category parameters to provide our predictive analysis. We do not access your private Google account credentials; OAuth tokens are encrypted at rest.
                 </p>
             </section>
             <section className="space-y-6">
                 <h2 className="text-zinc-900 text-2xl font-bold font-display">3. Use of Intelligence Models</h2>
                 <p>
-                    Your data is processed by our ensemble models to generate performance scores. This data may be used in an anonymized, aggregated format to improve our global intelligence benchmarks.
+                    Your data is processed by our format-native computer vision pipelines to generate performance scores. This data may be used in an anonymized, aggregated format to refine global intelligence benchmarks.
                 </p>
             </section>
             <p className="text-sm italic border-t border-zinc-200 pt-12">
-                Last Updated: May 2026
+                Last Updated: October 2026
             </p>
           </div>
         </article>

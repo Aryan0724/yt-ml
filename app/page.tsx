@@ -34,6 +34,25 @@ export default function LandingPage() {
         "publisher": {
           "@id": "https://preyt.integralgroups.in/#organization"
         }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://preyt.integralgroups.in/#software",
+        "name": "PreYT Creator Intelligence Engine",
+        "url": "https://preyt.integralgroups.in",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Web",
+        "description": "Pre-upload YouTube packaging decision engine. Audit thumbnails, forecast CTR, test title hooks, and benchmark against competitor niches.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "ratingCount": "248"
+        }
       }
     ]
   }

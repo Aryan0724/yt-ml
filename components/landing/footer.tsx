@@ -32,23 +32,23 @@ export function Footer() {
           </h2>
           <ul className="space-y-2.5 text-sm font-medium text-[#161512]">
             <li>
-              <Link href="/#why-preyt" className="hover:text-[#EE1122] transition-colors">
-                Why PreYT
-              </Link>
-            </li>
-            <li>
-              <Link href="/#capabilities" className="hover:text-[#EE1122] transition-colors">
+              <Link href="/features" className="hover:text-[#EE1122] transition-colors">
                 Features
               </Link>
             </li>
             <li>
-              <Link href="/#resources" className="hover:text-[#EE1122] transition-colors">
-                Resource Hub
+              <Link href="/pricing" className="hover:text-[#EE1122] transition-colors">
+                Pricing
               </Link>
             </li>
             <li>
-              <Link href="/#contact" className="hover:text-[#EE1122] transition-colors">
-                Contact
+              <Link href="/intelligence" className="hover:text-[#EE1122] transition-colors">
+                Intelligence Engine
+              </Link>
+            </li>
+            <li>
+              <Link href="/about" className="hover:text-[#EE1122] transition-colors">
+                About PreYT
               </Link>
             </li>
             <li>
@@ -71,18 +71,23 @@ export function Footer() {
           </h2>
           <ul className="space-y-2.5 text-sm font-medium text-[#161512]">
             <li>
-              <Link href="/dashboard/radar" className="hover:text-[#EE1122] transition-colors">
-                Topic Radar (Demand Gap)
-              </Link>
-            </li>
-            <li>
               <Link href="/dashboard/analyze" className="hover:text-[#EE1122] transition-colors">
                 Video Packaging Audit
               </Link>
             </li>
             <li>
+              <Link href="/dashboard/niche" className="hover:text-[#EE1122] transition-colors">
+                Niche Outlier Scanner
+              </Link>
+            </li>
+            <li>
+              <Link href="/dashboard/radar" className="hover:text-[#EE1122] transition-colors">
+                Topic Radar (Demand Gap)
+              </Link>
+            </li>
+            <li>
               <Link href="/dashboard/lab" className="hover:text-[#EE1122] transition-colors">
-                Mobile Feed Contrast Lab
+                Mobile Feed Simulator
               </Link>
             </li>
             <li>
@@ -96,7 +101,7 @@ export function Footer() {
         {/* Company & Trust (Col 11-12) */}
         <nav aria-label="Company" className="md:col-span-2 space-y-3.5">
           <h2 className="text-xs font-semibold text-neutral-400 tracking-wider uppercase">
-            Company
+            Company &amp; Legal
           </h2>
           <ul className="space-y-2.5 text-sm font-medium text-[#161512]">
             <li>
@@ -105,23 +110,28 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/#creator-challenges" className="hover:text-[#EE1122] transition-colors">
-                Creator Challenges
+              <Link href="/changelog" className="hover:text-[#EE1122] transition-colors">
+                Changelog
               </Link>
             </li>
             <li>
-              <a href="mailto:contact@integralgroups.in" className="hover:text-[#EE1122] transition-colors">
-                Support
-              </a>
+              <Link href="/contact" className="hover:text-[#EE1122] transition-colors">
+                Contact &amp; Support
+              </Link>
             </li>
             <li>
-              <Link href="/privacy" className="hover:text-[#EE1122] transition-colors">
+              <Link href="/legal/privacy" className="hover:text-[#EE1122] transition-colors">
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link href="/terms" className="hover:text-[#EE1122] transition-colors">
+              <Link href="/legal/terms" className="hover:text-[#EE1122] transition-colors">
                 Terms of Service
+              </Link>
+            </li>
+            <li>
+              <Link href="/legal/cookies" className="hover:text-[#EE1122] transition-colors">
+                Cookie Policy
               </Link>
             </li>
           </ul>
@@ -132,7 +142,7 @@ export function Footer() {
       {/* Bottom Sub-footer */}
       <div className="mt-14 pt-8 border-t border-neutral-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-400">
         <div>
-          &copy; {new Date().getFullYear()} PreYT Intelligence Inc. All rights reserved.
+          &copy; {new Date().getFullYear()} PreYT Intelligence Inc. Built under Integral Groups Studio. All rights reserved.
         </div>
         <div className="flex items-center gap-6">
           <span>YouTube is a registered trademark of Google LLC.</span>

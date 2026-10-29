@@ -1,10 +1,32 @@
+import type { Metadata } from "next";
 import { NavbarLight } from "@/components/landing/navbar-light";
 import { FooterLight } from "@/components/landing/footer-light";
 import { PageTransition } from "@/components/global/page-transition";
+import { BreadcrumbSchema } from "@/components/seo/json-ld";
+
+export const metadata: Metadata = {
+  title: "Cookie Policy — PreYT Creator Intelligence",
+  description: "Learn how PreYT uses essential session cookies and telemetry tokens to maintain your workspace state.",
+  alternates: {
+    canonical: "/legal/cookies",
+  },
+  openGraph: {
+    title: "Cookie Policy — PreYT Platform",
+    description: "Learn how PreYT uses essential session cookies and telemetry tokens.",
+    url: "https://preyt.integralgroups.in/legal/cookies",
+    siteName: "PreYT",
+  }
+};
 
 export default function CookiesPage() {
   return (
     <PageTransition>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Cookie Policy", url: "/legal/cookies" }
+        ]}
+      />
       <NavbarLight />
       <main className="pt-44 pb-32 px-6 min-h-screen bg-[#FAF9F6] relative overflow-hidden">
         {/* Subtle background grid */}
@@ -17,7 +39,7 @@ export default function CookiesPage() {
           <h1 className="text-4xl md:text-6xl font-display font-bold mb-16 text-zinc-900 tracking-tight">Cookie Policy</h1>
           <div className="prose prose-zinc max-w-none space-y-12 text-zinc-600 text-lg leading-relaxed font-medium">
             <p>
-                We use cookies to enhance your intelligence experience and remember your workspace settings. By continuing to use the platform, you agree to our use of these session cookies.
+                We use cookies to maintain your authenticated workspace session, store temporary analysis previews, and measure product performance metrics. We do not sell creator tracking data to third-party ad brokers.
             </p>
           </div>
         </article>

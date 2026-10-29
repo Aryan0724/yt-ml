@@ -48,15 +48,19 @@ const plans = [
       "Team Collaboration & Editor Seats (Up to 5)",
       "Thumbnail A/B Head-to-Head Compare",
       "Exportable Client Packaging PDF Reports",
-      "Dedicated Strategist Support",
+      "Dedicated Model Support via Slack",
     ],
-    buttonText: "Start Studio Trial",
+    buttonText: "Contact for Agency Setup",
     href: "/signup?plan=studio",
     popular: false,
   },
 ]
 
-export function PricingSection() {
+interface PricingSectionProps {
+  isMainHeading?: boolean
+}
+
+export function PricingSection({ isMainHeading = false }: PricingSectionProps) {
   return (
     <section className="py-24 bg-white border-b border-neutral-200" id="pricing">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -67,10 +71,17 @@ export function PricingSection() {
             <span>[ TRANSPARENT PRICING ]</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-neutral-950 tracking-tight leading-tight">
-            Predictable pricing that <br />
-            <span className="curved-underline">pays for itself</span> in one upload.
-          </h2>
+          {isMainHeading ? (
+            <h1 className="text-3xl sm:text-5xl font-extrabold text-neutral-950 tracking-tight leading-tight">
+              Predictable pricing that <br />
+              <span className="curved-underline">pays for itself</span> in one upload.
+            </h1>
+          ) : (
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-neutral-950 tracking-tight leading-tight">
+              Predictable pricing that <br />
+              <span className="curved-underline">pays for itself</span> in one upload.
+            </h2>
+          )}
 
           <p className="text-base sm:text-lg text-neutral-600 max-w-xl mx-auto font-normal leading-relaxed">
             One extra high-CTR video covers an entire year of PreYT. Cancel or upgrade anytime with one click.
@@ -78,78 +89,71 @@ export function PricingSection() {
         </div>
 
         {/* Pricing Cards Grid (8-point grid, consistent padding) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`relative flex flex-col justify-between p-8 rounded-2xl border transition-all ${
-                plan.popular 
-                  ? "bg-white border-2 border-red-600 card-shadow scale-102 z-10" 
-                  : "bg-white border-neutral-200 card-shadow hover:border-neutral-300"
+              className={`relative flex flex-col justify-between p-8 rounded-2xl transition-all duration-200 ${
+                plan.popular
+                  ? "bg-white border-2 border-[#EE1122] shadow-xl md:-translate-y-2"
+                  : "bg-white border border-neutral-200 shadow-sm hover:shadow-md"
               }`}
             >
               {plan.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3.5 py-1 bg-red-600 text-white text-[11px] font-mono font-bold uppercase tracking-wider rounded-full shadow-xs flex items-center gap-1.5">
-                  <Sparkles className="w-3 h-3" />
-                  <span>MOST POPULAR</span>
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#EE1122] text-white text-xs font-bold uppercase tracking-wider py-1 px-3.5 rounded-full shadow-sm flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Most Popular
                 </div>
               )}
-              
+
               <div>
-                <div className="mb-6 space-y-2">
+                {/* Header */}
+                <div className="space-y-1 mb-6">
                   <h3 className="text-xl font-bold text-neutral-950">
                     {plan.name}
                   </h3>
-                  <p className="text-xs text-neutral-600 min-h-[36px] leading-relaxed">
+                  <p className="text-xs text-neutral-500 font-normal leading-relaxed min-h-[32px]">
                     {plan.description}
                   </p>
-                  <div className="pt-2 flex items-baseline gap-1">
-                    <span className="text-4xl sm:text-5xl font-black text-neutral-950 tracking-tight font-mono">
-                      {plan.price}
-                    </span>
-                    <span className="text-xs font-semibold text-neutral-500 font-mono">
-                      {plan.period}
-                    </span>
-                  </div>
                 </div>
 
-                <div className="pt-6 border-t border-neutral-100 space-y-3">
-                  <div className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 font-bold">
-                    INCLUDED CAPABILITIES:
-                  </div>
-                  {plan.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5 text-xs text-neutral-700">
-                      <Check className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                {/* Price */}
+                <div className="flex items-baseline gap-1 mb-8 pb-6 border-b border-neutral-100">
+                  <span className="text-4xl sm:text-5xl font-black text-neutral-950 tracking-tight font-mono">
+                    {plan.price}
+                  </span>
+                  <span className="text-xs text-neutral-400 font-medium font-mono">
+                    {plan.period}
+                  </span>
+                </div>
+
+                {/* Feature List */}
+                <ul className="space-y-3.5 mb-8">
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-3 text-xs text-neutral-700 leading-normal font-medium">
+                      <div className="mt-0.5 rounded-full bg-red-50 text-[#EE1122] p-0.5 shrink-0">
+                        <Check className="w-3.5 h-3.5" strokeWidth={3} />
+                      </div>
                       <span>{feature}</span>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
 
-              <div className="pt-8 mt-6">
-                <Link
-                  href={plan.href}
-                  className={`w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl text-sm font-bold transition-all ${
-                    plan.popular
-                      ? "bg-red-600 hover:bg-red-700 active:bg-red-800 text-white shadow-xs"
-                      : "bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border border-neutral-200"
-                  }`}
-                >
-                  <span>{plan.buttonText}</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
+              {/* Action Button */}
+              <Link
+                href={plan.href}
+                className={`w-full py-3.5 px-4 rounded-xl font-semibold text-xs tracking-wide flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                  plan.popular
+                    ? "bg-[#EE1122] text-white hover:bg-[#CC0E1D] shadow-md hover:shadow-lg"
+                    : "bg-neutral-100 text-neutral-900 hover:bg-neutral-200 border border-neutral-200"
+                }`}
+              >
+                <span>{plan.buttonText}</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           ))}
-        </div>
-
-        {/* Pricing Trust Footer */}
-        <div className="mt-12 text-center text-xs text-neutral-500 font-mono">
-          <span>✓ NO HIDDEN FEES</span>
-          <span className="mx-2">•</span>
-          <span>✓ 14-DAY MONEY-BACK GUARANTEE</span>
-          <span className="mx-2">•</span>
-          <span>✓ INSTANT CANCELLATION</span>
         </div>
 
       </div>
