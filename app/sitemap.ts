@@ -29,6 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/tools/youtube-feed-preview",
     "/vs/vidiq",
     "/vs/1of10",
+    "/integral-groups",
     "/legal/terms",
     "/legal/privacy",
     "/legal/cookies"

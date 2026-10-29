@@ -3,26 +3,26 @@ import Link from "next/link"
 import { Navbar } from "@/components/landing/navbar"
 import { Footer } from "@/components/landing/footer"
 import { getAllPosts, getAllCategories } from "@/lib/blog-data"
-import { BookOpen, Clock, Calendar, ArrowRight } from "lucide-react"
+import { BookOpen, Clock, Calendar, ArrowRight, Sparkles, TrendingUp, ShieldCheck } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "PreYT Resource Hub | YouTube SEO, Packaging & Growth Research",
-  description: "Actionable research, data-backed guides, and packaging strategies to help YouTube creators evaluate titles, thumbnails, and viewer demand before publishing.",
+  title: "Resources & Research Hub — PreYT YouTube Intelligence",
+  description: "Data-backed YouTube strategy articles, title formulas, and packaging benchmarks derived from empirical analysis of 14.8M uploads.",
   alternates: {
-    canonical: "https://preyt.integralgroups.in/blog",
+    canonical: "/blog",
   },
   openGraph: {
-    title: "PreYT Resource Hub | YouTube SEO & Creator Intelligence",
-    description: "Data-backed guides and empirical YouTube packaging insights from analyzing 14.8M uploads.",
+    title: "PreYT Resource Hub — Creator Packaging & Decision Intelligence",
+    description: "Learn how to write high-CTR titles, optimize thumbnail contrast, and discover unserved audience demand.",
     url: "https://preyt.integralgroups.in/blog",
     siteName: "PreYT",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "PreYT Resource Hub | YouTube SEO & Creator Intelligence",
-    description: "Data-backed guides and empirical YouTube packaging insights from analyzing 14.8M uploads.",
-  },
+    title: "PreYT Resource Hub — Creator Packaging & Decision Intelligence",
+    description: "Empirical insights from analyzing 14.8M YouTube uploads. Learn how to publish videos that earn the click.",
+  }
 }
 
 export default function BlogIndexPage() {
@@ -33,11 +33,11 @@ export default function BlogIndexPage() {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "CollectionPage",
+        "@type": "Blog",
         "@id": "https://preyt.integralgroups.in/blog#collection",
         "url": "https://preyt.integralgroups.in/blog",
         "name": "PreYT Resource Hub",
-        "description": "Practical guides, creator research, and actionable insights to help you discover video opportunities and improve content before publishing.",
+        "description": "YouTube Packaging & Decision Intelligence Research",
         "publisher": {
           "@type": "Organization",
           "name": "PreYT",
@@ -66,43 +66,38 @@ export default function BlogIndexPage() {
   }
 
   return (
-    <div className="landing-page-container">
+    <div className="min-h-screen bg-[#FAF9F6] text-neutral-900 selection:bg-red-100 selection:text-red-900 flex flex-col justify-between">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Hero Header Gradient */}
-      <div className="hero-background-gradient" style={{ height: "460px" }}>
-        <div className="hero-radial-glow" style={{ top: "60px", height: "300px" }} />
-      </div>
+      <div>
+        <Navbar variant="light" />
 
-      <div className="landing relative z-10">
-        <Navbar />
-
-        <main className="w-full pt-10 pb-24">
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24">
           {/* Header Banner */}
-          <div className="landing-col pt-4 pb-12 text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-mono font-bold tracking-wider uppercase border border-white/20 mb-6 backdrop-blur-md">
-              <BookOpen className="w-3.5 h-3.5 text-red-400" />
-              <span>THE PREYT RESOURCE HUB</span>
+          <div className="max-w-3xl space-y-4 mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-700 text-xs font-mono font-bold tracking-wider uppercase">
+              <BookOpen className="w-3.5 h-3.5 text-red-600" />
+              <span>THE PREYT RESOURCE HUB // 14.8M UPLOADS AUDITED</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight leading-[1.08] mb-4">
+            <h1 className="text-3xl sm:text-5xl font-black text-neutral-950 tracking-tight leading-tight">
               Creator Research &amp; <br />
-              <span className="text-red-400">Packaging Intelligence.</span>
+              <span className="text-red-600">Packaging Intelligence.</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-white/80 max-w-2xl font-normal leading-relaxed">
-              Empirical insights from analyzing 14.8M YouTube uploads. Learn how to write high-CTR titles, optimize thumbnail contrast, and discover unserved audience demand.
+            <p className="text-base sm:text-lg text-neutral-600 font-normal leading-relaxed">
+              Empirical insights, format-native OpenCV computer-vision heuristics, and title formulas derived from analyzing 14.8M YouTube uploads.
             </p>
           </div>
 
           {/* Category Filter Pills */}
-          <div className="mt-4 mb-10 flex flex-wrap items-center gap-2 pt-6 border-t border-neutral-200">
+          <div className="mb-10 flex flex-wrap items-center gap-2 pt-6 border-t border-neutral-200">
             <Link
               href="/blog"
-              className="px-4 py-2 text-xs font-semibold rounded-full bg-[#161512] text-white transition-all shadow-xs"
+              className="px-4 py-2 text-xs font-bold rounded-full bg-neutral-950 text-white transition-all shadow-xs"
             >
               All Articles ({posts.length})
             </Link>
@@ -110,7 +105,7 @@ export default function BlogIndexPage() {
               <Link
                 key={cat.slug}
                 href={`/blog/category/${cat.slug}`}
-                className="px-4 py-2 text-xs font-medium rounded-full bg-white border border-neutral-200 text-neutral-700 hover:border-[#EE1122] hover:text-[#EE1122] hover:bg-red-50/30 transition-all shadow-2xs"
+                className="px-4 py-2 text-xs font-semibold rounded-full bg-white border border-neutral-200 text-neutral-700 hover:border-red-500 hover:text-red-600 hover:bg-red-50/40 transition-all shadow-2xs"
               >
                 {cat.name}
               </Link>
@@ -123,7 +118,7 @@ export default function BlogIndexPage() {
               {posts.map((post) => (
                 <article
                   key={post.slug}
-                  className="squircle-card flex flex-col justify-between hover:border-neutral-300 transition-all group bg-white"
+                  className="rounded-2xl border border-neutral-200 bg-white hover:border-neutral-300 hover:shadow-md transition-all group flex flex-col justify-between overflow-hidden"
                 >
                   <div className="p-7 space-y-4 flex-1">
                     {/* Meta Badge Bar */}
@@ -132,33 +127,33 @@ export default function BlogIndexPage() {
                         {post.category}
                       </span>
                       <div className="flex items-center gap-1.5 text-neutral-400">
-                        <Clock className="w-3 h-3" />
+                        <Clock className="w-3.5 h-3.5" />
                         <span>{post.readTime}</span>
                       </div>
                     </div>
 
                     {/* Title */}
-                    <h2 className="text-xl font-bold text-[#161512] leading-snug tracking-tight group-hover:text-[#EE1122] transition-colors line-clamp-2">
+                    <h2 className="text-xl font-bold text-neutral-950 leading-snug tracking-tight group-hover:text-red-600 transition-colors line-clamp-2">
                       <Link href={`/blog/${post.slug}`} className="focus:outline-hidden">
                         {post.title}
                       </Link>
                     </h2>
 
                     {/* Description */}
-                    <p className="text-sm text-neutral-600 font-normal leading-relaxed line-clamp-3">
+                    <p className="text-xs sm:text-sm text-neutral-600 font-normal leading-relaxed line-clamp-3">
                       {post.description}
                     </p>
                   </div>
 
                   {/* Card Bottom Bar */}
-                  <div className="px-7 py-4 border-t border-neutral-100 bg-neutral-50/40 flex items-center justify-between text-xs">
-                    <div className="flex items-center gap-1 text-neutral-400 font-mono text-[11px]">
-                      <Calendar className="w-3 h-3 text-neutral-400" />
+                  <div className="px-7 py-4 border-t border-neutral-100 bg-neutral-50/60 flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-1.5 text-neutral-500 font-mono text-[11px]">
+                      <Calendar className="w-3.5 h-3.5 text-neutral-400" />
                       <span>{post.publishedAt}</span>
                     </div>
                     <Link
                       href={`/blog/${post.slug}`}
-                      className="font-semibold text-neutral-900 group-hover:text-[#EE1122] flex items-center gap-1 transition-colors"
+                      className="font-bold text-neutral-900 group-hover:text-red-600 flex items-center gap-1 transition-colors"
                       aria-label={`Read guide: ${post.title}`}
                     >
                       <span>Read guide</span>
@@ -177,26 +172,27 @@ export default function BlogIndexPage() {
           )}
 
           {/* Bottom Conversion Prompt */}
-          <div className="mt-16 p-8 sm:p-12 rounded-2xl bg-neutral-900 text-white flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="mt-16 p-8 sm:p-12 rounded-2xl bg-neutral-950 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
             <div className="space-y-2 max-w-xl text-center md:text-left">
+              <div className="text-[10px] font-mono font-bold text-red-500 uppercase tracking-widest">[ DIAGNOSTIC SIMULATOR ]</div>
               <h3 className="text-xl sm:text-2xl font-bold tracking-tight">
-                Benchmark your next video before you film
+                Benchmark your draft thumbnail before you film
               </h3>
-              <p className="text-sm text-neutral-300">
-                Run your draft title and thumbnail against 14.8M uploads. Test mobile feed contrast and curiosity tension in under 30 seconds.
+              <p className="text-xs sm:text-sm text-neutral-400">
+                Run your draft title and thumbnail in our mobile feed simulator. Check timestamp overlaps and 54-character cutoffs in under 30 seconds.
               </p>
             </div>
             <Link
-              href="/signup"
-              className="action-button action-button--hero-solid px-6 py-3 text-sm font-semibold whitespace-nowrap"
+              href="/tools/youtube-feed-preview"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider transition-colors shrink-0"
             >
-              Start Free Trial
+              Test Draft in Mobile Feed <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </main>
-
-        <Footer />
       </div>
+
+      <Footer />
     </div>
   )
 }

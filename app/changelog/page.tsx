@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { NavbarLight } from "@/components/landing/navbar-light";
-import { FooterLight } from "@/components/landing/footer-light";
+import { Footer } from "@/components/landing/footer";
 import { PageTransition } from "@/components/global/page-transition";
 import { BreadcrumbSchema } from "@/components/seo/json-ld";
 import { Zap, RefreshCcw, Sparkles } from "lucide-react";
@@ -50,20 +50,12 @@ const updates = [
     features: ["Ensemble Scoring Logic", "Behavioral Hook Audit", "Niche Benchmark Scaling"]
   },
   {
-    version: "1.0.4",
-    date: "March 2026",
-    title: "Confidence Calibration",
-    desc: "Introduced the confidence interval system to map prediction reliability.",
-    icon: RefreshCcw,
-    features: ["MAE Prediction Window", "Volatility Detection", "Trust Indicators"]
-  },
-  {
     version: "1.0.0",
-    date: "February 2026",
-    title: "Core Launch",
-    desc: "Initial deployment of the PreYT research engine.",
+    date: "March 2026",
+    title: "Initial System Launch",
+    desc: "PreYT v1.0 engine deployed with title hook evaluation, basic thumbnail contrast testing, and early creator beta testing.",
     icon: Zap,
-    features: ["Single Analysis Mode", "Linguistic Audit", "Visual Clarity Scoring"]
+    features: ["Title Hook Evaluator", "Contrast Scoring", "Initial Feed Simulator"]
   }
 ];
 
@@ -80,23 +72,22 @@ export default function ChangelogPage() {
       <main className="pt-24 pb-32 px-6 bg-[#FAF9F6] min-h-screen">
         <section className="max-w-[1200px] mx-auto space-y-16 pt-12">
             <div>
-                <div className="text-[9px] font-mono font-bold text-[#FF0000] uppercase tracking-[0.2em] mb-4">[ SYSTEM_UPDATES ]</div>
+                <div className="text-[9px] font-mono font-bold text-[#FF0000] uppercase tracking-[0.2em] mb-4">[ RELEASES // TELEMETRY ]</div>
                 <h1 className="font-display text-5xl md:text-6xl font-bold mb-4 text-zinc-900 tracking-tight">
-                  Changelog &amp; <br /><span className="text-[#FF0000]">Evolution.</span>
+                  System <br /><span className="text-[#FF0000]">Changelog.</span>
                 </h1>
                 <p className="text-xs font-mono text-zinc-500 leading-relaxed max-w-2xl">
-                    A technical log of every algorithmic update, architecture iteration, and model refinement deployed to the PreYT platform.
+                    Every algorithmic update, computer vision refinement, and feature release documented with technical precision.
                 </p>
             </div>
 
-            <div className="space-y-12 max-w-3xl">
+            <div className="space-y-6">
                 {updates.map((update) => (
-                    <div key={update.version} className="relative pl-8 border-l border-zinc-200 space-y-4">
-                        <div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-white border border-[#FF0000] flex items-center justify-center">
-                            <div className="w-1 h-1 rounded-full bg-[#FF0000]" />
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <span className="font-mono text-[9px] font-bold text-[#FF0000] uppercase tracking-wider bg-red-50 border border-red-200 px-2 py-0.5 rounded-[2px]">{update.version}</span>
+                    <div key={update.version} className="p-8 rounded-[4px] bg-white border border-zinc-200 shadow-[2px_2px_0px_rgba(0,0,0,0.04)] space-y-4">
+                        <div className="flex items-center justify-between border-b border-zinc-100 pb-4">
+                            <span className="font-mono text-xs font-bold text-[#FF0000] bg-red-50 border border-red-200 px-2 py-0.5 rounded">
+                                v{update.version}
+                            </span>
                             <span className="font-mono text-[9px] text-zinc-400 uppercase tracking-widest">{update.date}</span>
                         </div>
                         <h2 className="font-display text-2xl font-bold text-zinc-900">{update.title}</h2>
@@ -113,7 +104,7 @@ export default function ChangelogPage() {
             </div>
         </section>
       </main>
-      <FooterLight />
+      <Footer />
     </PageTransition>
   )
 }

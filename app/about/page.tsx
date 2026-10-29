@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { NavbarLight } from "@/components/landing/navbar-light";
-import { FooterLight } from "@/components/landing/footer-light";
+import { Footer } from "@/components/landing/footer";
 import { PageTransition } from "@/components/global/page-transition";
 import { BreadcrumbSchema } from "@/components/seo/json-ld";
 import { Target, ShieldCheck, Zap } from "lucide-react";
@@ -75,7 +75,7 @@ export default function AboutPage() {
             </div>
         </section>
       </main>
-      <FooterLight />
+      <Footer />
     </PageTransition>
   )
 }

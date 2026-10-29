@@ -107,52 +107,47 @@ export default async function CategoryPage({ params }: PageProps) {
   }
 
   return (
-    <div className="landing-page-container">
+    <div className="min-h-screen bg-[#FAF9F6] text-neutral-900 selection:bg-red-100 selection:text-red-900 flex flex-col justify-between">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Hero Header Gradient */}
-      <div className="hero-background-gradient" style={{ height: "440px" }}>
-        <div className="hero-radial-glow" style={{ top: "60px", height: "280px" }} />
-      </div>
+      <div>
+        <Navbar variant="light" />
 
-      <div className="landing relative z-10">
-        <Navbar />
-
-        <main className="w-full pt-8 pb-24">
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24">
           {/* Breadcrumb Navigation */}
-          <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs text-white/80 overflow-x-auto whitespace-nowrap">
-            <Link href="/" className="hover:text-white transition-colors">
+          <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs text-neutral-500 overflow-x-auto whitespace-nowrap">
+            <Link href="/" className="hover:text-neutral-950 transition-colors">
               Home
             </Link>
-            <ChevronRight className="w-3 h-3 text-white/40 shrink-0" />
-            <Link href="/blog" className="hover:text-white transition-colors">
+            <ChevronRight className="w-3 h-3 text-neutral-400 shrink-0" />
+            <Link href="/blog" className="hover:text-neutral-950 transition-colors">
               Resources
             </Link>
-            <ChevronRight className="w-3 h-3 text-white/40 shrink-0" />
-            <span className="text-white font-medium">{category.name}</span>
+            <ChevronRight className="w-3 h-3 text-neutral-400 shrink-0" />
+            <span className="text-neutral-950 font-semibold">{category.name}</span>
           </nav>
 
           {/* Header Banner */}
-          <div className="landing-col pt-2 pb-12 text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-mono font-bold tracking-wider uppercase border border-white/20 mb-6 backdrop-blur-md">
-              <BookOpen className="w-3.5 h-3.5 text-red-400" />
+          <div className="max-w-3xl space-y-4 mb-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-700 text-xs font-mono font-bold tracking-wider uppercase">
+              <BookOpen className="w-3.5 h-3.5 text-red-600" />
               <span>CATEGORY TOPIC CLUSTER</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl font-bold text-white tracking-tight leading-[1.1] mb-4">
+            <h1 className="text-3xl sm:text-5xl font-black text-neutral-950 tracking-tight leading-tight">
               {category.name}
             </h1>
 
-            <p className="text-base sm:text-lg text-white/80 max-w-2xl font-normal leading-relaxed">
+            <p className="text-base sm:text-lg text-neutral-600 font-normal leading-relaxed">
               {category.description}
             </p>
           </div>
 
           {/* Category Switcher Pills */}
-          <div className="mt-4 mb-10 flex flex-wrap items-center gap-2 pt-6 border-t border-neutral-200">
+          <div className="mb-10 flex flex-wrap items-center gap-2 pt-6 border-t border-neutral-200">
             <Link
               href="/blog"
               className="px-4 py-2 text-xs font-medium rounded-full bg-white border border-neutral-200 text-neutral-700 hover:border-neutral-400 transition-all shadow-2xs"
@@ -165,10 +160,10 @@ export default async function CategoryPage({ params }: PageProps) {
                 <Link
                   key={cat.slug}
                   href={`/blog/category/${cat.slug}`}
-                  className={`px-4 py-2 text-xs rounded-full transition-all shadow-2xs ${
+                  className={`px-4 py-2 text-xs rounded-full transition-all shadow-2xs font-semibold ${
                     isActive
-                      ? "bg-[#161512] text-white font-semibold"
-                      : "bg-white border border-neutral-200 text-neutral-700 hover:border-[#EE1122] hover:text-[#EE1122]"
+                      ? "bg-neutral-950 text-white"
+                      : "bg-white border border-neutral-200 text-neutral-700 hover:border-red-500 hover:text-red-600 hover:bg-red-50/40"
                   }`}
                 >
                   {cat.name}
@@ -183,7 +178,7 @@ export default async function CategoryPage({ params }: PageProps) {
               {posts.map((post) => (
                 <article
                   key={post.slug}
-                  className="squircle-card flex flex-col justify-between hover:border-neutral-300 transition-all group bg-white"
+                  className="rounded-2xl border border-neutral-200 bg-white hover:border-neutral-300 hover:shadow-md transition-all group flex flex-col justify-between overflow-hidden"
                 >
                   <div className="p-7 space-y-4 flex-1">
                     {/* Meta Badge Bar */}
@@ -198,7 +193,7 @@ export default async function CategoryPage({ params }: PageProps) {
                     </div>
 
                     {/* Title */}
-                    <h2 className="text-xl font-bold text-[#161512] leading-snug tracking-tight group-hover:text-[#EE1122] transition-colors line-clamp-2">
+                    <h2 className="text-xl font-bold text-neutral-950 leading-snug tracking-tight group-hover:text-red-600 transition-colors line-clamp-2">
                       <Link href={`/blog/${post.slug}`} className="focus:outline-hidden">
                         {post.title}
                       </Link>
@@ -211,14 +206,14 @@ export default async function CategoryPage({ params }: PageProps) {
                   </div>
 
                   {/* Card Bottom Bar */}
-                  <div className="px-7 py-4 border-t border-neutral-100 bg-neutral-50/40 flex items-center justify-between text-xs">
-                    <div className="flex items-center gap-1 text-neutral-400 font-mono text-[11px]">
-                      <Calendar className="w-3 h-3 text-neutral-400" />
+                  <div className="px-7 py-4 border-t border-neutral-100 bg-neutral-50/60 flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-1.5 text-neutral-500 font-mono text-[11px]">
+                      <Calendar className="w-3.5 h-3.5 text-neutral-400" />
                       <span>{post.publishedAt}</span>
                     </div>
                     <Link
                       href={`/blog/${post.slug}`}
-                      className="font-semibold text-neutral-900 group-hover:text-[#EE1122] flex items-center gap-1 transition-colors"
+                      className="font-bold text-neutral-900 group-hover:text-red-600 flex items-center gap-1 transition-colors"
                       aria-label={`Read guide: ${post.title}`}
                     >
                       <span>Read guide</span>
@@ -236,7 +231,7 @@ export default async function CategoryPage({ params }: PageProps) {
               <div className="mt-6">
                 <Link
                   href="/blog"
-                  className="action-button action-button--secondary text-xs px-4 py-2 font-semibold"
+                  className="px-4 py-2 text-xs font-semibold rounded-xl border border-neutral-300 text-neutral-700 hover:border-black transition-colors"
                 >
                   View All Articles
                 </Link>
@@ -244,9 +239,9 @@ export default async function CategoryPage({ params }: PageProps) {
             </div>
           )}
         </main>
-
-        <Footer />
       </div>
+
+      <Footer />
     </div>
   )
 }

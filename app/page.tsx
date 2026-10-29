@@ -72,7 +72,7 @@ export default function LandingPage() {
       </div>
 
       <div className="landing relative z-10">
-        <Navbar />
+        <Navbar variant="dark" />
         <main className="w-full">
           {/* Section 1: Hero — preserved exactly as-is */}
           <Hero />

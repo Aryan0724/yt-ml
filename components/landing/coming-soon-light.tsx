@@ -1,7 +1,7 @@
 "use client"
 
 import { NavbarLight } from "@/components/landing/navbar-light"
-import { FooterLight } from "@/components/landing/footer-light"
+import { Footer } from "@/components/landing/footer"
 import { PageTransition } from "@/components/global/page-transition"
 import { motion } from "framer-motion"
 import { Hammer } from "lucide-react"
@@ -57,7 +57,7 @@ export function ComingSoonLight({ title, description = "We are currently buildin
           </motion.div>
         </div>
       </main>
-      <FooterLight />
+      <Footer />
     </PageTransition>
   )
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { NavbarLight } from "@/components/landing/navbar-light";
-import { FooterLight } from "@/components/landing/footer-light";
+import { Footer } from "@/components/landing/footer";
 import { PageTransition } from "@/components/global/page-transition";
 import { BreadcrumbSchema, SoftwareAppSchema } from "@/components/seo/json-ld";
 import { GitCompare, Target, ShieldAlert, BarChart3, MessageSquare, Zap, RefreshCcw, Layout, Flame, Fingerprint, ArrowRight, Smartphone } from "lucide-react";
@@ -211,7 +211,7 @@ export default function FeaturesPage() {
           </div>
         </section>
       </main>
-      <FooterLight />
+      <Footer />
     </PageTransition>
   )
 }

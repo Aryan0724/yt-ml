@@ -4,7 +4,16 @@ import { notFound } from "next/navigation"
 import { Navbar } from "@/components/landing/navbar"
 import { Footer } from "@/components/landing/footer"
 import { getPostBySlug, getAllPosts } from "@/lib/blog-data"
-import { Clock, Calendar, ArrowRight, ChevronRight, Share2, Sparkles, User, Tag } from "lucide-react"
+import {
+  Clock,
+  Calendar,
+  User,
+  ArrowRight,
+  ChevronRight,
+  Sparkles,
+  Tag,
+  BookOpen
+} from "lucide-react"
 
 interface PageProps {
   params: Promise<{
@@ -29,18 +38,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
   }
 
-  const url = `https://preyt.integralgroups.in/blog/${post.slug}`
+  const articleUrl = `https://preyt.integralgroups.in/blog/${post.slug}`
 
   return {
-    title: `${post.title} | PreYT Guide`,
+    title: `${post.title} | PreYT Research`,
     description: post.description,
     alternates: {
-      canonical: url,
+      canonical: articleUrl,
     },
     openGraph: {
       title: post.title,
       description: post.description,
-      url,
+      url: articleUrl,
       siteName: "PreYT",
       type: "article",
       publishedTime: post.publishedAt,
@@ -101,7 +110,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           "url": "https://preyt.integralgroups.in",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://preyt.integralgroups.in/preyt-logo-dark.png"
+            "url": "https://preyt.integralgroups.in/preyt-logo-light.png"
           }
         }
       },
@@ -139,32 +148,27 @@ export default async function BlogPostPage({ params }: PageProps) {
   }
 
   return (
-    <div className="landing-page-container">
+    <div className="min-h-screen bg-[#FAF9F6] text-neutral-900 selection:bg-red-100 selection:text-red-900 flex flex-col justify-between">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Subtle Top Ambient Gradient */}
-      <div className="hero-background-gradient" style={{ height: "420px" }}>
-        <div className="hero-radial-glow" style={{ top: "40px", height: "260px" }} />
-      </div>
+      <div>
+        <Navbar variant="light" />
 
-      <div className="landing relative z-10">
-        <Navbar />
-
-        <main className="w-full pt-8 pb-24">
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24">
           {/* Breadcrumb Navigation */}
-          <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs text-white/80 overflow-x-auto whitespace-nowrap">
-            <Link href="/" className="hover:text-white transition-colors">
+          <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs text-neutral-500 overflow-x-auto whitespace-nowrap">
+            <Link href="/" className="hover:text-neutral-950 transition-colors">
               Home
             </Link>
-            <ChevronRight className="w-3 h-3 text-white/40 shrink-0" />
-            <Link href="/blog" className="hover:text-white transition-colors">
+            <ChevronRight className="w-3 h-3 text-neutral-400 shrink-0" />
+            <Link href="/blog" className="hover:text-neutral-950 transition-colors">
               Resources
             </Link>
-            <ChevronRight className="w-3 h-3 text-white/40 shrink-0" />
-            <Link href={`/blog/category/${post.categorySlug}`} className="hover:text-white transition-colors">
+            <ChevronRight className="w-3 h-3 text-neutral-400 shrink-0" />
+            <Link href={`/blog/category/${post.categorySlug}`} className="hover:text-neutral-950 transition-colors">
               {post.category}
             </Link>
           </nav>
@@ -174,38 +178,38 @@ export default async function BlogPostPage({ params }: PageProps) {
             <div className="flex flex-wrap items-center gap-3">
               <Link
                 href={`/blog/category/${post.categorySlug}`}
-                className="px-3 py-1 rounded-full bg-white/15 border border-white/25 text-white text-xs font-mono font-bold uppercase tracking-wider backdrop-blur-md hover:bg-white/25 transition-all"
+                className="px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-700 text-xs font-mono font-bold uppercase tracking-wider hover:bg-red-100 transition-all"
               >
                 {post.category}
               </Link>
-              <div className="flex items-center gap-1.5 text-xs text-white/80 font-mono">
-                <Clock className="w-3.5 h-3.5" />
+              <div className="flex items-center gap-1.5 text-xs text-neutral-500 font-mono">
+                <Clock className="w-3.5 h-3.5 text-neutral-400" />
                 <span>{post.readTime}</span>
               </div>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl font-bold text-white tracking-tight leading-[1.12]">
+            <h1 className="text-3xl sm:text-5xl font-black text-neutral-950 tracking-tight leading-[1.12]">
               {post.title}
             </h1>
 
-            <p className="text-base sm:text-xl text-white/90 leading-relaxed font-normal">
+            <p className="text-base sm:text-xl text-neutral-600 leading-relaxed font-normal">
               {post.description}
             </p>
 
-            {/* Author & Date Bar */}
-            <div className="pt-4 flex flex-wrap items-center justify-between gap-4 border-t border-white/15 text-xs text-white/80">
+            {/* Author & Date Bar - 100% High Contrast */}
+            <div className="pt-4 flex flex-wrap items-center justify-between gap-4 border-t border-neutral-200 text-xs">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xs shadow-xs">
-                  <User className="w-4 h-4" />
+                  <User className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <div className="font-semibold text-white">{post.author.name}</div>
-                  <div className="text-[11px] text-white/70">{post.author.role}</div>
+                  <div className="font-bold text-neutral-950">{post.author.name}</div>
+                  <div className="text-[11px] text-neutral-500">{post.author.role}</div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-1.5 font-mono text-[11px]">
-                <Calendar className="w-3.5 h-3.5" />
+              <div className="flex items-center gap-1.5 font-mono text-[11px] text-neutral-500">
+                <Calendar className="w-3.5 h-3.5 text-neutral-400" />
                 <span>Published {post.publishedAt}</span>
               </div>
             </div>
@@ -232,7 +236,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                       <h2
                         key={idx}
                         id={headingId}
-                        className="text-2xl sm:text-3xl font-bold text-[#161512] tracking-tight pt-6 pb-2 border-b border-neutral-100 scroll-mt-24"
+                        className="text-2xl sm:text-3xl font-bold text-neutral-950 tracking-tight pt-6 pb-2 border-b border-neutral-100 scroll-mt-24"
                       >
                         {headingText}
                       </h2>
@@ -249,7 +253,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                       <h3
                         key={idx}
                         id={headingId}
-                        className="text-xl sm:text-2xl font-bold text-[#161512] tracking-tight pt-4 pb-1 scroll-mt-24"
+                        className="text-xl sm:text-2xl font-bold text-neutral-950 tracking-tight pt-4 pb-1 scroll-mt-24"
                       >
                         {headingText}
                       </h3>
@@ -293,7 +297,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                           <thead className="bg-neutral-50 border-b border-neutral-200 font-bold text-neutral-900">
                             <tr>
                               {headerCells.map((h, hIdx) => (
-                                <th key={hIdx} className="p-3 font-semibold">
+                                <th key={hIdx} className="p-3 font-semibold text-neutral-900">
                                   {h}
                                 </th>
                               ))}
@@ -329,11 +333,11 @@ export default async function BlogPostPage({ params }: PageProps) {
 
               {/* In-Article Feature Callout Box */}
               <div className="my-8 p-6 sm:p-8 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-4">
-                <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#EE1122] uppercase tracking-wider">
-                  <Sparkles className="w-4 h-4 text-[#EE1122]" />
+                <div className="flex items-center gap-2 text-xs font-mono font-bold text-red-600 uppercase tracking-wider">
+                  <Sparkles className="w-4 h-4 text-red-600" />
                   <span>PRE-UPLOAD PACKAGING DIAGNOSTIC</span>
                 </div>
-                <h4 className="text-xl font-bold text-[#161512] tracking-tight">
+                <h4 className="text-xl font-bold text-neutral-950 tracking-tight">
                   Test your title and thumbnail before spending 40 hours filming.
                 </h4>
                 <p className="text-sm text-neutral-600 leading-relaxed">
@@ -341,16 +345,10 @@ export default async function BlogPostPage({ params }: PageProps) {
                 </p>
                 <div className="pt-2 flex flex-wrap items-center gap-3">
                   <Link
-                    href="/signup"
-                    className="action-button action-button--primary text-xs px-5 py-2.5 font-semibold"
+                    href="/tools/youtube-feed-preview"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider transition-colors shadow-xs"
                   >
-                    Start Free Audit
-                  </Link>
-                  <Link
-                    href="/#draft"
-                    className="action-button action-button--secondary text-xs px-4 py-2.5 font-semibold border border-neutral-200"
-                  >
-                    Try Title Sandbox
+                    Open Free Mobile Simulator <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>
@@ -372,11 +370,11 @@ export default async function BlogPostPage({ params }: PageProps) {
             </article>
 
             {/* Sidebar (4 cols) */}
-            <aside className="lg:col-span-4 space-y-8 sticky top-6">
+            <aside className="lg:col-span-4 space-y-8 sticky top-24">
               
               {/* Table of Contents Box */}
               {post.tableOfContents.length > 0 && (
-                <div className="p-6 bg-white border border-neutral-200 rounded-2xl shadow-2xs space-y-3">
+                <div className="p-6 bg-white border border-neutral-200 rounded-2xl shadow-xs space-y-3">
                   <h3 className="text-xs font-mono font-bold text-neutral-400 uppercase tracking-wider">
                     Table of Contents
                   </h3>
@@ -389,7 +387,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                         >
                           <a
                             href={`#${item.id}`}
-                            className="hover:text-[#EE1122] transition-colors block py-0.5 line-clamp-1"
+                            className="hover:text-red-600 transition-colors block py-0.5 line-clamp-1"
                           >
                             {item.title}
                           </a>
@@ -402,7 +400,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
               {/* Related Articles Card */}
               {relatedPosts.length > 0 && (
-                <div className="p-6 bg-white border border-neutral-200 rounded-2xl shadow-2xs space-y-4">
+                <div className="p-6 bg-white border border-neutral-200 rounded-2xl shadow-xs space-y-4">
                   <h3 className="text-xs font-mono font-bold text-neutral-400 uppercase tracking-wider">
                     Related Research
                   </h3>
@@ -412,7 +410,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                         <span className="text-[10px] font-mono font-semibold text-neutral-400 uppercase">
                           {related.category}
                         </span>
-                        <h4 className="text-sm font-bold text-[#161512] group-hover:text-[#EE1122] transition-colors leading-snug">
+                        <h4 className="text-sm font-bold text-neutral-950 group-hover:text-red-600 transition-colors leading-snug">
                           <Link href={`/blog/${related.slug}`}>
                             {related.title}
                           </Link>
@@ -427,30 +425,31 @@ export default async function BlogPostPage({ params }: PageProps) {
               )}
 
               {/* Sidebar Quick Audit CTA */}
-              <div className="p-6 bg-[#161512] text-white rounded-2xl space-y-3 shadow-md">
-                <span className="text-[11px] font-mono text-red-400 font-bold uppercase tracking-wider">
-                  FREE CREATOR TRIAL
+              <div className="p-6 bg-neutral-950 text-white rounded-2xl space-y-3 shadow-md">
+                <span className="text-[11px] font-mono text-red-500 font-bold uppercase tracking-wider">
+                  FREE CREATOR DIAGNOSTICS
                 </span>
                 <h4 className="text-base font-bold leading-snug">
                   Never flop a YouTube upload again.
                 </h4>
                 <p className="text-xs text-neutral-300 leading-relaxed">
-                  Audit your title, contrast, and curiosity tension against 14.8M uploads before you film.
+                  Test your title, safe-area overlaps, and curiosity tension in our live simulated feed.
                 </p>
                 <Link
-                  href="/signup"
-                  className="action-button action-button--hero-solid text-xs px-4 py-2.5 w-full text-center mt-2 font-semibold"
+                  href="/tools/youtube-feed-preview"
+                  className="inline-flex items-center justify-center gap-1.5 w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider transition-colors mt-2"
                 >
-                  Start Free Trial →
+                  <span>Launch Mobile Simulator</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
 
             </aside>
           </div>
         </main>
-
-        <Footer />
       </div>
+
+      <Footer />
     </div>
   )
 }

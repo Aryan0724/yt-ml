@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { NavbarLight } from "@/components/landing/navbar-light"
-import { FooterLight } from "@/components/landing/footer-light"
+import { Footer } from "@/components/landing/footer"
 import { PageTransition } from "@/components/global/page-transition"
 import {
   Send, CheckCircle2, Play, User, Mail, MessageSquare,
@@ -336,7 +336,7 @@ export default function WaitlistPage() {
           </div>
         </div>
       </main>
-      <FooterLight />
+      <Footer />
     </PageTransition>
   )
 }
