@@ -1,4 +1,4 @@
-import NextLink from "next/link"
+import NextLink from "next"
 import { Youtube, Twitter, Linkedin, Instagram, ArrowRight } from "lucide-react"
 
 export function FooterLight() {
@@ -34,9 +34,10 @@ export function FooterLight() {
             <h4 className="font-mono font-bold text-zinc-800 mb-4 uppercase tracking-widest text-[9.5px]">[ Product ]</h4>
             <ul className="space-y-3 text-zinc-500 text-xs font-semibold uppercase font-mono tracking-wider">
               <li><NextLink href="/features" className="hover:text-black transition-colors">Features</NextLink></li>
-              <li><NextLink href="/integrations" className="hover:text-black transition-colors">Integrations</NextLink></li>
+              <li><NextLink href="/tools/youtube-feed-preview" className="hover:text-[#EE1122] transition-colors text-red-600 font-bold">Thumbnail Lab</NextLink></li>
+              <li><NextLink href="/vs/vidiq" className="hover:text-black transition-colors">vs vidIQ</NextLink></li>
+              <li><NextLink href="/vs/1of10" className="hover:text-black transition-colors">vs 1of10</NextLink></li>
               <li><NextLink href="/changelog" className="hover:text-black transition-colors">Updates</NextLink></li>
-              <li><NextLink href="/roadmap" className="hover:text-black transition-colors">Roadmap</NextLink></li>
             </ul>
           </div>
 
@@ -46,13 +47,15 @@ export function FooterLight() {
               <li><NextLink href="/creators" className="hover:text-black transition-colors">Creators</NextLink></li>
               <li><NextLink href="/brands" className="hover:text-black transition-colors">Brands</NextLink></li>
               <li><NextLink href="/agencies" className="hover:text-black transition-colors">Agencies</NextLink></li>
+              <li><NextLink href="/youtube-packaging/faceless-documentary" className="hover:text-black transition-colors">Faceless Niche</NextLink></li>
+              <li><NextLink href="/youtube-packaging/gaming-esports" className="hover:text-black transition-colors">Gaming Niche</NextLink></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-mono font-bold text-zinc-800 mb-4 uppercase tracking-widest text-[9.5px]">[ Resources ]</h4>
             <ul className="space-y-3 text-zinc-500 text-xs font-semibold uppercase font-mono tracking-wider">
-
+              <li><NextLink href="/blog" className="hover:text-black transition-colors">Blog</NextLink></li>
               <li><NextLink href="/guides" className="hover:text-black transition-colors">Guides</NextLink></li>
               <li><NextLink href="/help-center" className="hover:text-black transition-colors">Help Center</NextLink></li>
               <li><NextLink href="/templates" className="hover:text-black transition-colors">Templates</NextLink></li>
@@ -98,4 +101,3 @@ export function FooterLight() {
     </footer>
   )
 }
-

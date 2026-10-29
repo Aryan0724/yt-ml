@@ -4,10 +4,10 @@ import Image from "next/image"
 export function Footer() {
   return (
     <footer className="landing-col pt-16 pb-20 border-t border-neutral-200">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10">
 
-        {/* Brand Information (Col 1-5) */}
-        <div className="md:col-span-5 space-y-4 max-w-sm">
+        {/* Brand Information (Col 1-4) */}
+        <div className="md:col-span-4 space-y-4 max-w-sm">
           <Link href="/" className="inline-block transition-opacity hover:opacity-90" aria-label="PreYT Home">
             <Image
               src="/preyt-logo-light.png"
@@ -25,12 +25,12 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Product Navigation (Col 6-7) */}
+        {/* Product & Free Tools (Col 5-6) */}
         <nav aria-label="Product" className="md:col-span-2 space-y-3.5">
-          <h2 className="text-xs font-semibold text-neutral-400 tracking-wider uppercase">
+          <h2 className="text-xs font-semibold text-neutral-400 tracking-wider uppercase font-mono">
             Product
           </h2>
-          <ul className="space-y-2.5 text-sm font-medium text-[#161512]">
+          <ul className="space-y-2.5 text-xs font-medium text-[#161512]">
             <li>
               <Link href="/features" className="hover:text-[#EE1122] transition-colors">
                 Features
@@ -47,8 +47,8 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/about" className="hover:text-[#EE1122] transition-colors">
-                About PreYT
+              <Link href="/tools/youtube-feed-preview" className="hover:text-[#EE1122] transition-colors font-semibold text-red-600">
+                Thumbnail Previewer
               </Link>
             </li>
             <li>
@@ -64,12 +64,12 @@ export function Footer() {
           </ul>
         </nav>
 
-        {/* Tools & Platform (Col 8-10) */}
-        <nav aria-label="Tools" className="md:col-span-3 space-y-3.5">
-          <h2 className="text-xs font-semibold text-neutral-400 tracking-wider uppercase">
+        {/* Platform Tools (Col 7-8) */}
+        <nav aria-label="Tools" className="md:col-span-2 space-y-3.5">
+          <h2 className="text-xs font-semibold text-neutral-400 tracking-wider uppercase font-mono">
             Platform Tools
           </h2>
-          <ul className="space-y-2.5 text-sm font-medium text-[#161512]">
+          <ul className="space-y-2.5 text-xs font-medium text-[#161512]">
             <li>
               <Link href="/dashboard/analyze" className="hover:text-[#EE1122] transition-colors">
                 Video Packaging Audit
@@ -82,7 +82,7 @@ export function Footer() {
             </li>
             <li>
               <Link href="/dashboard/radar" className="hover:text-[#EE1122] transition-colors">
-                Topic Radar (Demand Gap)
+                Topic Radar
               </Link>
             </li>
             <li>
@@ -98,12 +98,51 @@ export function Footer() {
           </ul>
         </nav>
 
-        {/* Company & Trust (Col 11-12) */}
+        {/* Comparisons & Blueprints (Col 9-10) */}
+        <nav aria-label="Comparisons & Blueprints" className="md:col-span-2 space-y-3.5">
+          <h2 className="text-xs font-semibold text-neutral-400 tracking-wider uppercase font-mono">
+            Comparisons &amp; Niche
+          </h2>
+          <ul className="space-y-2.5 text-xs font-medium text-[#161512]">
+            <li>
+              <Link href="/vs/vidiq" className="hover:text-[#EE1122] transition-colors">
+                PreYT vs vidIQ
+              </Link>
+            </li>
+            <li>
+              <Link href="/vs/1of10" className="hover:text-[#EE1122] transition-colors">
+                PreYT vs 1of10
+              </Link>
+            </li>
+            <li>
+              <Link href="/youtube-packaging/faceless-documentary" className="hover:text-[#EE1122] transition-colors">
+                Faceless Blueprint
+              </Link>
+            </li>
+            <li>
+              <Link href="/youtube-packaging/cooking-culinary" className="hover:text-[#EE1122] transition-colors">
+                Cooking Blueprint
+              </Link>
+            </li>
+            <li>
+              <Link href="/youtube-packaging/gaming-esports" className="hover:text-[#EE1122] transition-colors">
+                Gaming Blueprint
+              </Link>
+            </li>
+            <li>
+              <Link href="/youtube-packaging/tech-reviews" className="hover:text-[#EE1122] transition-colors">
+                Tech Reviews
+              </Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* Company & Legal (Col 11-12) */}
         <nav aria-label="Company" className="md:col-span-2 space-y-3.5">
-          <h2 className="text-xs font-semibold text-neutral-400 tracking-wider uppercase">
+          <h2 className="text-xs font-semibold text-neutral-400 tracking-wider uppercase font-mono">
             Company &amp; Legal
           </h2>
-          <ul className="space-y-2.5 text-sm font-medium text-[#161512]">
+          <ul className="space-y-2.5 text-xs font-medium text-[#161512]">
             <li>
               <Link href="/blog" className="hover:text-[#EE1122] transition-colors">
                 Resources &amp; Blog

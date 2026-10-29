@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { NavbarLight } from "@/components/landing/navbar-light";
 import { FooterLight } from "@/components/landing/footer-light";
 import { PageTransition } from "@/components/global/page-transition";
 import { BreadcrumbSchema, SoftwareAppSchema } from "@/components/seo/json-ld";
-import { GitCompare, Target, ShieldAlert, BarChart3, MessageSquare, Zap, RefreshCcw, Layout, Flame, Fingerprint } from "lucide-react";
+import { GitCompare, Target, ShieldAlert, BarChart3, MessageSquare, Zap, RefreshCcw, Layout, Flame, Fingerprint, ArrowRight, Smartphone } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Features — Pre-Publish Packaging Intelligence",
@@ -88,7 +89,7 @@ export default function FeaturesPage() {
           </p>
         </section>
 
-        <section className="px-6 max-w-[1200px] mx-auto space-y-16 pb-8">
+        <section className="px-6 max-w-[1200px] mx-auto space-y-16 pb-16">
           {features.map((feature, i) => (
             <div key={feature.title} className={`flex flex-col ${i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-16 items-center border-t border-zinc-200 pt-16`}>
                 <div className="flex-1 space-y-6">
@@ -112,6 +113,102 @@ export default function FeaturesPage() {
                 </div>
             </div>
           ))}
+        </section>
+
+        {/* Free Utilities & Niche Blueprints Internal Navigation Hub */}
+        <section className="px-6 max-w-[1200px] mx-auto border-t border-zinc-200 pt-16 space-y-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <div className="text-[9px] font-mono font-bold text-[#FF0000] uppercase tracking-[0.2em] mb-2">[ PUBLIC TOOLS &amp; BLUEPRINTS ]</div>
+              <h2 className="font-display text-3xl font-bold text-zinc-900 tracking-tight">Free Creator Diagnostics</h2>
+            </div>
+            <Link
+              href="/tools/youtube-feed-preview"
+              className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#FF0000] hover:underline"
+            >
+              Open Mobile Feed Simulator <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Link
+              href="/tools/youtube-feed-preview"
+              className="p-6 rounded-[4px] bg-white border border-zinc-200 shadow-sm hover:border-black transition-all group space-y-3"
+            >
+              <div className="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">[ UTILITY ]</div>
+              <h3 className="font-bold text-sm text-zinc-900 group-hover:text-[#FF0000] transition-colors">
+                Mobile Feed Simulator
+              </h3>
+              <p className="text-xs font-mono text-zinc-500 leading-relaxed">
+                Test your draft thumbnail and title across simulated iPhone and Android viewports before rendering.
+              </p>
+            </Link>
+
+            <Link
+              href="/vs/vidiq"
+              className="p-6 rounded-[4px] bg-white border border-zinc-200 shadow-sm hover:border-black transition-all group space-y-3"
+            >
+              <div className="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">[ COMPARISON ]</div>
+              <h3 className="font-bold text-sm text-zinc-900 group-hover:text-[#FF0000] transition-colors">
+                PreYT vs vidIQ
+              </h3>
+              <p className="text-xs font-mono text-zinc-500 leading-relaxed">
+                Why modern YouTube distribution rewards visual glanceability over legacy keyword tags.
+              </p>
+            </Link>
+
+            <Link
+              href="/vs/1of10"
+              className="p-6 rounded-[4px] bg-white border border-zinc-200 shadow-sm hover:border-black transition-all group space-y-3"
+            >
+              <div className="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">[ COMPARISON ]</div>
+              <h3 className="font-bold text-sm text-zinc-900 group-hover:text-[#FF0000] transition-colors">
+                PreYT vs 1of10
+              </h3>
+              <p className="text-xs font-mono text-zinc-500 leading-relaxed">
+                Outlier discovery coupled with 64-bit DCT perceptual hash saturation protection.
+              </p>
+            </Link>
+
+            <Link
+              href="/youtube-packaging/faceless-documentary"
+              className="p-6 rounded-[4px] bg-white border border-zinc-200 shadow-sm hover:border-black transition-all group space-y-3"
+            >
+              <div className="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">[ NICHE BLUEPRINT ]</div>
+              <h3 className="font-bold text-sm text-zinc-900 group-hover:text-[#FF0000] transition-colors">
+                Faceless Documentary Packaging
+              </h3>
+              <p className="text-xs font-mono text-zinc-500 leading-relaxed">
+                Zero-face penalty override, cool cinematic Kelvin grading, and high-stakes curiosity titles.
+              </p>
+            </Link>
+
+            <Link
+              href="/youtube-packaging/gaming-esports"
+              className="p-6 rounded-[4px] bg-white border border-zinc-200 shadow-sm hover:border-black transition-all group space-y-3"
+            >
+              <div className="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">[ NICHE BLUEPRINT ]</div>
+              <h3 className="font-bold text-sm text-zinc-900 group-hover:text-[#FF0000] transition-colors">
+                Gaming &amp; Esports Packaging
+              </h3>
+              <p className="text-xs font-mono text-zinc-500 leading-relaxed">
+                Neon HSV saturation thresholds, character rim lighting strokes, and high-contrast diagonal vectors.
+              </p>
+            </Link>
+
+            <Link
+              href="/youtube-packaging/cooking-culinary"
+              className="p-6 rounded-[4px] bg-white border border-zinc-200 shadow-sm hover:border-black transition-all group space-y-3"
+            >
+              <div className="text-[8px] font-mono font-bold text-zinc-400 uppercase tracking-widest">[ NICHE BLUEPRINT ]</div>
+              <h3 className="font-bold text-sm text-zinc-900 group-hover:text-[#FF0000] transition-colors">
+                Cooking &amp; Food Packaging
+              </h3>
+              <p className="text-xs font-mono text-zinc-500 leading-relaxed">
+                Appetite induction, warm 3,000K chrominance, and Laplacian food texture variance.
+              </p>
+            </Link>
+          </div>
         </section>
       </main>
       <FooterLight />
