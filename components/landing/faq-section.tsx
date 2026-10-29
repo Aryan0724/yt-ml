@@ -2,11 +2,12 @@
 
 import { useState } from "react"
 import { Plus, Minus, HelpCircle } from "lucide-react"
+import { FaqSchema } from "@/components/seo/json-ld"
 
 const faqs = [
   {
     question: "How does PreYT predict CTR before a video is published?",
-    answer: "PreYT benchmarks your draft title and thumbnail against a proprietary database of 14.8M analyzed YouTube uploads. We score character cutoff boundaries on mobile viewports, evaluate subject isolation against YouTube's dark and light UI themes, and measure title curiosity tension using linguistic semantic vectors."
+    answer: "PreYT benchmarks your draft title and thumbnail against an empirical database of 14.8M analyzed YouTube uploads. We score character cutoff boundaries on mobile viewports, evaluate subject isolation against YouTube's dark and light UI themes, and measure title curiosity tension using linguistic semantic vectors."
   },
   {
     question: "Do you require my YouTube channel login or password?",
@@ -14,15 +15,15 @@ const faqs = [
   },
   {
     question: "Can my video editor or thumbnail designer collaborate with me?",
-    answer: "Yes! PreYT Pro and Studio plans include team workspace seats. You can share pre-upload packaging reports with your editor, leave timestamped feedback, and agree on thumbnail variants directly in the browser before rendering."
+    answer: "Yes. PreYT includes collaborative team seats. You can share pre-upload packaging reports with your editor, evaluate variants, and agree on thumbnail compositions directly in the browser before rendering."
   },
   {
     question: "How is PreYT different from TubeBuddy or VidIQ?",
-    answer: "Traditional browser extensions focus primarily on tags and retrospective keyword density. PreYT is built specifically for pre-upload packaging intelligence: testing mobile feed truncations, dark mode contrast pop, and mining competitor comments for unserved viewer demand before you shoot."
+    answer: "Traditional browser extensions focus primarily on retrospective keyword tags. PreYT is built specifically for pre-upload packaging intelligence: testing mobile feed truncations, dark mode contrast pop, and mining competitor comments for unserved viewer demand before you shoot."
   },
   {
-    question: "What is your refund policy?",
-    answer: "We offer a 30-day money-back guarantee on all paid plans. If you don't see a measurable increase in your channel's click-through rates and browse impressions within 30 days, simply message us for a full refund—no questions asked."
+    question: "What is your refund and cancellation policy?",
+    answer: "We offer a 30-day money-back guarantee on all paid plans. If you are not satisfied with your packaging diagnostics, simply message support for a full refund. You can cancel your subscription at any time with zero long-term commitments."
   }
 ]
 
@@ -31,6 +32,7 @@ export function FaqSection() {
 
   return (
     <section id="faq" className="py-24 bg-neutral-50/50 border-b border-neutral-200">
+      <FaqSchema items={faqs} />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center mb-16 space-y-3">
@@ -40,7 +42,7 @@ export function FaqSection() {
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#161512] tracking-tight">
-            Everything you need to know.
+            Frequently Asked Questions
           </h2>
           <p className="text-base sm:text-lg text-neutral-600 max-w-xl mx-auto font-normal">
             Common questions about our benchmark model, data privacy, and creator workflows.
@@ -48,41 +50,33 @@ export function FaqSection() {
         </div>
 
         <div className="space-y-4">
-          {faqs.map((faq, index) => {
-            const isOpen = openIndex === index
-            
+          {faqs.map((faq, i) => {
+            const isOpen = openIndex === i
             return (
-              <div 
-                key={index} 
-                className={`border rounded-2xl overflow-hidden transition-all duration-200 ${
-                  isOpen 
-                    ? "bg-white border-neutral-300 shadow-sm" 
-                    : "bg-white/80 border-neutral-200 hover:border-neutral-300"
-                }`}
+              <div
+                key={i}
+                className="rounded-2xl border border-neutral-200 bg-white overflow-hidden shadow-2xs transition-colors"
               >
                 <button
                   type="button"
-                  onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 focus:outline-none cursor-pointer"
+                  onClick={() => setOpenIndex(isOpen ? null : i)}
+                  className="w-full py-5 px-6 sm:px-8 flex items-center justify-between text-left focus:outline-hidden"
                   aria-expanded={isOpen}
                 >
-                  <span className={`font-bold text-base sm:text-lg tracking-tight ${
-                    isOpen ? "text-[#161512]" : "text-neutral-800"
-                  }`}>
+                  <span className="text-base sm:text-lg font-bold text-[#161512] pr-4">
                     {faq.question}
                   </span>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
-                    isOpen ? "bg-red-50 text-[#EE1122]" : "bg-neutral-100 text-neutral-500"
-                  }`}>
-                    {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                  <div className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center shrink-0 text-neutral-600">
+                    {isOpen ? <Minus className="w-4 h-4 text-[#EE1122]" /> : <Plus className="w-4 h-4" />}
                   </div>
                 </button>
-                
-                {isOpen && (
-                  <div className="px-6 pb-6 pt-1 text-sm sm:text-base text-neutral-600 leading-relaxed border-t border-neutral-100 animate-in fade-in duration-200">
-                    {faq.answer}
-                  </div>
-                )}
+                <div
+                  className={`px-6 sm:px-8 pb-6 text-sm sm:text-base text-neutral-600 leading-relaxed font-normal ${
+                    isOpen ? "block" : "hidden"
+                  }`}
+                >
+                  {faq.answer}
+                </div>
               </div>
             )
           })}

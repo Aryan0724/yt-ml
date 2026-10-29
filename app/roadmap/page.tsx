@@ -5,8 +5,12 @@ import { BreadcrumbSchema } from "@/components/seo/json-ld"
 export const metadata: Metadata = {
   title: "Public Product Roadmap — PreYT Creator Intelligence",
   description: "View upcoming features for PreYT: Multi-model video script hook analysis, real-time A/B thumbnail testing integrations, and creator cohort benchmarking.",
+  robots: {
+    index: false,
+    follow: true,
+  },
   alternates: {
-    canonical: "/roadmap",
+    canonical: "https://preyt.integralgroups.in/roadmap",
   },
   openGraph: {
     title: "PreYT Public Product Roadmap",

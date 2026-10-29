@@ -5,8 +5,12 @@ import { BreadcrumbSchema } from "@/components/seo/json-ld"
 export const metadata: Metadata = {
   title: "Careers at PreYT — Building the Future of Creator Intelligence",
   description: "Join the PreYT engineering and machine learning team. We build high-throughput computer vision, statistical ranking engines, and creator workflows.",
+  robots: {
+    index: false,
+    follow: true,
+  },
   alternates: {
-    canonical: "/careers",
+    canonical: "https://preyt.integralgroups.in/careers",
   },
   openGraph: {
     title: "Careers at PreYT — Integral Groups",

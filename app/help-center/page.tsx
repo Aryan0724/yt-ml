@@ -5,8 +5,12 @@ import { BreadcrumbSchema } from "@/components/seo/json-ld"
 export const metadata: Metadata = {
   title: "Help Center & Documentation — PreYT Knowledge Base",
   description: "Learn how to interpret PreYT packaging scores, fix mobile truncation bottlenecks, and configure format-native archetype settings.",
+  robots: {
+    index: false,
+    follow: true,
+  },
   alternates: {
-    canonical: "/help-center",
+    canonical: "https://preyt.integralgroups.in/help-center",
   },
   openGraph: {
     title: "PreYT Help Center & Knowledge Base",

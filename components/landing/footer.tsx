@@ -3,7 +3,7 @@ import Image from "next/image"
 
 export function Footer() {
   return (
-    <footer className="landing-col pt-16 pb-20 border-t border-neutral-200">
+    <footer className="landing-col pt-16 pb-20 border-t border-neutral-200 bg-white">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10">
 
         {/* Brand Information (Col 1-4) */}
@@ -25,7 +25,46 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Product & Free Tools (Col 5-6) */}
+        {/* Free Public Creator Tools (Col 5-6) */}
+        <nav aria-label="Free Tools" className="md:col-span-2 space-y-3.5">
+          <h2 className="text-xs font-semibold text-neutral-400 tracking-wider uppercase font-mono">
+            Free Creator Tools
+          </h2>
+          <ul className="space-y-2.5 text-xs font-medium text-[#161512]">
+            <li>
+              <Link href="/youtube-thumbnail-analyzer" className="hover:text-[#EE1122] transition-colors font-semibold text-red-600">
+                Thumbnail Analyzer
+              </Link>
+            </li>
+            <li>
+              <Link href="/youtube-title-analyzer" className="hover:text-[#EE1122] transition-colors">
+                Title Analyzer
+              </Link>
+            </li>
+            <li>
+              <Link href="/youtube-video-idea-generator" className="hover:text-[#EE1122] transition-colors">
+                Video Idea Generator
+              </Link>
+            </li>
+            <li>
+              <Link href="/youtube-content-gap-finder" className="hover:text-[#EE1122] transition-colors">
+                Content Gap Finder
+              </Link>
+            </li>
+            <li>
+              <Link href="/youtube-thumbnail-tester" className="hover:text-[#EE1122] transition-colors">
+                Thumbnail Tester
+              </Link>
+            </li>
+            <li>
+              <Link href="/tools/youtube-feed-preview" className="hover:text-[#EE1122] transition-colors">
+                Mobile Feed Previewer
+              </Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* Product & Platform (Col 7-8) */}
         <nav aria-label="Product" className="md:col-span-2 space-y-3.5">
           <h2 className="text-xs font-semibold text-neutral-400 tracking-wider uppercase font-mono">
             Product
@@ -33,12 +72,7 @@ export function Footer() {
           <ul className="space-y-2.5 text-xs font-medium text-[#161512]">
             <li>
               <Link href="/features" className="hover:text-[#EE1122] transition-colors">
-                Features
-              </Link>
-            </li>
-            <li>
-              <Link href="/pricing" className="hover:text-[#EE1122] transition-colors">
-                Pricing
+                Features &amp; Audit
               </Link>
             </li>
             <li>
@@ -47,52 +81,18 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/tools/youtube-feed-preview" className="hover:text-[#EE1122] transition-colors font-semibold text-red-600">
-                Thumbnail Previewer
+              <Link href="/pricing" className="hover:text-[#EE1122] transition-colors">
+                Pricing Plans
               </Link>
             </li>
             <li>
               <Link href="/signup" className="hover:text-[#EE1122] transition-colors">
-                Free Trial
+                Start Free Audit
               </Link>
             </li>
             <li>
               <Link href="/login" className="hover:text-[#EE1122] transition-colors">
                 Sign In
-              </Link>
-            </li>
-          </ul>
-        </nav>
-
-        {/* Platform Tools (Col 7-8) */}
-        <nav aria-label="Tools" className="md:col-span-2 space-y-3.5">
-          <h2 className="text-xs font-semibold text-neutral-400 tracking-wider uppercase font-mono">
-            Platform Tools
-          </h2>
-          <ul className="space-y-2.5 text-xs font-medium text-[#161512]">
-            <li>
-              <Link href="/dashboard/analyze" className="hover:text-[#EE1122] transition-colors">
-                Video Packaging Audit
-              </Link>
-            </li>
-            <li>
-              <Link href="/dashboard/niche" className="hover:text-[#EE1122] transition-colors">
-                Niche Outlier Scanner
-              </Link>
-            </li>
-            <li>
-              <Link href="/dashboard/radar" className="hover:text-[#EE1122] transition-colors">
-                Topic Radar
-              </Link>
-            </li>
-            <li>
-              <Link href="/dashboard/lab" className="hover:text-[#EE1122] transition-colors">
-                Mobile Feed Simulator
-              </Link>
-            </li>
-            <li>
-              <Link href="/dashboard/channel" className="hover:text-[#EE1122] transition-colors">
-                Competitor Channel DNA
               </Link>
             </li>
           </ul>
@@ -160,7 +160,7 @@ export function Footer() {
             </li>
             <li>
               <Link href="/legal/privacy" className="hover:text-[#EE1122] transition-colors">
-                Privacy Policy
+                Privacy Policy (DPDP)
               </Link>
             </li>
             <li>

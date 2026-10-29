@@ -5,8 +5,12 @@ import { BreadcrumbSchema } from "@/components/seo/json-ld"
 export const metadata: Metadata = {
   title: "Integrations — Connect PreYT with YouTube Studio & Production Tools",
   description: "Seamlessly connect PreYT with YouTube Data API, Adobe Premiere Pro, Photoshop, and video editing workflow tools.",
+  robots: {
+    index: false,
+    follow: true,
+  },
   alternates: {
-    canonical: "/integrations",
+    canonical: "https://preyt.integralgroups.in/integrations",
   },
   openGraph: {
     title: "PreYT Integrations & Extensions",

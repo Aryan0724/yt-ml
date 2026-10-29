@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Resources & Research Hub — PreYT YouTube Intelligence",
   description: "Data-backed YouTube strategy articles, title formulas, and packaging benchmarks derived from empirical analysis of 14.8M uploads.",
   alternates: {
-    canonical: "/blog",
+    canonical: "https://preyt.integralgroups.in/blog",
   },
   openGraph: {
     title: "PreYT Resource Hub — Creator Packaging & Decision Intelligence",

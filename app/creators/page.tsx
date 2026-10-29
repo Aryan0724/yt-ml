@@ -5,8 +5,12 @@ import { BreadcrumbSchema } from "@/components/seo/json-ld"
 export const metadata: Metadata = {
   title: "PreYT for Independent Creators — Pre-Publish Packaging Intelligence",
   description: "Built for YouTubers with 10K to 250K subscribers. Eliminate the guesswork from thumbnail design, titles, and niche packaging before recording.",
+  robots: {
+    index: false,
+    follow: true,
+  },
   alternates: {
-    canonical: "/creators",
+    canonical: "https://preyt.integralgroups.in/creators",
   },
   openGraph: {
     title: "PreYT for Independent Creators",

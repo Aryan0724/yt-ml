@@ -5,8 +5,12 @@ import { BreadcrumbSchema } from "@/components/seo/json-ld"
 export const metadata: Metadata = {
   title: "PreYT for Brand Channels — Corporate Video Packaging Intelligence",
   description: "Enterprise video packaging intelligence for brand marketing teams. Benchmark corporate YouTube packaging against top consumer content creators.",
+  robots: {
+    index: false,
+    follow: true,
+  },
   alternates: {
-    canonical: "/brands",
+    canonical: "https://preyt.integralgroups.in/brands",
   },
   openGraph: {
     title: "PreYT for Brand Channels",

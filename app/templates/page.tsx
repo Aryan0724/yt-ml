@@ -5,8 +5,12 @@ import { BreadcrumbSchema } from "@/components/seo/json-ld"
 export const metadata: Metadata = {
   title: "High-CTR Packaging Templates — PreYT Creator Resource Hub",
   description: "Browse high-converting thumbnail templates and proven title formulas categorized by niche archetype: faceless, cooking, gaming, tech, and commentary.",
+  robots: {
+    index: false,
+    follow: true,
+  },
   alternates: {
-    canonical: "/templates",
+    canonical: "https://preyt.integralgroups.in/templates",
   },
   openGraph: {
     title: "High-CTR Packaging Templates — PreYT",

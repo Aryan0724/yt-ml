@@ -42,9 +42,9 @@ export default function ContactPage() {
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-700 text-xs font-mono font-bold tracking-wider uppercase">
                   <span>[ CONTACT // INTEGRAL GROUPS STUDIO ]</span>
                 </div>
-                <h1 className="text-4xl sm:text-6xl font-black text-neutral-950 tracking-tight leading-[1.08]">
-                  Get in <br />
-                  <span className="text-red-600">Touch.</span>
+                <h1 className="text-3xl sm:text-5xl font-black text-neutral-950 tracking-tight leading-[1.08]">
+                  Contact PreYT <br />
+                  <span className="text-red-600">Analytics Support.</span>
                 </h1>
                 <p className="text-sm sm:text-base text-neutral-600 leading-relaxed font-normal">
                   Whether you are a creator seeking pre-upload packaging diagnostics, an enterprise channel scaling multi-format productions, or inquiring about API access, our engineering team is here to assist.

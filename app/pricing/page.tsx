@@ -6,10 +6,10 @@ import { Footer } from "@/components/landing/footer"
 import { BreadcrumbSchema, FaqSchema } from "@/components/seo/json-ld"
 
 export const metadata: Metadata = {
-  title: "Pricing Plans — PreYT YouTube Packaging Intelligence",
+  title: "Pricing Plans — PreYT YouTube Packaging Intelligence | PreYT",
   description: "Transparent pricing for creators and production studios. Start free with 3 audits/month or unlock unlimited audits, topic radar, and A/B split testing.",
   alternates: {
-    canonical: "/pricing",
+    canonical: "https://preyt.integralgroups.in/pricing",
   },
   openGraph: {
     title: "Pricing Plans — PreYT Creator Decision Platform",
@@ -53,7 +53,7 @@ export default function PricingPage() {
         ]}
       />
       <FaqSchema items={PRICING_FAQS} />
-      <Navbar />
+      <Navbar variant="light" />
       <main>
         <PricingSection isMainHeading={true} />
         <BottomCTA />

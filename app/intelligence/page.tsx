@@ -27,13 +27,13 @@ import {
 } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Intelligence Engine Architecture — PreYT Algorithmic Packaging Forensics",
+  title: "YouTube Creator Intelligence & Video Performance Analytics | PreYT",
   description: "Explore the PreYT intelligence architecture: Forensic title analysis, format-native OpenCV computer vision, 64-bit DCT perceptual hash originality shields, and closed-loop calibration.",
   alternates: {
-    canonical: "/intelligence",
+    canonical: "https://preyt.integralgroups.in/intelligence",
   },
   openGraph: {
-    title: "PreYT Intelligence Engine — Algorithmic Packaging Forensics",
+    title: "YouTube Creator Intelligence & Video Performance Analytics | PreYT",
     description: "Statistical certainty for YouTube packaging. Linguistic forensics, visual benchmarking, and volatility modeling.",
     url: "https://preyt.integralgroups.in/intelligence",
     siteName: "PreYT",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PreYT Intelligence Engine — Algorithmic Packaging Forensics",
+    title: "YouTube Creator Intelligence & Video Performance Analytics | PreYT",
     description: "Statistical certainty for YouTube packaging. Linguistic forensics, visual benchmarking, and volatility modeling.",
   }
 }
@@ -91,8 +91,8 @@ export default function IntelligencePage() {
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-black text-neutral-950 tracking-tight leading-[1.08]">
-            The Engine of <br />
-            <span className="text-red-600">Packaging Certainty.</span>
+            YouTube Creator Intelligence &amp; <br />
+            <span className="text-red-600">Video Performance Analytics</span>
           </h1>
 
           <p className="text-base sm:text-xl text-neutral-600 font-normal leading-relaxed">

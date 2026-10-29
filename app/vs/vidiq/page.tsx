@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "PreYT vs vidIQ: Pre-Upload Packaging vs Post-Upload Tag Optimization (2026 Comparison)",
   description: "An objective comparison of PreYT and vidIQ. Discover why modern YouTube recommendation algorithms prioritize visual glanceability and packaging over keyword meta tags.",
   alternates: {
-    canonical: "/vs/vidiq",
+    canonical: "https://preyt.integralgroups.in/vs/vidiq",
   },
   openGraph: {
     title: "PreYT vs vidIQ: Pre-Upload Packaging vs Post-Upload Tag Optimization",
@@ -46,7 +46,7 @@ const VIDIQ_FAQS = [
 
 export default function VidIQComparisonPage() {
   return (
-    <div className="min-h-screen bg-white text-neutral-900 selection:bg-red-100 selection:text-red-900 pt-16">
+    <div className="min-h-screen bg-white text-neutral-900 selection:bg-red-100 selection:text-red-900">
       <SoftwareAppSchema
         name="PreYT Packaging Intelligence"
         description="Pre-upload visual prediction and outlier detection engine for YouTube creators."
@@ -60,7 +60,7 @@ export default function VidIQComparisonPage() {
         ]}
       />
       <FaqSchema items={VIDIQ_FAQS} />
-      <Navbar />
+      <Navbar variant="light" />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
         {/* Header Breadcrumbs & Title */}
@@ -92,7 +92,7 @@ export default function VidIQComparisonPage() {
             <div className="text-[10px] font-mono font-bold text-red-600 uppercase tracking-widest">[ MODERN RECOMMENDATION ]</div>
             <h2 className="text-xl font-bold text-neutral-950">PreYT: Pre-Upload Visual Forensics</h2>
             <p className="text-xs text-neutral-600 leading-relaxed">
-              Engineered for the modern Browse &amp; Suggested feed ecosystem ($85\%+$ of YouTube views). Evaluates thumbnail luminance, safe area duration overlaps, perceptual hash saturation, and title curiosity gaps before a single view is wasted.
+              Engineered for the modern Browse &amp; Suggested feed ecosystem (85%+ of YouTube views). Evaluates thumbnail luminance, safe area duration overlaps, perceptual hash saturation, and title curiosity gaps before a single view is wasted.
             </p>
             <div className="pt-2 text-xs font-semibold text-red-700">Primary Focus: Visual glanceability &amp; CTR prediction.</div>
           </div>
@@ -206,7 +206,7 @@ export default function VidIQComparisonPage() {
               </li>
               <li className="flex items-start gap-2">
                 <Check className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
-                <span>You want to test thumbnail glanceability and title truncation before filming or spending \$1,000+ on production.</span>
+                <span>You want to test thumbnail glanceability and title truncation before filming or spending $1,000+ on production.</span>
               </li>
               <li className="flex items-start gap-2">
                 <Check className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />

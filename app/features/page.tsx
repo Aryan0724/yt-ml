@@ -7,21 +7,21 @@ import { BreadcrumbSchema, SoftwareAppSchema } from "@/components/seo/json-ld";
 import { GitCompare, Target, ShieldAlert, BarChart3, MessageSquare, Zap, RefreshCcw, Layout, Flame, Fingerprint, ArrowRight, Smartphone } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Features — Pre-Publish Packaging Intelligence",
-  description: "Explore the PreYT intelligence suite: Thumbnail analysis, format-native computer vision, niche outlier detection, pHash originality, and feed simulations.",
+  title: "YouTube Thumbnail & Title Analysis Features | PreYT",
+  description: "Explore PreYT's pre-upload feature suite: format-native OpenCV thumbnail analysis, 54-char mobile title truncation checks, niche outlier scanner, and pHash originality shields.",
   alternates: {
-    canonical: "/features",
+    canonical: "https://preyt.integralgroups.in/features",
   },
   openGraph: {
-    title: "Features — PreYT YouTube Decision Engine",
-    description: "Audit thumbnails, detect outliers, forecast CTR, and eliminate blindspots before you film.",
+    title: "YouTube Thumbnail & Title Analysis Features | PreYT",
+    description: "Analyze thumbnails, test mobile cutoffs, and discover content gaps before you film.",
     url: "https://preyt.integralgroups.in/features",
     siteName: "PreYT",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Features — PreYT YouTube Decision Engine",
-    description: "Audit thumbnails, detect outliers, forecast CTR, and eliminate blindspots before you film.",
+    title: "YouTube Thumbnail & Title Analysis Features | PreYT",
+    description: "Analyze thumbnails, test mobile cutoffs, and discover content gaps before you film.",
   }
 };
 
@@ -81,8 +81,8 @@ export default function FeaturesPage() {
         </div>
         <section className="px-6 max-w-[1200px] mx-auto text-center mb-24 pt-20">
           <div className="text-[9px] font-mono font-bold text-[#FF0000] uppercase tracking-[0.2em] mb-4">[ FULL INTELLIGENCE SUITE ]</div>
-          <h1 className="font-display text-5xl md:text-7xl font-bold mb-6 text-zinc-900 tracking-tight">
-            The Full Intelligence <br /><span className="text-[#FF0000]">Suite.</span>
+          <h1 className="font-display text-4xl sm:text-6xl font-bold mb-6 text-zinc-900 tracking-tight">
+            YouTube Thumbnail, Title &amp; <br /><span className="text-[#FF0000]">Packaging Analysis Features</span>
           </h1>
           <p className="text-xs font-mono text-zinc-500 max-w-2xl mx-auto leading-relaxed">
             Everything you need to optimize your upload strategy and eliminate performance anxiety before filming.

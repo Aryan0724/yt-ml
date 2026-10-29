@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Free YouTube Thumbnail Previewer & Mobile Feed Tester | PreYT",
   description: "Test your YouTube thumbnail and title draft in a live simulated YouTube feed before publishing. Check mobile character cutoffs, dark mode contrast, and timestamp safe areas.",
   alternates: {
-    canonical: "/tools/youtube-feed-preview",
+    canonical: "https://preyt.integralgroups.in/tools/youtube-feed-preview",
   },
   openGraph: {
     title: "Free YouTube Thumbnail Previewer & Mobile Feed Tester",
@@ -45,7 +45,7 @@ const FEED_PREVIEW_FAQS = [
 
 export default function YouTubeFeedPreviewPage() {
   return (
-    <div className="min-h-screen bg-white text-neutral-900 selection:bg-red-100 selection:text-red-900 pt-16">
+    <div className="min-h-screen bg-white text-neutral-900 selection:bg-red-100 selection:text-red-900">
       <SoftwareAppSchema
         name="PreYT YouTube Thumbnail Previewer"
         description="Free browser-based YouTube feed simulator for creators to evaluate thumbnail contrast, safe area timestamp coverage, and title truncation."
@@ -59,7 +59,7 @@ export default function YouTubeFeedPreviewPage() {
         ]}
       />
       <FaqSchema items={FEED_PREVIEW_FAQS} />
-      <Navbar />
+      <Navbar variant="light" />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Editorial Header */}

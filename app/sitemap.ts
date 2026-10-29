@@ -5,28 +5,23 @@ import { getAllNicheSlugs } from "@/lib/niche-packaging-data"
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://preyt.integralgroups.in"
 
-  // 1. Static Core Marketing, Solution, & Resource Pages
+  // 1. Core High-Intent Public Tool & Product Pages (Excludes noindexed thin pages)
   const staticRoutes = [
     "",
     "/features",
     "/pricing",
     "/intelligence",
-    "/creators",
-    "/brands",
-    "/agencies",
-    "/guides",
-    "/templates",
-    "/integrations",
+    "/youtube-thumbnail-analyzer",
+    "/youtube-title-analyzer",
+    "/youtube-video-idea-generator",
+    "/youtube-content-gap-finder",
+    "/youtube-thumbnail-tester",
+    "/tools/youtube-feed-preview",
     "/blog",
     "/about",
     "/changelog",
-    "/roadmap",
-    "/careers",
-    "/partners",
-    "/help-center",
     "/contact",
     "/waitlist",
-    "/tools/youtube-feed-preview",
     "/vs/vidiq",
     "/vs/1of10",
     "/integral-groups",
@@ -40,17 +35,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     if (route === "") {
       priority = 1.0
       changeFrequency = "daily"
-    } else if (route === "/features" || route === "/pricing" || route === "/intelligence" || route === "/tools/youtube-feed-preview") {
-      priority = 0.9
+    } else if (
+      route === "/youtube-thumbnail-analyzer" ||
+      route === "/youtube-title-analyzer" ||
+      route === "/youtube-video-idea-generator" ||
+      route === "/youtube-content-gap-finder" ||
+      route === "/youtube-thumbnail-tester" ||
+      route === "/tools/youtube-feed-preview" ||
+      route === "/features" ||
+      route === "/pricing" ||
+      route === "/intelligence"
+    ) {
+      priority = 0.95
       changeFrequency = "daily"
     } else if (route === "/blog") {
       priority = 0.9
       changeFrequency = "daily"
     } else if (route === "/vs/vidiq" || route === "/vs/1of10") {
       priority = 0.85
-      changeFrequency = "weekly"
-    } else if (route === "/creators" || route === "/brands" || route === "/agencies" || route === "/guides") {
-      priority = 0.8
       changeFrequency = "weekly"
     } else if (route.startsWith("/legal")) {
       priority = 0.3
@@ -74,13 +76,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.85
   }))
 
-  // 3. Published Blog Articles
+  // 3. Published Blog Articles (9 authoritative guides)
   const posts = getAllPosts()
   const postRoutes = posts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: new Date(post.updatedAt || post.publishedAt),
     changeFrequency: "weekly" as const,
-    priority: 0.8
+    priority: 0.85
   }))
 
   // 4. Category Archive Pages

@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${niche.name} YouTube Packaging Blueprint & CTR Benchmarks | PreYT`,
     description: niche.metaDescription,
     alternates: {
-      canonical: `/youtube-packaging/${niche.slug}`,
+      canonical: `https://preyt.integralgroups.in/youtube-packaging/${niche.slug}`,
     },
     openGraph: {
       title: `${niche.name} YouTube Packaging Blueprint & CTR Benchmarks`,
@@ -78,7 +78,7 @@ export default async function NichePackagingPage({ params }: PageProps) {
   const allNiches = Object.values(NICHE_PACKAGING_DATA).filter((n) => n.slug !== niche.slug)
 
   return (
-    <div className="min-h-screen bg-white text-neutral-900 selection:bg-red-100 selection:text-red-900 pt-16">
+    <div className="min-h-screen bg-white text-neutral-900 selection:bg-red-100 selection:text-red-900">
       <SoftwareAppSchema
         name={`PreYT ${niche.name} Packaging Intelligence`}
         description={niche.metaDescription}
@@ -92,7 +92,7 @@ export default async function NichePackagingPage({ params }: PageProps) {
         ]}
       />
       <FaqSchema items={niche.faqs} />
-      <Navbar />
+      <Navbar variant="light" />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
         {/* Editorial Header */}

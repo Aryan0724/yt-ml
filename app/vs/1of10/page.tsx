@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "PreYT vs 1of10: Outlier Discovery & Computer Vision Packaging Comparison (2026)",
   description: "An objective architectural comparison between PreYT and 1of10. Discover how PreYT combines outlier detection with OpenCV computer vision and perceptual hash saturation defense.",
   alternates: {
-    canonical: "/vs/1of10",
+    canonical: "https://preyt.integralgroups.in/vs/1of10",
   },
   openGraph: {
     title: "PreYT vs 1of10: Outlier Discovery & Computer Vision Packaging Comparison",
@@ -46,7 +46,7 @@ const ONEOF10_FAQS = [
 
 export default function OneOfTenComparisonPage() {
   return (
-    <div className="min-h-screen bg-white text-neutral-900 selection:bg-red-100 selection:text-red-900 pt-16">
+    <div className="min-h-screen bg-white text-neutral-900 selection:bg-red-100 selection:text-red-900">
       <SoftwareAppSchema
         name="PreYT Outlier & Packaging Intelligence"
         description="Outlier detection and pre-upload computer vision diagnostic engine for YouTube packaging."
@@ -60,7 +60,7 @@ export default function OneOfTenComparisonPage() {
         ]}
       />
       <FaqSchema items={ONEOF10_FAQS} />
-      <Navbar />
+      <Navbar variant="light" />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
         {/* Editorial Header */}
@@ -194,7 +194,7 @@ export default function OneOfTenComparisonPage() {
               </li>
               <li className="flex items-start gap-2">
                 <Check className="w-4 h-4 text-neutral-700 shrink-0 mt-0.5" />
-                <span>You have a \$50–\$100/mo research budget and only need thumbnail discovery without diagnostic scoring on your draft work.</span>
+                <span>You have a $50–$100/mo research budget and only need thumbnail discovery without diagnostic scoring on your draft work.</span>
               </li>
             </ul>
           </div>

@@ -6,20 +6,20 @@ import { BreadcrumbSchema } from "@/components/seo/json-ld";
 import { Zap, RefreshCcw, Sparkles } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Changelog & Release Notes — PreYT Platform Updates",
+  title: "Changelog & Release Notes | PreYT YouTube Analytics Platform",
   description: "Track the evolution of the PreYT Creator Decision Engine: Model updates, format-native computer vision releases, and algorithmic upgrades.",
   alternates: {
-    canonical: "/changelog",
+    canonical: "https://preyt.integralgroups.in/changelog",
   },
   openGraph: {
-    title: "PreYT Changelog — Release Notes & Model Upgrades",
+    title: "Changelog & Release Notes | PreYT YouTube Analytics Platform",
     description: "Track new features, model upgrades, and packaging intelligence improvements.",
     url: "https://preyt.integralgroups.in/changelog",
     siteName: "PreYT",
   },
   twitter: {
     card: "summary_large_image",
-    title: "PreYT Changelog — Release Notes & Model Upgrades",
+    title: "Changelog & Release Notes | PreYT YouTube Analytics Platform",
     description: "Track new features, model upgrades, and packaging intelligence improvements.",
   }
 };
@@ -73,8 +73,8 @@ export default function ChangelogPage() {
         <section className="max-w-[1200px] mx-auto space-y-16 pt-12">
             <div>
                 <div className="text-[9px] font-mono font-bold text-[#FF0000] uppercase tracking-[0.2em] mb-4">[ RELEASES // TELEMETRY ]</div>
-                <h1 className="font-display text-5xl md:text-6xl font-bold mb-4 text-zinc-900 tracking-tight">
-                  System <br /><span className="text-[#FF0000]">Changelog.</span>
+                <h1 className="font-display text-4xl sm:text-6xl font-bold mb-4 text-zinc-900 tracking-tight">
+                  PreYT Platform Changelog <br /><span className="text-[#FF0000]">&amp; Release Notes</span>
                 </h1>
                 <p className="text-xs font-mono text-zinc-500 leading-relaxed max-w-2xl">
                     Every algorithmic update, computer vision refinement, and feature release documented with technical precision.

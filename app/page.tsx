@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import { Navbar } from "@/components/landing/navbar"
 import { Hero } from "@/components/landing/hero"
 import { StatsBar } from "@/components/landing/stats-bar"
@@ -5,9 +6,30 @@ import { VideoSection } from "@/components/landing/video-section"
 import { CompetitorProblems } from "@/components/landing/competitor-problems"
 import { WhyPreYT } from "@/components/landing/why-preyt"
 import { CoreCapabilities } from "@/components/landing/core-capabilities"
+import { FaqSection } from "@/components/landing/faq-section"
 import { ResourcesSection } from "@/components/landing/resources-section"
 import { ContactSection } from "@/components/landing/contact-section"
 import { Footer } from "@/components/landing/footer"
+
+export const metadata: Metadata = {
+  title: "PreYT — Pre-Upload YouTube Analytics for Titles, Thumbnails & Video Ideas",
+  description: "Audit your YouTube packaging before filming. Analyze thumbnails for mobile contrast, test 54-character title cutoffs, and discover high-demand competitor content gaps.",
+  alternates: {
+    canonical: "https://preyt.integralgroups.in",
+  },
+  openGraph: {
+    title: "PreYT — Pre-Upload YouTube Analytics for Titles, Thumbnails & Ideas",
+    description: "Audit thumbnails, test mobile cutoffs, and discover content gaps before you film.",
+    url: "https://preyt.integralgroups.in",
+    siteName: "PreYT",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PreYT — Pre-Upload YouTube Analytics for Titles, Thumbnails & Ideas",
+    description: "Audit thumbnails, test mobile cutoffs, and discover content gaps before you film.",
+  }
+}
 
 export default function LandingPage() {
   const jsonLd = {
@@ -30,7 +52,7 @@ export default function LandingPage() {
         "@id": "https://preyt.integralgroups.in/#website",
         "url": "https://preyt.integralgroups.in",
         "name": "PreYT",
-        "description": "YouTube Growth Analytics & Pre-Upload Packaging Intelligence",
+        "description": "Pre-Upload YouTube Analytics for Titles, Thumbnails & Video Ideas",
         "publisher": {
           "@id": "https://preyt.integralgroups.in/#organization"
         }
@@ -47,11 +69,6 @@ export default function LandingPage() {
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "ratingCount": "248"
         }
       }
     ]
@@ -59,22 +76,20 @@ export default function LandingPage() {
 
   return (
     <div className="landing-page-container">
-      {/* Structured Data for SEO */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Exact Terms.so Non-Linear 32-Stop Gradient infused with pure YouTube Red */}
+      {/* Amplified Hero Section Container */}
       <div className="hero-background-gradient">
-        {/* Electric YouTube Red Radial Aura directly behind the headline */}
         <div className="hero-radial-glow" />
       </div>
 
       <div className="landing relative z-10">
         <Navbar variant="dark" />
         <main className="w-full">
-          {/* Section 1: Hero — preserved exactly as-is */}
+          {/* Section 1: Hero */}
           <Hero />
 
           {/* Social Proof & Scale Metrics Bar */}
@@ -83,19 +98,22 @@ export default function LandingPage() {
           {/* Section 2: YouTube Introduction Video */}
           <VideoSection />
 
-          {/* Section 3: Competitor Problems & PreYT's Response */}
+          {/* Section 3: The Broken Current Landscape */}
           <CompetitorProblems />
 
-          {/* Section 4: Why PreYT / USP */}
+          {/* Section 4: The 4 High-Value Solution Pillars */}
           <WhyPreYT />
 
-          {/* Section 5: PreYT Features */}
+          {/* Section 5: Interactive Tabbed Capabilities Showcase */}
           <CoreCapabilities />
 
-          {/* Section 6: Resources & SEO Blog */}
+          {/* Section 6: FAQ with Schema */}
+          <FaqSection />
+
+          {/* Section 7: Curated Editorial Resources */}
           <ResourcesSection />
 
-          {/* Section 7: Contact Form */}
+          {/* Section 8: Terminal Contact & Inquiry Module */}
           <ContactSection />
         </main>
         <Footer />
