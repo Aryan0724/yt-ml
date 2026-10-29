@@ -223,7 +223,7 @@ function AnalyzeContent() {
           {status === "IDLE" && (
             <PackageInput
               onAnalyze={handleAnalyze}
-              isLoading={status === "ANALYZING"}
+              isLoading={false}
               initialTitle={searchParams.get("q") || ""}
               initialCategory="Entertainment"
               initialRegion="IN"

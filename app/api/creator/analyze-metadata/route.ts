@@ -33,7 +33,7 @@ export async function POST(req: Request) {
       
       // Try remote backend next (essential for Vercel production deployments)
       try {
-        const remoteUrl = process.env.PYTHON_BACKEND_URL || "https://yt-ml-production-870b.up.railway.app/analyze-metadata";
+        const remoteUrl = process.env.PYTHON_BACKEND_URL || "http://127.0.0.1:8000/analyze-metadata";
         const response = await fetch(remoteUrl, {
           method: "POST",
           body: formData,
