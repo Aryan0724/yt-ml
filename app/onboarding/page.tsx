@@ -17,9 +17,7 @@ import {
   Search,
   ShieldCheck,
   ChevronRight,
-  AlertCircle,
-  ExternalLink,
-  X
+  AlertCircle
 } from "lucide-react"
 import {
   YouTubeChannel,
@@ -71,7 +69,7 @@ function OnboardingContent() {
   const [connectedChannel, setChannel] = useState<YouTubeChannel | null>(null)
   const [availableChannels, setAvailableChannels] = useState<YouTubeChannel[]>([])
   const [loadingOAuth, setLoadingOAuth] = useState(false)
-  const [showConfigModal, setShowConfigModal] = useState(false)
+  const [googleUnavailable, setGoogleUnavailable] = useState(false)
   const [authError, setAuthError] = useState<string | null>(null)
 
   // Personalization Answers
@@ -140,11 +138,11 @@ function OnboardingContent() {
         return
       }
 
-      // Credentials not yet configured in environment
-      setShowConfigModal(true)
+      // Credentials not yet configured in environment — show inline message
+      setGoogleUnavailable(true)
     } catch (err: any) {
       setAuthError(err.message || "Failed to reach Google OAuth service")
-      setShowConfigModal(true)
+      setGoogleUnavailable(true)
     } finally {
       setLoadingOAuth(false)
     }
@@ -332,6 +330,13 @@ function OnboardingContent() {
                   </>
                 )}
               </button>
+
+              {googleUnavailable && (
+                <div className="flex items-start gap-2 px-3 py-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-xs animate-in fade-in duration-200">
+                  <AlertCircle className="w-3.5 h-3.5 mt-0.5 shrink-0 text-amber-600" />
+                  <span>Google Sign-In is being configured. You can skip this step and connect your channel from the dashboard once it&apos;s ready.</span>
+                </div>
+              )}
 
               <button
                 type="button"
@@ -611,72 +616,6 @@ function OnboardingContent() {
           </div>
         )}
       </div>
-
-      {/* Google Cloud OAuth Configuration Required Modal */}
-      {showConfigModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-neutral-200 overflow-hidden">
-            <div className="h-1.5 bg-red-600" />
-            <div className="p-6 sm:p-7">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-amber-50 text-amber-700 border border-amber-200">
-                    <AlertCircle className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-base font-bold text-neutral-950">Google Cloud OAuth Setup Required</h3>
-                    <p className="text-xs text-neutral-500">Official YouTube verification is enabled</p>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setShowConfigModal(false)}
-                  className="p-1 rounded-lg text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 cursor-pointer"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <div className="space-y-3.5 text-xs text-neutral-600 leading-relaxed">
-                <p>
-                  To verify your YouTube channel ownership directly with Google, PreYT requires your Google Cloud OAuth Client ID and Secret in your environment.
-                </p>
-
-                <div className="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 space-y-2 font-mono text-[11px]">
-                  <div className="text-neutral-500 uppercase tracking-wider font-bold">Required Environment Variables:</div>
-                  <div className="text-neutral-800">NEXT_PUBLIC_GOOGLE_CLIENT_ID=&lt;your_client_id&gt;.apps.googleusercontent.com</div>
-                  <div className="text-neutral-800">GOOGLE_CLIENT_SECRET=GOCSPX-&lt;your_secret&gt;</div>
-                  <div className="text-neutral-500 pt-1">Authorized redirect URI:</div>
-                  <div className="text-red-700 font-bold break-all">https://preyt.integralgroups.in/api/auth/google/callback</div>
-                </div>
-
-                <p className="text-[11px] text-neutral-500">
-                  PreYT strictly enforces official Google OAuth verification so that no unauthorized user can ever claim or access another creator&apos;s channel.
-                </p>
-              </div>
-
-              <div className="mt-6 flex items-center justify-end gap-3">
-                <button
-                  type="button"
-                  onClick={() => setShowConfigModal(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-neutral-700 bg-neutral-100 hover:bg-neutral-200 transition-colors cursor-pointer"
-                >
-                  Close
-                </button>
-                <a
-                  href="https://console.cloud.google.com/apis/credentials"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white bg-red-600 hover:bg-red-700 transition-colors shadow-xs"
-                >
-                  <span>Google Cloud Console</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
