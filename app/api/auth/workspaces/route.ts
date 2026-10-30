@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
-
-const BACKEND_URL = process.env.BACKEND_INTERNAL_URL || "http://127.0.0.1:8000"
+import { getBackendBaseUrl, getBackendHeaders } from "@/lib/backend-config"
 
 export async function GET(req: NextRequest) {
   try {
+    const backendUrl = getBackendBaseUrl()
     const authHeader = req.headers.get("authorization")
-    const response = await fetch(`${BACKEND_URL}/workspaces`, {
+    const response = await fetch(`${backendUrl}/workspaces`, {
       method: "GET",
-      headers: {
-        ...(authHeader ? { Authorization: authHeader } : {})
-      }
+      headers: getBackendHeaders(authHeader ? { Authorization: authHeader } : {})
     })
 
     const data = await response.json()
@@ -24,14 +22,15 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    const backendUrl = getBackendBaseUrl()
     const authHeader = req.headers.get("authorization")
     const body = await req.json()
-    const response = await fetch(`${BACKEND_URL}/workspaces`, {
+    const response = await fetch(`${backendUrl}/workspaces`, {
       method: "POST",
-      headers: {
+      headers: getBackendHeaders({
         "Content-Type": "application/json",
         ...(authHeader ? { Authorization: authHeader } : {})
-      },
+      }),
       body: JSON.stringify(body)
     })
 

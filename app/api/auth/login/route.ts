@@ -1,17 +1,17 @@
 import { NextRequest, NextResponse } from "next/server"
-
-const BACKEND_URL = process.env.BACKEND_INTERNAL_URL || "http://127.0.0.1:8000"
+import { getBackendBaseUrl, getBackendHeaders } from "@/lib/backend-config"
 
 export async function POST(req: NextRequest) {
   try {
+    const backendUrl = getBackendBaseUrl()
     const body = await req.json()
-    const response = await fetch(`${BACKEND_URL}/auth/login`, {
+    const response = await fetch(`${backendUrl}/auth/login`, {
       method: "POST",
-      headers: {
+      headers: getBackendHeaders({
         "Content-Type": "application/json",
         "User-Agent": req.headers.get("user-agent") || "preyt-frontend",
         "X-Forwarded-For": req.headers.get("x-forwarded-for") || "127.0.0.1"
-      },
+      }),
       body: JSON.stringify(body)
     })
 

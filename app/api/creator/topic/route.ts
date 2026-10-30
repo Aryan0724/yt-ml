@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server"
+import { getBackendBaseUrl, getBackendHeaders } from "@/lib/backend-config"
 
 export const runtime = "nodejs"
 
 function getBackendUrl(): string {
-  return process.env.PYTHON_BACKEND_URL || "http://127.0.0.1:8000"
+  return getBackendBaseUrl()
 }
 
 export async function GET(req: Request) {
@@ -22,7 +23,7 @@ export async function GET(req: Request) {
   try {
     const res = await fetch(target, {
       method: "GET",
-      headers: { Accept: "application/json" },
+      headers: getBackendHeaders({ Accept: "application/json" }),
       next: { revalidate: 3600 } // Cache for 1h at Next.js edge
     })
 

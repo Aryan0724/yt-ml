@@ -1,17 +1,8 @@
 import { NextResponse } from "next/server"
 import { recordAnalysisSuccess, recordAnalysisFailure } from "@/lib/analysis-telemetry"
+import { getBackendCandidateUrls, getBackendHeaders } from "@/lib/backend-config"
 
 export const runtime = "nodejs"
-
-function getBackendUrls(): string[] {
-  const custom = process.env.PYTHON_BACKEND_URL
-  const urls: string[] = []
-  if (custom) urls.push(custom)
-  urls.push("http://127.0.0.1:8000")
-  urls.push("http://localhost:8000")
-  urls.push("http://62.72.13.149:8000")
-  return [...new Set(urls)]
-}
 
 export async function POST(req: Request) {
   const startTime = Date.now()
@@ -27,17 +18,19 @@ export async function POST(req: Request) {
       )
     }
 
-    const candidateUrls = getBackendUrls()
+    const candidateUrls = getBackendCandidateUrls()
     let lastError: any = null
 
-    // Forward multi-tenancy and idempotency headers
-    const forwardHeaders: Record<string, string> = { Accept: "application/json" }
+    // Forward multi-tenancy, idempotency, and tunnel headers
+    const extraHeaders: Record<string, string> = { Accept: "application/json" }
     const idemp = req.headers.get("idempotency-key")
-    if (idemp) forwardHeaders["Idempotency-Key"] = idemp
+    if (idemp) extraHeaders["Idempotency-Key"] = idemp
     const auth = req.headers.get("authorization")
-    if (auth) forwardHeaders["Authorization"] = auth
+    if (auth) extraHeaders["Authorization"] = auth
     const ws = req.headers.get("x-workspace-id")
-    if (ws) forwardHeaders["X-Workspace-Id"] = ws
+    if (ws) extraHeaders["X-Workspace-Id"] = ws
+
+    const forwardHeaders = getBackendHeaders(extraHeaders)
 
     for (const baseUrl of candidateUrls) {
       try {

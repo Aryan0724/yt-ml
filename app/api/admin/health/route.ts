@@ -3,13 +3,13 @@
  * Proxy for FastAPI /admin/system-health endpoint.
  */
 import { NextResponse } from "next/server"
-
-const BACKEND_URL = process.env.PYTHON_BACKEND_URL || "http://localhost:8000"
+import { getBackendBaseUrl, getBackendHeaders } from "@/lib/backend-config"
 
 export async function GET() {
   try {
-    const res = await fetch(`${BACKEND_URL}/admin/system-health`, {
-      headers: { Accept: "application/json" },
+    const backendUrl = getBackendBaseUrl()
+    const res = await fetch(`${backendUrl}/admin/system-health`, {
+      headers: getBackendHeaders({ Accept: "application/json" }),
       next: { revalidate: 30 }
     })
     if (!res.ok) {

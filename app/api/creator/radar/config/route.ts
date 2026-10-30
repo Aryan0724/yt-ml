@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server"
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000"
+import { getBackendBaseUrl, getBackendHeaders } from "@/lib/backend-config"
 
 export async function GET() {
   try {
-    const res = await fetch(`${BACKEND_URL}/radar/config`, { cache: "no-store" })
+    const backendUrl = getBackendBaseUrl()
+    const res = await fetch(`${backendUrl}/radar/config`, {
+      cache: "no-store",
+      headers: getBackendHeaders()
+    })
     if (!res.ok) {
       return NextResponse.json({ error: "Failed to fetch config" }, { status: res.status })
     }

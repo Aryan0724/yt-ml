@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { recordAnalysisSuccess, recordAnalysisFailure } from "@/lib/analysis-telemetry"
+import { getBackendBaseUrl, getBackendHeaders } from "@/lib/backend-config"
 
 export const runtime = "nodejs"
 
@@ -20,13 +21,13 @@ export async function POST(req: Request) {
 
     // Try local python backend
     try {
-      const localBackend = process.env.PYTHON_BACKEND_URL || "http://127.0.0.1:8000"
+      const localBackend = getBackendBaseUrl()
       const response = await fetch(`${localBackend}/compare`, {
         method: "POST",
         body: formData,
-        headers: {
+        headers: getBackendHeaders({
           "Accept": "application/json",
-        },
+        }),
       })
 
       if (response.ok) {

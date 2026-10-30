@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server"
-
-const BACKEND_URL = process.env.BACKEND_INTERNAL_URL || "http://127.0.0.1:8000"
+import { getBackendBaseUrl, getBackendHeaders } from "@/lib/backend-config"
 
 export async function POST(req: Request) {
   try {
+    const backendUrl = getBackendBaseUrl()
     const body = await req.json()
     const {
       fullName,
@@ -31,11 +31,11 @@ export async function POST(req: Request) {
       consent_public_showcase: Boolean(consentPublicShowcase)
     }
 
-    const response = await fetch(`${BACKEND_URL}/waitlist`, {
+    const response = await fetch(`${backendUrl}/waitlist`, {
       method: "POST",
-      headers: {
+      headers: getBackendHeaders({
         "Content-Type": "application/json",
-      },
+      }),
       body: JSON.stringify(payload)
     })
 

@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server"
-
-const BACKEND_URL = process.env.BACKEND_INTERNAL_URL || "http://127.0.0.1:8000"
+import { getBackendBaseUrl, getBackendHeaders } from "@/lib/backend-config"
 
 export async function GET(req: Request) {
   try {
@@ -9,12 +8,13 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "Missing Authorization header" }, { status: 401 })
     }
 
-    const response = await fetch(`${BACKEND_URL}/auth/me`, {
+    const backendUrl = getBackendBaseUrl()
+    const response = await fetch(`${backendUrl}/auth/me`, {
       method: "GET",
-      headers: {
+      headers: getBackendHeaders({
         "Authorization": authHeader,
         "User-Agent": req.headers.get("user-agent") || "preyt-frontend",
-      }
+      })
     })
 
     if (!response.ok) {

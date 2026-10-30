@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server"
 import { cookies } from "next/headers"
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000"
+import { getBackendBaseUrl, getBackendHeaders } from "@/lib/backend-config"
 
 export async function POST(req: Request) {
   try {
+    const BACKEND_URL = getBackendBaseUrl()
     const body = await req.json()
     const cookieStore = await cookies()
     const token = cookieStore.get("preyt_session")?.value
@@ -14,10 +14,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    const headers: Record<string, string> = {
+    const headers: Record<string, string> = getBackendHeaders({
       "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`
-    }
+    })
 
     if (workspaceId) {
       headers["X-Workspace-ID"] = workspaceId

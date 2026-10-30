@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from "next/server"
-
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000"
+import { getBackendBaseUrl, getBackendHeaders } from "@/lib/backend-config"
 
 export async function GET(req: NextRequest) {
   try {
+    const backendUrl = getBackendBaseUrl()
     const { searchParams } = new URL(req.url)
     const query = searchParams.toString()
 
-    const res = await fetch(`${BACKEND_URL}/radar/topics?${query}`, {
-      cache: "no-store"
+    const res = await fetch(`${backendUrl}/radar/topics?${query}`, {
+      cache: "no-store",
+      headers: getBackendHeaders()
     })
     if (!res.ok) {
       return NextResponse.json({ error: "Failed to fetch topics" }, { status: res.status })
