@@ -2,21 +2,40 @@ import { NextResponse } from "next/server"
 import { google } from "googleapis"
 
 export const runtime = "nodejs"
+export const dynamic = "force-dynamic"
+export const revalidate = 0
 
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url)
     const redirectParam = searchParams.get("redirect") || "/onboarding"
 
-    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID || ""
-    const clientSecret = process.env.GOOGLE_CLIENT_SECRET || ""
+    const rawClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID || ""
+    const rawClientSecret = process.env.GOOGLE_CLIENT_SECRET || ""
 
-    const isPlaceholder = !clientId || clientId.includes("your-google-client-id") || clientId.length < 10
+    const clientId = rawClientId.replace(/^["']|["']$/g, "").trim()
+    const clientSecret = rawClientSecret.replace(/^["']|["']$/g, "").trim()
+
+    const isPlaceholder =
+      !clientId ||
+      clientId.includes("your-google-client-id") ||
+      clientId.length < 10
 
     if (isPlaceholder) {
       return NextResponse.json({
         configured: false,
-        message: "Google Cloud OAuth credentials (GOOGLE_CLIENT_ID & GOOGLE_CLIENT_SECRET) are not configured in environment variables."
+        message: "Google Cloud OAuth credentials are not active or not yet configured.",
+        diagnostics: {
+          hasClientId: Boolean(clientId),
+          clientIdLength: clientId.length,
+          clientIdSuffix: clientId ? clientId.slice(-15) : null,
+          hasClientSecret: Boolean(clientSecret),
+          clientSecretLength: clientSecret.length
+        }
+      }, {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate"
+        }
       })
     }
 
@@ -50,6 +69,10 @@ export async function GET(req: Request) {
     return NextResponse.json({
       configured: true,
       url: authUrl
+    }, {
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate"
+      }
     })
   } catch (error: any) {
     return NextResponse.json(

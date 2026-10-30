@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server"
 import { google } from "googleapis"
 
 export const runtime = "nodejs"
+export const dynamic = "force-dynamic"
+export const revalidate = 0
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
@@ -31,8 +33,10 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID || ""
-    const clientSecret = process.env.GOOGLE_CLIENT_SECRET || ""
+    const rawClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID || ""
+    const rawClientSecret = process.env.GOOGLE_CLIENT_SECRET || ""
+    const clientId = rawClientId.replace(/^["']|["']$/g, "").trim()
+    const clientSecret = rawClientSecret.replace(/^["']|["']$/g, "").trim()
     const redirectUri = `${baseUrl}/api/auth/google/callback`
 
     const oauth2Client = new google.auth.OAuth2(
