@@ -16,10 +16,11 @@ import {
   Film,
   Users,
   Video,
-  RefreshCw
+  RefreshCw,
+  AlertCircle,
+  X
 } from "lucide-react"
 import { YouTubeChannel, getConnectedYouTubeChannel, setConnectedYouTubeChannel, getStoredSession } from "@/lib/api/auth"
-import { YouTubeConnectModal } from "@/components/auth/youtube-connect-modal"
 
 function formatNumber(num: number | string | undefined): string {
   if (!num) return "0"
@@ -43,8 +44,22 @@ export default function ChannelManagementPage() {
   const [channel, setChannel] = useState<YouTubeChannel | null>(null)
   const [recentVideos, setRecentVideos] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
-  const [showConnectModal, setShowConnectModal] = useState(false)
+  const [showConfigModal, setShowConfigModal] = useState(false)
   const [selectedArchetype, setSelectedArchetype] = useState("TECH_PRODUCT_REVIEW")
+
+  const handleConnectYouTube = async () => {
+    try {
+      const res = await fetch("/api/auth/google/url?redirect=/dashboard/channel")
+      const data = await res.json()
+      if (data.configured && data.url) {
+        window.location.href = data.url
+        return
+      }
+      setShowConfigModal(true)
+    } catch {
+      setShowConfigModal(true)
+    }
+  }
 
   useEffect(() => {
     // 1. Initial channel load
@@ -111,11 +126,11 @@ export default function ChannelManagementPage() {
 
         <button
           type="button"
-          onClick={() => setShowConnectModal(true)}
+          onClick={handleConnectYouTube}
           className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-red-600 hover:bg-red-700 shadow-sm transition-all cursor-pointer shrink-0"
         >
           <Youtube className="w-4 h-4 fill-white" />
-          <span>{channel ? "Switch / Connect Channel" : "Connect YouTube Channel"}</span>
+          <span>{channel ? "Authorize Channel via Google" : "Connect YouTube Channel"}</span>
         </button>
       </div>
 
@@ -259,16 +274,16 @@ export default function ChannelManagementPage() {
           <div className="max-w-md mx-auto">
             <h2 className="text-lg font-bold text-neutral-950">No YouTube Channel Connected Yet</h2>
             <p className="text-xs text-neutral-600 mt-1">
-              Connect your YouTube channel in 2 seconds by entering your handle (e.g. <span className="font-mono font-semibold">@mkbhd</span> or <span className="font-mono font-semibold">@veritasium</span>).
+              Authorize your YouTube channel via official Google OAuth to verify ownership and calibrate PreYT&apos;s algorithms to your audience.
             </p>
           </div>
           <button
             type="button"
-            onClick={() => setShowConnectModal(true)}
+            onClick={handleConnectYouTube}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-red-600 hover:bg-red-700 shadow-md transition-all cursor-pointer"
           >
             <Youtube className="w-4 h-4 fill-white" />
-            <span>Connect YouTube Channel Now</span>
+            <span>Authorize YouTube Channel via Google</span>
           </button>
         </div>
       )}
@@ -316,16 +331,71 @@ export default function ChannelManagementPage() {
         </div>
       </div>
 
-      {/* Connect Modal */}
-      <YouTubeConnectModal
-        isOpen={showConnectModal}
-        onClose={() => setShowConnectModal(false)}
-        onConnected={(ch) => {
-          setChannel(ch)
-          setConnectedYouTubeChannel(ch)
-          fetchChannelDetails(ch.handle)
-        }}
-      />
+      {/* Google Cloud OAuth Configuration Required Modal */}
+      {showConfigModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-neutral-200 overflow-hidden">
+            <div className="h-1.5 bg-red-600" />
+            <div className="p-6 sm:p-7">
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-amber-50 text-amber-700 border border-amber-200">
+                    <AlertCircle className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-neutral-950">Google Cloud OAuth Setup Required</h3>
+                    <p className="text-xs text-neutral-500">Official YouTube verification is enabled</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowConfigModal(false)}
+                  className="p-1 rounded-lg text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="space-y-3.5 text-xs text-neutral-600 leading-relaxed">
+                <p>
+                  To verify your YouTube channel ownership directly with Google, PreYT requires your Google Cloud OAuth Client ID and Secret in your environment.
+                </p>
+
+                <div className="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 space-y-2 font-mono text-[11px]">
+                  <div className="text-neutral-500 uppercase tracking-wider font-bold">Required Environment Variables:</div>
+                  <div className="text-neutral-800">NEXT_PUBLIC_GOOGLE_CLIENT_ID=&lt;your_client_id&gt;.apps.googleusercontent.com</div>
+                  <div className="text-neutral-800">GOOGLE_CLIENT_SECRET=GOCSPX-&lt;your_secret&gt;</div>
+                  <div className="text-neutral-500 pt-1">Authorized redirect URI:</div>
+                  <div className="text-red-700 font-bold break-all">https://preyt.integralgroups.in/api/auth/google/callback</div>
+                </div>
+
+                <p className="text-[11px] text-neutral-500">
+                  PreYT strictly enforces official Google OAuth verification so that no unauthorized user can ever claim or access another creator&apos;s channel.
+                </p>
+              </div>
+
+              <div className="mt-6 flex items-center justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setShowConfigModal(false)}
+                  className="px-4 py-2 rounded-xl text-xs font-semibold text-neutral-700 bg-neutral-100 hover:bg-neutral-200 transition-colors cursor-pointer"
+                >
+                  Close
+                </button>
+                <a
+                  href="https://console.cloud.google.com/apis/credentials"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white bg-red-600 hover:bg-red-700 transition-colors shadow-xs"
+                >
+                  <span>Google Cloud Console</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

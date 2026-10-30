@@ -25,6 +25,7 @@ export interface AuthUser {
   avatar_url?: string
   is_verified: boolean
   youtube_channel?: YouTubeChannel
+  available_channels?: YouTubeChannel[]
 }
 
 export interface WorkspaceSummary {
@@ -243,64 +244,6 @@ export async function registerUser(email: string, password: string, fullName: st
   }
 
   storeSession(session)
-  return session
-}
-
-export async function loginWithGoogleCredential(payload: {
-  email: string
-  name: string
-  picture?: string
-  googleId?: string
-  youtubeChannel?: YouTubeChannel
-}): Promise<AuthSession> {
-  const res = await fetch("/api/auth/google/verify", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  })
-
-  const data = await res.json()
-  if (!res.ok) {
-    throw new Error(data.detail || data.error || "Failed to authenticate with Google.")
-  }
-
-  const session: AuthSession = {
-    access_token: data.access_token,
-    refresh_token: data.refresh_token,
-    user: data.user,
-    workspace: data.workspace
-  }
-
-  storeSession(session)
-  return session
-}
-
-export async function loginWithYouTubeChannel(channel: YouTubeChannel): Promise<AuthSession> {
-  const email = `${channel.handle.replace(/^@/, "").toLowerCase().replace(/[^a-z0-9]/g, "")}@creator.youtube`
-  const fullName = channel.title
-
-  const session: AuthSession = {
-    access_token: `preyt_yt_${channel.id}_${Date.now()}`,
-    refresh_token: `preyt_yt_ref_${channel.id}`,
-    user: {
-      id: `usr_${channel.id}`,
-      email,
-      full_name: fullName,
-      avatar_url: channel.avatarUrl,
-      is_verified: true,
-      youtube_channel: channel
-    },
-    workspace: {
-      id: `ws_${channel.id}`,
-      name: `${channel.title} Studio`,
-      slug: `${channel.handle.replace(/^@/, "").toLowerCase()}-workspace`,
-      plan_tier: "pro",
-      role: "owner"
-    }
-  }
-
-  storeSession(session)
-  setConnectedYouTubeChannel(channel)
   return session
 }
 

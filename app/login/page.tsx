@@ -20,7 +20,6 @@ import {
 import { loginUser, getStoredSession, sendOtp, verifyOtpCode, clearSession } from "@/lib/api/auth"
 import { trackFunnelEvent } from "@/lib/analytics/events"
 import { GoogleSignInButton } from "@/components/auth/google-sign-in-button"
-import { YouTubeConnectModal } from "@/components/auth/youtube-connect-modal"
 import { OtpInput } from "@/components/auth/otp-input"
 
 type AuthStep = "initial" | "otp" | "password"
@@ -39,7 +38,6 @@ function LoginContent() {
   const [loading, setLoading] = useState(false)
   const [resendCooldown, setResendCooldown] = useState(0)
   const [debugOtp, setDebugOtp] = useState<string | null>(null)
-  const [showYTModal, setShowYTModal] = useState(false)
 
   // Redirect if already authenticated (unless explicitly logging out)
   useEffect(() => {
@@ -260,17 +258,7 @@ function LoginContent() {
           {step === "initial" && (
             <div className="space-y-4">
               {/* Primary: Continue with Google */}
-              <GoogleSignInButton label="CONTINUE WITH GOOGLE" />
-
-              {/* Quick Connect YouTube Channel */}
-              <button
-                type="button"
-                onClick={() => setShowYTModal(true)}
-                className="w-full flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl text-sm font-semibold text-neutral-800 bg-red-50/70 hover:bg-red-50 border border-red-200/80 hover:border-red-300 shadow-xs transition-all cursor-pointer group"
-              >
-                <Youtube className="w-5 h-5 text-red-600 fill-red-600 group-hover:scale-105 transition-transform" />
-                <span>Connect YouTube Channel Directly</span>
-              </button>
+              <GoogleSignInButton label="CONTINUE WITH GOOGLE" redirect="/onboarding" />
 
               {/* Clean Divider */}
               <div className="relative text-center my-4">
@@ -454,17 +442,9 @@ function LoginContent() {
         {/* Security badge */}
         <div className="mt-6 flex items-center justify-center gap-2 text-xs text-neutral-500 font-mono">
           <ShieldCheck className="w-4 h-4 text-emerald-600" />
-          <span>PASSWORDS NOT REQUIRED · SHA-256 OTP ENCRYPTION · YOUTUBE DATA API V3</span>
+          <span>PASSWORDS NOT REQUIRED · SHA-256 OTP ENCRYPTION · OFFICIAL GOOGLE OAUTH</span>
         </div>
       </div>
-
-      {/* YouTube Channel Connect Modal */}
-      <YouTubeConnectModal
-        isOpen={showYTModal}
-        onClose={() => setShowYTModal(false)}
-        title="Sign In with Your YouTube Channel"
-        subtitle="Enter your channel handle or URL to instantly authenticate and import your channel stats."
-      />
     </div>
   )
 }

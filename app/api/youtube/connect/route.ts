@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server"
-import { updateOnboardingState } from "@/lib/onboarding/store"
 
 export const runtime = "nodejs"
 
@@ -20,6 +19,8 @@ function extractHandle(raw: string): string {
   return s
 }
 
+// Public read-only channel metadata lookup (for competitor intelligence & packaging research only).
+// NOTE: Channel ownership connection strictly requires official Google OAuth verification.
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
@@ -103,42 +104,14 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Sync with onboarding state if user is authenticated
-    const token = req.cookies.get("preyt_token")?.value
-    const userId = req.cookies.get("preyt_user_id")?.value || (token ? token.split("_")[2] : null)
-    if (userId) {
-      updateOnboardingState(userId, {
-        youtubeConnected: true,
-        channelSelected: true,
-        connectedChannel: {
-          id: channel.id,
-          title: channel.title,
-          handle: channel.handle,
-          avatarUrl: channel.avatarUrl,
-          subscriberCount: channel.subscriberCount,
-          videoCount: channel.videoCount,
-          totalViews: channel.totalViews
-        }
-      })
-    }
-
-    const res = NextResponse.json({
+    return NextResponse.json({
       success: true,
       channel,
       recentVideos
     })
-
-    // Set cookie for quick sync
-    res.cookies.set("preyt_yt_channel", encodeURIComponent(channel.handle), {
-      path: "/",
-      maxAge: 2592000,
-      sameSite: "lax"
-    })
-
-    return res
   } catch (err: any) {
     return NextResponse.json(
-      { error: err.message || "Failed to connect YouTube channel" },
+      { error: err.message || "Failed to lookup YouTube channel" },
       { status: 500 }
     )
   }
