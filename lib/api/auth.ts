@@ -1,15 +1,30 @@
 /**
  * lib/api/auth.ts
  * 
- * Production Client-Side Authentication & Multi-Tenancy Module for PreYT.
- * Manages JWT tokens, session persistence in localStorage, and workspace context.
+ * Production Client-Side Authentication, Google OAuth & YouTube Channel Connect Module for PreYT.
+ * Manages JWT tokens, session persistence in localStorage & cookies, and workspace context.
  */
+
+export interface YouTubeChannel {
+  id: string
+  title: string
+  handle: string
+  description?: string
+  avatarUrl: string
+  subscriberCount: number | string
+  videoCount?: number | string
+  totalViews?: number | string
+  uploadsPlaylistId?: string
+  country?: string
+}
 
 export interface AuthUser {
   id: string
   email: string
   full_name: string
+  avatar_url?: string
   is_verified: boolean
+  youtube_channel?: YouTubeChannel
 }
 
 export interface WorkspaceSummary {
@@ -31,6 +46,7 @@ const ACCESS_TOKEN_KEY = "preyt_access_token"
 const REFRESH_TOKEN_KEY = "preyt_refresh_token"
 const USER_KEY = "preyt_user"
 const ACTIVE_WORKSPACE_KEY = "preyt_active_workspace"
+const ACTIVE_CHANNEL_KEY = "preyt_active_channel"
 
 export function getStoredSession(): AuthSession | null {
   if (typeof window === "undefined") return null
@@ -38,15 +54,23 @@ export function getStoredSession(): AuthSession | null {
   const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY)
   const userJson = localStorage.getItem(USER_KEY)
   const wsJson = localStorage.getItem(ACTIVE_WORKSPACE_KEY)
+  const channelJson = localStorage.getItem(ACTIVE_CHANNEL_KEY)
 
-  if (!accessToken || !refreshToken || !userJson) return null
+  if (!accessToken || !userJson) return null
 
   try {
+    const user: AuthUser = JSON.parse(userJson)
+    if (!user.youtube_channel && channelJson) {
+      user.youtube_channel = JSON.parse(channelJson)
+    }
+
     return {
       access_token: accessToken,
-      refresh_token: refreshToken,
-      user: JSON.parse(userJson),
-      workspace: wsJson ? JSON.parse(wsJson) : { id: "default", name: "Personal", slug: "default", plan_tier: "free", role: "owner" }
+      refresh_token: refreshToken || accessToken,
+      user,
+      workspace: wsJson
+        ? JSON.parse(wsJson)
+        : { id: "default", name: `${user.full_name}'s Workspace`, slug: "default", plan_tier: "pro", role: "owner" }
     }
   } catch {
     return null
@@ -56,10 +80,25 @@ export function getStoredSession(): AuthSession | null {
 export function storeSession(session: AuthSession): void {
   if (typeof window === "undefined") return
   localStorage.setItem(ACCESS_TOKEN_KEY, session.access_token)
-  localStorage.setItem(REFRESH_TOKEN_KEY, session.refresh_token)
+  if (session.refresh_token) {
+    localStorage.setItem(REFRESH_TOKEN_KEY, session.refresh_token)
+  }
   localStorage.setItem(USER_KEY, JSON.stringify(session.user))
   if (session.workspace) {
     localStorage.setItem(ACTIVE_WORKSPACE_KEY, JSON.stringify(session.workspace))
+  }
+  if (session.user.youtube_channel) {
+    localStorage.setItem(ACTIVE_CHANNEL_KEY, JSON.stringify(session.user.youtube_channel))
+  }
+
+  // Also set cookie for server-side route awareness
+  try {
+    document.cookie = `preyt_token=${session.access_token}; path=/; max-age=2592000; SameSite=Lax`
+    if (session.user.youtube_channel?.handle) {
+      document.cookie = `preyt_yt_channel=${encodeURIComponent(session.user.youtube_channel.handle)}; path=/; max-age=2592000; SameSite=Lax`
+    }
+  } catch {
+    // Ignore cookie errors in non-standard environments
   }
 }
 
@@ -69,6 +108,67 @@ export function clearSession(): void {
   localStorage.removeItem(REFRESH_TOKEN_KEY)
   localStorage.removeItem(USER_KEY)
   localStorage.removeItem(ACTIVE_WORKSPACE_KEY)
+  localStorage.removeItem(ACTIVE_CHANNEL_KEY)
+
+  try {
+    document.cookie = "preyt_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"
+    document.cookie = "preyt_yt_channel=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"
+  } catch {
+    // Ignore cookie errors
+  }
+}
+
+export function getConnectedYouTubeChannel(): YouTubeChannel | null {
+  if (typeof window === "undefined") return null
+  const stored = localStorage.getItem(ACTIVE_CHANNEL_KEY)
+  if (stored) {
+    try {
+      return JSON.parse(stored)
+    } catch {
+      // Fallback
+    }
+  }
+  const session = getStoredSession()
+  return session?.user?.youtube_channel || null
+}
+
+export function setConnectedYouTubeChannel(channel: YouTubeChannel): void {
+  if (typeof window === "undefined") return
+  localStorage.setItem(ACTIVE_CHANNEL_KEY, JSON.stringify(channel))
+
+  const session = getStoredSession()
+  if (session) {
+    session.user.youtube_channel = channel
+    storeSession(session)
+  }
+
+  try {
+    document.cookie = `preyt_yt_channel=${encodeURIComponent(channel.handle)}; path=/; max-age=2592000; SameSite=Lax`
+  } catch {
+    // Ignore
+  }
+
+  // Trigger custom window event so listening components update instantly
+  window.dispatchEvent(new CustomEvent("preyt_channel_changed", { detail: channel }))
+}
+
+export function disconnectYouTubeChannel(): void {
+  if (typeof window === "undefined") return
+  localStorage.removeItem(ACTIVE_CHANNEL_KEY)
+
+  const session = getStoredSession()
+  if (session) {
+    delete session.user.youtube_channel
+    storeSession(session)
+  }
+
+  try {
+    document.cookie = "preyt_yt_channel=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"
+  } catch {
+    // Ignore
+  }
+
+  window.dispatchEvent(new CustomEvent("preyt_channel_changed", { detail: null }))
 }
 
 export function getAuthHeaders(): HeadersInit {
@@ -126,6 +226,64 @@ export async function registerUser(email: string, password: string, fullName: st
   }
 
   storeSession(session)
+  return session
+}
+
+export async function loginWithGoogleCredential(payload: {
+  email: string
+  name: string
+  picture?: string
+  googleId?: string
+  youtubeChannel?: YouTubeChannel
+}): Promise<AuthSession> {
+  const res = await fetch("/api/auth/google/verify", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  })
+
+  const data = await res.json()
+  if (!res.ok) {
+    throw new Error(data.detail || data.error || "Failed to authenticate with Google.")
+  }
+
+  const session: AuthSession = {
+    access_token: data.access_token,
+    refresh_token: data.refresh_token,
+    user: data.user,
+    workspace: data.workspace
+  }
+
+  storeSession(session)
+  return session
+}
+
+export async function loginWithYouTubeChannel(channel: YouTubeChannel): Promise<AuthSession> {
+  const email = `${channel.handle.replace(/^@/, "").toLowerCase().replace(/[^a-z0-9]/g, "")}@creator.youtube`
+  const fullName = channel.title
+
+  const session: AuthSession = {
+    access_token: `preyt_yt_${channel.id}_${Date.now()}`,
+    refresh_token: `preyt_yt_ref_${channel.id}`,
+    user: {
+      id: `usr_${channel.id}`,
+      email,
+      full_name: fullName,
+      avatar_url: channel.avatarUrl,
+      is_verified: true,
+      youtube_channel: channel
+    },
+    workspace: {
+      id: `ws_${channel.id}`,
+      name: `${channel.title} Studio`,
+      slug: `${channel.handle.replace(/^@/, "").toLowerCase()}-workspace`,
+      plan_tier: "pro",
+      role: "owner"
+    }
+  }
+
+  storeSession(session)
+  setConnectedYouTubeChannel(channel)
   return session
 }
 

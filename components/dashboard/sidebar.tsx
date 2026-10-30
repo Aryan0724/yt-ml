@@ -1,13 +1,28 @@
 "use client"
 
-import { Home, Radar, Flame, Lightbulb, ActivitySquare, FlaskConical, Tv, History, Settings, HelpCircle, ChevronDown, ShieldCheck } from "lucide-react"
+import { Home, Radar, Flame, Lightbulb, ActivitySquare, FlaskConical, Tv, History, Settings, HelpCircle, ChevronDown, ShieldCheck, Youtube, CheckCircle2 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { AuthSession } from "@/lib/api/auth"
+import { AuthSession, YouTubeChannel } from "@/lib/api/auth"
 
-export function Sidebar({ session }: { session: AuthSession | null }) {
+interface SidebarProps {
+  session: AuthSession | null
+  connectedChannel?: YouTubeChannel | null
+  onOpenConnect?: () => void
+}
+
+function formatSubs(num: number | string | undefined): string {
+  if (!num) return ""
+  const n = typeof num === "string" ? parseInt(num, 10) : num
+  if (isNaN(n)) return ""
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M subs`
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K subs`
+  return `${n} subs`
+}
+
+export function Sidebar({ session, connectedChannel, onOpenConnect }: SidebarProps) {
   const pathname = usePathname()
 
   const mainNav = [
@@ -44,16 +59,40 @@ export function Sidebar({ session }: { session: AuthSession | null }) {
           </Link>
         </div>
 
-        {/* Workspace selector */}
-        <div className="px-4 py-3.5 border-b border-neutral-100">
-          <button className="w-full flex items-center justify-between p-2.5 rounded-xl border border-neutral-200 bg-neutral-50 hover:bg-neutral-100 transition-colors cursor-pointer text-left">
-            <div>
-              <p className="text-[10px] font-bold tracking-wider uppercase text-neutral-400">Workspace</p>
-              <p className="text-sm font-semibold text-neutral-900 truncate max-w-[140px]">
-                {session?.workspace?.name || "Personal Creator"}
-              </p>
+        {/* Workspace / Channel selector */}
+        <div className="px-4 py-3 border-b border-neutral-100">
+          <button
+            type="button"
+            onClick={onOpenConnect}
+            className="w-full flex items-center justify-between p-2 rounded-xl border border-neutral-200 bg-neutral-50 hover:bg-neutral-100 transition-colors cursor-pointer text-left group"
+          >
+            <div className="flex items-center gap-2.5 min-w-0">
+              {connectedChannel?.avatarUrl ? (
+                <Image
+                  src={connectedChannel.avatarUrl}
+                  alt={connectedChannel.title}
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 rounded-full object-cover border border-neutral-200 shrink-0"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold text-xs shrink-0">
+                  <Youtube className="w-4 h-4 fill-red-600" />
+                </div>
+              )}
+              <div className="min-w-0">
+                <div className="flex items-center gap-1">
+                  <p className="text-xs font-bold text-neutral-900 truncate">
+                    {connectedChannel?.title || session?.workspace?.name || "Personal Creator"}
+                  </p>
+                  {connectedChannel && <CheckCircle2 className="w-3 h-3 text-red-600 shrink-0 fill-red-50" />}
+                </div>
+                <p className="text-[10px] text-neutral-500 font-mono truncate">
+                  {connectedChannel ? connectedChannel.handle : "Click to connect channel"}
+                </p>
+              </div>
             </div>
-            <ChevronDown className="h-4 w-4 text-neutral-400" />
+            <ChevronDown className="h-4 w-4 text-neutral-400 group-hover:text-neutral-700 shrink-0 ml-1" />
           </button>
         </div>
 

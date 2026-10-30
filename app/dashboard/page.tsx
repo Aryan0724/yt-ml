@@ -4,7 +4,8 @@ import { useEffect, useState } from "react"
 import { getStoredSession, AuthSession } from "@/lib/api/auth"
 import { fetchRadarTopics, RadarTopicItem } from "@/lib/api/radar"
 import Link from "next/link"
-import { TrendingUp, TrendingDown, Bookmark, Settings, ArrowRight } from "lucide-react"
+import Image from "next/image"
+import { TrendingUp, TrendingDown, Bookmark, Settings, ArrowRight, Youtube, CheckCircle2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export default function DashboardIndex() {
@@ -21,6 +22,7 @@ export default function DashboardIndex() {
   }, [])
 
   const firstName = session?.user?.full_name?.split(" ")[0] || "User"
+  const channel = session?.user?.youtube_channel
 
   return (
     <div className="flex flex-col gap-8 pb-12">
@@ -32,6 +34,68 @@ export default function DashboardIndex() {
           Here's your creator intelligence for today.
         </p>
       </header>
+
+      {/* Connected Channel Status Banner */}
+      {channel ? (
+        <div className="p-4 rounded-2xl bg-white border border-neutral-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 card-shadow">
+          <div className="flex items-center gap-3.5">
+            {channel.avatarUrl ? (
+              <Image
+                src={channel.avatarUrl}
+                alt={channel.title}
+                width={48}
+                height={48}
+                className="w-12 h-12 rounded-full object-cover border border-neutral-200"
+              />
+            ) : (
+              <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold">
+                <Youtube className="w-6 h-6 fill-red-600" />
+              </div>
+            )}
+            <div>
+              <div className="flex items-center gap-1.5">
+                <h2 className="text-sm font-bold text-neutral-900">{channel.title}</h2>
+                <CheckCircle2 className="w-4 h-4 text-red-600 fill-red-50" />
+              </div>
+              <p className="text-xs text-neutral-500 font-mono">
+                {channel.handle} • {channel.subscriberCount ? `${Number(channel.subscriberCount).toLocaleString()} subscribers` : "Verified Channel"}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/dashboard/channel"
+              className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-neutral-200 text-neutral-700 hover:bg-neutral-50 transition-colors"
+            >
+              Channel DNA
+            </Link>
+            <Link
+              href="/dashboard/analyze"
+              className="text-xs font-semibold px-3.5 py-1.5 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors"
+            >
+              Audit New Video
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <div className="p-4 rounded-2xl bg-red-50/60 border border-red-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center shrink-0">
+              <Youtube className="w-5 h-5 fill-red-600" />
+            </div>
+            <div>
+              <h2 className="text-sm font-bold text-neutral-900">Connect your YouTube Channel</h2>
+              <p className="text-xs text-neutral-600">Import your channel baseline velocity and customize CTR predictions.</p>
+            </div>
+          </div>
+          <Link
+            href="/dashboard/channel"
+            className="text-xs font-bold px-4 py-2 rounded-xl bg-red-600 text-white hover:bg-red-700 transition-all text-center shrink-0"
+          >
+            Connect Channel →
+          </Link>
+        </div>
+      )}
 
       {/* What's happening now */}
       <section>
