@@ -17,7 +17,7 @@ import {
   ChevronLeft,
   Lock
 } from "lucide-react"
-import { loginUser, getStoredSession, sendOtp, verifyOtpCode } from "@/lib/api/auth"
+import { loginUser, getStoredSession, sendOtp, verifyOtpCode, clearSession } from "@/lib/api/auth"
 import { trackFunnelEvent } from "@/lib/analytics/events"
 import { GoogleSignInButton } from "@/components/auth/google-sign-in-button"
 import { YouTubeConnectModal } from "@/components/auth/youtube-connect-modal"
@@ -41,9 +41,15 @@ function LoginContent() {
   const [debugOtp, setDebugOtp] = useState<string | null>(null)
   const [showYTModal, setShowYTModal] = useState(false)
 
-  // Redirect if already authenticated
+  // Redirect if already authenticated (unless explicitly logging out)
   useEffect(() => {
     trackFunnelEvent("login_page_viewed")
+
+    if (searchParams.get("logged_out") || searchParams.get("force")) {
+      clearSession()
+      return
+    }
+
     const session = getStoredSession()
     if (session?.access_token) {
       if (session.user.youtube_channel) {
@@ -52,7 +58,7 @@ function LoginContent() {
         router.push(redirectDestination)
       }
     }
-  }, [router, redirectDestination])
+  }, [router, redirectDestination, searchParams])
 
   // Cooldown countdown timer
   useEffect(() => {

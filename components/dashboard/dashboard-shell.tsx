@@ -1,11 +1,42 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Sidebar } from "@/components/dashboard/sidebar"
-import { Search, Bell, Plus, Youtube, CheckCircle2, ChevronDown } from "lucide-react"
+import {
+  Search,
+  Bell,
+  Plus,
+  Youtube,
+  CheckCircle2,
+  ChevronDown,
+  LogOut,
+  User,
+  Sparkles,
+  Settings as SettingsIcon,
+  Menu,
+  X,
+  Tv,
+  Radar,
+  Home,
+  Flame,
+  Lightbulb,
+  ActivitySquare,
+  FlaskConical,
+  History,
+  ShieldCheck,
+  HelpCircle
+} from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { getStoredSession, storeSession, AuthSession, YouTubeChannel, getConnectedYouTubeChannel } from "@/lib/api/auth"
+import { usePathname } from "next/navigation"
+import {
+  getStoredSession,
+  storeSession,
+  AuthSession,
+  YouTubeChannel,
+  getConnectedYouTubeChannel,
+  logoutUser
+} from "@/lib/api/auth"
 import { YouTubeConnectModal } from "@/components/auth/youtube-connect-modal"
 
 function formatNumber(num: number | string | undefined): string {
@@ -22,9 +53,13 @@ export function DashboardShell({
 }: {
   children: React.ReactNode
 }) {
+  const pathname = usePathname()
   const [session, setSession] = useState<AuthSession | null>(null)
   const [channel, setChannel] = useState<YouTubeChannel | null>(null)
   const [showConnectModal, setShowConnectModal] = useState(false)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const userMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // 1. Check if Google OAuth callback set a session cookie that needs client-side storage
@@ -35,7 +70,6 @@ export function DashboardShell({
           const raw = decodeURIComponent(match[1])
           const parsed = JSON.parse(atob(raw))
           storeSession(parsed)
-          // clear cookie after storing
           document.cookie = "preyt_session_data=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"
         } catch (e) {
           console.warn("[DashboardShell] Session sync error:", e)
@@ -51,30 +85,75 @@ export function DashboardShell({
         setChannel(currentSession.user.youtube_channel)
       }
     } else {
-      // Fallback channel if stored separately
       const ch = getConnectedYouTubeChannel()
       if (ch) setChannel(ch)
     }
 
-    // 3. Listen for dynamic channel changes across the dashboard
+    // 3. Listen for dynamic channel changes
     const handleChannelChange = (e: any) => {
       setChannel(e.detail)
       const s = getStoredSession()
       if (s) setSession(s)
     }
 
+    // 4. Click outside to close user menu
+    const handleClickOutside = (e: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false)
+      }
+    }
+
     window.addEventListener("preyt_channel_changed", handleChannelChange)
-    return () => window.removeEventListener("preyt_channel_changed", handleChannelChange)
+    document.addEventListener("mousedown", handleClickOutside)
+
+    return () => {
+      window.removeEventListener("preyt_channel_changed", handleChannelChange)
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
   }, [])
+
+  const handleLogout = async () => {
+    setUserMenuOpen(false)
+    setMobileMenuOpen(false)
+    await logoutUser(true)
+  }
+
+  const mobileNav = [
+    { label: "Overview", icon: Home, href: "/dashboard" },
+    { label: "Creator Radar", icon: Radar, href: "/dashboard/radar" },
+    { label: "Niche Outliers", icon: Flame, href: "/dashboard/niche" },
+    { label: "Idea Sandbox", icon: Lightbulb, href: "/dashboard/ideas" },
+    { label: "Analyze Video", icon: ActivitySquare, href: "/dashboard/analyze" },
+    { label: "A/B Lab", icon: FlaskConical, href: "/dashboard/lab" },
+    { label: "Channel DNA", icon: Tv, href: "/dashboard/channel" },
+    { label: "Audit Archive", icon: History, href: "/dashboard/history" },
+    { label: "Creator Onboarding", icon: Sparkles, href: "/onboarding" },
+    { label: "Settings", icon: SettingsIcon, href: "/dashboard/settings" },
+  ]
 
   return (
     <div className="flex h-screen overflow-hidden bg-white text-neutral-900">
+      {/* Desktop Sidebar */}
       <Sidebar session={session} connectedChannel={channel} onOpenConnect={() => setShowConnectModal(true)} />
 
+      {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden bg-neutral-50/50">
+        
         {/* Top Header */}
         <header className="h-16 border-b border-neutral-200 bg-white flex items-center justify-between px-4 sm:px-6 shrink-0 z-30">
-          <div className="flex-1 flex items-center gap-3">
+          
+          {/* Left: Mobile hamburger & search */}
+          <div className="flex items-center gap-3">
+            {/* Mobile Hamburger Button */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 -ml-2 rounded-xl text-neutral-600 hover:text-neutral-950 hover:bg-neutral-100 md:hidden cursor-pointer"
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+
             <div className="relative max-w-xs hidden sm:block">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" />
               <input
@@ -88,13 +167,16 @@ export function DashboardShell({
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            {/* Connected YouTube Channel Badge / Connect Button */}
+          {/* Right Header Actions */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            
+            {/* Connected YouTube Channel Badge */}
             {channel ? (
               <button
                 type="button"
                 onClick={() => setShowConnectModal(true)}
                 className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl border border-neutral-200 bg-neutral-50 hover:bg-neutral-100 transition-colors text-left cursor-pointer group"
+                title="Click to switch or manage channel"
               >
                 {channel.avatarUrl ? (
                   <Image
@@ -127,27 +209,152 @@ export function DashboardShell({
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-red-200 bg-red-50/80 hover:bg-red-50 text-red-700 text-xs font-semibold transition-all cursor-pointer shadow-xs"
               >
                 <Youtube className="w-4 h-4 text-red-600 fill-red-600" />
-                <span>Connect Channel</span>
+                <span className="hidden sm:inline">Connect Channel</span>
+                <span className="sm:hidden">Connect</span>
               </button>
             )}
 
+            {/* Notifications */}
             <button
-              className="relative p-2 rounded-lg text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 transition-colors"
+              className="relative p-2 rounded-lg text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 transition-colors hidden sm:block"
               aria-label="Notifications"
             >
               <Bell className="h-4 w-4" />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-600 rounded-full" />
             </button>
 
+            {/* New Audit CTA */}
             <Link
               href="/dashboard/analyze"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-red-600 hover:bg-red-700 shadow-sm transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-red-600 hover:bg-red-700 shadow-sm transition-all"
             >
               <Plus className="h-3.5 w-3.5" />
               <span>New Audit</span>
             </Link>
+
+            {/* User Profile & Logout Dropdown */}
+            <div className="relative" ref={userMenuRef}>
+              <button
+                type="button"
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                className="flex items-center gap-1.5 p-1 rounded-full border border-neutral-200 hover:border-neutral-300 bg-neutral-50 transition-all cursor-pointer"
+                aria-label="User Account Menu"
+              >
+                {session?.user?.avatar_url ? (
+                  <Image
+                    src={session.user.avatar_url}
+                    alt={session.user.full_name}
+                    width={28}
+                    height={28}
+                    className="w-7 h-7 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-7 h-7 rounded-full bg-neutral-900 text-white flex items-center justify-center text-xs font-bold">
+                    {(session?.user?.full_name || "C").charAt(0).toUpperCase()}
+                  </div>
+                )}
+                <ChevronDown className="w-3 h-3 text-neutral-400 mr-1" />
+              </button>
+
+              {/* Dropdown Menu */}
+              {userMenuOpen && (
+                <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white border border-neutral-200 shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                  {/* User Meta */}
+                  <div className="px-4 py-3 border-b border-neutral-100">
+                    <p className="text-xs font-bold text-neutral-900 truncate">
+                      {session?.user?.full_name || "Creator"}
+                    </p>
+                    <p className="text-[11px] text-neutral-500 truncate">
+                      {session?.user?.email || "creator@channel.com"}
+                    </p>
+                    <span className="inline-block mt-1.5 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-red-50 text-red-600 border border-red-100">
+                      PRO CREATOR WORKSPACE
+                    </span>
+                  </div>
+
+                  {/* Navigation Links */}
+                  <div className="py-1">
+                    <Link
+                      href="/onboarding"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-neutral-700 hover:text-neutral-950 hover:bg-neutral-50 transition-colors"
+                    >
+                      <Sparkles className="w-4 h-4 text-amber-500" />
+                      <span>Creator Onboarding Setup</span>
+                    </Link>
+
+                    <Link
+                      href="/dashboard/settings"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-neutral-700 hover:text-neutral-950 hover:bg-neutral-50 transition-colors"
+                    >
+                      <SettingsIcon className="w-4 h-4 text-neutral-400" />
+                      <span>Account & Channel Settings</span>
+                    </Link>
+
+                    <Link
+                      href="/pricing"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-neutral-700 hover:text-neutral-950 hover:bg-neutral-50 transition-colors"
+                    >
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      <span>Subscription & Quotas</span>
+                    </Link>
+                  </div>
+
+                  {/* Logout Button */}
+                  <div className="pt-1 border-t border-neutral-100">
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-red-600 hover:text-red-700 hover:bg-red-50 transition-colors cursor-pointer text-left"
+                    >
+                      <LogOut className="w-4 h-4 text-red-600" />
+                      <span>Sign Out of PreYT</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
           </div>
         </header>
+
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-b border-neutral-200 bg-white p-4 space-y-3 z-40 animate-in slide-in-from-top duration-200 shadow-md">
+            <div className="grid grid-cols-2 gap-2">
+              {mobileNav.map((item) => {
+                const isActive = pathname === item.href
+                const Icon = item.icon
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center gap-2 p-2.5 rounded-xl text-xs font-semibold transition-all ${
+                      isActive ? "bg-red-50 text-red-700" : "bg-neutral-50 text-neutral-700 hover:bg-neutral-100"
+                    }`}
+                  >
+                    <Icon className="w-4 h-4 shrink-0" />
+                    <span>{item.label}</span>
+                  </Link>
+                )
+              })}
+            </div>
+
+            <div className="pt-2 border-t border-neutral-100">
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-bold text-red-700 bg-red-50 hover:bg-red-100 transition-all cursor-pointer"
+              >
+                <LogOut className="w-4 h-4 text-red-600" />
+                <span>Sign Out</span>
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Main Content Viewport */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">

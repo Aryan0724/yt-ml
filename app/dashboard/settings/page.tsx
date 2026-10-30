@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { ShieldCheck, Loader2, Youtube, CheckCircle2, RefreshCw, Unlink, ExternalLink } from "lucide-react"
+import { ShieldCheck, Loader2, Youtube, CheckCircle2, RefreshCw, Unlink, ExternalLink, LogOut } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import {
   getAuthHeaders,
   getStoredSession,
   getConnectedYouTubeChannel,
   disconnectYouTubeChannel,
+  logoutUser,
   YouTubeChannel
 } from "@/lib/api/auth"
 import { YouTubeConnectModal } from "@/components/auth/youtube-connect-modal"
@@ -110,6 +111,18 @@ export default function DashboardSettingsPage() {
                 <span className="text-xs font-semibold text-neutral-400 uppercase tracking-wider block mb-1">Authentication Method</span>
                 <span className="text-xs text-neutral-600 font-medium">OTP / Google SSO Secured</span>
               </div>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-neutral-100 flex items-center justify-between">
+              <p className="text-xs text-neutral-500">Need to switch accounts or end your session?</p>
+              <button
+                type="button"
+                onClick={() => logoutUser(true)}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold text-red-600 bg-red-50 hover:bg-red-100 border border-red-200 transition-colors cursor-pointer"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Sign Out</span>
+              </button>
             </div>
           </div>
 

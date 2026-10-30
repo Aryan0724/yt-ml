@@ -3,15 +3,37 @@
 import * as React from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { getStoredSession, logoutUser } from "@/lib/api/auth"
+import { LogOut, LayoutDashboard, Sparkles } from "lucide-react"
 
 export function NavbarLight() {
   const [scrolled, setScrolled] = React.useState(false)
   const [hoveredLink, setHoveredLink] = React.useState<string | null>(null)
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false)
 
   React.useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10)
     window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+
+    // Check auth status
+    const session = getStoredSession()
+    if (session?.access_token) {
+      setIsAuthenticated(true)
+    }
+
+    const handleAuthChange = () => {
+      const s = getStoredSession()
+      setIsAuthenticated(Boolean(s?.access_token))
+    }
+
+    window.addEventListener("preyt_channel_changed", handleAuthChange)
+    window.addEventListener("preyt_logged_out", handleAuthChange)
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("preyt_channel_changed", handleAuthChange)
+      window.removeEventListener("preyt_logged_out", handleAuthChange)
+    }
   }, [])
 
   return (
@@ -66,16 +88,43 @@ export function NavbarLight() {
         </nav>
 
         {/* Actions */}
-        <div className="flex items-center gap-4 h-full pl-6 border-l border-zinc-200">
-          <Link href="/login" className="text-[10px] font-mono font-bold text-zinc-600 hover:text-black transition-colors uppercase tracking-widest hidden sm:block">
-            Login
-          </Link>
-          <Link
-            href="/signup"
-            className="text-[10px] font-mono font-bold text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition-all uppercase tracking-wider shadow-xs"
-          >
-            Start Free
-          </Link>
+        <div className="flex items-center gap-3 sm:gap-4 h-full pl-6 border-l border-zinc-200">
+          {isAuthenticated ? (
+            <>
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold text-white bg-neutral-900 hover:bg-neutral-800 px-3.5 py-2 rounded-lg transition-all uppercase tracking-wider shadow-xs"
+              >
+                <LayoutDashboard className="w-3.5 h-3.5" />
+                <span>Dashboard</span>
+              </Link>
+
+              <button
+                type="button"
+                onClick={() => logoutUser(true)}
+                className="inline-flex items-center gap-1 text-[10px] font-mono font-bold text-red-600 hover:text-red-700 hover:bg-red-50 border border-red-200 px-2.5 py-1.5 rounded-lg transition-all uppercase tracking-wider cursor-pointer"
+                title="Sign out of PreYT"
+              >
+                <LogOut className="w-3 h-3" />
+                <span>Logout</span>
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="text-[10px] font-mono font-bold text-zinc-600 hover:text-black transition-colors uppercase tracking-widest hidden sm:block"
+              >
+                Login
+              </Link>
+              <Link
+                href="/login"
+                className="text-[10px] font-mono font-bold text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition-all uppercase tracking-wider shadow-xs"
+              >
+                Start Free
+              </Link>
+            </>
+          )}
         </div>
         
       </div>

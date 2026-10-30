@@ -104,18 +104,35 @@ export function storeSession(session: AuthSession): void {
 
 export function clearSession(): void {
   if (typeof window === "undefined") return
-  localStorage.removeItem(ACCESS_TOKEN_KEY)
-  localStorage.removeItem(REFRESH_TOKEN_KEY)
-  localStorage.removeItem(USER_KEY)
-  localStorage.removeItem(ACTIVE_WORKSPACE_KEY)
-  localStorage.removeItem(ACTIVE_CHANNEL_KEY)
 
   try {
-    document.cookie = "preyt_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"
-    document.cookie = "preyt_yt_channel=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"
+    localStorage.removeItem(ACCESS_TOKEN_KEY)
+    localStorage.removeItem(REFRESH_TOKEN_KEY)
+    localStorage.removeItem(USER_KEY)
+    localStorage.removeItem(ACTIVE_WORKSPACE_KEY)
+    localStorage.removeItem(ACTIVE_CHANNEL_KEY)
+    sessionStorage.clear()
   } catch {
-    // Ignore cookie errors
+    // Ignore storage errors
   }
+
+  // Wiping all authentication and channel cookies thoroughly
+  const cookieNames = [
+    "preyt_token",
+    "preyt_yt_channel",
+    "preyt_user_id",
+    "preyt_session_data",
+    "preyt_active_channel"
+  ]
+
+  cookieNames.forEach((name) => {
+    try {
+      document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; max-age=0`
+      document.cookie = `${name}=; path=/; domain=${window.location.hostname}; expires=Thu, 01 Jan 1970 00:00:00 GMT; max-age=0`
+    } catch {
+      // Ignore cookie errors
+    }
+  })
 }
 
 export function getConnectedYouTubeChannel(): YouTubeChannel | null {
@@ -357,18 +374,25 @@ export async function getOnboardingStatus(): Promise<any> {
   }
 }
 
-export async function logoutUser(): Promise<void> {
+export async function logoutUser(redirect = true): Promise<void> {
   const session = getStoredSession()
-  if (session?.refresh_token) {
-    try {
-      await fetch("/api/auth/logout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ refresh_token: session.refresh_token })
-      })
-    } catch {
-      // Best-effort remote revocation
+  try {
+    await fetch("/api/auth/logout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ refresh_token: session?.refresh_token || "" })
+    })
+  } catch {
+    // Non-blocking best-effort remote revocation
+  }
+
+  clearSession()
+
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("preyt_logged_out"))
+    if (redirect) {
+      // Force hard navigation to /login?logged_out=1 to completely reset router cache
+      window.location.href = "/login?logged_out=1"
     }
   }
-  clearSession()
 }
