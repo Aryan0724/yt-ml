@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { GoogleAnalytics } from '@next/third-parties/google';
@@ -61,6 +62,16 @@ export default function RootLayout({
       <body className={`${inter.variable} font-sans antialiased bg-background text-foreground`} suppressHydrationWarning>
         {/* Google Analytics & Google Tag via Official Next.js Integration */}
         <GoogleAnalytics gaId="G-XBGTFZ9358" />
+        {/* Microsoft Clarity Session Replay & Heatmaps */}
+        <Script id="microsoft-clarity" strategy="afterInteractive">
+          {`
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "z5yn59w3x4");
+          `}
+        </Script>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
