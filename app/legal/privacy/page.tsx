@@ -70,13 +70,13 @@ export default function PrivacyPage() {
                 <span className="text-red-600 font-mono text-base">02.</span>
                 <span>Mandatory YouTube API Services &amp; Google Disclosure</span>
               </h2>
-              <div className="p-5 rounded-2xl bg-white border border-neutral-200 shadow-2xs space-y-2 text-xs sm:text-sm">
+              <div className="p-5 rounded-2xl bg-white border border-neutral-200 shadow-2xs space-y-3 text-xs sm:text-sm">
                 <p className="font-semibold text-neutral-900">
-                  PreYT utilizes the official YouTube Data API v3 to calculate channel baseline views, view velocity, and post-publish telemetry calibration.
+                  PreYT utilizes the official YouTube Data API v3 and Google OAuth 2.0 to authenticate creators and provide channel intelligence, baseline performance calibrations, and packaging forensics.
                 </p>
-                <ul className="list-disc pl-5 space-y-1.5 text-neutral-600">
+                <ul className="list-disc pl-5 space-y-2 text-neutral-600">
                   <li>
-                    By authenticating your channel with PreYT via Google OAuth, you agree to be bound by the{" "}
+                    <strong>Terms and Policies:</strong> By authenticating your channel with PreYT via Google OAuth, you agree to be bound by the{" "}
                     <a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener noreferrer" className="text-red-600 underline font-bold">
                       YouTube Terms of Service
                     </a>{" "}
@@ -86,13 +86,32 @@ export default function PrivacyPage() {
                     </a>.
                   </li>
                   <li>
-                    <strong>Zero Password Storage:</strong> PreYT never accesses, requests, or stores your Google or YouTube account passwords. Authentication is handled exclusively through encrypted OAuth 2.0 PKCE tokens.
+                    <strong>Google User Data Requested:</strong> We request only the following minimum necessary scopes:
+                    <ul className="list-circle pl-5 mt-1 space-y-1 font-mono text-[11px] text-neutral-700">
+                      <li>- <code>userinfo.profile</code> &amp; <code>userinfo.email</code>: To identify your creator account and display your profile name and avatar.</li>
+                      <li>- <code>https://www.googleapis.com/auth/youtube.readonly</code>: To read your channel metadata (channel title, handle, subscriber count, video count, view count) and recent video packaging performance.</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>Google API Limited Use Disclosure:</strong> PreYT&apos;s use and transfer to any other app of information received from Google APIs will adhere to the{" "}
+                    <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer" className="text-red-600 underline font-bold">
+                      Google API Services User Data Policy
+                    </a>, including the Limited Use requirements.
+                  </li>
+                  <li>
+                    <strong>No Data Sharing / Sale:</strong> We do not sell, rent, transfer, or disclose Google user data to any third parties, data brokers, or advertising networks under any circumstances.
+                  </li>
+                  <li>
+                    <strong>Zero Password Storage:</strong> PreYT never accesses, requests, or stores your Google or YouTube account passwords. Authentication is handled exclusively through encrypted OAuth 2.0 tokens stored in secure, HttpOnly session cookies.
                   </li>
                   <li>
                     <strong>Revocation of Access:</strong> You can revoke PreYT&apos;s access to your YouTube channel at any time through the{" "}
                     <a href="https://security.google.com/settings/security/permissions" target="_blank" rel="noopener noreferrer" className="text-red-600 underline font-bold">
                       Google Security Permissions Settings
-                    </a>.
+                    </a>. Revoking access terminates PreYT&apos;s ability to refresh channel statistics.
+                  </li>
+                  <li>
+                    <strong>Data Deletion Request:</strong> You can disconnect your channel at any time from your Account Settings or request permanent deletion of your stored workspace and YouTube metadata by emailing <a href="mailto:contact@integralgroups.in" className="text-red-600 underline font-bold">contact@integralgroups.in</a>. All associated cached records will be permanently purged within 30 days.
                   </li>
                 </ul>
               </div>
