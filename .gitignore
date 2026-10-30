@@ -60,3 +60,6 @@ run_local.bat
 run_local.ps1
 start_live_bridge.bat
 start_live_bridge.ps1
+
+.vercel
+.env*
