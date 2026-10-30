@@ -69,6 +69,36 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        source: "/sitemap_index.xml",
+        headers: [
+          {
+            key: "Content-Type",
+            value: "application/xml; charset=utf-8",
+          },
+        ],
+      },
+      {
+        source: "/sitemap-main.xml",
+        headers: [
+          {
+            key: "Content-Type",
+            value: "application/xml; charset=utf-8",
+          },
+        ],
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/sitemap_index.xml",
+        destination: "/sitemap.xml",
+      },
+      {
+        source: "/sitemap-main.xml",
+        destination: "/sitemap.xml",
+      },
     ];
   },
 };

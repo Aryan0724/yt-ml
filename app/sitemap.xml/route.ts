@@ -35,7 +35,8 @@ export async function GET() {
   let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
 
   for (const r of staticRoutes) {
-    xml += `  <url>\n    <loc>${baseUrl}${r.path}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>${r.changefreq}</changefreq>\n    <priority>${r.priority}</priority>\n  </url>\n`
+    const loc = r.path === "" ? `${baseUrl}/` : `${baseUrl}${r.path}`
+    xml += `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>${r.changefreq}</changefreq>\n    <priority>${r.priority}</priority>\n  </url>\n`
   }
 
   for (const slug of getAllNicheSlugs()) {
