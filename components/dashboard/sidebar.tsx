@@ -1,11 +1,11 @@
 "use client"
 
-import { Home, Radar, Flame, Lightbulb, ActivitySquare, FlaskConical, Tv, History, Settings, HelpCircle, ChevronDown, ShieldCheck, Youtube, CheckCircle2 } from "lucide-react"
+import { Home, Radar, Flame, Lightbulb, ActivitySquare, FlaskConical, Tv, History, Settings, HelpCircle, ChevronDown, ShieldCheck, Youtube, CheckCircle2, LogOut } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { AuthSession, YouTubeChannel } from "@/lib/api/auth"
+import { AuthSession, YouTubeChannel, logoutUser } from "@/lib/api/auth"
 
 interface SidebarProps {
   session: AuthSession | null
@@ -24,6 +24,12 @@ function formatSubs(num: number | string | undefined): string {
 
 export function Sidebar({ session, connectedChannel, onOpenConnect }: SidebarProps) {
   const pathname = usePathname()
+  const router = useRouter()
+
+  const handleLogout = async () => {
+    await logoutUser()
+    router.push("/login")
+  }
 
   const mainNav = [
     { id: "home", icon: Home, label: "Overview", href: "/dashboard" },
@@ -154,6 +160,15 @@ export function Sidebar({ session, connectedChannel, onOpenConnect }: SidebarPro
               </Link>
             )
           })}
+
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-neutral-500 hover:text-red-700 hover:bg-red-50 transition-colors cursor-pointer text-left"
+          >
+            <LogOut className="h-4 w-4 shrink-0 text-neutral-400 group-hover:text-red-600" />
+            <span>Sign Out</span>
+          </button>
         </div>
       </aside>
     </>

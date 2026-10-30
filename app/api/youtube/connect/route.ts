@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { updateOnboardingState } from "@/lib/onboarding/store"
 
 export const runtime = "nodejs"
 
@@ -100,6 +101,25 @@ export async function POST(req: NextRequest) {
       } catch (e) {
         console.warn("[PreYT Connect] Could not fetch recent uploads:", e)
       }
+    }
+
+    // Sync with onboarding state if user is authenticated
+    const token = req.cookies.get("preyt_token")?.value
+    const userId = req.cookies.get("preyt_user_id")?.value || (token ? token.split("_")[2] : null)
+    if (userId) {
+      updateOnboardingState(userId, {
+        youtubeConnected: true,
+        channelSelected: true,
+        connectedChannel: {
+          id: channel.id,
+          title: channel.title,
+          handle: channel.handle,
+          avatarUrl: channel.avatarUrl,
+          subscriberCount: channel.subscriberCount,
+          videoCount: channel.videoCount,
+          totalViews: channel.totalViews
+        }
+      })
     }
 
     const res = NextResponse.json({

@@ -287,6 +287,76 @@ export async function loginWithYouTubeChannel(channel: YouTubeChannel): Promise<
   return session
 }
 
+export async function sendOtp(email: string): Promise<{ success: boolean; message: string; debugCode?: string; cooldownRemaining?: number }> {
+  const res = await fetch("/api/auth/otp/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email })
+  })
+
+  const data = await res.json()
+  if (!res.ok) {
+    throw new Error(data.error || "Failed to send verification code.")
+  }
+
+  return data
+}
+
+export async function verifyOtpCode(email: string, code: string): Promise<AuthSession> {
+  const res = await fetch("/api/auth/otp/verify", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, code })
+  })
+
+  const data = await res.json()
+  if (!res.ok) {
+    throw new Error(data.error || "Invalid verification code.")
+  }
+
+  const session: AuthSession = {
+    access_token: data.access_token,
+    refresh_token: data.refresh_token,
+    user: data.user,
+    workspace: data.workspace
+  }
+
+  storeSession(session)
+  return session
+}
+
+export async function saveOnboardingPreferences(preferences: {
+  creatorCategory: string
+  primaryGoal: string
+  publishingFrequency: string
+}): Promise<boolean> {
+  try {
+    const res = await fetch("/api/onboarding/preferences", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...getAuthHeaders()
+      },
+      body: JSON.stringify(preferences)
+    })
+    return res.ok
+  } catch {
+    return false
+  }
+}
+
+export async function getOnboardingStatus(): Promise<any> {
+  try {
+    const res = await fetch("/api/onboarding/status", {
+      headers: getAuthHeaders()
+    })
+    if (!res.ok) return null
+    return await res.json()
+  } catch {
+    return null
+  }
+}
+
 export async function logoutUser(): Promise<void> {
   const session = getStoredSession()
   if (session?.refresh_token) {

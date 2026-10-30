@@ -17,6 +17,10 @@ from db.models.subscription import Subscription
 from db.models.topic import Topic, TopicSnapshot
 from db.models.waitlist import WaitlistEntry
 from db.models.idea import IdeaRecord
+from db.models.connected_channel import ConnectedChannel
+from db.models.oauth_connection import OAuthConnection
+from db.models.user_preference import UserPreference
+from db.models.onboarding_progress import OnboardingProgress
 
 __all__ = [
     "Base",
@@ -32,5 +36,9 @@ __all__ = [
     "Topic",
     "TopicSnapshot",
     "WaitlistEntry",
-    "IdeaRecord"
+    "IdeaRecord",
+    "ConnectedChannel",
+    "OAuthConnection",
+    "UserPreference",
+    "OnboardingProgress"
 ]
