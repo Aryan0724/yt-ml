@@ -36,6 +36,13 @@ from routers.outlier import router as outlier_router
 async def lifespan(app: FastAPI):
     # Startup validation of production secrets
     settings.validate_production_secrets()
+    # Initialize database tables locally if using SQLite
+    from db.session import init_db
+    try:
+        await init_db()
+        print("[PreYT Database] Local DB initialized successfully.")
+    except Exception as e:
+        print(f"[PreYT Database] Local DB initialization note: {e}")
     yield
     # Graceful shutdown handling
 

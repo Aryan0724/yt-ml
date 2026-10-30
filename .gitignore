@@ -51,3 +51,10 @@ __pycache__/
 *.pt
 
 
+
+# local database & storage
+*.db
+storage/
+backend/storage/*.db
+run_local.bat
+run_local.ps1
