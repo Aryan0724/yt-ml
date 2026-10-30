@@ -7,7 +7,7 @@ import { TitleAnalyzer } from "@/components/tools/title-analyzer"
 import { ArrowRight, CheckCircle2, ShieldCheck, Smartphone, Sparkles, BookOpen } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Free YouTube Title Analyzer | Mobile Cutoffs & Curiosity Score (PreYT)",
+  title: "Free YouTube Title Analyzer: Mobile Cutoffs & Score",
   description: "Analyze your YouTube video titles for 54-character mobile truncation, curiosity gap strength, and emotional power words. Get instant high-CTR title alternatives.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/youtube-title-analyzer",

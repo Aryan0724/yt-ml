@@ -134,6 +134,16 @@ export function Footer() {
                 Tech Reviews
               </Link>
             </li>
+            <li>
+              <Link href="/youtube-packaging/anime-animation" className="hover:text-[#EE1122] transition-colors">
+                Anime Blueprint
+              </Link>
+            </li>
+            <li>
+              <Link href="/youtube-packaging/personality-vlog" className="hover:text-[#EE1122] transition-colors">
+                Vlog Blueprint
+              </Link>
+            </li>
           </ul>
         </nav>
 
@@ -143,6 +153,11 @@ export function Footer() {
             Company &amp; Legal
           </h2>
           <ul className="space-y-2.5 text-xs font-medium text-[#161512]">
+            <li>
+              <Link href="/about" className="hover:text-[#EE1122] transition-colors">
+                About PreYT
+              </Link>
+            </li>
             <li>
               <Link href="/blog" className="hover:text-[#EE1122] transition-colors">
                 Resources &amp; Blog
@@ -171,6 +186,11 @@ export function Footer() {
             <li>
               <Link href="/legal/cookies" className="hover:text-[#EE1122] transition-colors">
                 Cookie Policy
+              </Link>
+            </li>
+            <li>
+              <Link href="/integral-groups" className="hover:text-[#EE1122] transition-colors">
+                Integral Groups
               </Link>
             </li>
           </ul>

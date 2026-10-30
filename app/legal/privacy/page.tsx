@@ -6,10 +6,10 @@ import { BreadcrumbSchema } from "@/components/seo/json-ld"
 import { ShieldCheck, Lock, Eye, FileText, CheckCircle2, AlertCircle, Building } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Privacy Policy & DPDP Act Compliance — PreYT Creator Intelligence",
-  description: "Comprehensive privacy policy detailing PreYT and Integral Groups' data protection practices under the Digital Personal Data Protection Act 2023 (DPDP Act, India), GDPR, and YouTube API Services Developer Policies.",
+  title: "Privacy Policy & DPDP Act Compliance",
+  description: "Privacy policy detailing PreYT and Integral Groups data protection practices under the DPDP Act 2023, GDPR, and YouTube API Developer Policies.",
   alternates: {
-    canonical: "/legal/privacy",
+    canonical: "https://preyt.integralgroups.in/legal/privacy",
   },
   openGraph: {
     title: "Privacy Policy & DPDP Act Compliance — PreYT Platform",

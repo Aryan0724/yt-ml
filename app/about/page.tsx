@@ -6,7 +6,7 @@ import { BreadcrumbSchema } from "@/components/seo/json-ld";
 import { Target, ShieldCheck, Zap } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "About PreYT — Our Approach to YouTube Intelligence",
+  title: "About Us: YouTube Packaging Intelligence",
   description: "Learn what PreYT does, how its tools work, and what creators can realistically expect from its analysis.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/about",

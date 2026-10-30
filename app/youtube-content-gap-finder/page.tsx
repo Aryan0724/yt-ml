@@ -7,7 +7,7 @@ import { ContentGapFinder } from "@/components/tools/content-gap-finder"
 import { ArrowRight, CheckCircle2, ShieldCheck, Compass, Search, Sparkles } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Free YouTube Content Gap Finder | Discover Underserved Niches (PreYT)",
+  title: "Free YouTube Content Gap Finder: Underserved Topics",
   description: "Find high-demand, low-competition YouTube topic gaps. Extract unserved viewer questions, benchmark saturation levels, and get engineered high-CTR packaging angles.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/youtube-content-gap-finder",

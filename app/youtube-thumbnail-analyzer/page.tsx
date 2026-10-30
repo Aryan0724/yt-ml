@@ -7,7 +7,7 @@ import { ThumbnailAnalyzer } from "@/components/tools/thumbnail-analyzer"
 import { ArrowRight, CheckCircle2, ShieldCheck, Eye, Layers, Smartphone } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Free YouTube Thumbnail Analyzer | Check Contrast & Safe Zones (PreYT)",
+  title: "Free YouTube Thumbnail Analyzer: Contrast & Safe Zones",
   description: "Analyze your YouTube thumbnail for mobile glanceability, dark mode contrast, luminance separation, and the bottom-right timestamp danger zone before uploading.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/youtube-thumbnail-analyzer",

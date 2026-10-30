@@ -6,8 +6,10 @@ import { Footer } from "@/components/landing/footer"
 import { BreadcrumbSchema, FaqSchema, SoftwareAppSchema } from "@/components/seo/json-ld"
 
 export const metadata: Metadata = {
-  title: "PreYT vs 1of10: Outlier Discovery & Computer Vision Packaging Comparison (2026)",
-  description: "An objective architectural comparison between PreYT and 1of10. Discover how PreYT combines outlier detection with OpenCV computer vision and perceptual hash saturation defense.",
+  title: {
+    absolute: "PreYT vs 1of10: Outlier Discovery & CV Analytics",
+  },
+  description: "Objective comparison between PreYT and 1of10. Discover how PreYT combines outlier detection with OpenCV computer vision and saturation defense.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/vs/1of10",
   },

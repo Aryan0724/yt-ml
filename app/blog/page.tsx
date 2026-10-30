@@ -6,7 +6,7 @@ import { getAllPosts, getAllCategories } from "@/lib/blog-data"
 import { BookOpen, Clock, Calendar, ArrowRight, Sparkles, TrendingUp, ShieldCheck } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Resources & Research Hub — PreYT YouTube Intelligence",
+  title: "Creator Research & YouTube Strategy Hub",
   description: "Data-backed YouTube strategy articles, title formulas, and packaging benchmarks derived from empirical analysis of 14.8M uploads.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/blog",

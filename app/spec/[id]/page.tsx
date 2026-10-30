@@ -11,9 +11,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: `${cleanTitle} — Packaging Audit Spec | PreYT`,
+    robots: {
+      index: false,
+      follow: false,
+    },
     description: `Collaborative pre-upload packaging audit and review spec for ${cleanTitle}. Evaluate thumbnail contrast, hook angles, and mobile safe areas.`,
     alternates: {
-      canonical: `/spec/${id}`,
+      canonical: `https://preyt.integralgroups.in/spec/${id}`,
     },
     openGraph: {
       title: `${cleanTitle} — Packaging Audit Spec`,
@@ -26,6 +30,5 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function SpecPage({ params }: PageProps) {
   const { id } = await params
-
   return <SpecViewer specId={id} />
 }

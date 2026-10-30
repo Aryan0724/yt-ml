@@ -11,12 +11,12 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 export const metadata: Metadata = {
   metadataBase: new URL("https://preyt.integralgroups.in"),
   title: {
-    default: "PreYT — YouTube Content Intelligence & Video Analysis",
+    default: "PreYT - YouTube Content Intelligence & Video Analysis",
     template: "%s | PreYT"
   },
   description: "Research YouTube topics, evaluate video packaging, and make more informed content decisions with PreYT's creator intelligence tools.",
   openGraph: {
-    title: "PreYT — YouTube Content Intelligence & Video Analysis",
+    title: "PreYT - YouTube Content Intelligence & Video Analysis",
     description: "Research YouTube topics, evaluate video packaging, and make more informed content decisions with PreYT's creator intelligence tools.",
     url: "https://preyt.integralgroups.in",
     siteName: "PreYT",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PreYT — YouTube Content Intelligence & Video Analysis",
+    title: "PreYT - YouTube Content Intelligence & Video Analysis",
     description: "Research YouTube topics, evaluate video packaging, and make more informed content decisions with PreYT's creator intelligence tools.",
     creator: "@preYTAI",
     images: ["/preyt-logo-dark.png"],

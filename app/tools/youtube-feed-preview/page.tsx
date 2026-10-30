@@ -5,8 +5,8 @@ import { BreadcrumbSchema, FaqSchema, SoftwareAppSchema } from "@/components/seo
 import { PublicFeedPreviewer } from "@/components/tools/public-feed-previewer"
 
 export const metadata: Metadata = {
-  title: "Free YouTube Thumbnail Previewer & Mobile Feed Tester | PreYT",
-  description: "Test your YouTube thumbnail and title draft in a live simulated YouTube feed before publishing. Check mobile character cutoffs, dark mode contrast, and timestamp safe areas.",
+  title: "Free YouTube Thumbnail Previewer & Mobile Feed Tester",
+  description: "Test your YouTube thumbnail and title draft in a simulated live feed before publishing. Check mobile cutoffs, dark mode contrast, and timestamp safe areas.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/tools/youtube-feed-preview",
   },

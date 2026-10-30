@@ -1,0 +1,567 @@
+[
+  {
+    "url": "https://preyt.integralgroups.in/",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "PreYT \u2014 YouTube Content Intelligence &amp; Video Analysis",
+    "description": "Research YouTube topics, evaluate video packaging, and make more informed content decisions with PreYT&#x27;s creator intelligence tools.",
+    "h1": "Get more clicks on every videoyou publish.",
+    "schemas": [
+      "Organization",
+      "WebSite"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/features",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/features",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "PreYT Features \u2014 YouTube Content Analysis Tools | PreYT",
+    "description": "Explore PreYT&#x27;s YouTube research and analysis tools, with clear examples of how each feature helps creators plan and evaluate content.",
+    "h1": "YouTube Thumbnail, Title &amp; Packaging Analysis Features",
+    "schemas": [
+      "SoftwareApplication",
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/pricing",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/pricing",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Pricing Plans \u2014 YouTube Packaging Intelligence | PreYT",
+    "description": "Transparent pricing for creators and production studios. Start free with 3 audits/month or unlock unlimited audits, topic radar, and A/B split testing.",
+    "h1": "Predictable pricing that pays for itself in one upload.",
+    "schemas": [
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/intelligence",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/intelligence",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "YouTube Channel &amp; Competitor Intelligence | PreYT",
+    "description": "Explore YouTube channel insights, competitor content patterns, and emerging topics to make better-informed content decisions.",
+    "h1": "YouTube Creator Intelligence &amp; Video Performance Analytics",
+    "schemas": [
+      "SoftwareApplication",
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/youtube-thumbnail-analyzer",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/youtube-thumbnail-analyzer",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Free YouTube Thumbnail Analyzer | Check Contrast &amp; Safe Zones (PreYT) | PreYT",
+    "description": "Analyze your YouTube thumbnail for mobile glanceability, dark mode contrast, luminance separation, and the bottom-right timestamp danger zone before uploading.",
+    "h1": "YouTube Thumbnail Analyzer: Contrast, Safe Zones &amp; Glanceability",
+    "schemas": [
+      "SoftwareApplication",
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/youtube-title-analyzer",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/youtube-title-analyzer",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Free YouTube Title Analyzer | Mobile Cutoffs &amp; Curiosity Score (PreYT) | PreYT",
+    "description": "Analyze your YouTube video titles for 54-character mobile truncation, curiosity gap strength, and emotional power words. Get instant high-CTR title alternatives.",
+    "h1": "YouTube Title Analyzer: Mobile Cutoffs &amp; Curiosity Score",
+    "schemas": [
+      "SoftwareApplication",
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/youtube-video-idea-generator",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/youtube-video-idea-generator",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Free YouTube Video Idea Generator | High-CTR Concepts (PreYT) | PreYT",
+    "description": "Generate viral YouTube video ideas with paired thumbnail concepts, title curiosity hooks, and estimated CTR benchmarks. Built for creators and production studios.",
+    "h1": "YouTube Video Idea Generator: High-CTR Concepts &amp; Thumbnail Hooks",
+    "schemas": [
+      "SoftwareApplication",
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/youtube-content-gap-finder",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/youtube-content-gap-finder",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Free YouTube Content Gap Finder | Discover Underserved Niches (PreYT) | PreYT",
+    "description": "Find high-demand, low-competition YouTube topic gaps. Extract unserved viewer questions, benchmark saturation levels, and get engineered high-CTR packaging angles.",
+    "h1": "YouTube Content Gap Finder: Discover Underserved Viewer Demand",
+    "schemas": [
+      "SoftwareApplication",
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/youtube-thumbnail-tester",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/youtube-thumbnail-tester",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Free YouTube Thumbnail Tester | Compare A/B Variants (PreYT) | PreYT",
+    "description": "Test and compare YouTube thumbnail variants side-by-side on live simulated mobile feeds. Benchmark contrast scores, safe areas, and predicted CTR before publishing.",
+    "h1": "YouTube Thumbnail Tester: Compare Variants Before Publishing",
+    "schemas": [
+      "SoftwareApplication",
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/tools/youtube-feed-preview",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/tools/youtube-feed-preview",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Free YouTube Thumbnail Previewer &amp; Mobile Feed Tester | PreYT | PreYT",
+    "description": "Test your YouTube thumbnail and title draft in a live simulated YouTube feed before publishing. Check mobile character cutoffs, dark mode contrast, and timestamp safe areas.",
+    "h1": "YouTube Thumbnail Previewer &amp; Mobile Feed Simulator",
+    "schemas": [
+      "SoftwareApplication",
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/blog",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/blog",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Resources &amp; Research Hub \u2014 PreYT YouTube Intelligence | PreYT",
+    "description": "Data-backed YouTube strategy articles, title formulas, and packaging benchmarks derived from empirical analysis of 14.8M uploads.",
+    "h1": "Creator Research &amp; Packaging Intelligence.",
+    "schemas": [
+      "Blog",
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/about",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/about",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "About PreYT \u2014 Our Approach to YouTube Intelligence | PreYT",
+    "description": "Learn what PreYT does, how its tools work, and what creators can realistically expect from its analysis.",
+    "h1": "About PreYT: Our Approach to YouTube Intelligence",
+    "schemas": [
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/changelog",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/changelog",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Changelog &amp; Release Notes \u2014 YouTube Analytics Platform | PreYT",
+    "description": "Track the evolution of the PreYT Creator Decision Engine: Model updates, format-native computer vision releases, and algorithmic upgrades.",
+    "h1": "PreYT Platform Changelog &amp; Release Notes",
+    "schemas": [
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/contact",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/contact",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Contact PreYT YouTube Analytics Support | PreYT",
+    "description": "Connect with the PreYT engineering and support team. Inquiries for API access, enterprise studio packaging, and creator partnerships.",
+    "h1": "Contact PreYT Analytics Support.",
+    "schemas": [
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/waitlist",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/waitlist",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Join the PreYT Creator Waitlist \u2014 Early Access Rollout | PreYT",
+    "description": "Apply for early access to PreYT&#x27;s YouTube pre-upload packaging audits. Submit your channel details to join our priority onboarding queue.",
+    "h1": "Join the Select Few.",
+    "schemas": []
+  },
+  {
+    "url": "https://preyt.integralgroups.in/vs/vidiq",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/vs/vidiq",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "PreYT vs vidIQ: Pre-Upload Packaging vs Post-Upload Tag Optimization (2026 Comparison) | PreYT",
+    "description": "An objective comparison of PreYT and vidIQ. Discover why modern YouTube recommendation algorithms prioritize visual glanceability and packaging over keyword meta tags.",
+    "h1": "PreYT vs vidIQ: The Pre-Upload Paradigm Shift",
+    "schemas": [
+      "SoftwareApplication",
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/vs/1of10",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/vs/1of10",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "PreYT vs 1of10: Outlier Discovery &amp; Computer Vision Packaging Comparison (2026) | PreYT",
+    "description": "An objective architectural comparison between PreYT and 1of10. Discover how PreYT combines outlier detection with OpenCV computer vision and perceptual hash saturation defense.",
+    "h1": "PreYT vs 1of10: Beyond Raw Outlier Curation",
+    "schemas": [
+      "SoftwareApplication",
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/integral-groups",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/integral-groups",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Integral Groups Studio \u2014 The Systems Architecture Studio Behind PreYT | PreYT",
+    "description": "Integral Groups is an execution-first systems engineering studio based in India. We design intelligent infrastructure, creator analytics, and autonomous software platforms.",
+    "h1": "Built Under the Integral Groups.",
+    "schemas": [
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/legal/terms",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/legal/terms",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Terms of Service \u2014 PreYT Creator Decision Platform | PreYT",
+    "description": "Review PreYT&#x27;s terms of service governing creator intellectual property rights, YouTube API integrations, subscriptions, and acceptable use policies.",
+    "h1": "Terms of Service",
+    "schemas": [
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/legal/privacy",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/legal/privacy",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Privacy Policy &amp; DPDP Act Compliance \u2014 PreYT Creator Intelligence | PreYT",
+    "description": "Comprehensive privacy policy detailing PreYT and Integral Groups&#x27; data protection practices under the Digital Personal Data Protection Act 2023 (DPDP Act, India), GDPR, and YouTube API Services Developer Policies.",
+    "h1": "Privacy Policy &amp; Data Governance",
+    "schemas": [
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/legal/cookies",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/legal/cookies",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Cookie Policy \u2014 PreYT Creator Intelligence | PreYT",
+    "description": "Learn how PreYT utilizes essential session cookies, workspace tokens, and diagnostic telemetry to maintain your creator workspace.",
+    "h1": "Cookie Policy",
+    "schemas": [
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/youtube-packaging/faceless-documentary",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/youtube-packaging/faceless-documentary",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Faceless Documentary &amp; Video Essays YouTube Packaging Blueprint &amp; CTR Benchmarks | PreYT | PreYT",
+    "description": "Master YouTube packaging for faceless documentaries and video essays. Discover OpenCV cinematic contrast benchmarks, high-stakes title formulas, and how to win browse feeds without human faces.",
+    "h1": "The Science of 8%+ CTR on Faceless Video Essays",
+    "schemas": [
+      "SoftwareApplication",
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/youtube-packaging/cooking-culinary",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/youtube-packaging/cooking-culinary",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Cooking &amp; Culinary Arts YouTube Packaging Blueprint &amp; CTR Benchmarks | PreYT | PreYT",
+    "description": "Master YouTube packaging for cooking and culinary channels. Learn OpenCV food texture benchmarks, Kelvin temperature optimization, and appetite-inducing title hooks.",
+    "h1": "Culinary YouTube Packaging: Color Temp &amp; Appetite Induction Heuristics",
+    "schemas": [
+      "SoftwareApplication",
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/youtube-packaging/gaming-esports",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/youtube-packaging/gaming-esports",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Gaming &amp; Esports YouTube Packaging Blueprint &amp; CTR Benchmarks | PreYT | PreYT",
+    "description": "Benchmark your gaming thumbnails and title hooks. Learn OpenCV neon saturation standards, character model rim lighting, and high-CTR gaming title formulas.",
+    "h1": "Gaming YouTube Packaging: Winning High-Velocity Feed Scrollers",
+    "schemas": [
+      "SoftwareApplication",
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/youtube-packaging/tech-reviews",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/youtube-packaging/tech-reviews",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Tech &amp; Hardware Reviews YouTube Packaging Blueprint &amp; CTR Benchmarks | PreYT | PreYT",
+    "description": "Master tech and hardware YouTube packaging. Benchmark your thumbnail lighting against MKBHD and Dave2D standards with OpenCV contrast forensics and contrarian title formulas.",
+    "h1": "Tech YouTube Packaging: Industrial Minimalism &amp; Contrarian Hooks",
+    "schemas": [
+      "SoftwareApplication",
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/youtube-packaging/anime-animation",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/youtube-packaging/anime-animation",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Anime &amp; Animation Analysis YouTube Packaging Blueprint &amp; CTR Benchmarks | PreYT | PreYT",
+    "description": "Optimize anime video essays and pop culture lore thumbnails. Learn cel-shade edge clarity standards, character expression benchmarks, and narrative mystery title formulas.",
+    "h1": "Anime &amp; Pop Culture Packaging: Edge Clarity &amp; Climax Capture",
+    "schemas": [
+      "SoftwareApplication",
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/youtube-packaging/personality-vlog",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/youtube-packaging/personality-vlog",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Personality &amp; Lifestyle Vlogs YouTube Packaging Blueprint &amp; CTR Benchmarks | PreYT | PreYT",
+    "description": "Master YouTube packaging for vlogs and creator personality channels. Learn OpenCV eyeline tracking, facial emotion sizing benchmarks, and authentic curiosity hooks.",
+    "h1": "Personality &amp; Lifestyle Packaging: Eyeline Geometry &amp; Authentic Emotion",
+    "schemas": [
+      "SoftwareApplication",
+      "BreadcrumbList",
+      "FAQPage"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/blog/what-is-the-best-youtube-title-length",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/blog/what-is-the-best-youtube-title-length",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "What is the Best YouTube Title Length for Maximum CTR in 2026? | PreYT Research | PreYT",
+    "description": "Empirical analysis of 14.8M uploads reveals the exact title length sweet spot. Learn why 40 to 52 characters outperform longer titles on mobile feeds and how to avoid the ellipsis cutoff.",
+    "h1": "What is the Best YouTube Title Length for Maximum CTR in 2026?",
+    "schemas": [
+      "BlogPosting",
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/blog/youtube-thumbnail-size-and-safe-zones",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/blog/youtube-thumbnail-size-and-safe-zones",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "YouTube Thumbnail Size, Dimensions &amp; Safe Zones Guide (2026 Blueprint) | PreYT Research | PreYT",
+    "description": "The complete technical guide to YouTube thumbnail resolution (1280x720, 16:9), maximum file sizes, and the critical bottom-right timestamp safe zone that ruins mobile CTR.",
+    "h1": "YouTube Thumbnail Size, Dimensions &amp; Safe Zones Guide (2026 Blueprint)",
+    "schemas": [
+      "BlogPosting",
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/blog/how-to-improve-youtube-thumbnail-ctr",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/blog/how-to-improve-youtube-thumbnail-ctr",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "How to Improve YouTube Thumbnail CTR: 7 Computer Vision Heuristics | PreYT Research | PreYT",
+    "description": "How to increase your YouTube click-through rate using luminance edge separation, dark-theme contrast, color temperature calibration, and the 120-pixel mobile squint test.",
+    "h1": "How to Improve YouTube Thumbnail CTR: 7 Computer Vision Heuristics",
+    "schemas": [
+      "BlogPosting",
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/blog/how-to-find-youtube-content-gaps",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/blog/how-to-find-youtube-content-gaps",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "How to Find YouTube Content Gaps: The Complete Whitespace Research Guide | PreYT Research | PreYT",
+    "description": "Discover high-demand topics where existing competition is low. Step-by-step frameworks for mining audience comment sections, evaluating saturation scores, and formulating high-CTR angles.",
+    "h1": "How to Find YouTube Content Gaps: The Complete Whitespace Research Guide",
+    "schemas": [
+      "BlogPosting",
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/blog/how-to-test-thumbnails-before-publishing",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/blog/how-to-test-thumbnails-before-publishing",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "How to Test YouTube Thumbnails Before Publishing: Avoid Burning Initial Impressions | PreYT Research | PreYT",
+    "description": "Why post-upload A/B testing can harm your initial 24-hour distribution velocity. Learn how to simulate and benchmark thumbnail variants on live mobile feeds before hitting publish.",
+    "h1": "How to Test YouTube Thumbnails Before Publishing: Avoid Burning Initial Impressions",
+    "schemas": [
+      "BlogPosting",
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/blog/how-to-audit-youtube-video-packaging-before-filming",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/blog/how-to-audit-youtube-video-packaging-before-filming",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "How to Audit YouTube Video Packaging Before Filming | PreYT Research | PreYT",
+    "description": "Why 80% of video success is determined during packaging. Learn how to benchmark title tension, mobile cutoff limits, and thumbnail contrast against 14.8M uploads before you shoot.",
+    "h1": "How to Audit YouTube Video Packaging Before Filming",
+    "schemas": [
+      "BlogPosting",
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/blog/mobile-viewport-truncation-youtube-titles",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/blog/mobile-viewport-truncation-youtube-titles",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Mobile Viewport Truncation: Why 48 Characters Dictate YouTube CTR | PreYT Research | PreYT",
+    "description": "Over 70% of YouTube feed impressions occur on mobile devices where titles truncate after 48-52 characters. Learn how to front-load tension and stop losing mobile browse traffic.",
+    "h1": "Mobile Viewport Truncation: Why 48 Characters Dictate YouTube CTR",
+    "schemas": [
+      "BlogPosting",
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/blog/reverse-engineering-competitor-comment-demand-gaps",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/blog/reverse-engineering-competitor-comment-demand-gaps",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Reverse-Engineering Competitor Comment Gaps for High-Retention Video Ideas | PreYT Research | PreYT",
+    "description": "Top creators in your niche leave hundreds of viewer questions unanswered in their comments. Here is how to mine competitor comment demand to discover proven, unsaturated video topics.",
+    "h1": "Reverse-Engineering Competitor Comment Gaps for High-Retention Video Ideas",
+    "schemas": [
+      "BlogPosting",
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/blog/youtube-seo-vs-suggested-browse-algorithm",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/blog/youtube-seo-vs-suggested-browse-algorithm",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "YouTube SEO vs. Suggested Browse: Where Views Actually Come From in 2026 | PreYT Research | PreYT",
+    "description": "Keyword stuffing in video tags is dead. Modern YouTube distribution is driven by Home Browse impressions, topic velocity, and mobile feed contrast. Here is what actually moves the needle.",
+    "h1": "YouTube SEO vs. Suggested Browse: Where Views Actually Come From in 2026",
+    "schemas": [
+      "BlogPosting",
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/blog/category/youtube-seo",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/blog/category/youtube-seo",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "YouTube SEO Guides &amp; Research | PreYT | PreYT",
+    "description": "Modern search discovery, algorithm ranking factors, and keyword intent for YouTube channels. Read data-driven YouTube insights from the PreYT research team.",
+    "h1": "YouTube SEO",
+    "schemas": [
+      "CollectionPage",
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/blog/category/titles-thumbnails",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/blog/category/titles-thumbnails",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Titles &amp; Thumbnails Guides &amp; Research | PreYT | PreYT",
+    "description": "Curiosity tension, mobile feed contrast, character cutoffs, and click-through rate optimization. Read data-driven YouTube insights from the PreYT research team.",
+    "h1": "Titles &amp; Thumbnails",
+    "schemas": [
+      "CollectionPage",
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/blog/category/competitor-research",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/blog/category/competitor-research",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Competitor Research Guides &amp; Research | PreYT | PreYT",
+    "description": "Reverse-engineering comment demand gaps, outlier video formats, and competitor upload velocity. Read data-driven YouTube insights from the PreYT research team.",
+    "h1": "Competitor Research",
+    "schemas": [
+      "CollectionPage",
+      "BreadcrumbList"
+    ]
+  },
+  {
+    "url": "https://preyt.integralgroups.in/blog/category/video-strategy",
+    "status": 200,
+    "canonical": "https://preyt.integralgroups.in/blog/category/video-strategy",
+    "canonical_match": "MATCH",
+    "robots": "index, follow",
+    "title": "Video Strategy Guides &amp; Research | PreYT | PreYT",
+    "description": "Topic selection frameworks, hook retention systems, and pre-upload packaging workflows. Read data-driven YouTube insights from the PreYT research team.",
+    "h1": "Video Strategy",
+    "schemas": [
+      "CollectionPage",
+      "BreadcrumbList"
+    ]
+  }
+]

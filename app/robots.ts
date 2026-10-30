@@ -7,8 +7,16 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: [
         "/api/",
+        "/dashboard/",
+        "/login",
+        "/signup",
+        "/register",
+        "/spec/",
       ]
     },
-    sitemap: "https://preyt.integralgroups.in/sitemap.xml",
+    sitemap: [
+      "https://preyt.integralgroups.in/sitemap.xml",
+      "https://preyt.integralgroups.in/sitemap_index.xml"
+    ]
   }
 }

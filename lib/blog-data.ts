@@ -63,7 +63,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "what-is-the-best-youtube-title-length",
     title: "What is the Best YouTube Title Length for Maximum CTR in 2026?",
-    description: "Empirical analysis of 14.8M uploads reveals the exact title length sweet spot. Learn why 40 to 52 characters outperform longer titles on mobile feeds and how to avoid the ellipsis cutoff.",
+    description: "Empirical analysis of 14.8M uploads reveals the title length sweet spot. Learn why 40-52 characters win on mobile feeds and how to avoid ellipsis cutoffs.",
     category: "Titles & Thumbnails",
     categorySlug: "titles-thumbnails",
     publishedAt: "2026-10-25",
@@ -153,7 +153,7 @@ Before you publish or write your script, test your title in PreYT's free tool:
   {
     slug: "youtube-thumbnail-size-and-safe-zones",
     title: "YouTube Thumbnail Size, Dimensions & Safe Zones Guide (2026 Blueprint)",
-    description: "The complete technical guide to YouTube thumbnail resolution (1280x720, 16:9), maximum file sizes, and the critical bottom-right timestamp safe zone that ruins mobile CTR.",
+    description: "Complete technical guide to YouTube thumbnail resolution (1280x720), file sizes, and the critical bottom-right timestamp safe zone that ruins mobile CTR.",
     category: "Titles & Thumbnails",
     categorySlug: "titles-thumbnails",
     publishedAt: "2026-10-24",
@@ -245,7 +245,7 @@ Avoid publishing thumbnails with hidden text or obscured faces:
   {
     slug: "how-to-improve-youtube-thumbnail-ctr",
     title: "How to Improve YouTube Thumbnail CTR: 7 Computer Vision Heuristics",
-    description: "How to increase your YouTube click-through rate using luminance edge separation, dark-theme contrast, color temperature calibration, and the 120-pixel mobile squint test.",
+    description: "Increase YouTube CTR using luminance edge separation, dark-theme contrast, color temperature calibration, and the 120-pixel mobile squint test.",
     category: "Titles & Thumbnails",
     categorySlug: "titles-thumbnails",
     publishedAt: "2026-10-23",
@@ -353,7 +353,7 @@ Never judge a thumbnail at 100% zoom on a 27-inch 4K monitor. Test your drafts s
   {
     slug: "how-to-find-youtube-content-gaps",
     title: "How to Find YouTube Content Gaps: The Complete Whitespace Research Guide",
-    description: "Discover high-demand topics where existing competition is low. Step-by-step frameworks for mining audience comment sections, evaluating saturation scores, and formulating high-CTR angles.",
+    description: "Discover high-demand topics with low competition. Frameworks for mining comment sections, evaluating saturation scores, and formulating high-CTR angles.",
     category: "Competitor Research",
     categorySlug: "competitor-research",
     publishedAt: "2026-10-22",
@@ -459,7 +459,7 @@ Discover high-demand topics without spending hours digging through comments manu
   {
     slug: "how-to-test-thumbnails-before-publishing",
     title: "How to Test YouTube Thumbnails Before Publishing: Avoid Burning Initial Impressions",
-    description: "Why post-upload A/B testing can harm your initial 24-hour distribution velocity. Learn how to simulate and benchmark thumbnail variants on live mobile feeds before hitting publish.",
+    description: "Why post-upload A/B testing harms initial distribution velocity. Learn how to simulate and benchmark thumbnail variants on mobile feeds before publishing.",
     category: "Video Strategy",
     categorySlug: "video-strategy",
     publishedAt: "2026-10-21",
@@ -547,7 +547,7 @@ Stop publishing blind and risking your video's critical launch window:
   {
     slug: "how-to-audit-youtube-video-packaging-before-filming",
     title: "How to Audit YouTube Video Packaging Before Filming",
-    description: "Why 80% of video success is determined during packaging. Learn how to benchmark title tension, mobile cutoff limits, and thumbnail contrast against 14.8M uploads before you shoot.",
+    description: "Why 80% of video success is decided in packaging. Learn to benchmark title tension, mobile cutoff limits, and thumbnail contrast before you film.",
     category: "Video Strategy",
     categorySlug: "video-strategy",
     publishedAt: "2026-10-20",
@@ -645,7 +645,7 @@ Manually testing thumbnails across simulated mobile feeds is tedious. PreYT was 
   {
     slug: "mobile-viewport-truncation-youtube-titles",
     title: "Mobile Viewport Truncation: Why 48 Characters Dictate YouTube CTR",
-    description: "Over 70% of YouTube feed impressions occur on mobile devices where titles truncate after 48-52 characters. Learn how to front-load tension and stop losing mobile browse traffic.",
+    description: "Over 70% of YouTube impressions happen on mobile where titles truncate after 48-52 chars. Learn to front-load tension and stop losing mobile traffic.",
     category: "Titles & Thumbnails",
     categorySlug: "titles-thumbnails",
     publishedAt: "2026-10-18",
@@ -742,7 +742,7 @@ Use our **[Free YouTube Title Analyzer](/youtube-title-analyzer)** to test your 
   {
     slug: "reverse-engineering-competitor-comment-demand-gaps",
     title: "Reverse-Engineering Competitor Comment Gaps for High-Retention Video Ideas",
-    description: "Top creators in your niche leave hundreds of viewer questions unanswered in their comments. Here is how to mine competitor comment demand to discover proven, unsaturated video topics.",
+    description: "Top creators leave viewer questions unanswered in comments. Learn how to mine competitor comment demand to discover proven, unsaturated video topics.",
     category: "Competitor Research",
     categorySlug: "competitor-research",
     publishedAt: "2026-10-15",
@@ -833,7 +833,7 @@ PreYT's **[Content Gap Finder](/youtube-content-gap-finder)** scans competitor t
   {
     slug: "youtube-seo-vs-suggested-browse-algorithm",
     title: "YouTube SEO vs. Suggested Browse: Where Views Actually Come From in 2026",
-    description: "Keyword stuffing in video tags is dead. Modern YouTube distribution is driven by Home Browse impressions, topic velocity, and mobile feed contrast. Here is what actually moves the needle.",
+    description: "Video tag keyword stuffing is dead. YouTube distribution is driven by Browse impressions, topic velocity, and feed contrast. Here is what moves views.",
     category: "YouTube SEO",
     categorySlug: "youtube-seo",
     publishedAt: "2026-10-12",

@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const url = `https://preyt.integralgroups.in/blog/category/${category.slug}`
 
   return {
-    title: `${category.name} Guides & Research | PreYT`,
+    title: `${category.name} Guides & Research`,
     description: `${category.description} Read data-driven YouTube insights from the PreYT research team.`,
     alternates: {
       canonical: url,

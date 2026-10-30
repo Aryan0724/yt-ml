@@ -1,13 +1,13 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Join the PreYT Creator Waitlist — Early Access Rollout",
+  title: "Join Creator Waitlist: Priority Early Access",
   description: "Apply for early access to PreYT's YouTube pre-upload packaging audits. Submit your channel details to join our priority onboarding queue.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/waitlist",
   },
   openGraph: {
-    title: "Join the PreYT Creator Waitlist — Early Access Rollout",
+    title: "Join Creator Waitlist: Priority Early Access",
     description: "Apply for early access to PreYT's YouTube pre-upload packaging audits. Submit your channel details to join our priority onboarding queue.",
     url: "https://preyt.integralgroups.in/waitlist",
     siteName: "PreYT",

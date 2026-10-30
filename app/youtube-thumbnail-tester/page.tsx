@@ -7,7 +7,7 @@ import { ThumbnailTester } from "@/components/tools/thumbnail-tester"
 import { ArrowRight, CheckCircle2, ShieldCheck, Trophy, Layers } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Free YouTube Thumbnail Tester | Compare A/B Variants (PreYT)",
+  title: "Free YouTube Thumbnail Tester: Compare A/B Variants",
   description: "Test and compare YouTube thumbnail variants side-by-side on live simulated mobile feeds. Benchmark contrast scores, safe areas, and predicted CTR before publishing.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/youtube-thumbnail-tester",

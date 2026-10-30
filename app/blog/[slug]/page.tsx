@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const articleUrl = `https://preyt.integralgroups.in/blog/${post.slug}`
 
   return {
-    title: `${post.title} | PreYT Research`,
+    title: post.title,
     description: post.description,
     alternates: {
       canonical: articleUrl,

@@ -6,10 +6,10 @@ import { BreadcrumbSchema } from "@/components/seo/json-ld"
 import { Cookie, CheckCircle2, ShieldCheck } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Cookie Policy — PreYT Creator Intelligence",
+  title: "Cookie Policy & Session Governance",
   description: "Learn how PreYT utilizes essential session cookies, workspace tokens, and diagnostic telemetry to maintain your creator workspace.",
   alternates: {
-    canonical: "/legal/cookies",
+    canonical: "https://preyt.integralgroups.in/legal/cookies",
   },
   openGraph: {
     title: "Cookie Policy — PreYT Platform",

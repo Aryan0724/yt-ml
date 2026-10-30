@@ -6,8 +6,10 @@ import { Footer } from "@/components/landing/footer"
 import { BreadcrumbSchema, FaqSchema, SoftwareAppSchema } from "@/components/seo/json-ld"
 
 export const metadata: Metadata = {
-  title: "PreYT vs vidIQ: Pre-Upload Packaging vs Post-Upload Tag Optimization (2026 Comparison)",
-  description: "An objective comparison of PreYT and vidIQ. Discover why modern YouTube recommendation algorithms prioritize visual glanceability and packaging over keyword meta tags.",
+  title: {
+    absolute: "PreYT vs vidIQ: Pre-Upload Packaging vs Tag Tools",
+  },
+  description: "Objective comparison of PreYT and vidIQ. Discover why modern YouTube algorithms prioritize visual glanceability over keyword tags.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/vs/vidiq",
   },

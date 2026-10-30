@@ -6,10 +6,10 @@ import { BreadcrumbSchema } from "@/components/seo/json-ld"
 import { FileText, Shield, CheckCircle2, AlertTriangle, Scale } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Terms of Service — PreYT Creator Decision Platform",
+  title: "Terms of Service: Creator Platform Terms",
   description: "Review PreYT's terms of service governing creator intellectual property rights, YouTube API integrations, subscriptions, and acceptable use policies.",
   alternates: {
-    canonical: "/legal/terms",
+    canonical: "https://preyt.integralgroups.in/legal/terms",
   },
   openGraph: {
     title: "Terms of Service — PreYT Platform",

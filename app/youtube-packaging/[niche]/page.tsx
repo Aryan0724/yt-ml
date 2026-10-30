@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: `${niche.name} YouTube Packaging Blueprint & CTR Benchmarks | PreYT`,
+    title: `${niche.name} YouTube Packaging & CTR Guide`,
     description: niche.metaDescription,
     alternates: {
       canonical: `https://preyt.integralgroups.in/youtube-packaging/${niche.slug}`,

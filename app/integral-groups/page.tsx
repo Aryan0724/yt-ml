@@ -6,8 +6,8 @@ import { BreadcrumbSchema } from "@/components/seo/json-ld"
 import { Boxes, Zap, Globe, Cpu, Target, ArrowRight, ShieldCheck, Terminal } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Integral Groups Studio — The Systems Architecture Studio Behind PreYT",
-  description: "Integral Groups is an execution-first systems engineering studio based in India. We design intelligent infrastructure, creator analytics, and autonomous software platforms.",
+  title: "Integral Groups: Systems Engineering Studio",
+  description: "Integral Groups is an execution-first systems engineering studio in India designing intelligent infrastructure and creator analytics platforms.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/integral-groups",
   },

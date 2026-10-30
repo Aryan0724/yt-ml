@@ -7,7 +7,7 @@ import { IdeaGenerator } from "@/components/tools/idea-generator"
 import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles, Lightbulb, Target } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Free YouTube Video Idea Generator | High-CTR Concepts (PreYT)",
+  title: "Free YouTube Video Idea Generator: High-CTR Concepts",
   description: "Generate viral YouTube video ideas with paired thumbnail concepts, title curiosity hooks, and estimated CTR benchmarks. Built for creators and production studios.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/youtube-video-idea-generator",

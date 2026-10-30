@@ -61,11 +61,6 @@ export function SoftwareAppSchema({
       "@type": "Offer",
       price,
       priceCurrency
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      ratingCount: "248"
     }
   }
 
@@ -123,6 +118,62 @@ export function BreadcrumbSchema({ items }: { items: BreadcrumbItem[] }) {
       name: item.name,
       item: item.url.startsWith("http") ? item.url : `https://preyt.integralgroups.in${item.url}`
     }))
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  )
+}
+
+interface ArticleSchemaProps {
+  headline: string
+  description: string
+  url: string
+  datePublished: string
+  dateModified?: string
+  authorName?: string
+  image?: string
+}
+
+export function ArticleSchema({
+  headline,
+  description,
+  url,
+  datePublished,
+  dateModified,
+  authorName = "PreYT Research Team",
+  image = "https://preyt.integralgroups.in/preyt-logo-dark.png"
+}: ArticleSchemaProps) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline,
+    description,
+    url,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url
+    },
+    datePublished,
+    dateModified: dateModified || datePublished,
+    author: {
+      "@type": "Organization",
+      name: authorName,
+      url: "https://preyt.integralgroups.in"
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "PreYT",
+      url: "https://preyt.integralgroups.in",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://preyt.integralgroups.in/preyt-logo-dark.png"
+      }
+    },
+    image: image.startsWith("http") ? image : `https://preyt.integralgroups.in${image}`
   }
 
   return (

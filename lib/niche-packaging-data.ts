@@ -42,7 +42,7 @@ export const NICHE_PACKAGING_DATA: Record<string, NicheBenchmark> = {
     archetypeCode: "FACELESS_DOCUMENTARY",
     subtitle: "Cinematic Tension, High Stakes & Zero-Face Packaging Architecture",
     headline: "The Science of 8%+ CTR on Faceless Video Essays",
-    metaDescription: "Master YouTube packaging for faceless documentaries and video essays. Discover OpenCV cinematic contrast benchmarks, high-stakes title formulas, and how to win browse feeds without human faces.",
+    metaDescription: "Master YouTube packaging for faceless documentaries. Discover OpenCV contrast benchmarks, high-stakes title formulas, and how to win browse feeds without faces.",
     targetKeywords: [
       "faceless youtube channel packaging",
       "faceless documentary thumbnail ideas",
@@ -276,7 +276,7 @@ export const NICHE_PACKAGING_DATA: Record<string, NicheBenchmark> = {
     archetypeCode: "TECH_REVIEWS",
     subtitle: "Industrial Studio Contrast, Device Silhouettes & Contrarian Truth Hooks",
     headline: "Tech YouTube Packaging: Industrial Minimalism & Contrarian Hooks",
-    metaDescription: "Master tech and hardware YouTube packaging. Benchmark your thumbnail lighting against MKBHD and Dave2D standards with OpenCV contrast forensics and contrarian title formulas.",
+    metaDescription: "Master tech YouTube packaging. Benchmark thumbnail lighting against top creator standards with OpenCV contrast forensics and contrarian title formulas.",
     targetKeywords: [
       "tech thumbnail design",
       "tech review youtube packaging",
@@ -354,7 +354,7 @@ export const NICHE_PACKAGING_DATA: Record<string, NicheBenchmark> = {
     archetypeCode: "ANIME_ANIMATION",
     subtitle: "Cel-Shaded Contrast, Emotional Climax & Narrative Lore Hooks",
     headline: "Anime & Pop Culture Packaging: Edge Clarity & Climax Capture",
-    metaDescription: "Optimize anime video essays and pop culture lore thumbnails. Learn cel-shade edge clarity standards, character expression benchmarks, and narrative mystery title formulas.",
+    metaDescription: "Optimize anime video essays and pop culture lore thumbnails. Learn cel-shade edge clarity, character expression benchmarks, and narrative mystery formulas.",
     targetKeywords: [
       "anime thumbnail design",
       "anime video essay packaging",
