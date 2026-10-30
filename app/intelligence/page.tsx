@@ -27,13 +27,13 @@ import {
 } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "YouTube Creator Intelligence & Video Performance Analytics | PreYT",
-  description: "Explore the PreYT intelligence architecture: Forensic title analysis, format-native OpenCV computer vision, 64-bit DCT perceptual hash originality shields, and closed-loop calibration.",
+  title: "YouTube Channel & Competitor Intelligence",
+  description: "Explore YouTube channel insights, competitor content patterns, and emerging topics to make better-informed content decisions.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/intelligence",
   },
   openGraph: {
-    title: "YouTube Creator Intelligence & Video Performance Analytics | PreYT",
+    title: "YouTube Channel & Competitor Intelligence",
     description: "Statistical certainty for YouTube packaging. Linguistic forensics, visual benchmarking, and volatility modeling.",
     url: "https://preyt.integralgroups.in/intelligence",
     siteName: "PreYT",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "YouTube Creator Intelligence & Video Performance Analytics | PreYT",
+    title: "YouTube Channel & Competitor Intelligence",
     description: "Statistical certainty for YouTube packaging. Linguistic forensics, visual benchmarking, and volatility modeling.",
   }
 }

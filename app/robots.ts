@@ -6,10 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
       disallow: [
-        "/dashboard/",
         "/api/",
-        "/cms/",
-        "/admin/"
       ]
     },
     sitemap: "https://preyt.integralgroups.in/sitemap.xml",

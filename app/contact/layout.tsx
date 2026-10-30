@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Contact PreYT YouTube Analytics Support | PreYT",
+  title: "Contact PreYT YouTube Analytics Support",
   description: "Connect with the PreYT engineering and support team. Inquiries for API access, enterprise studio packaging, and creator partnerships.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/contact",

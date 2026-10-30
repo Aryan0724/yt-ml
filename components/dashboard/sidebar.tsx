@@ -24,7 +24,7 @@ export function Sidebar({ session }: { session: AuthSession | null }) {
 
   const bottomNav = [
     { id: "settings", icon: Settings, label: "Settings", href: "/dashboard/settings" },
-    { id: "help", icon: HelpCircle, label: "Help & Docs", href: "/help" },
+    { id: "help", icon: HelpCircle, label: "Help & Docs", href: "/help-center" },
   ]
 
   return (

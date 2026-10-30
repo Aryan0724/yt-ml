@@ -7,20 +7,20 @@ import { BreadcrumbSchema, SoftwareAppSchema } from "@/components/seo/json-ld";
 import { GitCompare, Target, ShieldAlert, BarChart3, MessageSquare, Zap, RefreshCcw, Layout, Flame, Fingerprint, ArrowRight, Smartphone } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "YouTube Thumbnail & Title Analysis Features | PreYT",
-  description: "Explore PreYT's pre-upload feature suite: format-native OpenCV thumbnail analysis, 54-char mobile title truncation checks, niche outlier scanner, and pHash originality shields.",
+  title: "PreYT Features — YouTube Content Analysis Tools",
+  description: "Explore PreYT's YouTube research and analysis tools, with clear examples of how each feature helps creators plan and evaluate content.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/features",
   },
   openGraph: {
-    title: "YouTube Thumbnail & Title Analysis Features | PreYT",
+    title: "PreYT Features — YouTube Content Analysis Tools",
     description: "Analyze thumbnails, test mobile cutoffs, and discover content gaps before you film.",
     url: "https://preyt.integralgroups.in/features",
     siteName: "PreYT",
   },
   twitter: {
     card: "summary_large_image",
-    title: "YouTube Thumbnail & Title Analysis Features | PreYT",
+    title: "PreYT Features — YouTube Content Analysis Tools",
     description: "Analyze thumbnails, test mobile cutoffs, and discover content gaps before you film.",
   }
 };

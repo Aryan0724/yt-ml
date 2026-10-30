@@ -11,16 +11,13 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 export const metadata: Metadata = {
   metadataBase: new URL("https://preyt.integralgroups.in"),
   title: {
-    default: "PreYT | YouTube Growth Analytics & Pre-Upload Intelligence",
+    default: "PreYT — YouTube Content Intelligence & Video Analysis",
     template: "%s | PreYT"
   },
-  description: "Pick the perfect topic, title, and thumbnail based on real YouTube data. Audit your drafts against 14.8M uploads before you film.",
-  alternates: {
-    canonical: "/",
-  },
+  description: "Research YouTube topics, evaluate video packaging, and make more informed content decisions with PreYT's creator intelligence tools.",
   openGraph: {
-    title: "PreYT | YouTube Growth Analytics & Pre-Upload Intelligence",
-    description: "Pick the perfect topic, title, and thumbnail based on real YouTube data. Audit your drafts against 14.8M uploads before you film.",
+    title: "PreYT — YouTube Content Intelligence & Video Analysis",
+    description: "Research YouTube topics, evaluate video packaging, and make more informed content decisions with PreYT's creator intelligence tools.",
     url: "https://preyt.integralgroups.in",
     siteName: "PreYT",
     locale: "en_US",
@@ -36,8 +33,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PreYT | YouTube Growth Analytics & Pre-Upload Intelligence",
-    description: "Pick the perfect topic, title, and thumbnail based on real YouTube data. Audit your drafts against 14.8M uploads before you film.",
+    title: "PreYT — YouTube Content Intelligence & Video Analysis",
+    description: "Research YouTube topics, evaluate video packaging, and make more informed content decisions with PreYT's creator intelligence tools.",
     creator: "@preYTAI",
     images: ["/preyt-logo-dark.png"],
   },

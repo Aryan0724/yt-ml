@@ -6,8 +6,8 @@ import { BreadcrumbSchema } from "@/components/seo/json-ld";
 import { Target, ShieldCheck, Zap } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "How PreYT Helps Creators Validate YouTube Video Packaging | PreYT",
-  description: "Learn how PreYT empowers YouTube creators and studios with pre-upload packaging diagnostics, computer vision thumbnail analysis, and algorithmic certainty.",
+  title: "About PreYT — Our Approach to YouTube Intelligence",
+  description: "Learn what PreYT does, how its tools work, and what creators can realistically expect from its analysis.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/about",
   },
@@ -39,7 +39,7 @@ export default function AboutPage() {
             <div>
                 <div className="text-[9px] font-mono font-bold text-[#FF0000] uppercase tracking-[0.2em] mb-4">[ THE STORY ]</div>
                 <h1 className="font-display text-4xl sm:text-6xl font-bold mb-4 text-zinc-900 tracking-tight">
-                  How PreYT Helps Creators <br /><span className="text-[#FF0000]">Validate Video Packaging</span>
+                  About PreYT: Our Approach to <br /><span className="text-[#FF0000]">YouTube Intelligence</span>
                 </h1>
                 <p className="text-xs font-mono text-zinc-500 leading-relaxed max-w-2xl">
                     PreYT was born out of a simple observation: creators are working harder than ever, but publishing with less certainty. We provide statistical clarity before you hit upload.

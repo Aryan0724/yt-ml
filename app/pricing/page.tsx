@@ -6,7 +6,7 @@ import { Footer } from "@/components/landing/footer"
 import { BreadcrumbSchema, FaqSchema } from "@/components/seo/json-ld"
 
 export const metadata: Metadata = {
-  title: "Pricing Plans — PreYT YouTube Packaging Intelligence | PreYT",
+  title: "Pricing Plans — YouTube Packaging Intelligence",
   description: "Transparent pricing for creators and production studios. Start free with 3 audits/month or unlock unlimited audits, topic radar, and A/B split testing.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/pricing",

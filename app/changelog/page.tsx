@@ -6,20 +6,20 @@ import { BreadcrumbSchema } from "@/components/seo/json-ld";
 import { Zap, RefreshCcw, Sparkles } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Changelog & Release Notes | PreYT YouTube Analytics Platform",
+  title: "Changelog & Release Notes — YouTube Analytics Platform",
   description: "Track the evolution of the PreYT Creator Decision Engine: Model updates, format-native computer vision releases, and algorithmic upgrades.",
   alternates: {
     canonical: "https://preyt.integralgroups.in/changelog",
   },
   openGraph: {
-    title: "Changelog & Release Notes | PreYT YouTube Analytics Platform",
+    title: "Changelog & Release Notes — YouTube Analytics Platform",
     description: "Track new features, model upgrades, and packaging intelligence improvements.",
     url: "https://preyt.integralgroups.in/changelog",
     siteName: "PreYT",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Changelog & Release Notes | PreYT YouTube Analytics Platform",
+    title: "Changelog & Release Notes — YouTube Analytics Platform",
     description: "Track new features, model upgrades, and packaging intelligence improvements.",
   }
 };

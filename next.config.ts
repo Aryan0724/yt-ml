@@ -26,6 +26,36 @@ const nextConfig: NextConfig = {
         destination: "/legal/cookies",
         permanent: true,
       },
+      {
+        source: "/product",
+        destination: "/features",
+        permanent: true,
+      },
+      {
+        source: "/resources",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/about/data",
+        destination: "/intelligence",
+        permanent: true,
+      },
+      {
+        source: "/help",
+        destination: "/help-center",
+        permanent: true,
+      },
+      {
+        source: "/register",
+        destination: "/signup",
+        permanent: true,
+      },
+      {
+        source: "/guides",
+        destination: "/blog",
+        permanent: true,
+      },
     ];
   },
 };

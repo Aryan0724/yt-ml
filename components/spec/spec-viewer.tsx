@@ -83,6 +83,9 @@ const INITIAL_COMMENTS: Comment[] = [
 ]
 
 export function SpecViewer({ specId = "m4-mac-mini" }: { specId?: string }) {
+  const displayTitle = specId === "m4-mac-mini" 
+    ? "M4 Mac Mini — Packaging & Retention Spec" 
+    : `${specId.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")} — Packaging Spec`
   const [selectedConcept, setSelectedConcept] = useState<"A" | "B">("B")
   const [feedMode, setFeedMode] = useState<"dark" | "light">("dark")
   const [showSafeZone, setShowSafeZone] = useState(true)
@@ -163,9 +166,9 @@ export function SpecViewer({ specId = "m4-mac-mini" }: { specId?: string }) {
           <div className="h-5 w-px bg-neutral-200 hidden sm:block" />
 
           <div className="flex items-center gap-2.5">
-            <span className="font-semibold text-sm sm:text-base text-[#161512] tracking-tight">
-              M4 Mac Mini — Packaging &amp; Retention Spec
-            </span>
+            <h1 className="font-semibold text-sm sm:text-base text-[#161512] tracking-tight">
+              {displayTitle}
+            </h1>
             <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border ${
               status === "Approved" 
                 ? "bg-emerald-50 text-emerald-700 border-emerald-200" 

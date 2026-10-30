@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import { Navbar } from "@/components/landing/navbar"
 import { Hero } from "@/components/landing/hero"
 import { StatsBar } from "@/components/landing/stats-bar"
@@ -8,6 +9,26 @@ import { CoreCapabilities } from "@/components/landing/core-capabilities"
 import { ResourcesSection } from "@/components/landing/resources-section"
 import { ContactSection } from "@/components/landing/contact-section"
 import { Footer } from "@/components/landing/footer"
+
+export const metadata: Metadata = {
+  title: "PreYT — YouTube Content Intelligence & Video Analysis",
+  description: "Research YouTube topics, evaluate video packaging, and make more informed content decisions with PreYT's creator intelligence tools.",
+  alternates: {
+    canonical: "https://preyt.integralgroups.in",
+  },
+  openGraph: {
+    title: "PreYT — YouTube Content Intelligence & Video Analysis",
+    description: "Research YouTube topics, evaluate video packaging, and make more informed content decisions with PreYT's creator intelligence tools.",
+    url: "https://preyt.integralgroups.in",
+    siteName: "PreYT",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PreYT — YouTube Content Intelligence & Video Analysis",
+    description: "Research YouTube topics, evaluate video packaging, and make more informed content decisions with PreYT's creator intelligence tools.",
+  }
+}
 
 export default function LandingPage() {
   const jsonLd = {
